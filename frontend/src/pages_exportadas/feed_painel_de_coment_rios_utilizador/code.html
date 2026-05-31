@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html lang="pt"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NzolaNet - Feed Cultural</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#201b18",
+                        "tertiary": "#87512c",
+                        "surface-bright": "#fff8f5",
+                        "primary-fixed": "#ffdea4",
+                        "secondary-fixed-dim": "#ffb0cc",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#f7ece6",
+                        "inverse-surface": "#352f2c",
+                        "secondary": "#b7056b",
+                        "on-secondary-fixed-variant": "#8d0051",
+                        "outline": "#807665",
+                        "inverse-primary": "#f0bf5c",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#6b3a17",
+                        "on-primary-fixed": "#261900",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#311300",
+                        "secondary-fixed": "#ffd9e4",
+                        "inverse-on-surface": "#faeee9",
+                        "surface-variant": "#ebe0db",
+                        "surface-dim": "#e3d8d3",
+                        "on-secondary-fixed": "#3e0020",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#fe4ea2",
+                        "primary-container": "#c89b3c",
+                        "outline-variant": "#d2c5b1",
+                        "surface": "#fff8f5",
+                        "primary-fixed-dim": "#f0bf5c",
+                        "on-primary-container": "#4b3500",
+                        "tertiary-fixed-dim": "#feb78a",
+                        "on-surface-variant": "#4e4637",
+                        "on-surface": "#201b18",
+                        "surface-tint": "#7b5900",
+                        "surface-container-highest": "#ebe0db",
+                        "on-secondary-container": "#5c0033",
+                        "background": "#fff8f5",
+                        "primary": "#7b5900",
+                        "on-tertiary-container": "#592c0a",
+                        "surface-container-high": "#f1e6e1",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#d59369",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#5d4200",
+                        "surface-container-low": "#fdf1ec",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffdbc7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "margin-mobile": "16px",
+                        "gutter": "20px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "margin-desktop": "40px",
+                        "xxl": "48px",
+                        "xl": "32px",
+                        "max-width": "1200px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #F5F0EB;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 248, 245, 0.9);
+        }
+        .african-pattern {
+            background-image: radial-gradient(#c89b3c 0.5px, transparent 0.5px);
+            background-size: 12px 12px;
+            opacity: 0.1;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-background antialiased min-h-screen">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant px-4 py-3 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="text-primary font-bold text-headline-md tracking-tight">NzolaNet</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">grid_view</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full"></span>
+</button>
+</div>
+</header>
+<main class="max-w-md mx-auto pb-24">
+<!-- Post Card -->
+<article class="mt-4 mx-margin-mobile bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden transition-all duration-300">
+<!-- Author Header -->
+<div class="p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img alt="Avatar" class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A portrait of a young Angolan woman with a warm, authentic expression. She has short natural hair and wears subtle, modern African jewelry. The lighting is soft and golden, resembling a Luanda afternoon. The background is a clean, minimalist studio set with warm earthy tones, maintaining a high-fidelity social media aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcrILpCop_lT1M7H2qjqEDG77uusyTdZE6YN7ifmxpgIjv8cNr5w1085K5fH8G9Z64VvxD3_7uF4H5ETzapfdABaSop26RtqxEgKyoCrq5BgEW730RjOiZ-_u0cHwDPW-FAwhy8Rb4ORNsttFiu6d4tb96VWcZwe8kWsdii9Xvr9Tj4uQtP0e86eVoTzmd6_MdFiHpkYnRY0P8seIK7-A2U-iXhL8IsmKAuE2lIH5kL_Die3mQGfdUHh6E5iY_Mi6GB5ZpkrhMAZjd"/>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface">Helena Kiala</h3>
+<p class="text-body-sm text-on-surface-variant opacity-70">Há 2 horas • Luanda</p>
+</div>
+</div>
+<button class="text-on-surface-variant">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<!-- Post Content -->
+<div class="px-4 pb-3">
+<p class="text-body-md text-on-surface leading-relaxed">
+                    A preservação da nossa herança cultural é a base do nosso futuro. Hoje celebro a beleza do Semba, não apenas como música, mas como a alma da nossa resistência e alegria. 🇦🇴✨ #CulturaAngolana #Semba #NzolaNet
+                </p>
+</div>
+<!-- Post Image -->
+<div class="relative aspect-[4/5] bg-surface-container-high">
+<img alt="Semba Culture" class="w-full h-full object-cover" data-alt="A vibrant and cinematic photograph of two people dancing Semba in a sun-drenched courtyard in Luanda. The motion is captured with a slight artistic blur, emphasizing the fluid movement. The dancers wear modern clothing with subtle traditional Angolan textile accents. Warm, organic sunlight floods the scene, creating long shadows and a rich, premium atmosphere. The colors are earthy and warm." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMDGF3UevDCduKvMMB9AOzD5rTMtahQF9llx3aNkSANSZt9eFh5lybyAxzCydrwAn4tYBCi-mhYiRG36V9QkB0znlXH8UTLYHEcpicOban53D1sK-j3oLMBjL--cA22nFTZ7Lx-5_y2kIVASKOeKEYzdrMXwRCI9UNI9F85KfpZGZBMfiZUlXqFcUtCZYJbhdZcFl45lVn17P2BPluOmGRdm02BICD-I0l9ZUYRyJxbGSvpsSMv3hvcJ2uPSXlhWw4tF0JTdpg9rG8"/>
+<div class="absolute inset-0 african-pattern pointer-events-none"></div>
+</div>
+<!-- Post Actions -->
+<div class="px-4 py-3 flex items-center justify-between border-b border-outline-variant/30">
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-1.5 text-on-surface-variant group">
+<span class="material-symbols-outlined group-hover:text-secondary transition-colors" data-weight="fill">favorite</span>
+<span class="text-label-lg font-label-lg">1.2k</span>
+</button>
+<button class="flex items-center gap-1.5 text-primary font-bold">
+<span class="material-symbols-outlined" data-weight="fill">chat_bubble</span>
+<span class="text-label-lg font-label-lg">24</span>
+</button>
+<button class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+<button class="text-on-surface-variant">
+<span class="material-symbols-outlined">bookmark_border</span>
+</button>
+</div>
+<!-- Comments Panel (Expanded) -->
+<section class="bg-surface-container-low transition-all duration-500">
+<div class="p-4 space-y-4">
+<!-- Comment 1 -->
+<div class="flex gap-3">
+<img alt="User Avatar" class="w-8 h-8 rounded-full object-cover" data-alt="A profile photo of a young Angolan man with a stylish, modern haircut. He is smiling warmly in a bright, outdoor setting with lush Luanda greenery blurred in the background. The aesthetic is clean, professional, and full of life, utilizing natural golden hour lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYd-8cc5PN1K_Ad1e2-_FE1Zsnf1na23LznJ7GrjU7xyvNXQ9UwVYqlGpHEKoxZ1_AZ8SwmOJPlMha1BjO3AXtM3NMsaeYfCEbbm9DPOWCw0_yms9hbGwOJWp3cbgePOrhKN8O9ZHgaAQsxHqP2WLK8zoLz2IfYK8zao-Ywvoq_blhugUBFuU4X2rzH4Z1YEyCR7j02RZdplR5LkTrBk2TNKgSBvrXLRY-wSIDqFNOnNb1DyAzwIj-05cHTdUUk9Qd-yVHx9iKIvhU"/>
+<div class="flex-1">
+<div class="bg-surface-container-highest/50 p-3 rounded-xl rounded-tl-none">
+<div class="flex justify-between items-start">
+<span class="font-bold text-label-lg text-on-surface">Mateus Bento</span>
+<span class="text-xs text-on-surface-variant">Há 45 min</span>
+</div>
+<p class="text-body-sm mt-1 text-on-surface-variant">O Semba é realmente a nossa maior identidade! Post incrível, Helena. ❤️</p>
+</div>
+</div>
+</div>
+<!-- User Comment (Current User) -->
+<div class="flex gap-3">
+<img alt="Your Avatar" class="w-8 h-8 rounded-full object-cover border-2 border-primary-fixed" data-alt="Close-up portrait of a sophisticated young professional with African heritage. Clear skin, radiant expression, wearing a stylish minimalist outfit. High-end lighting creates a polished, editorial look. The background is a soft-focus modern interior with warm wooden accents and natural light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgeMfhWk-W_vNtwJfl5Ghnv05_78Z24NVFCujtWR1seIXN2SQdY8YBYYkD3Cs-5k5FH-3rXqVg-lrjHcMOqe1pEDmyPUBNZUF_vtlGuCPTkOLuUFRm477bOQ2T_rpjt_enqMwVnlR3wHqwcIKvA5O3e4SG5FtQWbqP6BziYD4FW_gwXfPOUI1_0WxTNC8SLwSB_CxmVWGeGwickQo6ELI8nONuRev_GZ5XDeq4EBO_SNFNoILejSW1OwpYjiW1AU0FcjtxUsT5OtYp"/>
+<div class="flex-1 relative">
+<div class="bg-primary-container/10 p-3 rounded-xl rounded-tl-none border border-primary-container/20">
+<div class="flex justify-between items-start">
+<span class="font-bold text-label-lg text-primary">Tu (Você)</span>
+<div class="flex items-center gap-2">
+<span class="text-xs text-on-surface-variant">Há 15 min</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors" onclick="toggleDropdown(event)">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</div>
+<p class="text-body-sm mt-1 text-on-surface">Concordo plenamente! É vital passarmos estes valores para as novas gerações.</p>
+</div>
+<!-- Dropdown Menu (Open) -->
+<div class="absolute right-0 mt-2 w-32 glass-panel rounded-lg shadow-lg border border-outline-variant z-10 py-1 overflow-hidden" id="comment-dropdown">
+<button class="w-full text-left px-4 py-2 text-label-lg hover:bg-primary-container/20 flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span> Editar
+                                </button>
+<button class="w-full text-left px-4 py-2 text-label-lg text-error hover:bg-error-container/20 flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span> Excluir
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Comment Input -->
+<div class="p-4 border-t border-outline-variant bg-surface-container-low flex items-center gap-3">
+<img alt="Your Avatar" class="w-9 h-9 rounded-full object-cover" data-alt="Close-up portrait of a sophisticated young professional with African heritage. Clear skin, radiant expression, wearing a stylish minimalist outfit. High-end lighting creates a polished, editorial look. The background is a soft-focus modern interior with warm wooden accents and natural light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAunIHtZMj0fLmq40Jc9bj5Hl8bSU9Ska4CIDsRfuQSbxDnJml3HriqbzZZNBuYEFy29d6-uR8-RBDhr3DTKLlREVSl1izfG_HXF_TQIaV9rC8d3bqA191Zy0WeoOzNXh1NRtt1yxQe-FRAA-Db_bRAWU5npeAS-_mjP__CurdReQDiLFXrjYD5WNIyZlezpW_vRbm6-Cgb2942MmiHalnriwcWu3UlHjFL0-qP3ZGCLcOIbD1vAtvvV6HVq5mwkbZ1loXxLpbHq1Is"/>
+<div class="flex-1 relative flex items-center">
+<input class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary py-2 pr-10 text-body-md focus:outline-none transition-all placeholder:text-on-surface-variant/50" placeholder="Adiciona um comentário..." type="text"/>
+<button class="absolute right-0 text-[#735300] hover:scale-110 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+</section>
+</article>
+<!-- Second post preview -->
+<article class="mt-4 mx-margin-mobile bg-surface-container-lowest/60 rounded-xl border border-outline-variant/30 p-4 opacity-70">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high animate-pulse"></div>
+<div class="space-y-2">
+<div class="h-3 w-24 bg-surface-container-high rounded animate-pulse"></div>
+<div class="h-2 w-16 bg-surface-container-high rounded animate-pulse"></div>
+</div>
+</div>
+<div class="h-4 w-full bg-surface-container-high rounded mb-2 animate-pulse"></div>
+<div class="h-4 w-2/3 bg-surface-container-high rounded animate-pulse"></div>
+</article>
+</main>
+<!-- Bottom Navigation (Shared Component Style) -->
+<nav class="fixed bottom-0 left-0 right-0 glass-panel border-t border-outline-variant px-6 py-2 flex justify-between items-center md:hidden z-50 shadow-2xl">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-[10px] font-bold">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px]">Grupos</span>
+</a>
+<div class="relative -top-6">
+<button class="bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-primary/40 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[32px]">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="text-[10px]">Market</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px]">Perfil</span>
+</a>
+</nav>
+<script>
+        function toggleDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('comment-dropdown');
+            dropdown.classList.toggle('hidden');
+            
+            // Interaction effect
+            const btn = event.currentTarget;
+            btn.style.transform = 'scale(0.9)';
+            setTimeout(() => btn.style.transform = 'scale(1)', 150);
+        }
+
+        // Close dropdown when clicking outside
+        window.onclick = function(event) {
+            const dropdown = document.getElementById('comment-dropdown');
+            if (!event.target.closest('#comment-dropdown') && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+            }
+        }
+    </script>
+</body></html>

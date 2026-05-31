@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="pt"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NzolaNet - Junte-se à Comunidade</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#311300",
+                        "tertiary-container": "#d59369",
+                        "surface-container": "#f7ece6",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#4e4637",
+                        "primary-fixed-dim": "#f0bf5c",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#87512c",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#ffdea4",
+                        "on-primary-fixed": "#261900",
+                        "on-tertiary-container": "#592c0a",
+                        "surface-bright": "#fff8f5",
+                        "outline-variant": "#d2c5b1",
+                        "tertiary-fixed-dim": "#feb78a",
+                        "inverse-on-surface": "#faeee9",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#ffdbc7",
+                        "surface-tint": "#7b5900",
+                        "surface-container-low": "#fdf1ec",
+                        "surface-variant": "#ebe0db",
+                        "on-surface": "#201b18",
+                        "on-primary-container": "#4b3500",
+                        "inverse-primary": "#f0bf5c",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#fe4ea2",
+                        "on-secondary-fixed": "#3e0020",
+                        "secondary-fixed": "#ffd9e4",
+                        "on-tertiary-fixed-variant": "#6b3a17",
+                        "background": "#fff8f5",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#ebe0db",
+                        "surface": "#fff8f5",
+                        "secondary-fixed-dim": "#ffb0cc",
+                        "primary-container": "#c89b3c",
+                        "secondary": "#b7056b",
+                        "primary": "#7b5900",
+                        "outline": "#807665",
+                        "surface-container-high": "#f1e6e1",
+                        "on-background": "#201b18",
+                        "on-secondary-fixed-variant": "#8d0051",
+                        "inverse-surface": "#352f2c",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#5c0033",
+                        "on-primary-fixed-variant": "#5d4200",
+                        "surface-dim": "#e3d8d3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "sm": "8px",
+                        "max-width": "1200px",
+                        "lg": "24px",
+                        "xxl": "48px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "gutter": "20px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "label-lg": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #F6F1EA;
+            background-image: 
+                radial-gradient(circle at 2px 2px, rgba(123, 89, 0, 0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.85);
+        }
+        .input-clay {
+            background-color: #EFE7DC;
+            transition: all 0.3s ease;
+        }
+        .input-clay:focus {
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 2px #C89B3C;
+            outline: none;
+        }
+        .pattern-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-md md:p-xxl relative overflow-hidden">
+<!-- Background Heritage Patterns -->
+<div class="pattern-overlay hidden md:block">
+<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="100" id="samakaka" patternunits="userSpaceOnUse" width="100" x="0" y="0">
+<path d="M50 0 L100 50 L50 100 L0 50 Z" fill="none" stroke="#1F1A17" stroke-width="0.5"></path>
+<circle cx="50" cy="50" fill="none" r="10" stroke="#1F1A17" stroke-width="0.5"></circle>
+</pattern>
+</defs>
+<rect fill="url(#samakaka)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<main class="w-full max-w-[520px] z-10">
+<!-- Auth Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(60,40,20,0.06)] overflow-hidden relative border border-outline-variant/30">
+<!-- Branding Header -->
+<div class="px-xl pt-xl pb-md text-center">
+<div class="flex flex-col items-center gap-sm mb-md">
+<div class="w-16 h-16 flex items-center justify-center rounded-full bg-primary-container/10 p-2">
+<img alt="Cora77o de Samakaka Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxeSmCWcMoRVI20C-My1JBGLSL2ntLE4EyIpBSv-x1gldBAAPdel_3hZKfWf94yaI11AStX8cZ9ApuPzRBfe6wig_9HtJyIZtME8hhsmXRRuWN9RXzDiatSOy9tZDYVxPYZzGfkNzje85MyaNOp2IUbEkbLehnqeDVqH2UChhJjUHxUO9Dk6guE_hBtM8PGpOpqS9-Wj6j9Do7Q70XV75OcdmNP0-czORUU_7EtR7dMMmrplnvMw5naJ1E6C_7pOp5pHRrJy1Da_Qh"/>
+</div>
+<h1 class="font-display-lg text-primary text-headline-lg tracking-tight">NzolaNet</h1>
+<p class="font-label-md text-on-surface-variant max-w-[280px] mx-auto">
+                        Cultura Angolana em cada conexão. Junte-se à nossa baze.
+                    </p>
+</div>
+<div class="space-y-xs">
+<h2 class="font-headline-md text-on-surface text-headline-sm md:text-headline-md">Junte-se à comunidade</h2>
+</div>
+</div>
+<!-- Registration Form -->
+<form class="px-xl pb-xl space-y-md" onsubmit="event.preventDefault();">
+<!-- Full Name Field -->
+<div class="space-y-xs">
+<label class="font-label-lg text-on-surface-variant flex items-center gap-xs" for="full_name">
+<span class="material-symbols-outlined text-[18px]">person</span>
+                        Nome Completo
+                    </label>
+<input class="w-full h-12 px-md rounded-lg input-clay border-none text-body-md placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all" id="full_name" placeholder="Ex: António Agostinho" type="text"/>
+</div>
+<!-- Username Field -->
+<div class="space-y-xs">
+<label class="font-label-lg text-on-surface-variant flex items-center gap-xs" for="username">
+<span class="material-symbols-outlined text-[18px]">alternate_email</span>
+                        Nome de Utilizador
+                    </label>
+<div class="relative">
+<input class="w-full h-12 px-md rounded-lg input-clay border-none text-body-md placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all" id="username" placeholder="seu_nome" type="text"/>
+</div>
+</div>
+<!-- Email Field -->
+<div class="space-y-xs">
+<label class="font-label-lg text-on-surface-variant flex items-center gap-xs" for="email">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                        Email
+                    </label>
+<input class="w-full h-12 px-md rounded-lg input-clay border-none text-body-md placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all" id="email" placeholder="exemplo@nzo.la" type="email"/>
+</div>
+<!-- Password Group -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-label-lg text-on-surface-variant flex items-center gap-xs" for="password">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+                            Palavra-passe
+                        </label>
+<input class="w-full h-12 px-md rounded-lg input-clay border-none text-body-md placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all" id="password" placeholder="••••••••" type="password"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-lg text-on-surface-variant flex items-center gap-xs" for="confirm_password">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+                            Confirmar
+                        </label>
+<input class="w-full h-12 px-md rounded-lg input-clay border-none text-body-md placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all" id="confirm_password" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<!-- Terms and Privacy -->
+<div class="flex items-start gap-sm pt-xs">
+<input class="mt-1 rounded text-primary focus:ring-primary-container bg-surface-container-high border-outline-variant" id="terms" type="checkbox"/>
+<label class="font-body-sm text-on-surface-variant leading-tight" for="terms">
+                        Ao criar uma conta, aceito os <a class="text-primary font-semibold hover:underline" href="#">Termos de Serviço</a> e a <a class="text-primary font-semibold hover:underline" href="#">Política de Privacidade</a>.
+                    </label>
+</div>
+<!-- Submit Button -->
+<button class="w-full h-14 mt-md bg-primary hover:bg-primary-fixed-variant text-on-primary font-label-lg text-label-lg rounded-xl shadow-lg transition-all transform active:scale-95 flex items-center justify-center gap-sm" type="submit">
+                    Criar Conta
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<!-- Alternative Action -->
+<div class="text-center pt-md border-t border-outline-variant/30">
+<p class="font-body-sm text-on-surface-variant">
+                        Já tem uma conta? <a class="text-secondary font-bold hover:underline" href="#">Entrar na NzolaNet</a>
+</p>
+</div>
+</form>
+<!-- Decorative mask illustration (bottom right) -->
+<div class="absolute -bottom-8 -right-8 opacity-5 pointer-events-none select-none">
+<img alt="Cultural Mask Icon" class="w-32 h-32" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCehufYNiXAXyC8L6urHLkYa5w7JI9yYk7cuRlkSC0rsyj5e3S91vj7Q3ADoaCYWPfHKf3I1KXj394kXyIS8HJgWLu8KY3bG8jh5CceQ1SQc_X-UwqpXsdq_INAVkJetDA75EVgvN7dlDclvjMvlZYiMg2IA8UmK_vWv9CX4q1VixiP8pg0xkyVDf6x6gxxP60je9Q29FxSpxRBgD1nhKS-0pMmdMpWOTQ-Xj_ycZCTfOw8b6Q5A3Bx_v8rEborVaZVzzRdGt9DeHH8"/>
+</div>
+</div>
+<!-- Floating Testimonial/Tag Cloud for context -->
+<div class="mt-xl flex flex-wrap justify-center gap-sm px-md">
+<span class="px-md py-xs bg-white/50 border border-outline-variant/20 rounded-full font-label-sm text-primary flex items-center gap-xs">
+                #Kizomba
+            </span>
+<span class="px-md py-xs bg-white/50 border border-outline-variant/20 rounded-full font-label-sm text-primary flex items-center gap-xs">
+                #ArteAngolana
+            </span>
+<span class="px-md py-xs bg-white/50 border border-outline-variant/20 rounded-full font-label-sm text-primary flex items-center gap-xs">
+                #Cultura
+            </span>
+<span class="px-md py-xs bg-white/50 border border-outline-variant/20 rounded-full font-label-sm text-primary flex items-center gap-xs">
+                #Luanda
+            </span>
+</div>
+</main>
+<!-- Visual Footer -->
+<footer class="fixed bottom-0 w-full p-md text-center hidden md:block">
+<p class="font-label-sm text-on-surface-variant opacity-60">
+            © 2024 NzolaNet - Inspirado na alma de Angola.
+        </p>
+</footer>
+<script>
+        // Micro-interaction for form inputs
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('label')?.classList.add('text-primary');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('label')?.classList.remove('text-primary');
+            });
+        });
+
+        // Floating effect for background elements
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+            document.querySelector('.pattern-overlay').style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+    </script>
+</body></html>

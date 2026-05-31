@@ -1,0 +1,398 @@
+<!DOCTYPE html><html lang="pt-AO"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#261900",
+                    "on-background": "#201b18",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#feb78a",
+                    "surface-bright": "#fff8f5",
+                    "on-error": "#ffffff",
+                    "outline-variant": "#d2c5b1",
+                    "on-tertiary-fixed-variant": "#6b3a17",
+                    "secondary-container": "#fe4ea2",
+                    "error": "#ba1a1a",
+                    "on-surface-variant": "#4e4637",
+                    "tertiary": "#87512c",
+                    "surface-container-low": "#fdf1ec",
+                    "on-secondary-fixed": "#3e0020",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#ebe0db",
+                    "on-error-container": "#93000a",
+                    "background": "#fff8f5",
+                    "surface-variant": "#ebe0db",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#c89b3c",
+                    "on-surface": "#201b18",
+                    "secondary": "#b7056b",
+                    "secondary-fixed": "#ffd9e4",
+                    "on-tertiary-fixed": "#311300",
+                    "inverse-surface": "#352f2c",
+                    "primary": "#7b5900",
+                    "tertiary-container": "#d59369",
+                    "inverse-primary": "#f0bf5c",
+                    "tertiary-fixed": "#ffdbc7",
+                    "on-secondary-container": "#5c0033",
+                    "surface-container-high": "#f1e6e1",
+                    "surface-container": "#f7ece6",
+                    "surface": "#fff8f5",
+                    "on-secondary-fixed-variant": "#8d0051",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#f0bf5c",
+                    "inverse-on-surface": "#faeee9",
+                    "primary-fixed": "#ffdea4",
+                    "on-tertiary-container": "#592c0a",
+                    "surface-tint": "#7b5900",
+                    "outline": "#807665"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "32px",
+                    "margin-desktop": "40px",
+                    "lg": "24px",
+                    "sm": "8px",
+                    "xxl": "48px",
+                    "max-width": "1200px",
+                    "base": "4px",
+                    "md": "16px",
+                    "margin-mobile": "16px",
+                    "xs": "4px",
+                    "gutter": "20px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "body-sm": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #fdfaf7; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(123, 89, 0, 0.1);
+            box-shadow: 0px 4px 20px rgba(60, 40, 20, 0.04);
+        }
+        .premium-shadow {
+            box-shadow: 0px 12px 40px rgba(60, 40, 20, 0.08);
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e3d8d3; border-radius: 10px; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="text-on-surface font-body-md overflow-x-hidden selection:bg-primary-fixed selection:text-on-primary-fixed">
+<div class="flex min-h-screen max-w-[1440px] mx-auto">
+<!-- SideNavBar (Left Column) -->
+<aside class="h-screen sticky left-0 w-72 bg-surface border-r border-outline-variant/20 flex flex-col gap-sm p-md shrink-0">
+<div class="flex items-center gap-md px-4 py-6 mb-4">
+<img alt="NzolaNet Logo" class="h-12 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAATbcpgCsaRP3L8WWCZf9-9tORQ1q9ZtMNifdTxDhpdQgqYD0o9tGlH8xICqox_zeCZiJO6W2fS-zaOu3Fv-oC1Z9_8sLE08cNYgk46WhaZtK3tvRDH3Q9KJfdBFOftwSy13L7gSh8XXMZOn-ssELt58HpXVegq6thAxxj7TS1c-SmqfhxwH-Ys-e6Kj__D5wn3SuG2YJALxkN08AwJbv11RuPTii1csK558f1a-R2iyxZ2pLDfYJjVhxJlEK9c7cHYgAEDpUUMMsL">
+<div>
+<h1 class="font-headline-sm text-headline-sm text-primary">NzolaNet</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Cultura Angolana</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 flex-grow">
+<a class="flex items-center gap-4 text-on-surface-variant font-medium px-4 py-3 hover:bg-surface-container-high hover:text-primary transition-all rounded-xl active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-lg text-label-lg">Início</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant font-medium px-4 py-3 hover:bg-surface-container-high hover:text-primary transition-all rounded-xl active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-label-lg">Perfil</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant font-medium px-4 py-3 hover:bg-surface-container-high hover:text-primary transition-all rounded-xl active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-lg text-label-lg">Grupos</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant font-medium px-4 py-3 hover:bg-surface-container-high hover:text-primary transition-all rounded-xl active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="font-label-lg text-label-lg">Nzola Mercado</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant font-medium px-4 py-3 hover:bg-surface-container-high hover:text-primary transition-all rounded-xl active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-lg text-label-lg">Eventos</span>
+</a>
+<!-- Kizomba Hub - Active State -->
+<a class="flex items-center gap-4 bg-primary-container/10 text-primary font-bold rounded-xl px-4 py-3 active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">music_note</span>
+<span class="font-label-lg text-label-lg">Kizomba Hub</span>
+</a>
+</nav>
+<button class="mt-auto bg-primary text-white font-label-lg text-label-lg py-4 px-6 rounded-xl hover:opacity-90 transition-all active:scale-95 shadow-lg shadow-primary/20">
+                Criar Post
+            </button>
+</aside>
+<!-- Main Content (Central Column) -->
+<main class="flex-grow min-w-0 bg-background custom-scrollbar overflow-y-auto">
+<!-- Top Search/Profile Bar -->
+<header class="w-full sticky top-0 z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 px-xl py-md flex justify-between items-center shadow-sm">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 rounded-full border-none bg-surface-container-low focus:ring-2 focus:ring-primary focus:bg-white transition-all text-body-sm" placeholder="Pesquisar tutoriais ou ritmos..." type="text">
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+<img alt="User Avatar" class="w-10 h-10 rounded-full object-cover border-2 border-primary/20 cursor-pointer" data-alt="A professional headshot of a stylish young Angolan man with a confident smile, wearing a modern shirt with subtle traditional patterns. The lighting is soft and golden, suggesting a high-end photographic studio setting with a clean, light cream background that complements the premium light-mode UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO8_i14WA3gxX1XjXteIdYadwFW760u-ViRdQNe3nqejyHqsdgGaW24_mto38QOmqC0WRlMASmJs6mS87UJGqJqy6T3Qq_oIy7i-3vR6-HqYDvfE74p4HSKdJC4CZbISox-_ivdGVPU8f2XZnT8hoybuF1j9VaAJLGUiPpDoYUWJ4THP8kYM_oOxHv98thw_VupUKQkMZmQtGhp2oBl2J_gRhS_BcYD_GK09S-j3QxziXwAaQ78-Ik-gE-sDJ6uSpXXWlfblzIkQ0o">
+</div>
+</header>
+<div class="px-xl py-lg space-y-xl max-w-[800px] mx-auto">
+<!-- Banner Section -->
+<section class="relative h-64 rounded-xxl overflow-hidden premium-shadow group">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A cinematic, high-quality photograph of a couple dancing Kizomba in a sun-drenched, elegant Luanda ballroom. The lighting is warm and ethereal, highlighting the intricate movement and emotional connection. The background features subtle Angolan architectural details and a soft-focus atmosphere, rendered in warm earth tones and golden highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiPRJnIuZe3gVvOJNZ_5oQ11jocur5vK5YVB0VdaV4_2oDzB0ZkvrMzzZce2AmN2YApmmiw8yVc2PnPawxMc0Qw7QGYSBMJnKl42qzZaBvOiqCVY9KLloWpaIkwSZTKmZ1GXpYssIHQaScytrMOYSsB1LXnMvCDET1AKoQ_6h3wFzaG7voCfIYSv9JsBltRv7qnH6lnI8yF_D92s2qiH60rGji70FUndb4BDVvWSHX9lfqcYThBiWIHC6iWz2m1Wu0lafVD2ax34ht">
+<div class="absolute inset-0 bg-gradient-to-r from-on-primary-fixed/80 to-transparent flex flex-col justify-end p-xl">
+<h2 class="font-display-lg text-display-lg text-white mb-2">Kizomba Hub</h2>
+<p class="text-white/90 font-body-lg text-body-lg max-w-md">Descubra a alma do movimento angolano. Dos passos básicos às técnicas avançadas.</p>
+</div>
+</section>
+<!-- Video Tutorial Cards -->
+<section>
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-background">Tutoriais em Destaque</h3>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Aprenda com os melhores mestres de Angola</p>
+</div>
+<button class="text-primary font-label-lg text-label-lg flex items-center gap-1 hover:underline">Ver todos <span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+<div class="grid grid-cols-2 gap-lg">
+<!-- Card 1 -->
+<div class="glass-card rounded-xl overflow-hidden group cursor-pointer" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+<div class="relative aspect-video">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-resolution tutorial thumbnail showing a close-up of dance shoes on a polished wooden floor. The lighting is focused and warm, creating sharp highlights on the movement. The overall aesthetic is clean, professional, and instructional, featuring a soft ocre and cream color palette consistent with the premium brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTU16MNAFhNUwGVx0UUo66mZHDzv2KtM35cCDm15m5QO-9RZe6UFCuYVJO5qUQBfM7eC1DTWL-KNRKk6SZhZHTTT0tt2CXzAPzx_4a_o9ihltU7L6m2bt-H72YezNhaMWcKyZ6xIkjYVgt6_iAbqCYjEpv-08nZ6hn0DRclQeWu49E3GqL80mUgkWQ9K1L8iitaN6fWFCHUMRKKpc1yRZwhKitSFTyLaY3wFbL-qv09EF3xr8RT5LX0t4niHo5h3esejP0yzO0OYdu">
+<div class="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white text-5xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+<span class="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded-md font-label-sm">12:45</span>
+</div>
+<div class="p-md">
+<span class="text-primary font-label-sm text-label-sm tracking-wider uppercase">Iniciante</span>
+<h4 class="font-headline-sm text-headline-sm mt-1 group-hover:text-primary transition-colors">Passos Básicos (A Passada)</h4>
+<p class="text-on-surface-variant text-body-sm line-clamp-2 mt-2">Domine o ritmo fundamental e a conexão inicial necessária para qualquer dançarino de Kizomba.</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card rounded-xl overflow-hidden group cursor-pointer" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+<div class="relative aspect-video">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A visually stunning dance studio environment with large windows letting in soft afternoon light. Two dancers are captured in a fluid, technical pose. The image emphasizes the geometry of the movement and the high-end, minimalist interior design of the studio, maintaining the warm and sophisticated light-mode brand personality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm3J0KymZYTpB_UkyvAnwCZzr95KVhFqTkPvjKorD7nbKlgHLIL3n8z1zLlFtM9EoS9g1sRJGQpYjZLfJLmJlFT0-h9jUOiVCprk8xAS7CfxjR6e9dkL_U7H2IbB3C8DHXPj9KI_sAn6k0VoIoUEf6ZO14g01gBpQMT0D096zxzCu2s0P7zGWcyVY3NgcYh5MKuRfnD5oVHFX45IY95uvJy8RuFcww-TIdZPH7ZPTAjXbDDdWWqZe3Fv8axM6FF09U4fmO3QgYDhde">
+<div class="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white text-5xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+<span class="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded-md font-label-sm">18:20</span>
+</div>
+<div class="p-md">
+<span class="text-secondary font-label-sm text-label-sm tracking-wider uppercase">Intermédio</span>
+<h4 class="font-headline-sm text-headline-sm mt-1 group-hover:text-primary transition-colors">Técnicas de Dissociação</h4>
+<p class="text-on-surface-variant text-body-sm line-clamp-2 mt-2">Aprenda a isolar os movimentos do tronco e quadril para uma dança mais fluida e expressiva.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Most Played Music -->
+<section class="glass-card p-xl rounded-xxl" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+<div class="flex items-center gap-md mb-xl">
+<span class="material-symbols-outlined text-primary text-3xl">equalizer</span>
+<h3 class="font-headline-md text-headline-md">Músicas Mais Tocadas</h3>
+</div>
+<div class="space-y-4">
+<!-- Music Item 1 -->
+<div class="flex items-center justify-between p-md rounded-xl hover:bg-surface-container-low transition-all group">
+<div class="flex items-center gap-md">
+<div class="relative w-14 h-14 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Vibrant album cover art with abstract African geometric patterns in gold, deep pink, and earth black. The style is modern-minimalist, resembling a premium digital music platform interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6KZ3DwBO5Wm3to3GwmDESdHvm_glYkgpRjIQPmpFeGLDf1Q_1IjQwLzAPm86QQSUPOgOjz0klvaB4Q79zlQ3_Ls2-jfXxChYIxsenQ_eT-P61Ive_MeQx0ouKmxKjvvVtS0uPOg5rDi1WX1akSjt-ttIrVDCr_llex2j6SSln2hgqBh7pxfbe-IFKfoo6J5GkkR09bgtOeMDlFS8JpYkTlDPhn4k67WKs8wlzWtBu4hV3-z551VgUbXidoFVjX0nGpsePmTPaVXKK">
+<button class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div>
+<h5 class="font-label-lg text-label-lg text-on-surface">Lento e Suave</h5>
+<p class="text-on-surface-variant text-body-sm">Cef Tanzy</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<span class="text-on-surface-variant text-label-sm">4:12</span>
+<button class="p-2 rounded-full text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="bg-primary-container text-on-primary-container p-2 rounded-full shadow-sm hover:scale-105 transition-transform active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Music Item 2 -->
+<div class="flex items-center justify-between p-md rounded-xl hover:bg-surface-container-low transition-all group border-t border-outline-variant/10">
+<div class="flex items-center gap-md">
+<div class="relative w-14 h-14 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Abstract musical visual representation featuring warm light leaks and rhythmic textures, evocative of a late-night Luanda lounge atmosphere. Gold and deep brown tones dominate." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDejqPL99wgfZXl6k6V5qeCfEZsdynIPmUQse0OpAMraD_FjJU8U2DeoVsVRuoQHCEozM1XYhX8L7N3zu8L1FR-x7iZJke1SA9SF8mAhPUnMt2alsSxd2Yhny_jpHYc_1rTpdLYDHKSrj4xEl-zAxmVxQ5i_mzrRJWuXnIH1rr5jMUDoHPomB63fDXYZGCuZIAGMdY9cYp7JPG9S6DzfhdErR_hOAdTYaGj7CEIMRtWLoJJFt7M-fx4x1NdmIBVoIAKY2InBTyVpcvq">
+<button class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div>
+<h5 class="font-label-lg text-label-lg text-on-surface">Minha Vida</h5>
+<p class="text-on-surface-variant text-body-sm">Anselmo Ralph</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<span class="text-on-surface-variant text-label-sm">3:58</span>
+<button class="p-2 rounded-full text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+<button class="bg-primary-container text-on-primary-container p-2 rounded-full shadow-sm hover:scale-105 transition-transform active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Music Item 3 -->
+<div class="flex items-center justify-between p-md rounded-xl hover:bg-surface-container-low transition-all group border-t border-outline-variant/10">
+<div class="flex items-center gap-md">
+<div class="relative w-14 h-14 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A minimalist digital illustration of a musical instrument with stylized African line art. The background is a clean, eggshell white with subtle golden accents, fitting the premium light social network theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSar5nOAkcLoI2HC8Zv1XreEa-wOD7-N5H0gBvVIuQ1vX3qDFMgkLps9Vv5xFk8hsQ7wIUzIAQvSlInUYx6Bm3Rd9euUSdF6BF0QUxs0UxQciaKmgRukeLcoS8HLr4gkSyIiTS3h8voUOR-WksRrqEADWxjLsx22Kj7f6p9nDU7reM4PcPOYya0Db3hOZE2XvO9KoaE5tRAE4JlkKE6McAjEItEkC3pQiEfSoHov6r4_dNh34BuftUrn6q9BLwNsLUKL9NFDoYyyCY">
+<button class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div>
+<h5 class="font-label-lg text-label-lg text-on-surface">Balançar</h5>
+<p class="text-on-surface-variant text-body-sm">Pérola</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<span class="text-on-surface-variant text-label-sm">4:30</span>
+<button class="p-2 rounded-full text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="bg-primary-container text-on-primary-container p-2 rounded-full shadow-sm hover:scale-105 transition-transform active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Right Column (Instructors) -->
+<aside class="w-80 h-screen sticky right-0 bg-surface border-l border-outline-variant/20 p-xl flex flex-col gap-xl overflow-y-auto custom-scrollbar">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-background mb-lg flex items-center gap-2"><span class="material-symbols-outlined text-primary">stars</span>Principais Instrutores</h3>
+<div class="space-y-lg">
+<!-- Instructor 1 -->
+<div class="flex items-center gap-md p-2 rounded-xl hover:bg-surface-container-low transition-all group cursor-pointer">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-primary" data-alt="Close-up portrait of an experienced Kizomba instructor, an Angolan man with a warm and inviting expression. The lighting is sophisticated, with a warm rim light that separates him from the soft-focus dance studio background. The overall style is high-end and trustworthy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV0QQ15kwVZzOYAOy-83TQLPHaSt1oFJWVj1MkDhWRnEooso7bxVRk_AS-7rxyhyvNmqd1xjZ6Bkdvevn-8AlxP_1JGgtFmss7FjhG-3NglrqtKA6F6aybTjrk11ME-_ruhNktzNlkJr7G_ZoNobtUMAactr6MCpbSie7R8qsLMLzTm6hmEDq4DWvwfqUsIr641p1-Te7YA4zH-IR4P91umK_hveZOCpUuU5NmBWGhfjLbUUZtOhlJVijdZgZQlJjW2tYdYk5uMzIK">
+<div class="flex-grow">
+<h4 class="font-label-lg text-label-lg text-on-surface group-hover:text-primary transition-colors">Mestre Petchu</h4>
+<p class="text-label-sm text-on-surface-variant">Lenda da Kizomba</p>
+</div>
+<button class="text-primary hover:bg-primary/10 p-1 rounded-full">
+<span class="material-symbols-outlined">person_add</span>
+</button>
+</div>
+<!-- Instructor 2 -->
+<div class="flex items-center gap-md p-2 rounded-xl hover:bg-surface-container-low transition-all group cursor-pointer">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-primary/40" data-alt="Portrait of a young, dynamic female dancer and Kizomba instructor from Angola. She has a vibrant energy, with the photograph captured in high-key, bright lighting that reflects the modern minimalism of the brand. Her attire features elegant, understated African prints." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASlYe4JEcd0kBb1cPXphQTucMVR6rFj0VGPOJ5M_PtUnRn_SuYiQ_lZQQ5dYt9zX_Z6JMdgr3wBSKlygxZH-tDMV28jCoavhwQ_xr-qX_OTMhv4JHCpEkYAX3fQbrM14mYCW35vlVWWX1lUQ44GmNAWS09HzVWD6oHRo1nHTn0hT0MkB2911bYLUxmIcQ2Dp5x2h_yQ4MuA1JFFyyoztrpgKrDu5yVvEILENsTs1_TZ1vsXPBi1vf6GI1fgPyvAMUphh0emsiQ5-9h">
+<div class="flex-grow">
+<h4 class="font-label-lg text-label-lg text-on-surface group-hover:text-primary transition-colors">Vanessa Ginga</h4>
+<p class="text-label-sm text-on-surface-variant">Especialista em Ginga</p>
+</div>
+<button class="text-primary hover:bg-primary/10 p-1 rounded-full">
+<span class="material-symbols-outlined">person_add</span>
+</button>
+</div>
+<!-- Instructor 3 -->
+<div class="flex items-center gap-md p-2 rounded-xl hover:bg-surface-container-low transition-all group cursor-pointer">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-primary/40" data-alt="Headshot of a modern Kizomba choreographer in a professional dance setting. The image is bright and airy, with a focus on high-fidelity detail and a warm, inviting color palette of beige, gold, and soft white." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgquKAhhj33wyCdhe23XNBOY82FzsXe1Ut-5Ayx_2iraM4UtVSjJ2fcanROKyZWxryDgRjtuRX6goPzbKgsPP5h-PzfT9qRZmI-jbVn8gu_yIBcXXERnMxiroWeLzoGZnVVaXoBbNVg9uVn3m9dYgKdK8Lpb_wkVpePt-xU1XX1NM_5-MdWv91EqLMDMb852wNNsP1jsg6Y9cENAK6Ij-iy4PlDXPMUSJZSvFsLgrrXqMu0wbI0gag-_TQpEi_fpVdySGhYhdqwmt5">
+<div class="flex-grow">
+<h4 class="font-label-lg text-label-lg text-on-surface group-hover:text-primary transition-colors">Dasmarinas</h4>
+<p class="text-label-sm text-on-surface-variant">Kizomba Tradicional</p>
+</div>
+<button class="text-primary hover:bg-primary/10 p-1 rounded-full">
+<span class="material-symbols-outlined">person_add</span>
+</button>
+</div>
+</div>
+<button class="w-full mt-xl border border-outline text-on-surface font-label-lg text-label-lg py-3 rounded-xl hover:bg-surface-container-low transition-all">
+                    Ver Todos os Mestres
+                </button>
+</div>
+<div class="mt-auto pt-xl border-t border-outline-variant/20">
+<div class="bg-primary-container/10 p-lg rounded-xxl space-y-md">
+<h4 class="font-headline-sm text-headline-sm text-primary">Nzola Premium</h4>
+<p class="text-on-surface-variant text-body-sm">Desbloqueie cursos avançados e masterclasses exclusivas com os grandes mestres.</p>
+<button class="w-full bg-primary text-white font-label-lg text-label-lg py-3 rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform active:scale-95">
+                        Assinar Agora
+                    </button>
+</div>
+<footer class="mt-lg text-center space-x-4">
+<a class="text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Sobre</a>
+<a class="text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacidade</a>
+<a class="text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Ajuda</a>
+</footer>
+</div>
+</aside>
+</div>
+<!-- Micro-interaction JavaScript -->
+<script>
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('click', (e) => {
+                // Add a small ripple effect or logging logic if needed
+                console.log('Interaction:', e.currentTarget.innerText || 'Action');
+            });
+        });
+
+        // Simple opacity fade-in for cards on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(10px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+
+
+</body></html>

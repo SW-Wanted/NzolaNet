@@ -1,0 +1,182 @@
+.cartao-publicacao {
+  margin-top: 16px;
+  background-color: var(--cor-container-mais-baixo);
+  border-radius: var(--raio-borda-xl);
+  box-shadow: 0 1px 3px rgba(60, 40, 20, 0.04);
+  overflow: hidden;
+}
+
+.cartao-publicacao__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  position: relative;
+}
+
+.cartao-publicacao__autor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cartao-publicacao__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--cor-contorno-variante);
+  flex-shrink: 0;
+}
+
+.cartao-publicacao__info-autor {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cartao-publicacao__nome-autor {
+  font-size: var(--fonte-tamanho-label-lg);
+  font-weight: var(--fonte-peso-semibold);
+  line-height: var(--fonte-linha-label-lg);
+  color: var(--cor-no-superficie);
+}
+
+.cartao-publicacao__tempo {
+  font-size: var(--fonte-tamanho-body-sm);
+  line-height: var(--fonte-linha-body-sm);
+  color: var(--cor-no-superficie-variante);
+  opacity: 0.7;
+}
+
+.cartao-publicacao__botao-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--cor-no-superficie-variante);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color var(--transicao-rapida);
+}
+
+.cartao-publicacao__botao-menu:hover {
+  background-color: var(--cor-superficie-variante);
+}
+
+.cartao-publicacao__botao-menu .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.cartao-publicacao__menu {
+  position: absolute;
+  top: 52px;
+  right: 16px;
+  z-index: 5;
+  display: grid;
+  gap: 4px;
+  min-width: 160px;
+  padding: 8px;
+  border: 1px solid var(--cor-contorno-variante);
+  border-radius: 12px;
+  background: var(--cor-container-mais-baixo);
+  box-shadow: var(--sombra-flutuante);
+}
+
+.cartao-publicacao__menu button,
+.cartao-publicacao__menu a {
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--cor-no-superficie);
+  text-align: left;
+  font-size: 14px;
+}
+
+.cartao-publicacao__menu button:hover,
+.cartao-publicacao__menu a:hover {
+  background: var(--cor-container);
+}
+
+.cartao-publicacao__corpo {
+  padding: 0 16px 12px;
+}
+
+.cartao-publicacao__conteudo {
+  font-size: var(--fonte-tamanho-body-md);
+  line-height: var(--fonte-linha-body-md);
+  color: var(--cor-no-superficie);
+}
+
+.cartao-publicacao__imagem-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.cartao-publicacao__imagem {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.cartao-publicacao__estatisticas {
+  padding: 8px 16px;
+  border-top: 1px solid var(--cor-contorno-variante);
+  border-bottom: 1px solid var(--cor-contorno-variante);
+}
+
+.cartao-publicacao__estatistica-texto {
+  font-size: var(--fonte-tamanho-label-sm);
+  font-weight: var(--fonte-peso-medio);
+  color: var(--cor-no-superficie-variante);
+}
+
+.cartao-publicacao__accoes {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  gap: 4px;
+}
+
+.cartao-publicacao__accao {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  justify-content: center;
+  padding: 10px 8px;
+  border: none;
+  background: transparent;
+  color: var(--cor-no-superficie-variante);
+  cursor: pointer;
+  border-radius: var(--raio-borda-xl);
+  transition: background-color var(--transicao-rapida), color var(--transicao-rapida);
+  font-family: var(--fonte-familia);
+  font-size: var(--fonte-tamanho-label-lg);
+  font-weight: var(--fonte-peso-semibold);
+}
+
+.cartao-publicacao__accao:hover {
+  background-color: var(--cor-container);
+}
+
+.cartao-publicacao__accao .material-symbols-outlined {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.cartao-publicacao__accao-texto {
+  line-height: var(--fonte-linha-label-lg);
+}
+
+.cartao-publicacao__accao--activo {
+  color: var(--cor-secundaria);
+}
+
+.cartao-publicacao__accao--activo .material-symbols-outlined {
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+  filter: drop-shadow(0 0 6px rgba(183, 5, 107, 0.4));
+}

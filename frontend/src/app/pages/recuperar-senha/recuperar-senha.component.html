@@ -1,0 +1,14 @@
+<main class="autenticacao">
+  <section class="painel-autenticacao">
+    <h1 class="titulo-pagina">Recuperar senha</h1>
+    <p class="descricao-pagina">Digite o email da sua conta para receber o link de recuperação.</p>
+    <form class="formulario" [formGroup]="formulario" (ngSubmit)="enviarLink()">
+      <input class="campo-formulario" formControlName="email" placeholder="Email" type="email" />
+      @if (submetido && formulario.controls.email.invalid) {
+        <span class="mensagem-campo">Informe um email válido.</span>
+      }
+      <button class="botao-destaque" type="submit">Enviar link</button>
+      <a class="botao-fantasma" routerLink="/entrar">Voltar ao início de sessão</a>
+    </form>
+  </section>
+</main>

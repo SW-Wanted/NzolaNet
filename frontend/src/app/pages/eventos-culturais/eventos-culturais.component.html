@@ -1,0 +1,151 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <div class="conteudo-limite">
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Agenda 2024</span>
+              <h1 class="titulo-pagina">Agenda Cultural Angolana</h1>
+              <p class="descricao-pagina">
+                Explore os ritmos, as cores e o talento da nossa terra. Garanta o seu lugar
+                nos eventos mais exclusivos de Angola.
+              </p>
+            </div>
+            <div class="acoes-cabecalho">
+              <button class="botao-contornado" type="button" (click)="modalFiltrosAberto.set(true)">Filtros</button>
+              <button class="botao-contornado" type="button" (click)="modalCriarAberto.set(true)">Criar Evento</button>
+              <button class="botao-destaque" type="button" (click)="alternarConfirmados()">
+                {{ mostrarApenasConfirmados() ? 'Todos Eventos' : 'Meus Eventos' }}
+              </button>
+            </div>
+          </header>
+          @if (feedback()) {
+            <p class="aviso-sucesso">{{ feedback() }}</p>
+          }
+
+          <div class="grelha-bento">
+            <section class="coluna">
+              @for (evento of eventos(); track evento.id) {
+                @if (evento.destaque) {
+                  <article class="cartao evento-destaque">
+                    <div class="evento-imagem">
+                      <img [alt]="evento.titulo" class="imagem-destaque" [src]="evento.imagem" />
+                      <div class="evento-sobreposicao">
+                        <span class="pilula pilula-secundaria">Destaque</span>
+                        <h2>{{ evento.titulo }}</h2>
+                        <p><span class="material-symbols-outlined">location_on</span>{{ evento.local }}</p>
+                      </div>
+                    </div>
+                    <div class="conteudo-cartao linha-distribuida bloco-evento">
+                      <div class="data-evento">
+                        <span>{{ evento.mes }}</span>
+                        <strong>{{ evento.data }}</strong>
+                      </div>
+                      <p class="texto-cartao">{{ evento.descricao }}</p>
+                      <button class="botao-contornado" type="button" (click)="abrirDetalhes(evento)">Ver Evento</button>
+                      <button class="botao-destaque" type="button" (click)="confirmarEvento(evento.id)">
+                        {{ evento.confirmado ? 'Presença Confirmada' : 'Confirmar Presença' }}
+                      </button>
+                    </div>
+                  </article>
+                }
+              }
+
+              <div class="grelha-cartoes">
+                @for (evento of eventos(); track evento.id) {
+                  @if (!evento.destaque) {
+                    <article class="cartao">
+                      <img [alt]="evento.titulo" class="imagem-cartao" [src]="evento.imagem" />
+                      <div class="conteudo-cartao">
+                        <div class="linha-distribuida">
+                          <h3 class="titulo-cartao">{{ evento.titulo }}</h3>
+                          <span class="data-mini">{{ evento.data }}</span>
+                        </div>
+                        <p class="texto-cartao">{{ evento.descricao }}</p>
+                        <div class="linha-distribuida rodape-cartao">
+                          <span class="meta-linha">
+                            <span class="material-symbols-outlined">map</span>{{ evento.local }}
+                          </span>
+                          <button class="botao-fantasma" type="button" (click)="abrirDetalhes(evento)">Ver Detalhes</button>
+                        </div>
+                      </div>
+                    </article>
+                  }
+                }
+              </div>
+            </section>
+
+            <aside class="coluna">
+              <div class="cartao cartao-preenchido">
+                <h3 class="titulo-cartao">Sua Atividade</h3>
+                <div class="lista-vertical">
+                  <div class="linha-distribuida"><span>Eventos Confirmados</span><strong>12</strong></div>
+                  <div class="linha-distribuida"><span>Interesses em Comum</span><strong>45</strong></div>
+                  <div class="barra-progresso"><span></span></div>
+                  <p class="texto-cartao">Você está no top 5% dos utilizadores mais ativos este mês.</p>
+                </div>
+              </div>
+              <div class="cartao cartao-preenchido">
+                <h3 class="titulo-cartao">Sugestões</h3>
+                <a class="botao-fantasma" routerLink="/sugestoes">Encontrar pessoas e eventos</a>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<nav class="navegacao-inferior">
+  <a routerLink="/feed"><span class="material-symbols-outlined">home</span>Início</a>
+  <a class="ativo" routerLink="/eventos"><span class="material-symbols-outlined">event</span>Eventos</a>
+  <a routerLink="/mercado"><span class="material-symbols-outlined">storefront</span>Loja</a>
+  <a routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
+</nav>
+
+<app-modal titulo="Filtros de eventos" [aberto]="modalFiltrosAberto()" (fechar)="modalFiltrosAberto.set(false)">
+  <div class="lista-vertical">
+    <button class="botao-contornado" type="button" (click)="mostrarApenasConfirmados.set(false); modalFiltrosAberto.set(false)">Mostrar todos</button>
+    <button class="botao-destaque" type="button" (click)="mostrarApenasConfirmados.set(true); modalFiltrosAberto.set(false)">Mostrar confirmados</button>
+  </div>
+</app-modal>
+
+<app-modal titulo="Criar evento" [aberto]="modalCriarAberto()" (fechar)="modalCriarAberto.set(false)">
+  <form class="formulario" [formGroup]="formularioEvento" (ngSubmit)="criarEvento()">
+    <input class="campo-formulario" formControlName="titulo" placeholder="Titulo do evento" />
+    <textarea class="area-formulario" formControlName="descricao" placeholder="Descricao"></textarea>
+    <input class="campo-formulario" formControlName="local" placeholder="Local" />
+    <div class="grelha-cartoes">
+      <input class="campo-formulario" formControlName="data" placeholder="Dia" />
+      <input class="campo-formulario" formControlName="mes" placeholder="Mes" />
+    </div>
+    <input class="campo-formulario" formControlName="categoria" placeholder="Categoria" />
+    @if (submetido && formularioEvento.invalid) {
+      <span class="mensagem-campo">Preencha todos os campos do evento.</span>
+    }
+    <div class="linha-distribuida">
+      <button class="botao-contornado" type="button" (click)="modalCriarAberto.set(false)">Cancelar</button>
+      <button class="botao-destaque" type="submit">Guardar Evento</button>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal titulo="Detalhes do evento" [aberto]="eventoDetalhe() !== null" (fechar)="eventoDetalhe.set(null)">
+  @if (eventoDetalhe(); as evento) {
+    <article class="detalhe-modal">
+      <img [alt]="evento.titulo" class="imagem-cartao" [src]="evento.imagem" />
+      <span class="pilula pilula-primaria">{{ evento.categoria }}</span>
+      <h3 class="titulo-cartao">{{ evento.titulo }}</h3>
+      <p class="texto-cartao">{{ evento.descricao }}</p>
+      <p class="meta-linha"><span class="material-symbols-outlined">location_on</span>{{ evento.local }}</p>
+      <div class="linha-distribuida">
+        <button class="botao-destaque" type="button" (click)="confirmarEvento(evento.id)">Confirmar Presença</button>
+        <button class="botao-perigo" type="button" (click)="eliminarEvento(evento.id)">Eliminar</button>
+      </div>
+    </article>
+  }
+</app-modal>

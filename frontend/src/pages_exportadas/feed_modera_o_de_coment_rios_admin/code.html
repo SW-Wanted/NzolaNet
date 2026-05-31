@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html lang="pt-AO"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(60, 40, 20, 0.08);
+        }
+        body {
+            background-color: #F6F1EA;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .african-pattern-overlay {
+            background-image: radial-gradient(#C89B3C 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+            opacity: 0.03;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-background": "#201b18",
+                      "tertiary": "#87512c",
+                      "surface-bright": "#fff8f5",
+                      "primary-fixed": "#ffdea4",
+                      "secondary-fixed-dim": "#ffb0cc",
+                      "on-tertiary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "surface-container": "#f7ece6",
+                      "inverse-surface": "#352f2c",
+                      "secondary": "#b7056b",
+                      "on-secondary-fixed-variant": "#8d0051",
+                      "outline": "#807665",
+                      "inverse-primary": "#f0bf5c",
+                      "on-error": "#ffffff",
+                      "on-tertiary-fixed-variant": "#6b3a17",
+                      "on-primary-fixed": "#261900",
+                      "error-container": "#ffdad6",
+                      "on-tertiary-fixed": "#311300",
+                      "secondary-fixed": "#ffd9e4",
+                      "inverse-on-surface": "#faeee9",
+                      "surface-variant": "#ebe0db",
+                      "surface-dim": "#e3d8d3",
+                      "on-secondary-fixed": "#3e0020",
+                      "error": "#ba1a1a",
+                      "secondary-container": "#fe4ea2",
+                      "primary-container": "#c89b3c",
+                      "outline-variant": "#d2c5b1",
+                      "surface": "#fff8f5",
+                      "primary": "#7b5900",
+                      "on-tertiary-container": "#592c0a",
+                      "surface-container-high": "#f1e6e1",
+                      "on-secondary": "#ffffff",
+                      "tertiary-container": "#d59369",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-fixed-variant": "#5d4200",
+                      "surface-container-low": "#fdf1ec",
+                      "on-error-container": "#93000a",
+                      "tertiary-fixed": "#ffdbc7"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "1rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "4px",
+                      "margin-mobile": "16px",
+                      "gutter": "20px",
+                      "sm": "8px",
+                      "lg": "24px",
+                      "xs": "4px",
+                      "margin-desktop": "40px",
+                      "xxl": "48px",
+                      "xl": "32px",
+                      "max-width": "1200px",
+                      "md": "16px"
+              },
+              "fontFamily": {
+                      "label-sm": ["Plus Jakarta Sans"],
+                      "headline-sm": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "body-sm": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "label-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen">
+<div class="fixed inset-0 african-pattern-overlay pointer-events-none"></div>
+<!-- Admin Status Bar -->
+<div class="sticky top-0 z-[60] bg-secondary-container text-on-secondary-container px-margin-mobile py-2 flex items-center justify-between shadow-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+<span class="font-label-lg text-label-lg">Modo de Moderação Ativo</span>
+</div>
+<div class="bg-white/20 px-3 py-0.5 rounded-full font-label-sm text-label-sm">
+            Admin: Paulo J.
+        </div>
+</div>
+<!-- Top Navigation Bar -->
+<header class="sticky top-[36px] z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile py-2 shadow-sm">
+<h1 class="text-headline-md font-headline-md font-bold text-primary">NzolaNet</h1>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-variant/50 rounded-full transition-colors">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+<div class="relative">
+<button class="p-2 hover:bg-surface-variant/50 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<span class="absolute top-1 right-1 w-2 h-2 bg-secondary rounded-full"></span>
+</div>
+<img alt="User Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A close-up portrait of a professional Angolan man with a warm and confident expression. He is wearing a modern business-casual outfit against a soft-focus Luanda urban background. The lighting is golden hour, casting a warm glow that aligns with the premium Earth-tone palette of the social network. The overall aesthetic is clean, high-fidelity, and human-centric." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1xgupuU5b3faYnnYyxFRFHh0I3mxMl96gVTDExacsIEANMOCrsTUHN0CItaJg1TbGY_PkEFwUPR9Thw7w-Ne3GtxTQKPlCwleM2UXqakAalYnmZBXQEPb7tTE78vHNOHJEf8thuyIBbN6kCU9Hu09irqRpW2ArraLLlQWgBIsnPbQiYbOeuqZAE2To91n_ymkoEQlBhkszBHaQZ3x0LChQn9SHR4oRiAVu0c4m0yfzhVn7qCaAiNi7W6X2n7W1r-tMDqm8DCUtlx7"/>
+</div>
+</header>
+<!-- Main Feed Content -->
+<main class="px-margin-mobile py-lg pb-32 max-w-[680px] mx-auto">
+<!-- Post Card -->
+<article class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(60,40,20,0.04)] mb-lg overflow-hidden border border-outline-variant/30">
+<div class="p-md flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img alt="Author" class="w-10 h-10 rounded-full object-cover" data-alt="A professional headshot of a creative Angolan woman in a studio setting. She is wearing a modern dress with subtle ethnic geometric patterns. The lighting is soft and high-key, creating a bright and welcoming atmosphere. The image feels premium and aligned with a sophisticated digital social network identity, focusing on human connection and cultural pride." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEfTquZ6SJU4jB_LxbRzb2AhZq3lhY0fJFRFATCUOK0e9-53MzmVI6ZGkQMDHxzJzRxb_aiR3VYv45RZbvRP8varzDfiFkr5xs97HQiLT6hs_d9ZvBEVHOQ_iT3HnFxNyaBLG8w92n4GOmwDo6F0MvTYaa53p_bvP9wf9MaSk0WneEUpISXTb1kJr9_YQiCj3yeuKg1PoOqxRRjkP_V5IQ5au3GbB1Fp1NrbCFwAUsz3thWi8FDuyP8MeO60yWacowQmECxaLxlIPm"/>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface">Ana Luísa</h3>
+<p class="text-body-sm text-on-surface-variant">Luanda • 2 horas atrás</p>
+</div>
+</div>
+<button class="text-on-surface-variant">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<div class="px-md pb-md">
+<p class="text-body-md text-on-background mb-4">
+                    Preparativos para o Workshop de Kizomba no próximo sábado! Quem vem? 💃🇦🇴 #KizombaHub #NzolaCulture
+                </p>
+<img alt="Kizomba Class" class="w-full h-64 object-cover rounded-lg" data-alt="An energetic scene of a Kizomba dance workshop taking place in a bright, modern studio in Luanda. The dancers are captured in motion, showing joy and connection. The room is flooded with natural sunlight from large windows. The overall aesthetic is vibrant yet sophisticated, highlighting the rich cultural heritage of Angolan dance in a contemporary, high-quality digital setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDijX_itJ9PaqZG1MqMIYkWwJoItLA-K4O15N0ySSSxtVfw6kd-BBjFVsFC_FFjGcrU1Q9xHDTvO8qpT2VTcrTEUDfnXBua1zPbR_cHWFXpTqiFpfVFemAFaj9lbsavSuCMqZVxIyuf2tSF9FUewNxhKucjyDEcr4GV9Exzjk27J1_R7f5JNn8AWnvIp23oLkePKqIZTuzbDeiqo2mYs94lmc6FATGO-E8l3Yye11PZ0GMpKScrVDGCcUiAw2coV0ZZQx_83DytAxMB"/>
+</div>
+<div class="px-md py-sm border-t border-outline-variant/30 flex justify-between items-center">
+<div class="flex gap-4">
+<button class="flex items-center gap-1.5 text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="text-label-sm font-label-sm">245</span>
+</button>
+<button class="flex items-center gap-1.5 text-primary font-bold">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+<span class="text-label-sm font-label-sm">42 Comentários</span>
+</button>
+</div>
+<button class="text-on-surface-variant">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</article>
+<!-- Moderation Comment Panel (Open) -->
+<section class="glass-panel rounded-xl p-md shadow-lg border-primary/20">
+<div class="flex justify-between items-center mb-md border-b border-outline-variant/30 pb-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Comentários</h2>
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-label-sm font-label-sm uppercase tracking-wider">Moderação</span>
+</div>
+<!-- Comment List -->
+<div class="space-y-6">
+<!-- Comment Item 1 -->
+<div class="group relative">
+<div class="flex gap-3">
+<img alt="Commenter 1" class="w-8 h-8 rounded-full object-cover" data-alt="A portrait of a young Angolan man with a friendly smile, photographed in an outdoor urban setting with warm sunlight. He is wearing casual, modern attire. The image is crisp and professional, using a shallow depth of field to emphasize the subject while maintaining a clean, light-mode aesthetic consistent with a premium social platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFg_d-aWXhjnJ48-qiKADMbLzH3eAY5Ar_S1744ZyiyKUAlKszvlf6Pz6RFmJW0aV1VfejPamPcpaxPMPpFelT-isITQOd5e08_E2gYZYDjW0d5ggfgf5iHPTuuj0Dh2qsoteCwkeeaoDafsSYny2nQ_BfJkUVXhoupX97rlWIoI4ov5oDW5TMrbVbWNsx2-eSFJXFO5AlIy7TtDAq1c-1zDbjC10ljT36_xYJaqFyTLtT4G91EroBbxTArRsjcpc1BZE45pw0Mth6"/>
+<div class="flex-1">
+<div class="bg-surface-container-low p-3 rounded-xl rounded-tl-none">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label-lg text-label-lg">Carlos Bento</span>
+<span class="text-[10px] text-on-surface-variant uppercase">Há 1h</span>
+</div>
+<p class="text-body-sm text-on-background">Eu estarei lá com certeza! A última edição foi fantástica.</p>
+</div>
+<!-- Admin Removal Action -->
+<div class="mt-2 flex items-center justify-end">
+<button class="flex items-center gap-1 px-3 py-1 rounded-full bg-error/10 hover:bg-error/20 text-error transition-all duration-200" onclick="this.parentElement.parentElement.parentElement.parentElement.style.opacity='0.5'; this.innerText='Removido'">
+<span class="material-symbols-outlined text-[16px]">report</span>
+<span class="text-[11px] font-bold">Remover por violação</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Comment Item 2 (The Violator) -->
+<div class="group relative">
+<div class="flex gap-3">
+<img alt="Commenter 2" class="w-8 h-8 rounded-full object-cover" data-alt="A professional headshot of a middle-aged man with a neutral expression, set against a blurred office background. The lighting is soft and even, highlighting facial features clearly. The photo maintains the warm earth tones and high-fidelity quality required for a premium digital experience, ensuring a cohesive and sophisticated look across the user interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwUd4vJyeTlEuArsy25WIXt3INkgFHcvP2ZCB-_uyMd3Ts67JQrK1baW6pwnJzweN5rHSVSf8G85frBtnoCxpb1G1rDKW0FXqoXVLSHXWc9zDs6r9khIIFAtgL0-Rh8-yNN1mxCkvj2AxNCBuhOZIihtO_xIJnc5G3YHVx03Nyh-h7jdP4yPyzGCLX2J2_-oIq78h0jcJtGYcsEz-BglhMimQM8GJw-1VJIWUxytA181HQel4VMrsY8Qc7Wunj0UVlki1OV-eM4Tx1"/>
+<div class="flex-1">
+<div class="bg-error/5 border border-error/10 p-3 rounded-xl rounded-tl-none">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label-lg text-label-lg">User_9921</span>
+<span class="text-[10px] text-on-surface-variant uppercase">Há 45m</span>
+</div>
+<p class="text-body-sm text-on-background italic">Este comentário contém spam ou linguagem não permitida nas regras da comunidade.</p>
+</div>
+<!-- Admin Removal Action - Active Red -->
+<div class="mt-2 flex items-center justify-end">
+<button class="flex items-center gap-1 px-3 py-1 rounded-full bg-error text-white shadow-sm transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined text-[16px]">delete_forever</span>
+<span class="text-[11px] font-bold">Remover Imediatamente</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Comment Item 3 -->
+<div class="group relative">
+<div class="flex gap-3">
+<img alt="Commenter 3" class="w-8 h-8 rounded-full object-cover" data-alt="A bright, cheerful portrait of an Angolan woman laughing, set in a sun-lit park. Her expression is genuine and vibrant. The photography is professional, featuring natural lighting and warm colors that perfectly match the 'sun-drenched afternoon in Luanda' theme of the NzolaNet brand, conveying warmth, stability, and high-quality human interaction." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnxbl6Vr1bsYbEZKhDblyy6a1NZKYsrNb32vfQIMu8MNjHf5d_y_eUPmEhxokxVQexj-P4Iw_4ZIXQfSuUMbRRFUZwr76PxO5-xbgZ3skbGHor6q0s36j7e8NtU6sCRXv2tmP3rUmYc2-_t09wneLoSPMrWcqFsP7VTQDnBADRmM3Yh1Lrl5H0RzR05laBp3-A-9DyfoYTz1qoLA76gVMAwptgPJxZ6CVdLGW3WIqn6ZUlgsXSef2Xlls62Hdb4yIKd4ra0BrNc1gr"/>
+<div class="flex-1">
+<div class="bg-surface-container-low p-3 rounded-xl rounded-tl-none">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label-lg text-label-lg">Maria João</span>
+<span class="text-[10px] text-on-surface-variant uppercase">Há 12m</span>
+</div>
+<p class="text-body-sm text-on-background">Qual é a localização exacta? O mapa não carregou para mim.</p>
+</div>
+<div class="mt-2 flex items-center justify-end">
+<button class="flex items-center gap-1 px-3 py-1 rounded-full bg-error/10 hover:bg-error/20 text-error transition-all duration-200">
+<span class="material-symbols-outlined text-[16px]">report</span>
+<span class="text-[11px] font-bold">Remover por violação</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Admin Contextual FAB -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform z-50">
+<span class="material-symbols-outlined text-[28px]">shield_person</span>
+</button>
+<!-- Bottom Navigation Bar (Mobile) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-lg border-t border-outline-variant/30 px-6 py-3 flex justify-between items-center z-[50] md:hidden">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-sm font-label-sm">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">group</span>
+<span class="text-label-sm font-label-sm">Grupos</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<div class="bg-primary-container text-on-primary-container p-2 rounded-xl -mt-8 shadow-lg border-4 border-background">
+<span class="material-symbols-outlined">add</span>
+</div>
+<span class="text-label-sm font-label-sm">Postar</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">storefront</span>
+<span class="text-label-sm font-label-sm">Market</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm">Perfil</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction for moderate buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if(this.textContent.includes('Remover')) {
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('absolute', 'inset-0', 'bg-white/20', 'rounded-full', 'animate-ping');
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 500);
+                }
+            });
+        });
+    </script>
+</body></html>

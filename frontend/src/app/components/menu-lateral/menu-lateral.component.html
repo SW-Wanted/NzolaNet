@@ -1,0 +1,41 @@
+<nav class="menu-lateral">
+  <div class="menu-lateral__marca">
+    <img
+      alt="NzolaNet"
+      class="menu-lateral__logo"
+      src="https://lh3.googleusercontent.com/aida-public/AB6AXuASVyXVtXqL7zFkiKp_wDHrAQkFQsOWoB3HZ3TqAiRNBOvBFfKmtVjXqtxR52DwpO7JFR63uNe3mKwQkPYJ4Pp2xzJGRsyoeUdBxCX5hSrjd1oSWzs8wkQERoIjd5NsdV5vWKpOEqxw7fE0xuXbG5cQ18NOUiOPkNa2Fh9aw3kth-VbOoXZNZIZSVl96H6Z0kVeuc_-aawN2I_4_HvH8r84fGDGFzRqRf87wGaDhKBh_cNHysPe4pJfpR2tFqxZ2EhpsS6ZhqN6Y054"
+    />
+    <div>
+      <strong>NzolaNet</strong>
+      <span>Rede Cultural Angolana</span>
+    </div>
+  </div>
+
+  <div class="menu-lateral__grupo">
+    @for (item of itensMenuSuperior; track item.etiqueta) {
+      <a
+        class="menu-lateral__item"
+        [routerLink]="item.rota"
+        routerLinkActive="menu-lateral__item--activo"
+      >
+        <span class="material-symbols-outlined menu-lateral__icone">{{ item.icone }}</span>
+        <span class="menu-lateral__etiqueta">{{ item.etiqueta }}</span>
+      </a>
+    }
+  </div>
+
+  <div class="menu-lateral__separador"></div>
+
+  <div class="menu-lateral__grupo">
+    @for (item of itensMenuInferior; track item.etiqueta) {
+      <a
+        class="menu-lateral__item"
+        [routerLink]="item.rota"
+        routerLinkActive="menu-lateral__item--activo"
+      >
+        <span class="material-symbols-outlined menu-lateral__icone">{{ item.icone }}</span>
+        <span class="menu-lateral__etiqueta">{{ item.etiqueta }}</span>
+      </a>
+    }
+  </div>
+</nav>

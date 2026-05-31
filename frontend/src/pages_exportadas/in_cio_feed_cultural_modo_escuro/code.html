@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        body {
+            background-color: #161310;
+            color: #e9e1dc;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #161310;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #383431;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#001b3d",
+                        "surface": "#161310",
+                        "surface-tint": "#f0bf5c",
+                        "inverse-surface": "#e9e1dc",
+                        "primary-container": "#c89b3c",
+                        "secondary-container": "#b40068",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#d6e3ff",
+                        "surface-container-lowest": "#100e0b",
+                        "on-surface-variant": "#d2c5b1",
+                        "surface-container-low": "#1e1b18",
+                        "secondary-fixed-dim": "#ffb0cc",
+                        "surface-bright": "#3c3835",
+                        "tertiary-fixed-dim": "#a9c7ff",
+                        "on-primary-fixed-variant": "#5d4200",
+                        "tertiary": "#a9c7ff",
+                        "on-secondary-fixed": "#3e0020",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-container": "#7ea3e3",
+                        "on-primary-container": "#4b3500",
+                        "on-tertiary": "#003063",
+                        "primary-fixed": "#ffdea4",
+                        "error-container": "#93000a",
+                        "on-secondary-container": "#ffc5d8",
+                        "inverse-on-surface": "#33302c",
+                        "on-primary": "#412d00",
+                        "inverse-primary": "#7b5900",
+                        "surface-dim": "#161310",
+                        "on-error": "#690005",
+                        "outline-variant": "#4e4637",
+                        "surface-container-highest": "#383431",
+                        "outline": "#9b8f7d",
+                        "on-primary-fixed": "#261900",
+                        "on-background": "#e9e1dc",
+                        "on-secondary-fixed-variant": "#8d0051",
+                        "on-secondary": "#640038",
+                        "primary": "#f0bf5c",
+                        "primary-fixed-dim": "#f0bf5c",
+                        "secondary-fixed": "#ffd9e4",
+                        "on-tertiary-container": "#033871",
+                        "background": "#161310",
+                        "secondary": "#ffb0cc",
+                        "surface-container": "#221f1c",
+                        "on-tertiary-fixed-variant": "#1b4680",
+                        "on-surface": "#e9e1dc",
+                        "surface-container-high": "#2d2926",
+                        "surface-variant": "#383431"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "gutter": "16px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "xl": "40px",
+                        "margin-mobile": "16px",
+                        "unit": "4px",
+                        "lg": "24px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "display-lg": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "title-md": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 flex justify-between items-center px-margin-desktop h-20">
+<div class="flex items-center gap-md">
+<span class="font-display-lg text-display-lg font-bold text-primary">NzolaNet</span>
+</div>
+<div class="hidden md:flex flex-1 max-w-xl mx-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant/50 rounded-full py-sm pl-xl pr-md text-on-surface focus:outline-none focus:border-primary transition-all" placeholder="Pesquisar..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<button class="relative text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute -top-1 -right-1 w-4 h-4 bg-secondary text-[10px] flex items-center justify-center rounded-full text-on-secondary font-bold">2</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a charismatic Angolan man with a friendly smile, styled in modern fashion against a soft-focus urban background. The lighting is warm and golden, reflecting the premium dark theme of the platform. The image quality is high-definition, showcasing clear skin textures and vibrant eyes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDW1tKtRUKH5xAGPgRIhBtmUC8905OQIiAtQ_I2R907c94AIjNGFC8Dl3t_GxHglLE4Q74dQGMmLdVrMKwbR15lnxLUfqGUVtR3mhu62o4Lbv-CrcbW6z5Z-L-6GjFzuHnywR5mm24uRFWfg3Yx8dRbYibYc0S1BByT13kqsW8x8-Cn_XjyKycJYN3jjW8TZpg9D7xpW3QHkvHKt2cBIW3WDYPRPCTFYdMHh7TZmW-C6Nm5CWEMsTBQdepZywRJeYfs1VvEk_AKppRi"/>
+</div>
+</div>
+</nav>
+<!-- Side Navigation Bar -->
+<aside class="fixed left-0 top-20 h-[calc(100vh-80px)] w-64 bg-surface-container border-r border-outline-variant/20 hidden md:flex flex-col p-md space-y-sm">
+<div class="mb-lg px-sm">
+<h2 class="font-headline-lg text-headline-lg text-primary">NzolaNet</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">Cultura Angolana</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-md p-md bg-primary-container text-on-primary-container rounded-lg font-bold transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span class="font-label-md text-label-md">Explorar</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">music_note</span>
+<span class="font-label-md text-label-md">Kizomba</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Comunidade</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">museum</span>
+<span class="font-label-md text-label-md">História</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">star</span>
+<span class="font-label-md text-label-md">Favoritos</span>
+</a>
+</nav>
+<button class="mt-xl bg-primary text-on-primary font-bold py-md px-lg rounded-xl active:scale-95 transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined">add_circle</span>
+            Criar Baze
+        </button>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-0 md:ml-64 mr-0 lg:mr-[350px] pt-24 px-md md:px-lg min-h-screen">
+<!-- Feed Container -->
+<div class="max-w-3xl mx-auto space-y-lg">
+<!-- Main Post Card -->
+<article class="bg-surface-container rounded-xl overflow-hidden border border-outline-variant/30 transition-all hover:border-outline-variant/60">
+<div class="p-md flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md">NzolaNet</h3>
+<p class="text-label-sm text-on-surface-variant flex items-center gap-xs">ER evoluída <span class="w-1 h-1 bg-on-surface-variant rounded-full"></span> 2h</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="px-md pb-md">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-md uppercase tracking-tight">Rede NzolaNet: Celebrando nossa cultura!</h1>
+</div>
+<div class="relative aspect-video w-full">
+<img class="w-full h-full object-cover" data-alt="A breathtaking cinematic wide-shot of traditional Angolan dancers performing at sunset on the Luanda bay waterfront. The sky is a gradient of deep orange and purple, reflecting off the calm water. The dancers wear vibrant, patterned heritage fabrics that swirl as they move. The lighting is dramatic and warm, emphasizing the cultural pride and dynamic energy of the scene." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbRfbpxqv2HvAwBF2UouZYDOKmrDNqkMmHK95lPph8MJvhkxdxtnkew8aZdCpchCf__U7uhAh7PnfGR9DHvh20VF0Xj5bzrQDvP6ABYfdgmFkBPFFNfE2w0HkeeBGtO7xzgrVfOMJvRIyvdAzExdrKSHEOmB95bnk__nfAAy4j_ndQpwsEVQO_0afkrvatkEuS3g02MUYxMe-FUEPHynwaFkjJLYJQpJtN61Bnl1e9jjyxsZA0ay_P8zngKjSzqxG05hsGzvjzPfFG"/>
+</div>
+<div class="p-md flex items-center justify-between border-t border-outline-variant/20">
+<div class="flex items-center gap-lg">
+<button class="flex items-center gap-sm text-primary font-bold hover:scale-105 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">back_hand</span>
+<span>125 Bazes</span>
+</button>
+<button class="flex items-center gap-sm text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined">share</span>
+<span>Partilhar</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Bento Grid Section for smaller posts -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Local Art Post -->
+<article class="bg-surface-container rounded-xl overflow-hidden border border-outline-variant/30">
+<div class="p-md flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close up avatar of a female African artist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPG7EAoczNGD6R8yeCDvgBzySpDBKez9x3auyle92_Lg76KpcV5ucARKBwpHldUGwqhRflnYntcEOHuGOaw-2P1s3Pu_wQ-AAmvkDzDnex6276VaJUXEBRRy8TKyPNjIxF22z6yOxvO7mPm8h4xyhkV3n00Vi1PpsGWNT_RBEuq2fD-oZWFLClhfP_9eSIEb3fgbq2ep9NdpHBCHk6kxkhqjw5cwM4IPXQn8lJVKy0aOoKHX9zOScd2ToGwGIV4CP4y7CRsmbm35MB"/>
+</div>
+<div>
+<p class="font-label-md text-label-md">Local Art</p>
+<p class="text-[10px] text-on-surface-variant">1 min</p>
+</div>
+</div>
+<div class="aspect-square w-full">
+<img class="w-full h-full object-cover" data-alt="A detailed macro photograph of an authentic Pwo mask, a traditional Chokwe carving from Angola. The mask is displayed in a moody, museum-style setting with focused spotlighting that highlights its intricate facial scarring patterns and woven fiber hair. The background is a dark, warm charcoal, perfectly integrating with the app's minimalist dark mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMy4nrxAXPpPDeURsm6kRR0v7vZJ2C7L0BXIOK2UjoKrAj_uDJKEqZU5dwENvqwbl_ozBT4y0nW7gBzoe4ifhk6Vs5A-xg-m8I7YhEKAvSVbbXXDucQL1tLfDuptrm27SWAo_4z16aIkZNZwriGa3W5owrO_w_SPQvO2f24plctK-Txc89-905WRITcs1qacGWfsikl9M1S7Vg_b6ik9icdQRvQ3VSwNkuzV-Q2GrJxpeFKeSpd0baxWkivPsxYhOfpBQykOYgPMkO"/>
+</div>
+<div class="p-md">
+<p class="text-body-md text-on-surface mb-md">Mwana Pwo - Umbundu</p>
+<div class="flex gap-md">
+<button class="text-primary font-bold flex items-center gap-xs"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">back_hand</span> Baze</button>
+<button class="text-on-surface-variant flex items-center gap-xs"><span class="material-symbols-outlined">share</span> Partilhar</button>
+</div>
+</div>
+</article>
+<!-- Mwana Pgolana Post -->
+<article class="bg-surface-container rounded-xl overflow-hidden border border-outline-variant/30">
+<div class="p-md flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-secondary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-sm">restaurant</span>
+</div>
+<div>
+<p class="font-label-md text-label-md">Mwana Pgolana</p>
+<p class="text-[10px] text-on-surface-variant">33 namado</p>
+</div>
+</div>
+<div class="aspect-square w-full">
+<img class="w-full h-full object-cover" data-alt="An exquisite, gourmet presentation of Calulu, a traditional Angolan stew. The dish is served in a handcrafted clay bowl and features vibrant green vegetables, tender fish, and a side of smooth, creamy funge. The photography is high-end culinary style, with soft lateral lighting that creates deep shadows and rich textures, emphasizing the warmth and heritage of Angolan cuisine." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuYEO9Zd5wG3CfxDkOqTgBLdEvBffUL103ri3NViDQqVSOEZf3jAQk9zetRj6gVY0t1wJGSstbX6kMhmNRTcS0CYKSiuxRxY-s0w0slaGbUTmhG3Y8p1pzkSd6y-N6vM2b8gcQNx2dHp2K_F_6KfrXvdIxrJL9tFS-9-iqhDrlaDYfhaoF_cMzlRpkDlx6rWTzlIiZLea7wVLeUNqPFTij28hHv4LkQmHUTZUCGw7as5b5SMTTzAu1z4iPf3VeZFwZWhoGb7kX5dZe"/>
+</div>
+<div class="p-md">
+<p class="text-body-md text-on-surface mb-md">Calulu ed funge na uminda Calulu e tanre-ou Funge</p>
+<div class="flex gap-md">
+<button class="text-primary font-bold flex items-center gap-xs"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">back_hand</span> Baze</button>
+<button class="text-on-surface-variant flex items-center gap-xs"><span class="material-symbols-outlined">share</span> Partilhar</button>
+</div>
+</div>
+</article>
+</div>
+<!-- Video Section -->
+<article class="bg-surface-container rounded-xl overflow-hidden border border-outline-variant/30 relative">
+<div class="p-md flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-secondary">
+<img class="w-full h-full object-cover" data-alt="Profile photo of a dancer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB87kkrgRNGRJfwWhKP6Tk8LOt0m4TRGmVy_9Ma0wzqQajfSX37kWp_mEugYjlk15Fzlrflm95b8815uWQu2mpQtUJSEui5Lcu3W5krSsYcSHCg8NYgWbCMR5dL6U7AurbZ515QVZlOb3iftMTd4_yF9TT8lfyVtcWlY1JPed4qrxPTD-7K3aG18CAxDQAxuX41v116w_Lb_ev4ay3Rvgv9UtCDdMBk71X2oTeSKRfuBVayit0ShPUSuwWhIRBQLiMC3hb40FT--jXy"/>
+</div>
+<div>
+<p class="font-label-md text-label-md">Foota Funge</p>
+<p class="text-[10px] text-on-surface-variant">13 min</p>
+</div>
+</div>
+<div class="relative aspect-video">
+<img class="w-full h-full object-cover brightness-50" data-alt="A stylized video thumbnail showing a group of young people learning Kizomba steps in a modern dance studio with large windows overlooking a city skyline at dusk. The lighting is intimate with neon pink and gold accents. In the center, a large white play icon is overlaid, suggesting high-quality video content focused on cultural education and dance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBk_jw5ctPZFfn5pTI6DBF3FLCOXDnK5iPySJuJOT9D7FH6HbCu0hccMCKU10h5Gj2Ez4WdqHEFLRTQ69b_g4alFIA7n1v4n2jNS12zrRB28mGXO-1cu-DvdFdvl3S6Z9YEs9GO1NSomH7UrGXRv6EEK79puRWJmbAqv6wPFjidbhCHUnJqPWjHoRE6FM3m0ZaIzjWRo-fzvzNnqphG3fZqo4bDObFpF9RD3rjtUPXzmvW0mzVExlmhD4f_zwHCREeMLlVwkUn9P3Dh"/>
+<div class="absolute inset-0 flex items-center justify-center cursor-pointer group">
+<div class="w-16 h-16 bg-primary/90 text-on-primary rounded-full flex items-center justify-center transition-all group-hover:scale-110 shadow-lg">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-md bg-surface-container-highest/50 backdrop-blur-sm">
+<h4 class="font-title-md text-title-md mb-xs">Aula de Kizomba: Passos Básicos</h4>
+<p class="text-label-sm text-on-surface-variant mb-md">1min ago</p>
+<div class="flex items-center justify-between">
+<div class="flex gap-lg">
+<span class="flex flex-col items-center"><span class="text-primary font-bold">145</span><span class="text-[10px] uppercase">Bazes</span></span>
+<span class="flex flex-col items-center"><span class="text-on-surface font-bold">45</span><span class="text-[10px] uppercase">Comentários</span></span>
+</div>
+<button class="flex items-center gap-sm text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined">share</span>
+<span class="text-label-md">Partilhar</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+<div class="h-xl"></div>
+</main>
+<!-- Right Sidebar -->
+<aside class="fixed right-0 top-20 h-[calc(100vh-80px)] w-[350px] hidden lg:flex flex-col p-lg space-y-lg border-l border-outline-variant/20 overflow-y-auto">
+<!-- Activity Log -->
+<section class="bg-surface-container-low rounded-2xl p-md border border-outline-variant/20">
+<h3 class="font-title-md text-title-md text-primary mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined">bolt</span> Atividade
+            </h3>
+<div class="space-y-md">
+<div class="flex items-start gap-md p-sm hover:bg-surface-variant/30 rounded-lg transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">back_hand</span>
+<p class="text-body-md"><span class="font-bold">Recebeu 2 bazes</span> em sua última publicação</p>
+</div>
+<div class="flex items-start gap-md p-sm hover:bg-surface-variant/30 rounded-lg transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-secondary">chat_bubble</span>
+<p class="text-body-md">Novo comentário de <span class="font-bold text-secondary">Auroval</span></p>
+</div>
+<div class="flex items-start gap-md p-sm hover:bg-surface-variant/30 rounded-lg transition-colors cursor-pointer">
+<div class="w-6 h-6 rounded-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Small avatar of a follower" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJGBWTfWWw3h9a6GxWVo-y33jZOGGEXua592c1ld5Xq0fbeJs37_MUhu3eba_kg0VKUzE7fIczxhc3B6svOUZRh6Y_rTDVr__6B8GKMKHWQPwDrRGK7ERXXEb3r7Epa5cwDfCYHf71eNJsQp0znk6maRH5wv7PGUwhM3G9vwHqhmO5QuNVH_fm1KsJt2De0WuA0TUWObbUIRHEhg694B8Ga4SLSpzhMM5d_cwy6VZudVk6qSlXtjqLKBXqcHyPOSazR1kFGqmPxl5J"/>
+</div>
+<p class="text-body-md"><span class="font-bold">Sonca</span> começou a seguir-te</p>
+</div>
+</div>
+</section>
+<!-- Trending Tags -->
+<section class="space-y-sm px-sm">
+<div class="flex flex-wrap gap-sm">
+<span class="px-md py-sm bg-surface-container-highest/50 border border-outline-variant/30 rounded-full text-label-md text-on-surface-variant hover:border-primary hover:text-primary transition-all cursor-pointer">#Kizomba</span>
+<span class="px-md py-sm bg-surface-container-highest/50 border border-outline-variant/30 rounded-full text-label-md text-on-surface-variant hover:border-primary hover:text-primary transition-all cursor-pointer">#ArteAngolana</span>
+<span class="px-md py-sm bg-surface-container-highest/50 border border-outline-variant/30 rounded-full text-label-md text-on-surface-variant hover:border-primary hover:text-primary transition-all cursor-pointer">#Luanda</span>
+</div>
+</section>
+<!-- Suggestions -->
+<section class="bg-surface-container-low rounded-2xl p-md border border-outline-variant/20">
+<h3 class="font-title-md text-title-md text-on-surface mb-md">Sugestões</h3>
+<div class="space-y-lg">
+<!-- Suggestion Item 1 -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="Portrait for Auroval Banger" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG_jilY6vIEHLFHDD6LE8s_uzCTWXYPBJrQ_Lr-IhcfKPFvJs4O2vCGaktiPepnikWJj0G_G3AS4c-4tl6AdltPcKcmLF6W05ndcsnwVgcEXuBLWgBj2smdenwvbC2hEMIDH634M3phRpj1KX3m3OdpniHoHphuxhH1kfRZWNyOmrnQ8-dm2POupEAOYrXKz0oGrigtSsic7p1nX-c64hOX8tELcaDQSGiHxSD-Rk_luE3Dmygj-mjzjx5C7Dl97yx3x0cg9RQBo29"/>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold group-hover:text-primary transition-colors">Auroval banger</p>
+<p class="text-[11px] text-on-surface-variant">@nzolanewteve</p>
+</div>
+</div>
+<button class="text-primary font-bold text-label-sm hover:underline">Seguir</button>
+</div>
+<!-- Suggestion Item 2 -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="Portrait for Koista Baron" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTW68pv2S9B6feBnmWXk4EAQXlyRZA5Vf9bs_AR1_VzTUVKtNQGKpJS27cMHymlsIDhZWy5T_BBzU9gag4MSVs3kZ-OGloJV-NYl7jZ6DBXWP3T_sqqT_pAMOq5tjJl2lxOeYTsn2jKzJRj7axD-EP01Utwgd_8fKA2qdcZW3qjb3CQMX4AhRfmQ57MhcH6OIalNcu6Q4zB13LWcXDpd5QAOK0Q3QM8dHHTboVZAO3BZLdcoR-RLWHD7IUKuWcrOANk2MhOWcjoQyg"/>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold group-hover:text-primary transition-colors">Koista Baron</p>
+<p class="text-[11px] text-on-surface-variant">@koistanetvee</p>
+</div>
+</div>
+<button class="text-primary font-bold text-label-sm hover:underline">Seguir</button>
+</div>
+<!-- Suggestion Item 3 -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="Portrait for Sonca Awrama" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzEwEQNW-40wN-FqZq6XSgeJytYAHhK8KnbmcHi3_e8tPHax-8rGO4--44ZQ2AoYMkxjEdAeRTM3A2k6AkYcCN9YEjnuJKBejzUcST35rODhAG0oimRsAfu_XCF4Q8MXMDooQEMiQ_oBxH70iCVtOU-nHaCm1f1nH7A50QGAAFMoIitk9yv7U818WBrvE0tLedO3XwFcc0GmYj05VTY2HYE-vhMiBx6JSK8GOZu-ySvUyLQCjAaEwE2wx-HItjMzFWsbKG467WyXPS"/>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold group-hover:text-primary transition-colors">Sonca Awrama</p>
+<p class="text-[11px] text-on-surface-variant">@nzolanetinar</p>
+</div>
+</div>
+<button class="text-primary font-bold text-label-sm hover:underline">Seguir</button>
+</div>
+</div>
+<button class="w-full mt-lg py-sm bg-surface-container-highest rounded-lg text-label-md text-on-surface-variant hover:text-on-surface transition-colors">Vois motas</button>
+</section>
+</aside>
+<!-- Bottom Nav for Mobile -->
+<nav class="md:hidden fixed bottom-0 w-full h-16 bg-surface/90 backdrop-blur-xl border-t border-outline-variant/30 flex justify-around items-center z-50">
+<button class="text-primary"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span></button>
+<button class="text-on-surface-variant"><span class="material-symbols-outlined">explore</span></button>
+<button class="bg-primary text-on-primary w-12 h-12 rounded-full -mt-8 shadow-lg flex items-center justify-center active:scale-90 transition-transform"><span class="material-symbols-outlined">add</span></button>
+<button class="text-on-surface-variant"><span class="material-symbols-outlined">notifications</span></button>
+<button class="text-on-surface-variant"><span class="material-symbols-outlined">person</span></button>
+</nav>
+<script>
+        // Micro-interaction for Bazes button
+        document.querySelectorAll('button').forEach(btn => {
+            if(btn.innerText.includes('Baze')) {
+                btn.addEventListener('click', function() {
+                    this.classList.add('scale-125', 'text-pink-500');
+                    setTimeout(() => {
+                        this.classList.remove('scale-125', 'text-pink-500');
+                    }, 300);
+                });
+            }
+        });
+    </script>
+</body></html>

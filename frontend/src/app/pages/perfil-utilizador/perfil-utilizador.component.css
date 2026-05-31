@@ -1,0 +1,49 @@
+@import '../telas.css';
+
+.capa-perfil {
+  height: 240px;
+  background:
+    linear-gradient(120deg, rgba(123, 89, 0, 0.28), rgba(183, 5, 107, 0.22)),
+    url('https://lh3.googleusercontent.com/aida-public/AB6AXuAQyCxYTrGTvudis_SU_kdT9jUuVWq9DN-Mkuj80cvluFlQF_565vx4GgHaAK-XfZYyy3lTPnUL1Dn04JwIAtU_ALs9X6meSm-XmSmdhAo_rK5sw3QMuXMfVoRCjdXzDsfVk_94wf_3FQBJfyyODaOftfvffHm9mOkzLy0Kb3muxoQEgiQ4PVNfUnhqWthga2o6ik9cSGgaqGWDM2LyMW_fV31hCRCEmOu-Liyrzf69ykPU6q664BnRGN2AR5DxPywt0jOx77M-v40H')
+      center/cover;
+}
+
+.perfil-conteudo {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 24px;
+  align-items: end;
+  padding: 0 28px 28px;
+}
+
+.avatar-perfil {
+  width: 132px;
+  height: 132px;
+  margin-top: -54px;
+  border: 5px solid #fff;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.grelha-perfil {
+  margin-top: 24px;
+}
+
+.estatisticas-perfil {
+  display: flex;
+  gap: 28px;
+  margin-top: 22px;
+}
+
+.estatisticas-perfil span {
+  display: block;
+  color: var(--cor-no-superficie-variante);
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .perfil-conteudo {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}

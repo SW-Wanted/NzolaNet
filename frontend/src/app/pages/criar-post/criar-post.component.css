@@ -1,0 +1,15 @@
+@import '../telas.css';
+
+.editor-publicacao {
+  max-width: 820px;
+}
+
+.anexo-post {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  gap: 10px;
+  color: var(--cor-primaria);
+  font-weight: 700;
+}

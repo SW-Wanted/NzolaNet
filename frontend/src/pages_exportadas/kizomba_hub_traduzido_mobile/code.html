@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="pt"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#201b18",
+                    "on-primary-fixed-variant": "#5d4200",
+                    "tertiary-fixed": "#ffdbc7",
+                    "surface-container": "#f7ece6",
+                    "surface-container-high": "#f1e6e1",
+                    "outline": "#807665",
+                    "on-tertiary-fixed-variant": "#6b3a17",
+                    "on-surface-variant": "#4e4637",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#7b5900",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#8d0051",
+                    "primary-fixed-dim": "#f0bf5c",
+                    "secondary-fixed": "#ffd9e4",
+                    "on-tertiary-container": "#592c0a",
+                    "secondary-container": "#fe4ea2",
+                    "secondary-fixed-dim": "#ffb0cc",
+                    "outline-variant": "#d2c5b1",
+                    "primary-fixed": "#ffdea4",
+                    "on-primary-container": "#4b3500",
+                    "tertiary": "#87512c",
+                    "on-error-container": "#93000a",
+                    "on-background": "#201b18",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#feb78a",
+                    "surface-container-low": "#fdf1ec",
+                    "surface-dim": "#e3d8d3",
+                    "on-tertiary-fixed": "#311300",
+                    "surface-container-highest": "#ebe0db",
+                    "primary-container": "#c89b3c",
+                    "on-secondary-fixed": "#3e0020",
+                    "inverse-primary": "#f0bf5c",
+                    "surface": "#fff8f5",
+                    "surface-variant": "#ebe0db",
+                    "tertiary-container": "#d59369",
+                    "surface-bright": "#fff8f5",
+                    "on-secondary-container": "#5c0033",
+                    "inverse-on-surface": "#faeee9",
+                    "primary": "#7b5900",
+                    "inverse-surface": "#352f2c",
+                    "background": "#fff8f5",
+                    "secondary": "#b7056b",
+                    "on-primary-fixed": "#261900",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "1rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "max-width": "1200px",
+                    "margin-mobile": "16px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "xxl": "48px",
+                    "gutter": "20px",
+                    "xs": "4px",
+                    "margin-desktop": "40px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #F5F0EB;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 z-50 bg-surface dark:bg-inverse-surface w-full h-14 flex items-center justify-between px-margin-mobile shadow-sm">
+<div class="flex items-center gap-3">
+<img alt="NzolaNet Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuZ4dNMto2vyI-HX7TrHFcTwzp-EkqKUFNeJvwrdOtyjvkIcRzueNO5lyHTtWeDA4ZA9XaY8QCkHYHT_uyw_V_OihV69-Xm6A7A4onatcnt-mCKC9s3NptpAuhD278IIuDnL1JB4y_kd7fp9eSB3wdeoU122doGAQ6uFlPboHw3H0nGBPOL5D6aOPm8oT8xB7shzSu7bzlOXv8rGSlPZk2rVtLzncg2hAfoQJwfzEtb9v5JhtDE4QAnDqNU6A7sZSZ35xL1vcSE-Jg"/>
+<h1 class="font-headline-md text-headline-md text-primary font-bold tracking-tight">NzolaNet</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 transition-all duration-200 active:scale-95 hover:opacity-80">
+<span class="material-symbols-outlined text-primary">search</span>
+</button>
+<button class="p-2 transition-all duration-200 active:scale-95 hover:opacity-80">
+<span class="material-symbols-outlined text-primary">hub</span>
+</button>
+</div>
+</header>
+<main class="pt-20 pb-24 px-margin-mobile max-w-[680px] mx-auto space-y-8">
+<!-- Hero Section: Centro de Kizomba -->
+<section class="relative overflow-hidden rounded-xl bg-primary-container p-6 text-on-primary-container shadow-sm">
+<div class="relative z-10">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile mb-2">Centro de Kizomba</h2>
+<p class="font-body-md text-body-md opacity-90">O coração da dança angolana. Aprenda, descubra e conecte-se.</p>
+</div>
+<!-- Decorative Pattern Element -->
+<div class="absolute -right-4 -bottom-4 opacity-10 rotate-12">
+<span class="material-symbols-outlined text-[120px]">music_note</span>
+</div>
+</section>
+<!-- Tutoriais de Kizomba Section -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Tutoriais de Kizomba</h3>
+<button class="font-label-lg text-label-lg text-primary uppercase">Ver tudo</button>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Video Item 1 -->
+<div class="group relative aspect-video rounded-xl overflow-hidden shadow-sm transition-transform active:scale-95">
+<img class="w-full h-full object-cover" data-alt="A cinematic close-up shot of two professional Kizomba dancers in a dimly lit Luanda studio." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3H3dcrCjTgNyXY7MCbpQI3zxf3v9vRCq7wocH4FykyRwQ5NFyyZUZJwl-_VflmIHpbjK13_sGf-TD-3f9W7-Suk5NKp2AT3nAFqovjpCX_AtbuZTIJ7ECHDbByPJW-w56vhHWHTZ2fEWiojpfL3bB6eIDBhi6fRMfJgBWH-LGZjABx1Gqp-27IRQB8rmVLQEa0mZwCbwviv3RIU8w4lNYaK7QwEoOZeqjnL6c6NESKt5t3LI7VQCUf7QSkLLKtPy5onxTbKrA7sP7"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+<div class="glass w-12 h-12 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 p-3 w-full bg-gradient-to-t from-black/80 to-transparent">
+<p class="font-label-lg text-white text-xs truncate">Passos Básicos de Kizomba</p>
+<span class="text-[10px] text-white/80 font-medium bg-white/20 px-2 py-0.5 rounded-full">12:45</span>
+</div>
+</div>
+<!-- Video Item 2 -->
+<div class="group relative aspect-video rounded-xl overflow-hidden shadow-sm transition-transform active:scale-95">
+<img class="w-full h-full object-cover" data-alt="A vibrant, high-key image of a dance instructor demonstrating a fluid body roll in Kizomba." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMsqMjIeLQSBWOSM1cUVUx-LIMCPIR-9a5DFK8LGK429Ja8BEr-SuzT04JiyQDIQltuigLXO4fpgWFbU-LgER4q-mlUsfbSKxYR3W8RtcUZFfujqHA34o21qAmiDiPf2jWTvKlgObt9NZuhWpFGh7O1LZ1qEZ9Nc_awU2-OqoeePCmTwu3qr-AGUDP_h1kQ9IcoObEd9So4X5vOvNX7FChAR1h09IEICieZPFN5S-NAafIGHLFm2hiJ7QkXa5ElGJ3rx2ibQB9xStS"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+<div class="glass w-12 h-12 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 p-3 w-full bg-gradient-to-t from-black/80 to-transparent">
+<p class="font-label-lg text-white text-xs truncate">Técnicas de Conexão</p>
+<span class="text-[10px] text-white/80 font-medium bg-white/20 px-2 py-0.5 rounded-full">08:20</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Próximos Workshops Section -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Próximos Workshops</h3>
+</div>
+<div class="flex gap-4 overflow-x-auto no-scrollbar pb-2">
+<!-- Workshop Card 1 -->
+<div class="flex-shrink-0 w-64 bg-surface rounded-xl p-4 shadow-[0px_4px_20px_rgba(60,40,20,0.04)] border border-outline-variant/30">
+<div class="flex items-start justify-between mb-3">
+<div class="bg-primary-fixed-dim/20 text-primary px-3 py-1 rounded-lg text-center">
+<p class="font-label-sm text-[10px] uppercase">Mar</p>
+<p class="font-headline-sm text-headline-sm leading-none">15</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">calendar_today</span>
+</div>
+<h4 class="font-label-lg text-on-surface mb-1">Masterclass Semba &amp; Kizomba</h4>
+<p class="font-body-sm text-on-surface-variant text-xs mb-4">Instrutor: Mestre Petchu</p>
+<button class="w-full py-2 bg-primary text-white rounded-xl font-label-lg hover:opacity-90 active:scale-95 transition-all">Participar</button>
+</div>
+<!-- Workshop Card 2 -->
+<div class="flex-shrink-0 w-64 bg-surface rounded-xl p-4 shadow-[0px_4px_20px_rgba(60,40,20,0.04)] border border-outline-variant/30">
+<div class="flex items-start justify-between mb-3">
+<div class="bg-primary-fixed-dim/20 text-primary px-3 py-1 rounded-lg text-center">
+<p class="font-label-sm text-[10px] uppercase">Mar</p>
+<p class="font-headline-sm text-headline-sm leading-none">22</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">event</span>
+</div>
+<h4 class="font-label-lg text-on-surface mb-1">Ritmos de Luanda</h4>
+<p class="font-body-sm text-on-surface-variant text-xs mb-4">Instrutora: Nadia Rodrigues</p>
+<button class="w-full py-2 bg-primary text-white rounded-xl font-label-lg hover:opacity-90 active:scale-95 transition-all">Participar</button>
+</div>
+</div>
+</section>
+<!-- Músicas Mais Tocadas Section -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Músicas Mais Tocadas</h3>
+<span class="material-symbols-outlined text-primary">equalizer</span>
+</div>
+<div class="space-y-3">
+<!-- Song 1 -->
+<div class="flex items-center justify-between p-3 bg-surface/50 rounded-xl hover:bg-surface-variant/50 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="An album cover artwork featuring abstract Angolan geometric patterns." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8OD_tZ6M4_AvTm58A0HHntjlZ7w6702mLOdzsSmGLkrDTFVnbOBHw4Ob8AE-jgiHXeM0r25Q0z7oQBPJM-daepqipDEB6bxFUFJby7xDRTybBLiwqEfZTV8f4l06D3JPwh4bMG9n2NrloGHun7qQACeSUJbpzSCAeHfX7eax69pXJQebt8rc6uHFim_LClhJtQIaaAF40U0bC3X6QFir2FK6LbGXS7rD2vH_h-gp4L9oWzdWMc9zz7_g-e4aWjTjvMu2I9vvR2xof"/>
+</div>
+<div>
+<p class="font-label-lg text-on-surface">Só Tu</p>
+<p class="font-body-sm text-on-surface-variant text-xs">C4 Pedro</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</button>
+</div>
+<!-- Song 2 -->
+<div class="flex items-center justify-between p-3 bg-surface/50 rounded-xl hover:bg-surface-variant/50 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A macro photograph of a professional studio microphone in a Luanda recording studio." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfaIGpZh5GQEqabYnbanUHF-c2wS0dARtadnLnaBtNblav1wyFecC9CyDedBE1n1omHQLdbgWufdFCWvqhILNNzAoEriKTn8T6oqogJXONeiGZflT_1FYS8k7UMFg9pfjwh9F_RgRbwx9VNQ49M1KAm-1tetNeJGPeRS3QS0gKF9tNOPQf4dKQV8cc5S8CdW7zwUHH4mBrlMV2mfFtXTs6_EwdaqouiwfO-7BpiJc_k_ttRFN3hqZh--LDIWNkfzRlH5Dtg9lWQiUn"/>
+</div>
+<div>
+<p class="font-label-lg text-on-surface">Kizomba na Luanda</p>
+<p class="font-body-sm text-on-surface-variant text-xs">Yola Semedo</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</button>
+</div>
+<!-- Song 3 -->
+<div class="flex items-center justify-between p-3 bg-surface/50 rounded-xl hover:bg-surface-variant/50 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A stylized portrait of an Angolan musician holding an instrument." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVaOTXfELF8w5hZVSgmBG3v1_UNFR36qRGp4acGodnvewGSMd4EZF9sqFg7hNRowP4G89z_i32mVNkkCSUj-8NLDd5IcSXscro9SytV0bA9f8O5MLSUFM8bYB0kx4Qa8oMV7nV3yoVsgndrYt-PJ46aSKnN6IXaDXyP1FvdB1hPtZr4QtCmwzb2uG-1tm5ZShnoTliAuBhlT9C8yQztj2kg4sCFEBAW2F4ACYoLExiU8UX4UWSjCkJDUkT-7MFmt0hdiaAeI426UT-"/>
+</div>
+<div>
+<p class="font-label-lg text-on-surface">Bo Tem Mel</p>
+<p class="font-body-sm text-on-surface-variant text-xs">Nelson Freitas</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-xl flex justify-around items-center px-4 pb-safe h-16 shadow-[0px_-4px_20px_rgba(60,40,20,0.04)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant p-2 transition-transform duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm mt-0.5">Início</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant p-2 transition-transform duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-sm text-label-sm mt-0.5">Nzola Market</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-inverse-primary font-bold bg-primary-fixed-dim/20 rounded-xl px-3 py-1 transition-transform duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
+<span class="font-label-sm text-label-sm mt-0.5">Grupos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant p-2 transition-transform duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm mt-0.5">Perfil</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for play buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('.material-symbols-outlined');
+                if (icon && icon.innerText === 'play_circle') {
+                    icon.innerText = icon.innerText === 'play_circle' ? 'pause_circle' : 'play_circle';
+                }
+            });
+        });
+    </script>
+</body></html>

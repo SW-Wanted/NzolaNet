@@ -1,0 +1,13 @@
+<nav class="barra-navegacao">
+  @for (item of itens; track item.etiqueta) {
+    <button
+      class="barra-navegacao__item"
+      [class.barra-navegacao__item--activo]="item.activa"
+      type="button"
+      (click)="aoClicarItem(item)"
+    >
+      <span class="material-symbols-outlined barra-navegacao__icone">{{ item.icone }}</span>
+      <span class="barra-navegacao__etiqueta">{{ item.etiqueta }}</span>
+    </button>
+  }
+</nav>

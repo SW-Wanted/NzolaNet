@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-AO"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>NzolaNet - Eventos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(60, 40, 20, 0.08);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed": "#ffdbc7",
+                      "inverse-surface": "#352f2c",
+                      "inverse-on-surface": "#faeee9",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#feb78a",
+                      "surface-container-high": "#f1e6e1",
+                      "primary-fixed": "#ffdea4",
+                      "outline": "#807665",
+                      "primary-fixed-dim": "#f0bf5c",
+                      "secondary-fixed": "#ffd9e4",
+                      "on-error": "#ffffff",
+                      "secondary-fixed-dim": "#ffb0cc",
+                      "inverse-primary": "#f0bf5c",
+                      "surface": "#fff8f5",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed-variant": "#8d0051",
+                      "surface-tint": "#7b5900",
+                      "primary": "#7b5900",
+                      "on-surface": "#201b18",
+                      "tertiary-container": "#d59369",
+                      "surface-bright": "#fff8f5",
+                      "on-primary": "#ffffff",
+                      "background": "#fff8f5",
+                      "on-secondary-fixed": "#3e0020",
+                      "primary-container": "#c89b3c",
+                      "on-secondary-container": "#5c0033",
+                      "on-primary-fixed": "#261900",
+                      "surface-variant": "#ebe0db",
+                      "secondary-container": "#fe4ea2",
+                      "on-primary-fixed-variant": "#5d4200",
+                      "tertiary": "#87512c",
+                      "surface-container-highest": "#ebe0db",
+                      "on-secondary": "#ffffff",
+                      "on-surface-variant": "#4e4637",
+                      "surface-dim": "#e3d8d3",
+                      "surface-container": "#f7ece6",
+                      "on-tertiary": "#ffffff",
+                      "secondary": "#b7056b",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed-variant": "#6b3a17",
+                      "on-primary-container": "#4b3500",
+                      "surface-container-low": "#fdf1ec",
+                      "on-background": "#201b18",
+                      "outline-variant": "#d2c5b1",
+                      "on-tertiary-fixed": "#311300",
+                      "on-tertiary-container": "#592c0a",
+                      "error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "max-width": "1200px",
+                      "margin-desktop": "40px",
+                      "base": "4px",
+                      "margin-mobile": "16px",
+                      "gutter": "20px",
+                      "lg": "24px",
+                      "xxl": "48px",
+                      "xl": "32px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "xs": "4px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "body-sm": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "headline-sm": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "label-lg": ["Plus Jakarta Sans"],
+                      "label-sm": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-[#F6F1EA] text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface shadow-sm w-full top-0 fixed z-50 transition-all duration-200">
+<div class="flex items-center justify-between px-margin-mobile h-14 w-full">
+<div class="flex items-center gap-3">
+<img alt="NzolaNet Logo" class="h-8 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuZ4dNMto2vyI-HX7TrHFcTwzp-EkqKUFNeJvwrdOtyjvkIcRzueNO5lyHTtWeDA4ZA9XaY8QCkHYHT_uyw_V_OihV69-Xm6A7A4onatcnt-mCKC9s3NptpAuhD278IIuDnL1JB4y_kd7fp9eSB3wdeoU122doGAQ6uFlPboHw3H0nGBPOL5D6aOPm8oT8xB7shzSu7bzlOXv8rGSlPZk2rVtLzncg2hAfoQJwfzEtb9v5JhtDE4QAnDqNU6A7sZSZ35xL1vcSE-Jg"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary dark:text-inverse-primary transition-all duration-200 active:scale-95 hover:opacity-80">search</button>
+<button class="material-symbols-outlined text-primary dark:text-inverse-primary transition-all duration-200 active:scale-95 hover:opacity-80">notifications</button>
+</div>
+</div>
+</header>
+<main class="pt-14 pb-20">
+<!-- Hero Banner: Festival de Arte de Luanda -->
+<section class="relative w-full h-[420px] overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" data-alt="A vibrant and energetic music festival scene in Luanda at dusk. The sky is a deep purple and orange gradient, with stage lights casting brilliant beams of gold and pink across a diverse, dancing crowd. Traditional Angolan patterns are subtly projected onto large screens in the background. The atmosphere is high-fidelity, premium, and festive, capturing the warmth and celebration of modern Angolan culture." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAIU2Snebh0MrCpfRE22Q5lUaY-pD7ui6qo4D2BTGdXzrgaA55r-oTUla8IBWJFDWVKspHrpj2owRLq5FKEeCdDgW-w698Ojk6uG-89SwA1ZZuQJojWEC81W8qHnNdwOW4YpOEQnHYnO0RRKUztqMaXlJYumPsHu60cRX7kbabJr3GY7a_O0j6sXyzrSjAEh_drPNTQkmaYhjFIt6Lwa81FkFGxnOEyD1XYAkKFrc-UBV1UGAW1hPp5r3jVIgv3cjogP72Lz63Y333E');">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+</div>
+<div class="absolute bottom-0 left-0 p-margin-mobile w-full">
+<div class="inline-block px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-label-sm font-label-sm mb-3">EVENTO DA SEMANA</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-white mb-2 leading-tight">
+                    Festival de Arte <br/> de Luanda
+                </h1>
+<p class="text-white/80 font-body-sm text-body-sm mb-6 max-w-[80%]">
+                    Uma celebração épica da cultura angolana com música ao vivo, dança e gastronomia local.
+                </p>
+<button class="bg-primary-container text-on-primary-container px-6 py-3 rounded-xl font-label-lg text-label-lg flex items-center gap-2 transition-all active:scale-95 shadow-lg">
+<span class="">Garantir Bilhete</span>
+<span class="material-symbols-outlined">confirmation_number</span>
+</button>
+</div>
+</section>
+<!-- Categories horizontal scroll -->
+<div class="px-margin-mobile mt-8 mb-4">
+<div class="flex gap-3 overflow-x-auto hide-scrollbar">
+<button class="bg-primary text-on-primary whitespace-nowrap px-4 py-2 rounded-full font-label-sm text-label-sm">Todos</button>
+<button class="bg-surface whitespace-nowrap px-4 py-2 rounded-full font-label-sm text-label-sm text-on-surface-variant shadow-sm">Música</button>
+<button class="bg-surface whitespace-nowrap px-4 py-2 rounded-full font-label-sm text-label-sm text-on-surface-variant shadow-sm">Exposições</button>
+<button class="bg-surface whitespace-nowrap px-4 py-2 rounded-full font-label-sm text-label-sm text-on-surface-variant shadow-sm">Teatro</button>
+<button class="bg-surface whitespace-nowrap px-4 py-2 rounded-full font-label-sm text-label-sm text-on-surface-variant shadow-sm">Workshops</button>
+</div>
+</div>
+<!-- Main Section: Upcoming Cultural Events -->
+<section class="px-margin-mobile">
+<h2 class="font-headline-sm text-headline-sm-mobile text-on-surface mb-6 mt-4">Próximos Eventos</h2>
+<div class="space-y-4">
+<!-- Event Card 1 -->
+<div class="bg-surface p-4 rounded-xl shadow-[0px_4px_20px_rgba(60,40,20,0.04)] flex flex-col gap-4">
+<div class="flex gap-4">
+<!-- Date Box -->
+<div class="flex-shrink-0 w-16 h-16 bg-primary-fixed-dim/20 rounded-xl flex flex-col items-center justify-center border border-primary-fixed-dim/30">
+<span class="font-headline-sm text-primary leading-none">28</span>
+<span class="font-label-sm text-primary uppercase">MAI</span>
+</div>
+<!-- Content -->
+<div class="flex-1">
+<h3 class="font-headline-sm text-on-surface mb-1 leading-snug">Noite de Jazz na Ilha</h3>
+<div class="flex items-center text-on-surface-variant gap-1 mb-1">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="font-body-sm text-body-sm">Centro Cultural, Luanda</span>
+</div>
+<div class="flex items-center text-on-surface-variant gap-1">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span class="font-body-sm text-body-sm">19:30 - 23:00</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-surface-variant">
+<div class="flex -space-x-2">
+<img class="w-7 h-7 rounded-full border-2 border-surface" data-alt="Close-up portrait of a smiling young woman with natural hair and bright, glowing skin against a warm sunset background. High-key lighting highlights her features." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBApf4k9id_k_sb4LILymX2AJ9U2890b9nuP45y8055sR0A1dAG2G7XowPk9gdngfDtltLDXStIyDtfEYoGplQkDQ2jEO9RUyQu2c3WX2LGEYT8aPe9iUmvOV5tluM3Rwk4-CKDgkoTijbcxzMXOo9jlMotFiamDsSlNpDfzECfyM9vTVOalulcXeLG9GDkZt7zi0uMzvUKMNj-un5i86VuS1f5sR_s4PrvONM4Os16LRbDRGY0zb7eZQm7HhjPuoR2VgmZDzPn_gj8"/>
+<img class="w-7 h-7 rounded-full border-2 border-surface" data-alt="Close-up portrait of a professional man in his 30s with a confident expression. The lighting is soft and natural, emphasizing a premium and approachable look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvgrFl9iToz0h32b37IaIFzsGAZOmsOwOspxsPtOmOlyu3aMJl9r-9kSdOUD-ha7lpe3qyie6x60tPUY_3LXREy52bRPRhermLbsuQgyyiqPkWdvepvuBsGsCfBJ0xzVI7B1mJkDZhSKEIviQkv81naf6XxfRjwPlux_XjdF2POcxqdvW7BWSapcG_zBz57YM5S2QyGujBrFI5hUJYyf8XY9-WQwU0OYP56wWTgLarz4DtUp5srOL31m5mHsi2nE0pFdyEVf5hG_ss"/>
+<div class="w-7 h-7 rounded-full border-2 border-surface bg-surface-container-highest flex items-center justify-center text-[10px] font-bold">+12</div>
+</div>
+<button class="bg-primary text-on-primary px-5 py-2 rounded-lg font-label-sm text-label-sm transition-transform active:scale-95" onclick="toggleGoing(this)">Vou comparecer</button>
+</div>
+</div>
+<!-- Event Card 2 -->
+<div class="bg-surface p-4 rounded-xl shadow-[0px_4px_20px_rgba(60,40,20,0.04)] flex flex-col gap-4">
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-16 h-16 bg-primary-fixed-dim/20 rounded-xl flex flex-col items-center justify-center border border-primary-fixed-dim/30">
+<span class="font-headline-sm text-primary leading-none">02</span>
+<span class="font-label-sm text-primary uppercase">JUN</span>
+</div>
+<div class="flex-1">
+<h3 class="font-headline-sm text-on-surface mb-1 leading-snug">Exposição Raízes Modernas</h3>
+<div class="flex items-center text-on-surface-variant gap-1 mb-1">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="font-body-sm text-body-sm">Museu de Antropologia</span>
+</div>
+<div class="flex items-center text-on-surface-variant gap-1">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span class="font-body-sm text-body-sm">10:00 - 18:00</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-surface-variant">
+<div class="flex -space-x-2">
+<img class="w-7 h-7 rounded-full border-2 border-surface" data-alt="Portrait of an elegant woman in colorful contemporary African fashion. The background is a clean gallery space with soft lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCICbp0z6WY8Ttn_bSn5eFTwYyvNIxR6_g82bgUCU1LkSWIC67TCl656xxnSnSAaDqo3AwDVT6P1jEaMupfr6JZ-wYxBCnWGG9N6QabtBvTI3bvmoiE5MDGafyn_aeEbfzHFKTSbM03RRiIvh8ZDiDwqo35uUeJBZn_gmPaes9QdZo9NU61-wJK0OzjOAFqiwG-RWZbwjv4JAS9zDlhzHa3nxh8BG9x0uBm2YyNvE0Ja_gRKDvFzcmPt7oFCrZqLxsEpHdzcnOrZne4"/>
+<div class="w-7 h-7 rounded-full border-2 border-surface bg-surface-container-highest flex items-center justify-center text-[10px] font-bold">+45</div>
+</div>
+<button class="bg-primary text-on-primary px-5 py-2 rounded-lg font-label-sm text-label-sm transition-transform active:scale-95" onclick="toggleGoing(this)">Vou comparecer</button>
+</div>
+</div>
+<!-- Event Card 3 -->
+<div class="bg-surface p-4 rounded-xl shadow-[0px_4px_20px_rgba(60,40,20,0.04)] flex flex-col gap-4">
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-16 h-16 bg-primary-fixed-dim/20 rounded-xl flex flex-col items-center justify-center border border-primary-fixed-dim/30">
+<span class="font-headline-sm text-primary leading-none">15</span>
+<span class="font-label-sm text-primary uppercase">JUN</span>
+</div>
+<div class="flex-1">
+<h3 class="font-headline-sm text-on-surface mb-1 leading-snug">Workshop de Kizomba Master</h3>
+<div class="flex items-center text-on-surface-variant gap-1 mb-1">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="font-body-sm text-body-sm">Academia de Dança Estrela</span>
+</div>
+<div class="flex items-center text-on-surface-variant gap-1">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span class="font-body-sm text-body-sm">14:00 - 17:00</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-surface-variant">
+<div class="flex -space-x-2">
+<img class="w-7 h-7 rounded-full border-2 border-surface" data-alt="Portrait of a handsome man with a friendly smile, lit by warm indoor ambient lighting that creates a sophisticated mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_c9j9PAH9zAbTKwsd-wfvGDDxHB53bTTt2C4MeUuCJKRxjD-pxBe1FMJBk07R8jK_Q08Tx2eyCxbWCabE3pM-bsMvYfOc4SUkrcwXVw66OgorY5vocHiCmc4l7oQYji17yMn3-zqyjlhBR1mQk9MeyVZdlC5N2-88SAPMcnvnEn_hZQrnCZmKZ1FOZhW896za4AtlSA7QT2pmhd4gxWsr0hwisK1R6JBsK9XnuS3kpEZL2r640pQuidAo4-KGMtnWJMSFf9Th05Ge"/>
+<img class="w-7 h-7 rounded-full border-2 border-surface" data-alt="Softly lit portrait of a woman with braided hair, expressive eyes, looking directly into the camera in a modern studio setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHKr2JqbbPpL00jviv0vWk8CIarxMzuGP2gS9afhoyac5toft60xaws7SQu0vgo3eeb-de1Z7aEDGnd-v31tuj51eyL4VhJlIblRwjG_uEKUB-lDGOc6WMQvI643EdjLtsT-TxvRjStlwUd9nDLuRd3bAf_3UR4QvVhw3ezZORIzokgG2Gex5Q7NE5fLJV-zFPb3WX0Yh5aIE0sunvwW3v5qMN6MofjJTmldDIWvKj9UV7QZwPPqJua1ixHQemKTDxZEHKxxjz31qr"/>
+<div class="w-7 h-7 rounded-full border-2 border-surface bg-surface-container-highest flex items-center justify-center text-[10px] font-bold">+8</div>
+</div>
+<button class="bg-primary text-on-primary px-5 py-2 rounded-lg font-label-sm text-label-sm transition-transform active:scale-95" onclick="toggleGoing(this)">Vou comparecer</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter Section (Bento Inspired) -->
+<section class="px-margin-mobile mt-10 mb-8">
+<div class="bg-primary-container p-6 rounded-2xl relative overflow-hidden">
+<div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<h3 class="font-headline-sm text-on-primary-container mb-2">Fica por dentro!</h3>
+<p class="font-body-sm text-on-primary-container/80 mb-4">Recebe notificações exclusivas sobre eventos culturais em Luanda.</p>
+<div class="flex gap-2">
+<input class="bg-white/90 border-none rounded-xl flex-1 px-4 text-body-sm focus:ring-2 focus:ring-primary-fixed" placeholder="Teu e-mail" type="email"/>
+<button class="bg-inverse-surface text-inverse-on-surface px-4 py-2 rounded-xl font-label-sm">OK</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-16 bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-xl shadow-[0px_-4px_20px_rgba(60,40,20,0.04)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant p-2 transition-transform duration-300 active:scale-90 hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Início</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-inverse-primary font-bold bg-primary-fixed-dim/20 rounded-xl px-3 py-1 transition-transform duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="font-label-sm text-label-sm">Eventos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant p-2 transition-transform duration-300 active:scale-90 hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-sm text-label-sm">Mercado</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant p-2 transition-transform duration-300 active:scale-90 hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Perfil</span>
+</a>
+</nav>
+<script>
+        function toggleGoing(btn) {
+            if (btn.innerText === "Vou comparecer") {
+                btn.innerText = "Confirmado";
+                btn.classList.remove('bg-primary', 'text-on-primary');
+                btn.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+                
+                // Add a small heart animation effect
+                const heart = document.createElement('span');
+                heart.className = 'material-symbols-outlined absolute text-secondary animate-ping pointer-events-none';
+                heart.style.fontVariationSettings = "'FILL' 1";
+                heart.innerText = 'favorite';
+                btn.appendChild(heart);
+                setTimeout(() => heart.remove(), 1000);
+            } else {
+                btn.innerText = "Vou comparecer";
+                btn.classList.add('bg-primary', 'text-on-primary');
+                btn.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+            }
+        }
+
+        // Add subtle shadow change on scroll for header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body></html>

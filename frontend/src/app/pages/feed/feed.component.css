@@ -1,0 +1,33 @@
+@import '../telas.css';
+
+.campo-publicacao {
+  flex: 1;
+  border-radius: 999px;
+  background: var(--cor-container);
+  color: var(--cor-no-superficie-variante);
+  padding: 14px 18px;
+}
+
+.atalhos-publicacao {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--cor-contorno-variante);
+}
+
+.atalhos-publicacao button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 12px;
+  color: var(--cor-no-superficie-variante);
+  padding: 10px;
+}
+
+.painel-tags {
+  align-items: flex-start;
+  margin-top: 16px;
+}
