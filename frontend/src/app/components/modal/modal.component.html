@@ -1,0 +1,22 @@
+@if (aberto) {
+  <div class="modal-overlay" role="presentation" (click)="fechar.emit()">
+    <section
+      class="modal"
+      [class.modal--grande]="largura === 'grande'"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="titulo"
+      (click)="$event.stopPropagation()"
+    >
+      <header class="modal__cabecalho">
+        <h2>{{ titulo }}</h2>
+        <button class="modal__fechar" type="button" aria-label="Fechar" (click)="fechar.emit()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </header>
+      <div class="modal__conteudo">
+        <ng-content />
+      </div>
+    </section>
+  </div>
+}

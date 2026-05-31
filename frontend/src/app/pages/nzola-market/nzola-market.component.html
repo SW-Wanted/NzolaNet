@@ -1,0 +1,100 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <div class="conteudo-limite">
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Nzola Market</span>
+              <h1 class="titulo-pagina">Loja cultural angolana</h1>
+              <p class="descricao-pagina">Produtos, arte e experiências de criadores locais com curadoria NzolaNet.</p>
+            </div>
+            <div class="acoes-cabecalho">
+              <button class="botao-contornado" type="button" (click)="modalProdutoAberto.set(true)">Criar Produto</button>
+              <button class="botao-destaque" type="button" (click)="modalCarrinhoAberto.set(true)">
+                <span class="material-symbols-outlined">shopping_bag</span>Carrinho
+              </button>
+            </div>
+          </header>
+          @if (feedback()) {
+            <p class="aviso-sucesso">{{ feedback() }}</p>
+          }
+
+          <div class="grelha-cartoes produtos">
+            @for (produto of produtos(); track produto.id) {
+              <article class="cartao produto-cartao">
+                <img [alt]="produto.nome" class="imagem-cartao" [src]="produto.imagem" />
+                <div class="conteudo-cartao">
+                  <h2 class="titulo-cartao">{{ produto.nome }}</h2>
+                  <div class="linha-distribuida">
+                    <strong class="preco-produto">{{ produto.preco }}</strong>
+                    <button class="botao-contornado" type="button" (click)="alternarCarrinho(produto.id)">
+                      {{ produto.noCarrinho ? 'No Carrinho' : 'Adicionar' }}
+                    </button>
+                  </div>
+                </div>
+              </article>
+            }
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<nav class="navegacao-inferior">
+  <a routerLink="/feed"><span class="material-symbols-outlined">home</span>Início</a>
+  <a routerLink="/eventos"><span class="material-symbols-outlined">event</span>Eventos</a>
+  <a class="ativo" routerLink="/mercado"><span class="material-symbols-outlined">storefront</span>Loja</a>
+  <a routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
+</nav>
+
+<app-modal titulo="Carrinho cultural" [aberto]="modalCarrinhoAberto()" (fechar)="modalCarrinhoAberto.set(false)">
+  @if (itensCarrinho().length === 0) {
+    <section class="estado-carrinho">
+      <span class="material-symbols-outlined">shopping_bag</span>
+      <h3 class="titulo-cartao">Carrinho vazio</h3>
+      <p class="texto-cartao">Adicione produtos culturais para simular a compra.</p>
+    </section>
+  } @else {
+    <div class="lista-vertical">
+      @for (linha of itensCarrinho(); track linha.item.produtoId) {
+        <article class="linha-carrinho">
+          <div>
+            <strong>{{ linha.produto?.nome }}</strong>
+            <p class="texto-cartao">{{ linha.produto?.preco }}</p>
+          </div>
+          <input
+            class="campo-quantidade"
+            min="1"
+            type="number"
+            [value]="linha.item.quantidade"
+            (input)="actualizarQuantidade(linha.item.produtoId, $event)"
+          />
+          <button class="botao-fantasma" type="button" (click)="removerDoCarrinho(linha.item.produtoId)">Remover</button>
+        </article>
+      }
+      <div class="linha-distribuida total-carrinho">
+        <strong>Total</strong>
+        <strong>{{ totalCarrinho().toLocaleString('pt-AO') }} Kz</strong>
+      </div>
+    </div>
+  }
+</app-modal>
+
+<app-modal titulo="Criar produto" [aberto]="modalProdutoAberto()" (fechar)="modalProdutoAberto.set(false)">
+  <form class="formulario" [formGroup]="formularioProduto" (ngSubmit)="criarProduto()">
+    <input class="campo-formulario" formControlName="nome" placeholder="Nome do produto" />
+    <input class="campo-formulario" formControlName="categoria" placeholder="Categoria" />
+    <input class="campo-formulario" formControlName="precoValor" min="1" type="number" placeholder="Preço" />
+    @if (submetido && formularioProduto.invalid) {
+      <span class="mensagem-campo">Preencha os dados do produto.</span>
+    }
+    <div class="linha-distribuida">
+      <button class="botao-contornado" type="button" (click)="modalProdutoAberto.set(false)">Cancelar</button>
+      <button class="botao-destaque" type="submit">Guardar Produto</button>
+    </div>
+  </form>
+</app-modal>

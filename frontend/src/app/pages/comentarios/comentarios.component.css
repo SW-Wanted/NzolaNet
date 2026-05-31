@@ -1,0 +1,19 @@
+@import '../telas.css';
+
+.painel-comentarios {
+  max-width: 820px;
+}
+
+.comentario {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--cor-container-baixo);
+}
+
+.formulario-comentario {
+  margin-top: 22px;
+}

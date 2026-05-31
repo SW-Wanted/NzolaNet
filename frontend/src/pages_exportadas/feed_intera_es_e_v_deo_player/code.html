@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html lang="pt"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#ffdea4",
+                        "secondary-fixed-dim": "#ffb0cc",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#f7ece6",
+                        "inverse-surface": "#352f2c",
+                        "on-background": "#201b18",
+                        "tertiary": "#87512c",
+                        "surface-bright": "#fff8f5",
+                        "secondary-fixed": "#ffd9e4",
+                        "on-tertiary-fixed": "#311300",
+                        "surface-variant": "#ebe0db",
+                        "surface-dim": "#e3d8d3",
+                        "inverse-on-surface": "#faeee9",
+                        "on-error": "#ffffff",
+                        "secondary": "#b7056b",
+                        "on-secondary-fixed-variant": "#8d0051",
+                        "outline": "#807665",
+                        "inverse-primary": "#f0bf5c",
+                        "on-primary-fixed": "#261900",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#6b3a17",
+                        "surface": "#fff8f5",
+                        "primary-fixed-dim": "#f0bf5c",
+                        "on-surface": "#201b18",
+                        "on-primary-container": "#4b3500",
+                        "tertiary-fixed-dim": "#feb78a",
+                        "on-surface-variant": "#4e4637",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#3e0020",
+                        "outline-variant": "#d2c5b1",
+                        "secondary-container": "#fe4ea2",
+                        "primary-container": "#c89b3c",
+                        "surface-container-high": "#f1e6e1",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffdbc7",
+                        "tertiary-container": "#d59369",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#5d4200",
+                        "surface-container-low": "#fdf1ec",
+                        "surface-tint": "#7b5900",
+                        "surface-container-highest": "#ebe0db",
+                        "on-secondary-container": "#5c0033",
+                        "background": "#fff8f5",
+                        "primary": "#7b5900",
+                        "on-tertiary-container": "#592c0a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "gutter": "20px",
+                        "xs": "4px",
+                        "base": "4px",
+                        "xxl": "48px",
+                        "xl": "32px",
+                        "max-width": "1200px",
+                        "md": "16px",
+                        "margin-desktop": "40px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "label-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #F6F1EA;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(60, 40, 20, 0.08);
+        }
+        .baze-pulse:active {
+            animation: baze-heart-beat 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes baze-heart-beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="text-on-background">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-xl shadow-sm flex justify-between items-center px-margin-mobile h-16 w-full">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-primary hover:bg-surface-variant/20 transition-colors p-2 rounded-full active:scale-95 duration-200">
+                grid_view
+            </button>
+<div class="flex items-center">
+<img alt="NzolaNet Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbAlCe23k-AejBnoOv-MOBLiXdqrB-Axs6UZwok0BpkQELEDoYhENRYBNxG3QRTFDZdq6bEm1q09yEnVOUupV5cOdCHm_k4X1W37N-kFp2bMUi4Y_mqbnc6S1_H3Z8qeRDZwcjUQwrXqW_fuFEMyCA7JZrswpT54gJg-nvtnfbewdJCNMeIuuntcy1VIpVMgxaoYwOcrmcMX60lNf7QHTt7xnarEPjsHetVEdheF9Rq7IPjbFG4dl4ApMOgMT-FJJVS0-6QaG_2Xw0"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-on-surface-variant p-2 rounded-full hover:bg-surface-variant/20">search</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary-container overflow-hidden active:scale-95 duration-200 cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="A professional high-fidelity studio portrait of a young Angolan man with a warm smile, styled with modern aesthetics. He wears a contemporary neutral-toned linen shirt, set against a soft, sun-drenched architectural background in Luanda. The lighting is bright and airy, reflecting a premium social network's clean and sophisticated brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN_vAvJkDP-T6fzfCtRicusbl0JVPGqTpV6822LSDlQ8dBrFnhjPjQgHGgtSoJa_QkKtgcYs2xgVuIz706CglZtU7iLumCFxv3NJ3iO4dR9G8r0QkCe3gvWPZtWuznI0fM6GQWoo3QTIrXnNfw2CAacQ5mQWzi-cb3gOx0ZM4OKpZMBCH6JGKaZUuZ6kztMHnGqrmmw63a-OJ8axjADa5lqzILdiolEiGdvo6GBpllVB92-rKMdUReeN3vtinfpS_mJ0ZiAOFmineX"/>
+</div>
+</div>
+</header>
+<!-- Main Content Feed -->
+<main class="pt-20 pb-24 px-4 max-w-[680px] mx-auto space-y-6">
+<!-- Video Card: Aula de Kizomba -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_4px_20px_rgba(60,40,20,0.04)]">
+<!-- User Header -->
+<div class="flex items-center px-4 py-3 gap-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Close up portrait of a graceful Angolan woman with braided hair, wearing traditional gold jewelry. She is smiling warmly in a bright, modern studio setting with warm earthy tones and soft morning light. The visual style is premium and high-fidelity, typical of a luxury social experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWWyJ0PJG6mYUtQ_UxtHbJUv-KyrQUtB0aC5a1UvE6nqRGLsvnjDM8iHWsPz8oGI1wRVlTdLWwpWPXsoXKqwRd_VTP4bbq1G5jkVq9zdvMjD59iajJYBdqfqsAoIQxWr3t1oBY1AaIGi5HipPhoQnNhGAc3Os2iN8SSq-Y8ZwCmk710vOyQ9E3Vf0Enh1rvqolivJDhjpT0HYdvAcwknbBT8TdvQV3hr9asUlFJG__M4ZEg-MigrS0RTBVZlb21p755Ek0VrJntfDx"/>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface">Beatriz Ndola</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Aula de Kizomba • Luanda</p>
+</div>
+<button class="ml-auto material-symbols-outlined text-on-surface-variant">more_vert</button>
+</div>
+<!-- Video Player -->
+<div class="relative w-full aspect-video group cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="A cinematic, wide-angle shot of a sun-drenched wooden dance studio in Angola. Two dancers are captured in a fluid Kizomba motion, their silhouettes softened by the warm golden hour light streaming through large windows. The atmosphere is vibrant and cultural, with earthy textures and a clean, high-end minimalist aesthetic consistent with a premium social platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpdf6k4NhtfAmddcIJZZJbD29qU6xPmRA_4ACymsX6sVRWNuyjXyhp-Hv3KLdy2n5NlX35b8KTeGU7Z7W2hHIVqLNU1fZ5ApT8O1uPbRoXWEEHL0XOv7HI7ux9YMcS6BI188twkcwFrK5hM2tO45DN85MtWWh1euvsAY-nT4XVmyYX7XlU11mKmBzDyudYHaO2COdMoO2_3bWUCpm6UTMvu_HTXTJhBsv8MurgCYPG_wAnkk9H4JT_Wl9slUbk_zsPMnMHZstrawSn"/>
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+<div class="w-16 h-16 glass-panel rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-white text-4xl filled-icon">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-3 right-3 glass-panel px-2 py-1 rounded text-[10px] font-bold text-on-surface uppercase tracking-wider">
+                    04:22
+                </div>
+</div>
+<!-- Interaction Bar (Active State) -->
+<div class="px-4 py-3 border-t border-surface-variant/30">
+<div class="flex items-center justify-between mb-2">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-white bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-white filled-icon">thumb_up</span>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-white filled-icon">favorite</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">146 Bazes • 12 Partilhas</span>
+</div>
+<div class="flex items-center gap-6 pt-1">
+<!-- Baze Active -->
+<button class="flex items-center gap-2 text-primary baze-pulse" onclick="toggleBaze(this)">
+<span class="material-symbols-outlined filled-icon">thumb_up</span>
+<span class="font-label-lg text-label-lg">Baze</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined">mode_comment</span>
+<span class="font-label-lg text-label-lg">Comentar</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant ml-auto">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Image Card: Angolan Art -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_4px_20px_rgba(60,40,20,0.04)]">
+<!-- User Header -->
+<div class="flex items-center px-4 py-3 gap-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A portrait of an elderly Angolan artist with a wise and kind expression. He is wearing a simple denim shirt in a sun-lit outdoor studio surrounded by carved wooden sculptures. The image is crisp, high-resolution, and captures the warm, organic textures of the wood and the surrounding Luanda environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAtFi75ULKSgaYgIiIar0sUC_Wjl4XmAAtLjso4tcSW29LWxmfVRfxRPwZP3aKBwv5cGhTOZ98dIjeVIEqzYx4yUTw_dLb7iZmsOgkDAyT9MzcF8Wa9CeCkMIXVOOYbhVyX4HdHUCf6SAsaVZq4fj-QSziwqgXTIWnw-91p0c_pKzG58ZWiCKtSaTX-Vdmgizl2KG1glKj8Y7biJu6CRSvhiYYSE9W-7Qak9iwSEMoMVqmLR37uUtLkCgIS2bJcJzd0JlWJzcwYAAC"/>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface">Mestre Kapela</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Arte Angolana Contemporânea</p>
+</div>
+<button class="ml-auto material-symbols-outlined text-on-surface-variant">more_vert</button>
+</div>
+<!-- Main Image -->
+<div class="w-full">
+<img class="w-full h-auto object-cover max-h-[450px]" data-alt="A stunning piece of contemporary Angolan art featuring bold geometric patterns and vibrant earth tones of gold, ocre, and deep black. The artwork is presented in a bright gallery space with clean white walls and soft ambient lighting. The style is modern minimalist yet deeply rooted in African heritage, creating a premium and culturally rich visual experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqYSIWaGDvAs8N43wswH_M-Nz0BQWdmlTwptVv3i04rmNDXfmAqp7gJkv5X4a1BNpPTrbo0wejTEkbCzNTCnH3ng8l4Ax1qClyOh7uJQpHhJWRh2EJ4oqEh7ToCtZB9xhMsMVqFXaMoBnuVvvUznGXO5zYaxuF2DqenlK5wbM_soKUUJn-UlB8S_2yxkVxwrbubEtYMTnM6nB6eQmF-W_ITz5Uz3WVyqSyJDYDoNFr8xQSvRj5JuAWR_PMF7kb1JPsbklNBbRweAYU"/>
+</div>
+<!-- Interaction Bar (Neutral State) -->
+<div class="px-4 py-3 border-t border-surface-variant/30">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant">45 Bazes</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">3 Comentários</span>
+</div>
+<div class="flex items-center gap-6 pt-1">
+<!-- Baze Neutral -->
+<button class="flex items-center gap-2 text-on-surface-variant baze-pulse" onclick="toggleBaze(this)">
+<span class="material-symbols-outlined">thumb_up</span>
+<span class="font-label-lg text-label-lg">Baze</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined">mode_comment</span>
+<span class="font-label-lg text-label-lg">Comentar</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant ml-auto">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<div class="px-4 pb-4">
+<p class="font-body-sm text-body-sm text-on-surface leading-relaxed">
+<span class="font-bold">Mestre Kapela</span> O espírito das nossas tradições ganha vida através da cor e da forma. #ArteAngolana #NzolaCultura
+                </p>
+</div>
+</article>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-4 pb-safe bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-xl rounded-t-xl shadow-[0px_-4px_20px_rgba(60,40,20,0.04)]">
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim hover:bg-primary/5 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined filled-icon">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:bg-primary/5 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-sm text-label-sm">Grupos</span>
+</a>
+<button class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-on-primary shadow-lg shadow-primary/20 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:bg-primary/5 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-sm text-label-sm">Market</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:bg-primary/5 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Perfil</span>
+</a>
+</nav>
+<script>
+        function toggleBaze(btn) {
+            const icon = btn.querySelector('.material-symbols-outlined');
+            const isFilled = icon.classList.contains('filled-icon');
+            
+            if (isFilled) {
+                // Deactivate
+                icon.classList.remove('filled-icon');
+                btn.classList.remove('text-primary');
+                btn.classList.add('text-on-surface-variant');
+            } else {
+                // Activate
+                icon.classList.add('filled-icon');
+                btn.classList.remove('text-on-surface-variant');
+                btn.classList.add('text-primary');
+            }
+        }
+    </script>
+</body></html>

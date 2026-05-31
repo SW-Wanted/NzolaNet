@@ -1,0 +1,37 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <form
+          class="conteudo-limite cartao cartao-preenchido formulario perfil-formulario"
+          [formGroup]="formulario"
+          (ngSubmit)="guardar()"
+        >
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Perfil</span>
+              <h1 class="titulo-pagina">Editar perfil</h1>
+            </div>
+            <button class="botao-destaque" type="submit">Guardar</button>
+          </header>
+          <input class="campo-formulario" formControlName="nome" />
+          @if (submetido && formulario.controls.nome.invalid) {
+            <span class="mensagem-campo">Informe um nome válido.</span>
+          }
+          <input class="campo-formulario" formControlName="descricaoCurta" />
+          <textarea class="area-formulario" formControlName="biografia"></textarea>
+          @if (submetido && formulario.controls.biografia.invalid) {
+            <span class="mensagem-campo">A biografia precisa de mais detalhes.</span>
+          }
+          <div class="grupo-botoes">
+            <span class="pilula pilula-primaria">Kizomba</span>
+            <span class="pilula">Semba</span>
+            <span class="pilula">Arte</span>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</section>

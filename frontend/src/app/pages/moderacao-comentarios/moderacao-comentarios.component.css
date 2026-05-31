@@ -1,0 +1,22 @@
+@import '../telas.css';
+
+.tabela-moderacao {
+  overflow-x: auto;
+}
+
+.linha-tabela {
+  display: grid;
+  grid-template-columns: 180px minmax(260px, 1fr) 140px 230px;
+  gap: 16px;
+  align-items: center;
+  min-width: 840px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--cor-contorno-variante);
+}
+
+.cabecalho-tabela {
+  color: var(--cor-no-superficie-variante);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}

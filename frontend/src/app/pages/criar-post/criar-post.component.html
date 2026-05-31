@@ -1,0 +1,45 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <form
+          class="conteudo-limite cartao cartao-preenchido formulario editor-publicacao"
+          [formGroup]="formulario"
+          (ngSubmit)="publicar()"
+        >
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Nova publicação</span>
+              <h1 class="titulo-pagina">Criar post NzolaNet</h1>
+            </div>
+          </header>
+          <textarea
+            class="area-formulario"
+            formControlName="conteudo"
+            placeholder="O que está a acontecer na cultura angolana?"
+          ></textarea>
+          @if (submetido && formulario.controls.conteudo.invalid) {
+            <span class="mensagem-campo">Escreva pelo menos 10 caracteres antes de publicar.</span>
+          }
+          <div class="grelha-cartoes">
+            <button class="cartao cartao-preenchido anexo-post" type="button" (click)="seleccionarAnexo('Imagem selecionada')">
+              <span class="material-symbols-outlined">image</span>Adicionar imagem
+            </button>
+            <button class="cartao cartao-preenchido anexo-post" type="button" (click)="seleccionarAnexo('Vídeo selecionado')">
+              <span class="material-symbols-outlined">smart_display</span>Adicionar vídeo
+            </button>
+          </div>
+          @if (anexoSelecionado()) {
+            <p class="texto-cartao">{{ anexoSelecionado() }}</p>
+          }
+          <div class="linha-distribuida">
+            <a class="botao-contornado" routerLink="/feed">Cancelar</a>
+            <button class="botao-destaque" type="submit">Publicar</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</section>

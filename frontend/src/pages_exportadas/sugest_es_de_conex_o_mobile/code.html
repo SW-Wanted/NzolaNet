@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="pt"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>NzolaNet - Sugestões de Conexão</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f6f1ea;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        /* Custom scrollbar for better appearance */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(123, 89, 0, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#fff8f5",
+                      "secondary": "#b7056b",
+                      "tertiary-fixed": "#ffdbc7",
+                      "primary": "#7b5900",
+                      "outline-variant": "#d2c5b1",
+                      "on-secondary": "#ffffff",
+                      "tertiary-container": "#d59369",
+                      "tertiary-fixed-dim": "#feb78a",
+                      "surface-dim": "#e3d8d3",
+                      "surface-container-highest": "#ebe0db",
+                      "primary-fixed": "#ffdea4",
+                      "on-background": "#201b18",
+                      "on-primary-fixed-variant": "#5d4200",
+                      "on-error-container": "#93000a",
+                      "surface-variant": "#ebe0db",
+                      "primary-fixed-dim": "#f0bf5c",
+                      "on-primary-fixed": "#261900",
+                      "secondary-fixed": "#ffd9e4",
+                      "secondary-fixed-dim": "#ffb0cc",
+                      "surface": "#fff8f5",
+                      "secondary-container": "#fe4ea2",
+                      "on-secondary-container": "#5c0033",
+                      "on-surface-variant": "#4e4637",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-container": "#4b3500",
+                      "surface-tint": "#7b5900",
+                      "on-secondary-fixed": "#3e0020",
+                      "error-container": "#ffdad6",
+                      "surface-bright": "#fff8f5",
+                      "outline": "#807665",
+                      "on-surface": "#201b18",
+                      "surface-container-low": "#fdf1ec",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary-fixed": "#311300",
+                      "surface-container-high": "#f1e6e1",
+                      "on-secondary-fixed-variant": "#8d0051",
+                      "on-primary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "inverse-primary": "#f0bf5c",
+                      "on-tertiary-fixed-variant": "#6b3a17",
+                      "surface-container": "#f7ece6",
+                      "tertiary": "#87512c",
+                      "inverse-on-surface": "#faeee9",
+                      "primary-container": "#c89b3c",
+                      "on-error": "#ffffff",
+                      "on-tertiary-container": "#592c0a",
+                      "inverse-surface": "#352f2c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "lg": "24px",
+                      "max-width": "1200px",
+                      "gutter": "20px",
+                      "xs": "4px",
+                      "sm": "8px",
+                      "xxl": "48px",
+                      "base": "4px",
+                      "margin-desktop": "40px",
+                      "md": "16px",
+                      "xl": "32px"
+              },
+              "fontFamily": {
+                      "body-md": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-sm": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "body-sm": ["Plus Jakarta Sans"],
+                      "label-sm": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "label-lg": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-sm h-16 flex items-center justify-between px-margin-mobile max-w-screen-xl mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="A portrait of a young Angolan woman with a bright, welcoming smile and stylish braided hair. She is wearing modern golden jewelry that reflects the warm sunlight. The background is a soft-focus Luanda cityscape at sunset, conveying a premium and contemporary social media aesthetic with warm earth tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAv1pkREFu2E48CZf0qP3XOBXAoc5yK6gUcJKqAORhj4rSSHqKHb6yumQub6yWlUrspFypUOqy1x7Uq_46Bi365v5qbY8FWmni3DPpnf27ShltQDt_dXPhOtV_Nrgva4j4Wx11Af0S0UOVR4x4Hgk7hRlCNTcf4jEKrgB5RSFr3g3n_ok1HinAZoPiiOx-gmmUG33ilJ-6Wq5XH4PvD4_e-_7db767g2Vv0020aCzm6HrTIgaBt6106uwlawyNVAIs2N7hJ29BHdcyy">
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile tracking-tight text-primary">NzolaNet</h1>
+</div>
+<div class="flex items-center">
+<button class="material-symbols-outlined text-primary p-2 active:scale-95 transition-transform" data-icon="notifications">notifications</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-16 pb-24 min-h-screen px-margin-mobile">
+<!-- Search Bar Section -->
+<div class="mt-4 sticky top-16 z-40 py-4 bg-background/95 backdrop-blur-md">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-12 pl-12 pr-4 bg-[#EFE7DC] border-none rounded-full font-body-md text-on-surface focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all placeholder:text-outline" placeholder="Procurar novos rostos..." type="text">
+</div>
+<div class="mt-4 flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Sugestões de Conexão</h2>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Luanda, AO</span>
+</div>
+</div>
+<!-- Connection Cards List -->
+<div class="space-y-4 pb-10" id="suggestion-list">
+<!-- Card 1 (Follow State) -->
+<article class="bg-surface-container-lowest p-4 rounded-xl shadow-[0px_4px_20px_rgba(60,40,20,0.04)] relative animate-in fade-in duration-500">
+<button class="absolute top-4 right-4 text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-primary/10">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Professional portrait of a middle-aged Angolan man with short hair and a clean-shaven face, wearing a crisp white linen shirt. The lighting is soft and natural, coming from the side to highlight his friendly expression. The overall style is minimal and high-fidelity, set against a warm beige textured wall." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYHJk7qS_M3uS_NoIwhlCr7LlawTp4LkkrnINYj9PL9ewBe161rWJLvAS4LH1X8daiU56ylTCzCGyqZ-EQTIsCtNkio_-OXLcPZ7TbA8Y_WOVvsHWpACgONF7J30hPcu3lVozFJiQtK6i3Hh_j5ICo1u8yIBBIvlqrZ0HxxiAC862DBvycR4PudZSgyElN5SIlEwQ0wjjKPg7-0rUh6dfq7-TsZjVK9qwZXKtXTjSkCa280xlvqKluq_ORP3y20WWrCFS2zL8V2N3h">
+</div>
+<div class="flex-1">
+<h3 class="font-body-md text-on-surface font-semibold">Mauro Domingos</h3>
+<p class="font-body-sm text-outline-variant text-sm">@mauro_kizomba</p>
+<p class="font-body-sm text-on-surface-variant text-[13px] mt-1">Seguido por 12 amigos comuns</p>
+</div>
+</div>
+<button class="mt-4 w-full h-10 bg-primary text-white rounded-full font-label-lg transition-transform active:scale-[0.98] hover:opacity-90">
+                    Seguir
+                </button>
+</article>
+<!-- Card 2 (Already Following Demonstration) -->
+<article class="bg-surface-container-lowest p-4 rounded-xl shadow-[0px_4px_20px_rgba(60,40,20,0.04)] relative">
+<button class="absolute top-4 right-4 text-outline">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-primary/10">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A portrait of a young woman with a creative and artistic look, wearing bold African-inspired patterns and accessories. She has a confident gaze. The lighting is bright and high-contrast, creating a modern social media vibe. The background uses soft pastel earth tones that match a premium UI design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBipUXF7HCu9fXnOpv7LZ08FjOj7WAync9R6ApmeeBVqj7CmZmQ9Fm_HCiTwnqUz64WlZwPBGuv7tVuqRu9Ra_crKPORsEKCgo-Q09rMoCXfDkS0nWAytY0hFlbRnLHgjgmV7FAHEv0Zy5lYthTLXGSB27pdSJQ4O1DHwaWOWQSfNndeU33LngUNpHZiC7zXVlDP7cLUrUBLz6zNW7SvlY-stH7AsBL6SmtqQ3--XWN1Ko0AgaNfAkDojmwqN7irsVrFcBfU3N8USsO">
+</div>
+<div class="flex-1">
+<h3 class="font-body-md text-on-surface font-semibold">Tânia Banza</h3>
+<p class="font-body-sm text-outline-variant text-sm">@tanita.arte</p>
+<p class="font-body-sm text-on-surface-variant text-[13px] mt-1">Sugerido para ti • Dança Contemporânea</p>
+</div>
+</div>
+<button class="mt-4 w-full h-10 border-2 border-primary text-primary rounded-full font-label-lg transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">check</span>
+                    A Seguir
+                </button>
+</article>
+<!-- Card 3 -->
+<article class="bg-surface-container-lowest p-4 rounded-xl shadow-[0px_4px_20px_rgba(60,40,20,0.04)] relative">
+<button class="absolute top-4 right-4 text-outline">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-primary/10">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a young man with a modern hairstyle and a trendy denim jacket. He is laughing, showing an authentic and warm moment. The photography style is high-end lifestyle, with golden hour lighting that gives a warm glow to the skin. Minimalist urban background with clean lines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi9rbX254RiZ95Hnv3NslZuwSgpMjdzCpDPdd5bpOYG2Dy45vwysmfdr7-KTIt2nfPY3r4ApbYFyTDs8StDuMi5ivtB0-onhEE72yqCu3_DRvSTjNhyZgGbR8gRNB2daBjguQD4uD1tY8qXgq0ewLhXRjqLAiBv6RgzPNWEt2g4U3x-KxJeo2mkoQRoabXlaAVXErO1eyInMaxt5cIuIONeYUjXymOJy5j8hEDSmQPxj5m8t7KfL52lM8RVqvVFsyQbdaaGD3HFznN">
+</div>
+<div class="flex-1">
+<h3 class="font-body-md text-on-surface font-semibold">Lázaro Santos</h3>
+<p class="font-body-sm text-outline-variant text-sm">@lazaro_dev</p>
+<p class="font-body-sm text-on-surface-variant text-[13px] mt-1">Seguido por 3 amigos comuns</p>
+</div>
+</div>
+<button class="mt-4 w-full h-10 bg-primary text-white rounded-full font-label-lg transition-transform active:scale-[0.98]">
+                    Seguir
+                </button>
+</article>
+<!-- Card 4 -->
+<article class="bg-surface-container-lowest p-4 rounded-xl shadow-[0px_4px_20px_rgba(60,40,20,0.04)] relative">
+<button class="absolute top-4 right-4 text-outline">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-primary/10">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A portrait of a cheerful African woman in a professional business setting. She is wearing a soft cream-colored blazer. The background is a bright, modern office with plants and glass partitions, suggesting a high-tier professional environment. The lighting is soft and even, highlighting her friendly expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD51nmQi5U4I_Hfwr7b21zRH6F28sHMqCDyww4trd0L7MVMsI5oAQ5yn1COF6reQuhaxLCQf8UCJK7-Z0P-ORdDMyPJakNH-yOSUEpq58Wt4RlDSKDHppPPrIDJwzNdTPY-WiI1NyQJc69GKdITvvbBB50EmdT5hPTg6KzmkigpCSBuYQ96iGZtyBW6XVz2lpuSNnHGBBqez_uorMbgSCSecDj1o6zYaiprnum84QteQw4q0bVXCrNDzWOT4Fv66tv_BfFvru0kZksJ">
+</div>
+<div class="flex-1">
+<h3 class="font-body-md text-on-surface font-semibold">Kianda Oliveira</h3>
+<p class="font-body-sm text-outline-variant text-sm">@kianda_events</p>
+<p class="font-body-sm text-on-surface-variant text-[13px] mt-1">Interesse em Kizomba &amp; Negócios</p>
+</div>
+</div>
+<button class="mt-4 w-full h-10 bg-primary text-white rounded-full font-label-lg transition-transform active:scale-[0.98]">
+                    Seguir
+                </button>
+</article>
+<!-- Infinite Scroll Loader Simulator -->
+<div class="flex justify-center py-8" id="loader">
+<div class="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-margin-mobile py-2 pb-safe bg-surface/90 dark:bg-surface-container/90 backdrop-blur-xl shadow-[0px_-4px_20px_rgba(60,40,20,0.04)] z-50 rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 transition-colors rounded-full active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Incio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 transition-colors rounded-full active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-label-sm text-label-sm">Mercado</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="diversity_3" style="font-variation-settings: 'FILL' 1;">diversity_3</span>
+<span class="font-label-sm text-label-sm font-semibold">Grupos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant/50 transition-colors rounded-full active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Perfil</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions and Infinite Scroll Mock
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.innerText === 'Seguir') {
+                    this.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span> A Seguir';
+                    this.classList.remove('bg-primary', 'text-white');
+                    this.classList.add('border-2', 'border-primary', 'text-primary');
+                } else if (this.innerText.includes('A Seguir')) {
+                    this.innerHTML = 'Seguir';
+                    this.classList.add('bg-primary', 'text-white');
+                    this.classList.remove('border-2', 'border-primary', 'text-primary');
+                }
+            });
+        });
+
+        // Simple infinite scroll simulation
+        window.onscroll = function() {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
+                const list = document.getElementById('suggestion-list');
+                const loader = document.getElementById('loader');
+                
+                // Clone a random existing card to simulate new items
+                const cards = list.querySelectorAll('article');
+                const randomCard = cards[Math.floor(Math.random() * cards.length)].cloneNode(true);
+                
+                // Slight delay to simulate loading
+                setTimeout(() => {
+                    list.insertBefore(randomCard, loader);
+                }, 800);
+            }
+        };
+
+        // Smooth search bar focus
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-[1.02]');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-[1.02]');
+        });
+    </script>
+
+
+
+
+</body></html>

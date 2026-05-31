@@ -1,0 +1,29 @@
+<main class="autenticacao">
+  <section class="painel-autenticacao">
+    <div class="marca-autenticacao">
+      <img
+        alt="NzolaNet"
+        class="logo-autenticacao"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuASVyXVtXqL7zFkiKp_wDHrAQkFQsOWoB3HZ3TqAiRNBOvBFfKmtVjXqtxR52DwpO7JFR63uNe3mKwQkPYJ4Pp2xzJGRsyoeUdBxCX5hSrjd1oSWzs8wkQERoIjd5NsdV5vWKpOEqxw7fE0xuXbG5cQ18NOUiOPkNa2Fh9aw3kth-VbOoXZNZIZSVl96H6Z0kVeuc_-aawN2I_4_HvH8r84fGDGFzRqRf87wGaDhKBh_cNHysPe4pJfpR2tFqxZ2EhpsS6ZhqN6Y054"
+      />
+      <div>
+        <h1 class="titulo-cartao">NzolaNet</h1>
+        <p class="texto-cartao">Rede Cultural Angolana</p>
+      </div>
+    </div>
+    <h2 class="titulo-pagina">Entrar</h2>
+    <form class="formulario" [formGroup]="formulario" (ngSubmit)="entrar()">
+      <input class="campo-formulario" formControlName="email" placeholder="Email" type="email" />
+      @if (submetido && formulario.controls.email.invalid) {
+        <span class="mensagem-campo">Informe um email válido.</span>
+      }
+      <input class="campo-formulario" formControlName="senha" placeholder="Senha" type="password" />
+      @if (submetido && formulario.controls.senha.invalid) {
+        <span class="mensagem-campo">A senha deve ter pelo menos 6 caracteres.</span>
+      }
+      <button class="botao-destaque" type="submit">Entrar</button>
+      <a class="botao-fantasma" routerLink="/recuperar-senha">Esqueceu a senha?</a>
+      <p class="texto-cartao">Ainda não tem conta? <a routerLink="/registo">Criar conta</a></p>
+    </form>
+  </section>
+</main>

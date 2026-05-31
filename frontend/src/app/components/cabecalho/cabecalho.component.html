@@ -1,0 +1,46 @@
+<header class="cabecalho">
+  <div class="cabecalho__container">
+
+    <div class="cabecalho__esquerda">
+      <a class="cabecalho__logo" routerLink="/feed">
+        <img
+          alt="NzolaNet"
+          class="cabecalho__logo-imagem"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxeSmCWcMoRVI20C-My1JBGLSL2ntLE4EyIpBSv-x1gldBAAPdel_3hZKfWf94yaI11AStX8cZ9ApuPzRBfe6wig_9HtJyIZtME8hhsmXRRuWN9RXzDiatSOy9tZDYVxPYZzGfkNzje85MyaNOp2IUbEkbLehnqeDVqH2UChhJjUHxUO9Dk6guE_hBtM8PGpOpqS9-Wj6j9Do7Q70XV75OcdmNP0-czORUU_7EtR7dMMmrplnvMw5naJ1E6C_7pOp5pHRrJy1Da_Qh"
+        />
+      </a>
+
+      <div class="cabecalho__pesquisa">
+        <span class="material-symbols-outlined cabecalho__pesquisa-icone">search</span>
+        <input
+          class="cabecalho__pesquisa-campo"
+          placeholder="Pesquisar"
+          type="text"
+          (input)="aoPesquisar($event)"
+        />
+      </div>
+    </div>
+
+    <div class="cabecalho__direita">
+      <button class="cabecalho__botao-icone" type="button" routerLink="/feed/estados">
+        <span class="material-symbols-outlined">grid_view</span>
+      </button>
+
+      <button class="cabecalho__botao-icone cabecalho__botao-icone--com-badge" type="button" routerLink="/comentarios/moderacao">
+        <span class="material-symbols-outlined">notifications</span>
+        @if (temNotificacoes) {
+          <span class="cabecalho__badge-notificacao"></span>
+        }
+      </button>
+
+      <div class="cabecalho__utilizador">
+        <img
+          alt="Foto de perfil"
+          class="cabecalho__avatar"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9fc3LgEcIoMRyzygrtvD6C_iV8JhkmmaTtxcLnjXD5lVR1x07sV9E-OOXCJagLASt999mjLIwu6YevVPZ9BueZGq2OkQ3cpJ6V-L79xUftQINDSPLvDya9eyFOEDMGzG-VLGz9cEhiU5wZ84QJHkmQKU_IsBm27u3btYmWHZeDYzt6VilY2lglbx7nO2C_uLNlR-r5pwZXfpMwboIrTTD_kU3x4KlgqWyjnp7lgqyiY6uE4qzxCtwRNTnYq5VF14sb6avLWA8Iy9s"
+        />
+      </div>
+    </div>
+
+  </div>
+</header>

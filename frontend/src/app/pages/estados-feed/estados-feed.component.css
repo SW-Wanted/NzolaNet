@@ -1,0 +1,40 @@
+@import '../telas.css';
+
+.estado-vazio {
+  display: grid;
+  min-height: 320px;
+  place-items: center;
+  text-align: center;
+}
+
+.estado-vazio .material-symbols-outlined {
+  color: var(--cor-primaria);
+  font-size: 56px;
+}
+
+.esqueleto {
+  border-radius: 14px;
+  background: linear-gradient(90deg, var(--cor-container) 25%, var(--cor-container-alto) 50%, var(--cor-container) 75%);
+  background-size: 200% 100%;
+  animation: carregar 1.4s infinite;
+}
+
+.linha {
+  height: 24px;
+  margin-bottom: 18px;
+}
+
+.curta {
+  width: 55%;
+}
+
+.bloco {
+  height: 190px;
+  margin-bottom: 18px;
+}
+
+@keyframes carregar {
+  to {
+    background-position: -200% 0;
+  }
+}

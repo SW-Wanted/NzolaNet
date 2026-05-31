@@ -1,0 +1,71 @@
+<article class="cartao-publicacao">
+  <div class="cartao-publicacao__cabecalho">
+    <div class="cartao-publicacao__autor">
+      <img
+        [src]="publicacao.autorAvatar"
+        [alt]="publicacao.autorNome"
+        class="cartao-publicacao__avatar"
+      />
+      <div class="cartao-publicacao__info-autor">
+        <h3 class="cartao-publicacao__nome-autor">{{ publicacao.autorNome }}</h3>
+        <p class="cartao-publicacao__tempo">
+          {{ publicacao.tempoPublicacao }}
+          @if (publicacao.localizacao) {
+            <span> • {{ publicacao.localizacao }}</span>
+          }
+        </p>
+      </div>
+    </div>
+    <button class="cartao-publicacao__botao-menu" type="button" (click)="alternarMenu()">
+      <span class="material-symbols-outlined">more_horiz</span>
+    </button>
+    @if (menuAberto()) {
+      <div class="cartao-publicacao__menu">
+        <button type="button" (click)="partilhar()">Copiar ligação</button>
+        <a routerLink="/comentarios">Ver detalhes</a>
+      </div>
+    }
+  </div>
+
+  <div class="cartao-publicacao__corpo">
+    <p class="cartao-publicacao__conteudo">{{ publicacao.conteudo }}</p>
+  </div>
+
+  @if (publicacao.imagem) {
+    <div class="cartao-publicacao__imagem-container">
+      <img
+        [src]="publicacao.imagem"
+        [alt]="publicacao.imagemAlt || ''"
+        class="cartao-publicacao__imagem"
+      />
+    </div>
+  }
+
+  <div class="cartao-publicacao__estatisticas">
+    <span class="cartao-publicacao__estatistica-texto">
+      {{ contagemBaze() }} bazes • {{ publicacao.contagemComentarios }} comentários
+    </span>
+  </div>
+
+  <div class="cartao-publicacao__accoes">
+    <button
+      class="cartao-publicacao__accao"
+      [class.cartao-publicacao__accao--activo]="bazeActivo()"
+      type="button"
+      (click)="aoBaze()"
+    >
+      <span class="material-symbols-outlined">{{ bazeActivo() ? 'favorite' : 'favorite_border' }}</span>
+      <span class="cartao-publicacao__accao-texto">Baze</span>
+    </button>
+
+    <a class="cartao-publicacao__accao" routerLink="/comentarios">
+      <span class="material-symbols-outlined">chat_bubble_outline</span>
+      <span class="cartao-publicacao__accao-texto">Comentar</span>
+    </a>
+
+    <button class="cartao-publicacao__accao" type="button" (click)="partilhar()">
+      <span class="material-symbols-outlined">share</span>
+      <span class="cartao-publicacao__accao-texto">{{ partilhado() ? 'Ligação copiada' : 'Partilhar' }}</span>
+    </button>
+  </div>
+</article>

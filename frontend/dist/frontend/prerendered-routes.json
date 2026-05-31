@@ -1,0 +1,21 @@
+{
+  "routes": {
+    "/": {},
+    "/comentarios": {},
+    "/comentarios/moderacao": {},
+    "/criar-post": {},
+    "/entrar": {},
+    "/eventos": {},
+    "/feed": {},
+    "/feed/estados": {},
+    "/grupos": {},
+    "/kizomba-hub": {},
+    "/mercado": {},
+    "/perfil": {},
+    "/perfil/editar": {},
+    "/recuperar-senha": {},
+    "/registo": {},
+    "/sucesso": {},
+    "/sugestoes": {}
+  }
+}

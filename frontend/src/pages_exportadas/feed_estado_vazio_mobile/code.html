@@ -1,0 +1,278 @@
+<!DOCTYPE html><html lang="pt"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#8d0051",
+                        "surface-tint": "#7b5900",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#7b5900",
+                        "tertiary-container": "#d59369",
+                        "surface-bright": "#fff8f5",
+                        "on-primary": "#ffffff",
+                        "background": "#fff8f5",
+                        "on-secondary-fixed": "#3e0020",
+                        "on-surface": "#201b18",
+                        "inverse-surface": "#352f2c",
+                        "inverse-on-surface": "#faeee9",
+                        "tertiary-fixed": "#ffdbc7",
+                        "tertiary-fixed-dim": "#feb78a",
+                        "surface-container-high": "#f1e6e1",
+                        "primary-fixed": "#ffdea4",
+                        "outline": "#807665",
+                        "primary-fixed-dim": "#f0bf5c",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#ffd9e4",
+                        "on-error": "#ffffff",
+                        "surface": "#fff8f5",
+                        "secondary-fixed-dim": "#ffb0cc",
+                        "inverse-primary": "#f0bf5c",
+                        "surface-dim": "#e3d8d3",
+                        "surface-container-highest": "#ebe0db",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#4e4637",
+                        "surface-container": "#f7ece6",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#b7056b",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#fdf1ec",
+                        "on-background": "#201b18",
+                        "outline-variant": "#d2c5b1",
+                        "on-tertiary-fixed": "#311300",
+                        "on-tertiary-fixed-variant": "#6b3a17",
+                        "on-primary-container": "#4b3500",
+                        "on-tertiary-container": "#592c0a",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#5c0033",
+                        "on-primary-fixed": "#261900",
+                        "primary-container": "#c89b3c",
+                        "secondary-container": "#fe4ea2",
+                        "on-primary-fixed-variant": "#5d4200",
+                        "surface-variant": "#ebe0db",
+                        "tertiary": "#87512c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "max-width": "1200px",
+                        "margin-desktop": "40px",
+                        "base": "4px",
+                        "margin-mobile": "16px",
+                        "gutter": "20px",
+                        "lg": "24px",
+                        "xxl": "48px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F6F1EA;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(60, 40, 20, 0.08);
+        }
+        .soft-shadow {
+            box-shadow: 0px 4px 20px rgba(60, 40, 20, 0.04);
+        }
+        .samakaka-pattern {
+            mask-image: radial-gradient(circle, #000 10%, transparent 10.5%);
+            mask-size: 20px 20px;
+            opacity: 0.03;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface antialiased min-h-screen flex flex-col opacity-100">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm flex items-center justify-between px-margin-mobile h-16 w-full">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">NzolaNet</h1>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center border-2 border-primary/10 overflow-hidden">
+<img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJqhjVCrQZ7D0Rzv_2OLVe3rqhtq2F6daAmmYej8s7AjNRPR-WCclOHsyDIEk3J7j9BriCB4fc4-7zXPbPNzhoeTTAt58DpQoCGbbGP5TTtWnldrLNHXTuw4uxQLg9Ww7jwxYe_xJHfCvS8bvWBWnTwEwqn8T290hBsOpJtMi2QNUHuY2XFu6rIr-M7UBQ6QYS6KRj4wZi2DHQF1pRfpTNY2DJoqzhYIiQkgRgE28iTuCjT9FinFeN_rzt_PNybSADrztuOlF0F7aw">
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow pt-24 pb-28 px-margin-mobile flex flex-col items-center justify-center relative overflow-hidden">
+<!-- Subtle Pattern Background -->
+<div class="absolute inset-0 samakaka-pattern pointer-events-none"></div>
+<!-- Empty State Container -->
+<div class="w-full max-w-[680px] flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
+<!-- Illustration -->
+<div class="relative w-full aspect-square max-w-[320px] mb-8">
+<div class="absolute inset-0 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="relative w-full h-full glass-card rounded-xxl flex items-center justify-center overflow-hidden soft-shadow border-primary/20">
+<img alt="Feed Empty Illustration" class="w-full h-full object-cover mix-blend-multiply opacity-80" data-alt="A sophisticated minimalist digital illustration depicting a stylized figure standing on a geometric golden horizon under a warm Angolan sun. The style uses rich ochre and earth tones with clean vector lines and soft ambient gradients. The mood is peaceful and aspirational, with a high-key light mode aesthetic that feels premium and stable, echoing a sun-drenched afternoon in Luanda." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhJYqhP-L29Slxh1mjdNbL9AeakvmKrv4bHeqo7dnxEKScoZfT1_hlR-8xggA636Efks5xhlQzN2BNku5TYlJ3LeNu1967WA30TtqiFIfIW8RyG32iRFbmWjSZrd9DqvNDH6pz-V99EgsaJugHRZ6XvNSoasYhLgaOeEvpIJfh0fQACxbuMnc1Hkgh3RCU75ESyhoPZaBiLby63K8B0EwK0v4ubdnoStIBlpoO1x73rtevly1PVQ4EDfSucgqjGnuRr0JIsutpapAM">
+</div>
+<!-- Abstract Geometric Floating Elements -->
+<div class="absolute -top-4 -right-4 w-16 h-16 bg-primary-container rounded-xl rotate-12 flex items-center justify-center shadow-lg animate-bounce" style="animation-duration: 3s">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="explore">explore</span>
+</div>
+</div>
+<!-- Empty State Text -->
+<div class="space-y-4 px-4">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-bold tracking-tight">
+                    O teu feed está calmo
+                </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed max-w-[280px] mx-auto">
+                    Ainda não segues ninguém. Explora as sugestões ao lado para veres publicações!
+                </p>
+</div>
+<!-- Action Button -->
+<div class="mt-xl w-full px-8">
+<button class="w-full bg-primary text-on-primary font-label-lg text-label-lg py-4 rounded-xl soft-shadow active:scale-95 transition-all flex items-center justify-center gap-2 group">
+<span class="">Encontrar Amigos</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<button class="mt-4 w-full bg-transparent text-primary font-label-lg text-label-lg py-4 rounded-xl border border-primary/20 hover:bg-primary/5 transition-colors">
+                    Ver Tendências
+                </button>
+</div>
+</div>
+<!-- Featured Suggestion Preview (Micro-Interaction) -->
+<div class="mt-12 w-full grid grid-cols-2 gap-4">
+<div class="glass-card p-4 rounded-xl flex flex-col items-center gap-2 animate-in fade-in slide-in-from-right-10 duration-1000 delay-300">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="Art community" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClmnSOafKVO1kHmTE1Fc4ZhkgzR3zAseF3beztYET_KsfHMHKf0qAUn-3NhXun3T9aaHDj-R-SlSpyGlD2GnwTjfD8kPQbT9AcAWtst-5esU1BReltrDJ4MhNIaLFiXyBB9cpJ1_pW4PPCYwWrLJ45Kcuvuv5Q6CQ36gywJq8p2BGjz4qKwRv3RNBOf66v4F28vWc_jdDZLfYGImmZmopPCDlGLhrTFftfcIM96JIiPxnILj4IjT6bMC_dMLkrCSh78nlHSfaZLk4j">
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">ArteAngolana</span>
+<span class="px-2 py-0.5 bg-secondary-fixed text-on-secondary-fixed text-[10px] rounded-full font-bold uppercase tracking-wider">Novo</span>
+</div>
+<div class="glass-card p-4 rounded-xl flex flex-col items-center gap-2 animate-in fade-in slide-in-from-right-10 duration-1000 delay-500">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="Music community" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEZF_dLnOBqiYMTu8QkrfqNkj5ws2jPoIDrWJWtcNgSgwEPRbAJ-iiM6sCS-RDH-FBWDP1bGNHHVxVYAyi2MX_dHg4WMiiFbh6yJwT39qzvm08rIBu_CFZSVMyX0qj6Ztv5jaRIqn7geGT-F858rgfBDx31FlNshTcUjMNMxpn_coKtTXIEhRU6KnaU_gI6KPp5bXex1NIySLILTzTfXT7hB4nWeTv2VW_LQ-BXzT5lnQXzj19GWSIuE4AJNnFHPo12JkfATWMhSZk">
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Nzola Kizomba</span>
+<span class="px-2 py-0.5 bg-primary-fixed text-on-primary-fixed text-[10px] rounded-full font-bold uppercase tracking-wider">Top</span>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full rounded-t-xl z-50 bg-surface dark:bg-on-background shadow-[0px_-4px_20px_rgba(60,40,20,0.04)] shadow-lg flex justify-around items-center h-20 px-2 pb-safe w-full">
+<!-- Início (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-fixed text-on-primary-fixed rounded-xl px-4 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm">Incio</span>
+</a>
+<!-- Mercado -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-label-sm text-label-sm">Mercado</span>
+</a>
+<!-- Grupos -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-sm text-label-sm">Grupos</span>
+</a>
+<!-- Perfil -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Perfil</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for buttons
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('click', (e) => {
+                const ripple = document.createElement('div');
+                ripple.classList.add('ripple');
+                // Potential for more complex logic if needed
+            });
+        });
+
+        // Entrance animation orchestration
+        window.onload = () => {
+            document.body.classList.add('opacity-100');
+        };
+    </script>
+
+
+<!-- Nav Drawer Container (Hidden by default) -->
+<div id="nav-drawer" class="fixed inset-0 z-[60] pointer-events-none transition-opacity duration-300 opacity-0 bg-black/50">
+    <div class="absolute left-0 top-0 h-full w-[280px] bg-surface flex flex-col p-6 shadow-2xl transition-transform duration-300 -translate-x-full pointer-events-auto">
+        <div class="flex items-center gap-3 mb-8">
+            <span class="material-symbols-outlined text-primary text-3xl">diversity_3</span>
+            <span class="font-headline-sm text-primary font-bold">NzolaNet</span>
+        </div>
+        <nav class="flex flex-col gap-2">
+            <a href="#" class="flex items-center gap-4 p-3 rounded-lg hover:bg-primary/5 text-on-surface-variant font-label-lg">
+                <span class="material-symbols-outlined">brush</span>
+                Cultura Angolana
+            </a>
+            <a href="#" class="flex items-center gap-4 p-3 rounded-lg hover:bg-primary/5 text-on-surface-variant font-label-lg">
+                <span class="material-symbols-outlined">event</span>
+                Eventos
+            </a>
+            <a href="#" class="flex items-center gap-4 p-3 rounded-lg hover:bg-primary/5 text-on-surface-variant font-label-lg">
+                <span class="material-symbols-outlined">favorite</span>
+                Favoritos
+            </a>
+            <hr class="my-4 border-outline-variant/30">
+            <a href="#" class="flex items-center gap-4 p-3 rounded-lg hover:bg-primary/5 text-on-surface-variant font-label-lg">
+                <span class="material-symbols-outlined">settings</span>
+                Definies
+            </a>
+            <a href="#" class="flex items-center gap-4 p-3 rounded-lg hover:bg-primary/5 text-on-surface-variant font-label-lg">
+                <span class="material-symbols-outlined">help</span>
+                Ajuda
+            </a>
+        </nav>
+    </div>
+</div></body></html>

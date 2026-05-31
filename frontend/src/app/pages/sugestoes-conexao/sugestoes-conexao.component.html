@@ -1,0 +1,40 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <div class="conteudo-limite">
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Conexões</span>
+              <h1 class="titulo-pagina">Sugestões para seguir</h1>
+              <p class="descricao-pagina">Pessoas e criadores ligados aos seus interesses culturais.</p>
+            </div>
+          </header>
+          @if (feedback()) {
+            <p class="aviso-sucesso">{{ feedback() }}</p>
+          }
+          <div class="grelha-cartoes">
+            @for (pessoa of pessoas; track pessoa.nome) {
+              <article class="cartao cartao-preenchido sugestao-cartao">
+                <img
+                  alt=""
+                  class="avatar-redondo"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM36i0IWTLeke9cjwtTJMlYBZ98WBh6yDSy3OVvjaDv8NV4VNBd5h1k4adv-7ncp_JsTIYQ7MgpQMOe4g4x08d5DeLnxKR3dd5ym0dJfhVMc1Z4D9Skukt8HkfsTSBTbjzG308I65hSZZdkXoDQ7F4UmXDZ7NSZQ6CCrOcn0w39BgXdfSqhfofVs0gGzHEVx4K_ITKDjiRBjClvAeIVNXc4YTf1n7Al_OslNEZ2yguWUGZO7kSoHQgYCWvU5S3NtqlKZ4T4B-tM01W"
+                />
+                <div>
+                  <h2 class="titulo-cartao">{{ pessoa.nome }}</h2>
+                  <p class="texto-cartao">{{ pessoa.identificador }}</p>
+                </div>
+                <button class="botao-destaque" type="button" (click)="alternarSeguir(pessoa.nome)">
+                  {{ pessoa.seguindo ? 'A seguir' : 'Seguir' }}
+                </button>
+              </article>
+            }
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>

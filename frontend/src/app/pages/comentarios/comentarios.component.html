@@ -1,0 +1,37 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <section class="conteudo-limite cartao cartao-preenchido painel-comentarios">
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Discussão</span>
+              <h1 class="titulo-pagina">Comentários</h1>
+            </div>
+            <a class="botao-contornado" routerLink="/feed">Fechar</a>
+          </header>
+          <div class="lista-vertical">
+            @for (comentario of comentarios(); track comentario.id) {
+              <article class="comentario">
+                <div>
+                  <strong>{{ comentario.autor }}</strong>
+                  <p>{{ comentario.texto }}</p>
+                </div>
+                <button class="botao-fantasma" type="button" (click)="removerComentario(comentario.id)">Remover</button>
+              </article>
+            }
+          </div>
+          <form class="linha-centro formulario-comentario" [formGroup]="formulario" (ngSubmit)="adicionarComentario()">
+            <input class="campo-formulario" formControlName="texto" placeholder="Escrever comentário..." />
+            <button class="botao-destaque" type="submit">Enviar</button>
+          </form>
+          @if (submetido && formulario.controls.texto.invalid) {
+            <span class="mensagem-campo">Escreva um comentário antes de enviar.</span>
+          }
+        </section>
+      </div>
+    </main>
+  </div>
+</section>

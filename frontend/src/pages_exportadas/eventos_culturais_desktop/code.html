@@ -1,0 +1,430 @@
+<!DOCTYPE html><html lang="pt-AO"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fff8f5;
+            color: #201b18;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px border rgba(60, 40, 20, 0.08);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d2c5b1;
+            border-radius: 10px;
+        }
+        .african-pattern {
+            background-image: radial-gradient(#c89b3c 0.5px, transparent 0.5px);
+            background-size: 16px 16px;
+            opacity: 0.1;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed": "#261900",
+                      "on-background": "#201b18",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed-dim": "#feb78a",
+                      "surface-bright": "#fff8f5",
+                      "on-error": "#ffffff",
+                      "outline-variant": "#d2c5b1",
+                      "on-tertiary-fixed-variant": "#6b3a17",
+                      "secondary-container": "#fe4ea2",
+                      "error": "#ba1a1a",
+                      "on-surface-variant": "#4e4637",
+                      "tertiary": "#87512c",
+                      "surface-container-low": "#fdf1ec",
+                      "on-secondary-fixed": "#3e0020",
+                      "on-primary": "#ffffff",
+                      "surface-container-highest": "#ebe0db",
+                      "on-error-container": "#93000a",
+                      "background": "#fff8f5",
+                      "surface-dim": "#e3d8d3",
+                      "on-primary-fixed-variant": "#5d4200",
+                      "on-primary-container": "#4b3500",
+                      "secondary-fixed-dim": "#ffb0cc",
+                      "surface-variant": "#ebe0db",
+                      "error-container": "#ffdad6",
+                      "on-tertiary": "#ffffff",
+                      "primary-container": "#c89b3c",
+                      "on-surface": "#201b18",
+                      "secondary": "#b7056b",
+                      "secondary-fixed": "#ffd9e4",
+                      "on-tertiary-fixed": "#311300",
+                      "inverse-surface": "#352f2c",
+                      "primary": "#7b5900",
+                      "tertiary-container": "#d59369",
+                      "inverse-primary": "#f0bf5c",
+                      "tertiary-fixed": "#ffdbc7",
+                      "on-secondary-container": "#5c0033",
+                      "surface-container-high": "#f1e6e1",
+                      "surface-container": "#f7ece6",
+                      "surface": "#fff8f5",
+                      "on-secondary-fixed-variant": "#8d0051",
+                      "on-secondary": "#ffffff",
+                      "primary-fixed-dim": "#f0bf5c",
+                      "inverse-on-surface": "#faeee9",
+                      "primary-fixed": "#ffdea4",
+                      "on-tertiary-container": "#592c0a",
+                      "surface-tint": "#7b5900",
+                      "outline": "#807665"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xl": "32px",
+                      "margin-desktop": "40px",
+                      "lg": "24px",
+                      "sm": "8px",
+                      "xxl": "48px",
+                      "max-width": "1200px",
+                      "base": "4px",
+                      "md": "16px",
+                      "margin-mobile": "16px",
+                      "xs": "4px",
+                      "gutter": "20px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "headline-sm": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "label-lg": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "label-sm": ["Plus Jakarta Sans"],
+                      "body-sm": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background">
+<div class="flex max-w-max-width mx-auto min-h-screen relative">
+<!-- SideNavBar (Authority: JSON) -->
+<aside class="h-screen sticky left-0 w-72 bg-surface border-r border-outline-variant/20 flex flex-col gap-sm p-md hidden md:flex">
+<div class="mb-xl px-4 py-2">
+<img alt="NzolaNet Logo" class="w-32 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAATbcpgCsaRP3L8WWCZf9-9tORQ1q9ZtMNifdTxDhpdQgqYD0o9tGlH8xICqox_zeCZiJO6W2fS-zaOu3Fv-oC1Z9_8sLE08cNYgk46WhaZtK3tvRDH3Q9KJfdBFOftwSy13L7gSh8XXMZOn-ssELt58HpXVegq6thAxxj7TS1c-SmqfhxwH-Ys-e6Kj__D5wn3SuG2YJALxkN08AwJbv11RuPTii1csK558f1a-R2iyxZ2pLDfYJjVhxJlEK9c7cHYgAEDpUUMMsL">
+</div>
+<div class="px-4 mb-lg">
+<h1 class="font-headline-sm text-headline-sm text-primary">Explorar</h1>
+<p class="font-label-lg text-label-lg text-on-surface-variant">Cultura Angolana</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-4 text-on-surface-variant font-medium px-4 py-3 hover:bg-surface-container-high hover:text-primary transition-all rounded-xl active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-lg text-label-lg">Incio</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant font-medium px-4 py-3 hover:bg-surface-container-high hover:text-primary transition-all rounded-xl active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-label-lg">Perfil</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant font-medium px-4 py-3 hover:bg-surface-container-high hover:text-primary transition-all rounded-xl active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-lg text-label-lg">Grupos</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant font-medium px-4 py-3 hover:bg-surface-container-high hover:text-primary transition-all rounded-xl active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="font-label-lg text-label-lg">Mercado</span>
+</a>
+<!-- ACTIVE TAB: Eventos (Authority: Active State Logic) -->
+<a class="flex items-center gap-4 bg-primary-container/10 text-primary font-bold rounded-xl px-4 py-3 active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">event</span>
+<span class="font-label-lg text-label-lg">Eventos</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant font-medium px-4 py-3 hover:bg-surface-container-high hover:text-primary transition-all rounded-xl active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">music_note</span>
+<span class="font-label-lg text-label-lg">Kizomba Hub</span>
+</a>
+</nav>
+<div class="mt-auto px-4 pb-md">
+<button class="w-full bg-primary-container text-on-primary-container py-3 rounded-xl font-label-lg text-label-lg font-bold shadow-sm active:scale-95 transition-all">
+                    Criar Post
+                </button>
+</div>
+</aside>
+<!-- Main Content (Central Section) -->
+<main class="flex-1 px-lg py-md custom-scrollbar overflow-y-auto max-w-[680px]">
+<!-- TopAppBar (Authority: JSON) -->
+<header class="w-full sticky top-0 z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 shadow-sm flex justify-between items-center py-sm mb-lg">
+<div class="flex items-center gap-md">
+<h2 class="font-headline-md text-headline-md font-bold text-primary">NzolaNet</h2>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="bg-surface-variant/40 border-none rounded-full pl-10 pr-4 py-2 focus:ring-2 focus:ring-primary-container w-64 text-body-sm" placeholder="Pesquisar eventos..." type="text">
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">chat_bubble</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">settings</button>
+</div>
+</header>
+<!-- Hero Banner -->
+<section class="relative rounded-xxl overflow-hidden mb-xl h-[340px] shadow-lg group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A vibrant and large-scale outdoor art festival in Luanda at sunset, featuring large colorful canvas installations and crowds of people admiring contemporary Angolan paintings. The sky is a brilliant mix of orange and gold, echoing the brand's ocre accents. The atmosphere is celebratory and high-end, with modern glass and steel architectural elements visible in the background against the warm African light." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBd11Jb2rKhq5A1tkhBeojYEpqpGiRcuoaxn9pYNSs3tg71uch4iiOBDK_Ilo4Sk-3ZdrA24zDuAOpwK0F-K_fly5Q9N77BZi-OLl1CrGsluzO31P91AFEQVIDnv_u5jWCVJODTCyJvvKH09r-wsw3Dul4yp-iJk67QeaGWYqvYqVFbsWz22kdOH782_ECQSOQyWykcR6F1QU3ZmJrBVE2RMeCc0ZOz8p8TZc_LBosMhkIG0-M03checN7-21B9TZK3emSbsUyMneEZ')">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/90 via-on-background/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-xl w-full">
+<span class="bg-primary-container text-on-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm uppercase mb-md inline-block">Destaque Cultural</span>
+<h3 class="font-display-lg text-display-lg text-white mb-sm">Festival de Arte de Luanda</h3>
+<div class="flex items-center gap-xl text-white/90">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary-fixed">calendar_today</span>
+<span class="font-body-md text-body-md">15 - 20 Setembro</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary-fixed">location_on</span>
+<span class="font-body-md text-body-md">Baía de Luanda</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Events List Header -->
+<div class="flex items-center justify-between mb-lg">
+<h4 class="font-headline-sm text-headline-sm text-on-background">Próximos Eventos</h4>
+<button class="text-primary font-label-lg text-label-lg hover:underline transition-all">Ver todos</button>
+</div>
+<!-- Vertical Event List -->
+<div class="space-y-md">
+<!-- Event Card 1 -->
+<div class="bg-surface-container-lowest p-md rounded-xl flex gap-md shadow-sm border border-outline-variant/10 hover:shadow-md transition-shadow group relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 african-pattern pointer-events-none"></div>
+<div class="w-20 h-24 bg-surface-container flex flex-col items-center justify-center rounded-lg border border-outline-variant/20 flex-shrink-0">
+<span class="font-label-sm text-label-sm text-primary uppercase">OUT</span>
+<span class="font-headline-md text-headline-md text-on-background">12</span>
+</div>
+<div class="flex-1 py-1">
+<h5 class="font-headline-sm text-headline-sm text-on-background mb-1 group-hover:text-primary transition-colors">Noite de Jazz no Elinga</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-xs mb-3">
+<span class="material-symbols-outlined text-sm">schedule</span> 20:30 • Elinga Teatro
+                        </p>
+<div class="flex items-center gap-sm">
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-lg font-label-lg text-label-lg hover:bg-primary transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">check_circle</span> Vou comparecer
+                            </button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Event Card 2 -->
+<div class="bg-surface-container-lowest p-md rounded-xl flex gap-md shadow-sm border border-outline-variant/10 hover:shadow-md transition-shadow group relative overflow-hidden">
+<div class="w-20 h-24 bg-surface-container flex flex-col items-center justify-center rounded-lg border border-outline-variant/20 flex-shrink-0">
+<span class="font-label-sm text-label-sm text-primary uppercase">OUT</span>
+<span class="font-headline-md text-headline-md text-on-background">18</span>
+</div>
+<div class="flex-1 py-1">
+<h5 class="font-headline-sm text-headline-sm text-on-background mb-1 group-hover:text-primary transition-colors">Workshop de Kizomba Moderna</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-xs mb-3">
+<span class="material-symbols-outlined text-sm">schedule</span> 15:00 • Kilamba Cultural Center
+                        </p>
+<div class="flex items-center gap-sm">
+<button class="bg-surface-container-highest text-on-surface-variant px-4 py-2 rounded-lg font-label-lg text-label-lg hover:bg-outline-variant/20 transition-colors flex items-center gap-xs"><span class="material-symbols-outlined text-sm">event_available</span> Vou comparecer</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Event Card 3 -->
+<div class="bg-surface-container-lowest p-md rounded-xl flex gap-md shadow-sm border border-outline-variant/10 hover:shadow-md transition-shadow group relative overflow-hidden">
+<div class="w-20 h-24 bg-surface-container flex flex-col items-center justify-center rounded-lg border border-outline-variant/20 flex-shrink-0">
+<span class="font-label-sm text-label-sm text-primary uppercase">NOV</span>
+<span class="font-headline-md text-headline-md text-on-background">05</span>
+</div>
+<div class="flex-1 py-1">
+<h5 class="font-headline-sm text-headline-sm text-on-background mb-1 group-hover:text-primary transition-colors">Exposição Mwana Pwo</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-xs mb-3">
+<span class="material-symbols-outlined text-sm">schedule</span> 09:00 • Museu da Moeda
+                        </p>
+<div class="flex items-center gap-sm">
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-lg font-label-lg text-label-lg hover:bg-primary transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">check_circle</span> Vou comparecer
+                            </button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Rail (Calendário Cultural) -->
+<aside class="w-[340px] p-lg hidden xl:block">
+<div class="glass-card rounded-xxl p-md mb-lg shadow-sm border border-outline-variant/10">
+<div class="flex items-center justify-between mb-md">
+<h6 class="font-label-lg text-label-lg text-on-background">Calendário Cultural</h6>
+<span class="text-primary font-bold text-label-sm">Outubro 2023</span>
+</div>
+<!-- Mini Calendar Grid -->
+<div class="grid grid-cols-7 gap-1 text-center mb-md">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">S</span>
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">T</span>
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Q</span>
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Q</span>
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">S</span>
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">S</span>
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">D</span>
+<!-- Calendar Days -->
+<div class="aspect-square flex items-center justify-center text-label-sm text-on-surface-variant/40">25</div>
+<div class="aspect-square flex items-center justify-center text-label-sm text-on-surface-variant/40">26</div>
+<div class="aspect-square flex items-center justify-center text-label-sm text-on-surface-variant/40">27</div>
+<div class="aspect-square flex items-center justify-center text-label-sm text-on-surface-variant/40">28</div>
+<div class="aspect-square flex items-center justify-center text-label-sm text-on-surface-variant/40">29</div>
+<div class="aspect-square flex items-center justify-center text-label-sm text-on-surface-variant/40">30</div>
+<div class="aspect-square flex items-center justify-center text-label-sm bg-primary-container/10 text-primary font-bold rounded-full">1</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">2</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">3</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">4</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">5</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">6</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">7</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">8</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">9</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">10</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">11</div>
+<div class="aspect-square flex items-center justify-center text-label-sm relative">
+                        12
+                        <span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full"></span>
+</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">13</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">14</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">15</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">16</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">17</div>
+<div class="aspect-square flex items-center justify-center text-label-sm relative">
+                        18
+                        <span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-secondary rounded-full"></span>
+</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">19</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">20</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">21</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">22</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">23</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">24</div>
+<div class="aspect-square flex items-center justify-center text-label-sm">25</div>
+</div>
+<div class="space-y-sm">
+<p class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-xs"><span class="w-2 h-2 rounded-full bg-primary"></span> Eventos em que vou</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-xs"><span class="w-2 h-2 rounded-full bg-secondary"></span> Eventos sugeridos</p>
+</div>
+</div>
+<!-- Trending Categories Bento -->
+<div class="grid grid-cols-2 gap-sm">
+<div class="col-span-2 bg-gradient-to-br from-tertiary-container/30 to-surface-container-high p-md rounded-xl flex flex-col justify-end h-32 relative overflow-hidden group cursor-pointer">
+<span class="material-symbols-outlined absolute -top-2 -right-2 text-6xl opacity-10 group-hover:scale-110 transition-transform">music_note</span>
+<span class="font-label-sm text-label-sm text-on-tertiary-container uppercase mb-1">Populares</span>
+<h6 class="font-label-lg text-label-lg font-bold text-on-tertiary-container">Show de Semba</h6>
+</div>
+<div class="bg-surface-container-low p-md rounded-xl flex flex-col justify-end h-28 hover:bg-surface-container-high transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-primary mb-2">theater_comedy</span>
+<h6 class="font-label-sm text-label-sm font-bold">Teatro</h6>
+</div>
+<div class="bg-surface-container-low p-md rounded-xl flex flex-col justify-end h-28 hover:bg-surface-container-high transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-secondary mb-2">restaurant</span>
+<h6 class="font-label-sm text-label-sm font-bold">Gastronomia</h6>
+</div>
+</div>
+<!-- Suggested Profiles -->
+<div class="mt-lg">
+<h6 class="font-label-lg text-label-lg text-on-background mb-md">Organizadores em Destaque</h6>
+<div class="space-y-sm">
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center overflow-hidden border border-outline-variant/10">
+<img alt="Org Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a stylish Angolan woman with a bright smile, wearing contemporary African jewelry. The background is a soft-focus Luanda city view during the golden hour, perfectly aligning with the warm, premium light-mode UI aesthetic. High-fidelity digital photography with professional lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD13bvSlsHnMTedPkdzJpvRE5z3ua4KnOoMIdfzowEp9gCWVeFIsp5TvMQL-Z2vmxoxebBMCaYfZvHFkGkd_pSZCweOs3B-v_SH2fnRgMeohe19_6rpdSsyfOqGLEDuGnw_R-KCAm5O1s2xAc3uVWfuVBKm1MNsDT78dVHYrpjHNnL1Qw1eo-q10srYLvkUM2TxBT-sr6lfXEhg3LoH8brfNCCWQzhRMTvXvEnAp6zDcM0VvLkEoNlATJTWXb06JXSgiN_lQAc2BmLq">
+</div>
+<div>
+<p class="font-label-sm text-label-sm font-bold"><span class="w-2 h-2 rounded-full bg-primary"></span> Eventos em que vou</p>
+<p class="font-label-sm text-[10px] text-on-surface-variant"><span class="w-2 h-2 rounded-full bg-secondary"></span> Eventos sugeridos</p>
+</div>
+</div>
+<button class="text-primary material-symbols-outlined hover:bg-primary-container/10 p-1 rounded-full transition-all">add_circle</button>
+</div>
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center overflow-hidden border border-outline-variant/10">
+<img alt="Org Avatar" class="w-full h-full object-cover" data-alt="Close-up portrait of an artistic individual with a warm, welcoming expression. They are set against a minimalist white wall with a soft, warm overhead light casting gentle shadows. The style is clean and high-end, representing a modern cultural curator in Angola." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk72jZzx4CM7Zwoq48gNpfPxyShSbvAc0OZ6DcwVkn29leNNvnKEQ7Ri2aFRBAjFCPZWXwMQxCweGv618bAUWjluwThU8ap5TaMddzi24LsR05NhsT8gHj3GPjCxB_r7UEmTc-iSLgGeAoyLkydJnGxb8hV6L_olKIKUHGrXwpnQz7mnRSoIaHN6LuirHYBglbthDOh7F25jpE0nlwF83eaAeog9KbdaYOZwZXBRunYah18AYPcnWZAzFC5XKpB4vHIK6bNzOp9Ekq">
+</div>
+<div>
+<p class="font-label-sm text-label-sm font-bold"><span class="w-2 h-2 rounded-full bg-primary"></span> Eventos em que vou</p>
+<p class="font-label-sm text-[10px] text-on-surface-variant"><span class="w-2 h-2 rounded-full bg-secondary"></span> Eventos sugeridos</p>
+</div>
+</div>
+<button class="text-primary material-symbols-outlined hover:bg-primary-container/10 p-1 rounded-full transition-all">add_circle</button>
+</div>
+</div>
+</div>
+</aside>
+</div>
+<!-- Micro-interaction Scripts -->
+<script>
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+            button.addEventListener('mouseleave', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+
+        // Simple smooth scroll for the events list
+        const mainScroll = document.querySelector('main');
+        mainScroll.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (mainScroll.scrollTop > 20) {
+                header.classList.add('shadow-md');
+                header.classList.remove('shadow-sm');
+            } else {
+                header.classList.add('shadow-sm');
+                header.classList.remove('shadow-md');
+            }
+        });
+    </script>
+
+
+</body></html>

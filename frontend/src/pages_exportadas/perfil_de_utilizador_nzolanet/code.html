@@ -1,0 +1,421 @@
+<!DOCTYPE html><html lang="pt-ao"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#f0bf5c",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#d2c5b1",
+                        "error-container": "#ffdad6",
+                        "background": "#fff8f5",
+                        "secondary-container": "#fe4ea2",
+                        "tertiary-fixed": "#ffdbc7",
+                        "on-tertiary-container": "#592c0a",
+                        "secondary": "#b7056b",
+                        "on-surface-variant": "#4e4637",
+                        "tertiary": "#87512c",
+                        "primary": "#7b5900",
+                        "inverse-surface": "#352f2c",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#201b18",
+                        "surface-bright": "#fff8f5",
+                        "inverse-primary": "#f0bf5c",
+                        "surface-variant": "#ebe0db",
+                        "on-primary-fixed-variant": "#5d4200",
+                        "inverse-on-surface": "#faeee9",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#fdf1ec",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#e3d8d3",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#3e0020",
+                        "outline": "#807665",
+                        "tertiary-fixed-dim": "#feb78a",
+                        "on-primary-container": "#4b3500",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#ebe0db",
+                        "surface-container-high": "#f1e6e1",
+                        "on-tertiary-fixed-variant": "#6b3a17",
+                        "on-tertiary-fixed": "#311300",
+                        "on-secondary-container": "#5c0033",
+                        "on-primary-fixed": "#261900",
+                        "secondary-fixed": "#ffd9e4",
+                        "primary-container": "#c89b3c",
+                        "surface": "#fff8f5",
+                        "tertiary-container": "#d59369",
+                        "surface-container": "#f7ece6",
+                        "secondary-fixed-dim": "#ffb0cc",
+                        "on-secondary-fixed-variant": "#8d0051",
+                        "surface-tint": "#7b5900",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#ffdea4",
+                        "on-surface": "#201b18"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "max-width": "1200px",
+                        "md": "16px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "gutter": "20px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "xs": "4px",
+                        "base": "4px",
+                        "lg": "24px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "label-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #F6F1EA;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #201b18;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(60, 40, 20, 0.08);
+            box-shadow: 0px 4px 20px rgba(60, 40, 20, 0.04);
+        }
+        .bento-item {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .bento-item:hover {
+            transform: translateY(-4px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-xl border-b border-outline-variant dark:border-outline shadow-sm docked full-width top-0 sticky z-50 flex justify-between items-center w-full px-margin-desktop py-2">
+<div class="flex items-center gap-6">
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed">NzolaNet</span>
+<div class="hidden md:flex items-center bg-surface-container rounded-full px-4 py-1.5 gap-2 border border-outline-variant/30">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-lg font-label-lg w-64" placeholder="Pesquisar..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-variant/50 transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+</button>
+<button class="p-2 hover:bg-surface-variant/50 transition-colors rounded-full relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full"></span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
+<img alt="User profile photo" data-alt="A professional close-up portrait of a stylish Angolan woman with a warm smile, wearing modern minimalist jewelry. The lighting is soft and golden, characteristic of a high-end social media profile picture. The background is a soft-focus Luanda cityscape at dusk, maintaining a premium and sophisticated digital aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbFHnBjZ49Xr2TCD-4xdB1ufC93gkWkwaTdBwX2iznPxZe8_naWxa944_rGZLy9obSm6CrMFUi6y1dfyGFly-IY_QShwEJJUilT54va3ViJMWoY0jDKduQZGUyNKeNLzKVNI8TVD9tmNx19cvL0j2eoKnT4dR1DYiwfYhpFSf011m_GOV52VeEAZfzbp3o_0HxUtQF1byqJMzVXJkMqk1vW5JIdWJOEA7T2XX43JkWZqpApQkWoue_DpThUPa9NmpPkWZPkaFpuVDO">
+</div>
+</div>
+</header>
+<div class="flex max-w-max-width mx-auto">
+<!-- SideNavBar (Shared Component) -->
+<aside class="hidden md:flex flex-col h-screen w-64 p-lg bg-surface dark:bg-surface-dim border-r border-outline-variant dark:border-outline fixed left-0 top-0 pt-24 z-40">
+<div class="mb-8 px-4">
+<img alt="NzolaNet Logo" class="w-12 h-auto mb-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMFvfLso0wc9A7BlwPP898eMvmPfgzEeBgiIvdE-sAfikHQnAYTTQWaf0q8QhqLYbK_Yhs0fdpPpbxPXI1a2smE4AI0LSvBnJww8vvbv1RFyteynjaH7-lc7XxNc4wM8LwrVpTLEGNCRZfIJPjT6i86BjqnqEjL3TsQHGHhQRy54xolkKL7L5T5wqEkS7if6RO-9sEQjEBUwajV-0T08lcBPhWGt897GE5BEvjuW-opfvhif87VwWmrHUw6_Ab0QhD9QuU6x964Q3L">
+<h2 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">NzolaNet</h2>
+<p class="text-on-surface-variant text-label-sm font-label-sm">Rede Cultural Angolana</p>
+</div>
+<nav class="flex flex-col h-full gap-2 overflow-y-auto">
+<a class="text-primary font-bold bg-primary-container/20 rounded-xl flex items-center gap-4 px-4 py-3 hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-label-lg font-label-lg">Início</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center gap-4 px-4 py-3 hover:bg-surface-container rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-lg font-label-lg">Perfil</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center gap-4 px-4 py-3 hover:bg-surface-container rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-label-lg font-label-lg">Grupos</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center gap-4 px-4 py-3 hover:bg-surface-container rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="text-label-lg font-label-lg">Mercado</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center gap-4 px-4 py-3 hover:bg-surface-container rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="text-label-lg font-label-lg">Eventos</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center gap-4 px-4 py-3 hover:bg-surface-container rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="library_music">library_music</span>
+<span class="text-label-lg font-label-lg">Kizomba Hub</span>
+</a>
+<button class="mt-8 mx-4 bg-primary text-on-primary py-3 rounded-xl font-bold shadow-md hover:scale-[1.02] active:scale-95 transition-transform">Criar Post</button>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 px-margin-mobile md:px-margin-desktop py-lg w-full max-w-[800px]">
+<!-- Profile Header Section -->
+<section class="glass-card rounded-xxl overflow-hidden mb-lg">
+<!-- Cover Image -->
+<div class="h-48 md:h-64 bg-primary-container relative">
+<img alt="Cover" class="w-full h-full object-cover opacity-60" data-alt="A high-resolution wide shot of a sunset over the Atlantic Ocean in Luanda, Angola. The sky is a gradient of deep orange, soft pink, and warm gold. The silhouette of palm trees and modern coastal architecture creates a peaceful, luxury atmosphere. The image is styled with a subtle film grain and a soft-focus aesthetic to match a premium cultural social network." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChy0Oj1m05TWd51jaAGRbvupAOF1acTFZZOsPzeeomHZjH1ycvQwScUCFLr6P8xMMOzpBQvRZZ0dkCdu-u1TA5Cv9Ay7zRF5MwmFhMa260EJqk5r4gDtgSgkh6I_GRTSpGDcFgZXxfipRsinI2dPyPGhcnRrtbPO3ZnMl5ENGx9Acp0RXgTPyJ_qBehU7z4vSFl73CKdG6JwIA1hrXT8vF1AlV5GZL2OBRBEXyn5qv8aezzBtRL_2QxFLlakblntP2MBvo94UB17i5">
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+<!-- Profile Info -->
+<div class="px-md md:px-lg pb-lg relative">
+<div class="flex flex-col md:flex-row items-end md:items-center justify-between -mt-16 md:-mt-20 gap-4">
+<div class="relative">
+<div class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-surface bg-surface shadow-xl overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="A portrait of a distinguished Angolan man with a confident and creative expression, wearing a high-end linen shirt in earthy tones. The lighting is bright and natural, suggesting an outdoor garden setting. The overall mood is sophisticated and artistic, aligning with the premium brand identity of NzolaNet." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8PsBgWhKqRp4Kc6e4lSA_eJPk9b7Yh2xtxSmKPuJ5gl4XHYfnJskymiN42L0db_xqtE1tP92jMq66T9ssq8WNAGNUJIDWTtZjTREfXIk-NG0sDqhB1pc7ngjefTQXTLmzgktsxO177P1AYOQUj5IhWNrF5wV8Ovrwa_6eJHB8LKVZQsuNJLdHYpwlqL7v0xS91wVbuOGr2rAqYsSBZrN9nGumGLM75lE_OduLkMonV8keK8aRZyJSEArs9mvJyn9ZgoG3Yhhim5OA">
+</div>
+<div class="absolute bottom-2 right-2 bg-primary text-on-primary w-8 h-8 rounded-full flex items-center justify-center border-2 border-surface">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-3 pb-2">
+<button class="bg-primary hover:bg-primary-container text-white px-8 py-2.5 rounded-full font-label-lg text-label-lg transition-all shadow-md active:scale-95 flex items-center gap-2" id="follow-btn" onclick="toggleFollow()">
+<span class="material-symbols-outlined" id="follow-icon">person_add</span>
+<span id="follow-text" class="">Seguir</span>
+</button>
+<button class="bg-surface-container hover:bg-surface-container-high text-on-surface p-2.5 rounded-full border border-outline-variant/50 transition-colors">
+<span class="material-symbols-outlined">mail</span>
+</button>
+<button class="bg-surface-container hover:bg-surface-container-high text-on-surface p-2.5 rounded-full border border-outline-variant/50 transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</div>
+<div class="mt-6">
+<h1 class="font-headline-lg text-headline-lg text-on-background">Mateus Kandengue</h1>
+<p class="text-primary font-label-lg text-label-lg mb-4">@kandengue_art</p>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-xl leading-relaxed">
+                            Arquiteto e entusiasta da Semba. Exploro as raízes de Luanda através da fotografia urbana e do design sustentável. Juntos pela cultura angolana. 🇦🇴✨
+                        </p>
+<div class="flex items-center gap-8 mt-6">
+<div class="flex flex-col">
+<span class="font-bold text-headline-sm text-on-background">12.5k</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Seguidores</span>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-headline-sm text-on-background">842</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">A seguir</span>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-headline-sm text-on-background">156</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Bazes</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Asymmetric Bento Content Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Large Featured Post -->
+<article class="md:col-span-8 bento-item glass-card rounded-xl overflow-hidden flex flex-col">
+<div class="relative aspect-video">
+<img alt="Post" class="w-full h-full object-cover" data-alt="A vibrant and detailed close-up of a traditional Angolan mask with intricate hand-carved textures and earthy pigments. The lighting highlights the craftsmanship and cultural history. The background is a clean, minimalist studio setting that allows the textures and the warm ocre and clay colors to stand out, reflecting a high-fidelity art gallery feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi9vlojcbIu0gzbbPrYojBLPCGTisdQG4rCxzIQbve8S0LLrYpTE1Mr32bRGtAtD6idNFBxGRrvhsyEm2-NckTY9CWQK8L2oSbMAWfcDx6YlNRKc2d7qp7f9VVfncKfVOHFojgc2uih-GcDoSGZU5FHJORy6Ks5FCMQnb4hDMTRmhbMT79Ke9eBEja0aBvvIs5akOjtdJ75tlKDCnZOgaoUtS5Ww6mTFl9IRbn52FTmDCDTp9LuV725cWYrK79dMOuLjyZ6WGHyoWI">
+<div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md rounded-full px-3 py-1 text-white text-label-sm">Cultura</div>
+</div>
+<div class="p-lg">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-primary text-[18px]">calendar_today</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Postado há 2 horas</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-2">A resiliência das máscaras Mwana Pwo</h3>
+<p class="text-body-md font-body-md text-on-surface-variant line-clamp-2">
+                            Recentemente visitei a oficina de artesãos locais no Dundo e a profundidade espiritual de cada talha é simplesmente inspiradora...
+                        </p>
+<div class="flex justify-between items-center mt-6">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-primary-container"></div>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-secondary-container"></div>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-tertiary-container"></div>
+<span class="pl-4 text-label-sm text-on-surface-variant">+42 Bazes</span>
+</div>
+<button class="text-primary font-label-lg flex items-center gap-1 hover:underline">
+                                Ver mais <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Market Highlight -->
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<div class="bento-item bg-gradient-to-br from-secondary to-on-secondary-fixed-variant p-lg rounded-xl text-white shadow-lg flex flex-col justify-between h-full min-h-[220px]">
+<div>
+<div class="bg-white/20 w-fit p-2 rounded-lg mb-4">
+<span class="material-symbols-outlined">storefront</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm">Nzola Market</h4>
+<p class="text-label-sm opacity-90 mt-1">Produtos artesanais de Mateus</p>
+</div>
+<button class="bg-white text-secondary py-2 rounded-lg font-bold text-label-lg w-full mt-4">Ver Loja</button>
+</div>
+<!-- Statistics / Badges -->
+<div class="bento-item glass-card p-lg rounded-xl flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-fixed-dim flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed-variant">emoji_events</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-label-sm uppercase">Influenciador</p>
+<p class="font-bold text-body-lg">Curador de Arte</p>
+</div>
+</div>
+</div>
+<!-- Gallery Section -->
+<div class="md:col-span-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="aspect-square rounded-xl overflow-hidden bento-item">
+<img alt="Gallery" class="w-full h-full object-cover" data-alt="A minimalist architectural photograph of a modern building in Luanda, featuring sharp geometric lines and a warm sandstone facade. The clear blue sky provides a high-contrast background. The composition is clean and professional, emphasizing the intersection of modern design and Angolan sunshine." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm0edymsaWQPA5TYt1w6rQfQFFN6HCa7Pnd_yyZR-dXU6nFfj-W9JXt9dXgn8PUBKmjg_Rbyp7YCY1oJf6j00r-bG2bbKbzavSzrWiYAG9815bufJMvovc3ZpCZqLNsd3SawBLFpldHJPBv9WMswCv_G-bEipRGL8cGcwY4Wvt19X_jvc2O9mbsj4eq4HCbZo-SgxO-UhPTkhxgIYuvWDejO8nwLKJaaWNKTIbmUQ1Bym_mwdyQm8js8Ok1vu3CCLmO6Ox8dNnkXBm">
+</div>
+<div class="aspect-square rounded-xl overflow-hidden bento-item">
+<img alt="Gallery" class="w-full h-full object-cover" data-alt="A lifestyle shot of a woman dancing Kizomba in a sunlit courtyard. The movement is blurred slightly to create a sense of energy and flow. The colors are warm and earthy, with golden highlights on the skin and traditional fabrics, fitting the cultural soul of the NzolaNet platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC58B2MgsnkacS6qjkIQt1f2USd3nJlA6xPFiddpcY_YuvQl9gLAany6-70JLQ3NHmXrIW8yihdjAqxrz8Y1is2J0aFt2dYYSkxkAvzIw7_InS6AHxTBdjoP5UzNWTeLQQ56Cm28kLcnVajx-ogMhrY406CIBEu5LtdRYu0JaVi4-n_rFJhQkf0-MOI68VY9cSHXU9Q2MuQgi57lVStcmW9bxy_G3Dumedk1O3W7XJqIvgciKQ_83PjbXv2XxhAtOGAQM8kfUEUurQo">
+</div>
+<div class="aspect-square rounded-xl overflow-hidden bento-item">
+<img alt="Gallery" class="w-full h-full object-cover" data-alt="An artistic flat lay of Angolan cultural artifacts including a small wood carving, a piece of colorful textile, and a modern smartphone showing the NzolaNet app. The lighting is soft and top-down, creating a premium and curated aesthetic for an influencer's profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq62T1bJoH0HgvwRa9huhyHotIQefauAqldKoIfp-9eAeqSnpyh0wrDrYRBvgRc0wgClfogW8XLqJv39kg-GPfSprubpZkRXXPqef2Khs4lNewokS8Mc9SqQ_a5ehXKPXfUHEhI3rRzh9AY0KjFhlIVoxC_DSl11FOaPSXkq2cZZNCA64LbmdSJZs7UNH5ebAlrYs3WZJwAaoOx6FaeUOjWPu0_M6O2ZqeGBrI8IfWVNl8ytDObsKNV6i3s9k6vO7iVQ9SYILm-_6n">
+</div>
+<div class="aspect-square rounded-xl overflow-hidden bento-item group relative">
+<img alt="Gallery" class="w-full h-full object-cover" data-alt="A portrait of two friends laughing together in a modern Angolan cafe. The atmosphere is warm, social, and vibrant. High-end lighting and a shallow depth of field make the subjects pop against the blurred, sophisticated background of the urban setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMgmt2NsJRWCh_NSnGh0rJTBSgWm4tY3X8vIqNg16dq_BjZBAsWtiy1tgOZOwNZMD4Oq7dOWSw1nfn_NI8tPACIxmwUgfWx5uYl5SczX-26kN3MUAWiGgbkhFWnuetgweTlIgryXbGV3s6wN4rI79rKNsPVk-bwaiOgcVPz6EGQwpgECEQrJ__gfrWw0cvVRTNF78lKoHotDOXj_rvLVuhbDTSZltwrnKJvphYfUfhGqjbPfLfSsor6j_q71A8Il7CoHa9ghU66Ksx">
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-white font-bold text-headline-sm">+12</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Rail / Suggestions -->
+<aside class="hidden lg:block w-80 p-lg sticky top-24 h-fit">
+<div class="glass-card rounded-xl p-md mb-lg">
+<h4 class="font-label-lg text-label-lg text-on-surface mb-4">Sugestões para ti</h4>
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden">
+<img alt="Sug" data-alt="A simple, clean profile avatar of a smiling young creator. Professional lighting and a neutral background ensure the focus remains on the person's friendly and welcoming expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD57jR0b_NZ26XeV-tGCXucrSrQOwspPVBOvHmubU20PFMnqioWPVMMNUMj4kzz_Q-ANT8uJplh-6e6V5c33kxeALZbeA4Q2poDdcP-e8WpCFq4kWXr2dyxfusgkIZa9C3afEjvCU95127y21v_-AQvL2afILJR_0DalAjYfcINczAldp1JTGdBPIggVqfSTNEf4rkj1YK8_LKs2E4jN7NHMNKR6cR97QbH_JhePfnx0jcfbMSqCmCNo1dloZLDNKCrkdLqYdc-oCiN">
+</div>
+<div>
+<p class="text-label-lg font-bold">Avelina Cruz</p>
+<p class="text-label-sm text-on-surface-variant">Escritora</p>
+</div>
+</div>
+<button class="text-primary font-bold text-label-sm">Seguir</button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden">
+<img alt="Sug" data-alt="A clean, minimalist portrait of a man in a professional setting. The image uses soft natural light and a high-end photographic style, suitable for a professional network member profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgqhjV9GhNjaOxt2Z2MVTK1Aqs6sESAGcTkH3piamzdd2apsRqdtgVb-VTHy4xeqH2E5eUYl0KWXnQ0-l5_sZQRA1c53vKHNbblJ4VT2-zWwJnU9dlt01o6tOZ2vjopTMUyHRu0DW2S--oTX6qW1dpms6AyOvphdVeqbSGXoWY5CHGoVf1hMroO0Bj8WXqoJOJ7KBF09LJa3dGRpCr2ci9--rLDzZ4I7HDcRjQvxnFAGI0AzisSEJh7reqQGbMwwImgV_TKlz4vPo_">
+</div>
+<div>
+<p class="text-label-lg font-bold">Tiago Neto</p>
+<p class="text-label-sm text-on-surface-variant">Produtor</p>
+</div>
+</div>
+<button class="text-primary font-bold text-label-sm">Seguir</button>
+</div>
+</div>
+<button class="w-full mt-6 text-on-surface-variant text-label-sm font-label-sm border-t border-outline-variant/30 pt-4 hover:text-primary transition-colors">
+                    Ver todos os amigos
+                </button>
+</div>
+<div class="glass-card rounded-xl p-md">
+<h4 class="font-label-lg text-label-lg text-on-surface mb-4">Trending em Luanda</h4>
+<div class="space-y-4">
+<div>
+<p class="text-label-sm text-on-surface-variant">#CulturaAngolana</p>
+<p class="text-label-lg font-bold">2.4k Bazes</p>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">#LuandaModerna</p>
+<p class="text-label-lg font-bold">1.8k Bazes</p>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">#SembaFlow</p>
+<p class="text-label-lg font-bold">950 Bazes</p>
+</div>
+</div>
+</div>
+</aside>
+</div>
+<!-- Mobile Bottom Navigation (Shared Component Logic) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-xl border-t border-outline-variant/30 flex justify-around py-3 px-4 z-50">
+<button class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold">Início</span>
+</button>
+<button class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px]">Grupos</span>
+</button>
+<button class="flex flex-col items-center text-on-surface-variant">
+<div class="bg-primary text-on-primary p-2 rounded-full -mt-8 shadow-lg border-4 border-background">
+<span class="material-symbols-outlined">add</span>
+</div>
+</button>
+<button class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">storefront</span>
+<span class="text-[10px]">Mercado</span>
+</button>
+<button class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px]">Perfil</span>
+</button>
+</nav>
+<script>
+        let isFollowing = false;
+        const followBtn = document.getElementById('follow-btn');
+        const followText = document.getElementById('follow-text');
+        const followIcon = document.getElementById('follow-icon');
+
+        function toggleFollow() {
+            isFollowing = !isFollowing;
+            if (isFollowing) {
+                followBtn.classList.remove('bg-primary', 'text-white');
+                followBtn.classList.add('bg-transparent', 'text-on-background', 'border', 'border-outline');
+                followText.textContent = 'A Seguir';
+                followIcon.textContent = 'person_check';
+                followBtn.style.boxShadow = 'none';
+            } else {
+                followBtn.classList.add('bg-primary', 'text-white');
+                followBtn.classList.remove('bg-transparent', 'text-on-background', 'border', 'border-outline');
+                followText.textContent = 'Seguir';
+                followIcon.textContent = 'person_add';
+                followBtn.style.boxShadow = '0px 4px 20px rgba(60, 40, 20, 0.04)';
+            }
+        }
+
+        // Lightweight hover effect for bento items
+        document.querySelectorAll('.bento-item').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+            });
+        });
+    </script>
+
+
+</body></html>

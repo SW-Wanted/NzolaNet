@@ -1,0 +1,23 @@
+@import '../telas.css';
+
+.sugestao-cartao {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (max-width: 560px) {
+  .sugestao-cartao {
+    grid-template-columns: 1fr;
+  }
+}
+
+.aviso-sucesso {
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--cor-primaria-fixo);
+  color: var(--cor-no-container-primaria);
+  font-weight: 700;
+}

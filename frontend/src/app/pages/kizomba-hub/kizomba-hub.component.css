@@ -1,0 +1,33 @@
+@import '../telas.css';
+
+.hero-kizomba {
+  min-height: 240px;
+  align-items: center;
+}
+
+.palco-video {
+  min-height: 520px;
+}
+
+.palco-video .imagem-destaque {
+  height: 390px;
+}
+
+.miniatura-video {
+  width: 96px;
+  height: 70px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.botao-aula {
+  width: 100%;
+  padding: 0;
+  color: inherit;
+  text-align: left;
+}
+
+.detalhe-aula {
+  display: grid;
+  gap: 16px;
+}

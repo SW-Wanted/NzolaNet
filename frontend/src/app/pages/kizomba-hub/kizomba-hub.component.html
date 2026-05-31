@@ -1,0 +1,82 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <div class="conteudo-limite">
+          <header class="cabecalho-pagina hero-kizomba">
+            <div>
+              <span class="rotulo-seccao">Kizomba Hub</span>
+              <h1 class="titulo-pagina">Aprenda, assista e celebre a dança angolana</h1>
+              <p class="descricao-pagina">
+                Uma área dedicada a vídeos, aulas, playlists e directos ligados à Kizomba, Semba
+                e aos movimentos culturais de Luanda.
+              </p>
+            </div>
+            <button class="botao-destaque" type="button" (click)="continuar()"><span class="material-symbols-outlined">play_arrow</span>Continuar</button>
+          </header>
+
+          <div class="grelha-bento">
+            <article class="cartao palco-video">
+              <img
+                alt="Dançarinos em palco de Kizomba"
+                class="imagem-destaque"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQyCxYTrGTvudis_SU_kdT9jUuVWq9DN-Mkuj80cvluFlQF_565vx4GgHaAK-XfZYyy3lTPnUL1Dn04JwIAtU_ALs9X6meSm-XmSmdhAo_rK5sw3QMuXMfVoRCjdXzDsfVk_94wf_3FQBJfyyODaOftfvffHm9mOkzLy0Kb3muxoQEgiQ4PVNfUnhqWthga2o6ik9cSGgaqGWDM2LyMW_fV31hCRCEmOu-Liyrzf69ykPU6q664BnRGN2AR5DxPywt0jOx77M-v40H"
+              />
+              <div class="conteudo-cartao">
+                <span class="pilula pilula-secundaria">Ao vivo</span>
+                <h2 class="titulo-cartao">Festival Internacional de Kizomba</h2>
+                <p class="texto-cartao">Transmissão premium com comentários e destaques da comunidade.</p>
+              </div>
+            </article>
+
+            <aside class="coluna">
+              <div class="cartao cartao-preenchido">
+                <h2 class="titulo-cartao">Aulas em destaque</h2>
+                <div class="lista-vertical">
+                  @for (aula of aulas; track aula.titulo) {
+                    <button class="item-lista botao-aula" type="button" (click)="aulaActual.set(aula)">
+                      <img [alt]="aula.titulo" class="miniatura-video" [src]="aula.imagem" />
+                      <div>
+                        <strong>{{ aula.titulo }}</strong>
+                        <p class="texto-cartao">{{ aula.tempo }}</p>
+                      </div>
+                    </button>
+                  }
+                </div>
+              </div>
+              <div class="cartao cartao-preenchido">
+                <h2 class="titulo-cartao">Playlists</h2>
+                <div class="grupo-botoes">
+                  <span class="pilula">Kizomba clássica</span>
+                  <span class="pilula">Semba moderno</span>
+                  <span class="pilula">Tarraxinha</span>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<nav class="navegacao-inferior">
+  <a routerLink="/feed"><span class="material-symbols-outlined">home</span>Início</a>
+  <a class="ativo" routerLink="/kizomba-hub"><span class="material-symbols-outlined">library_music</span>Hub</a>
+  <a routerLink="/eventos"><span class="material-symbols-outlined">event</span>Eventos</a>
+  <a routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
+</nav>
+
+<app-modal titulo="Aula de Kizomba" [aberto]="aulaActual() !== null" (fechar)="aulaActual.set(null)">
+  @if (aulaActual(); as aula) {
+    <article class="detalhe-aula">
+      <img [alt]="aula.titulo" class="imagem-cartao" [src]="aula.imagem" />
+      <span class="pilula pilula-secundaria">{{ aula.tempo }}</span>
+      <h3 class="titulo-cartao">{{ aula.titulo }}</h3>
+      <p class="texto-cartao">Player simulado pronto para integração com serviço de vídeo.</p>
+      <button class="botao-destaque" type="button" (click)="aulaActual.set(null)">Concluir aula</button>
+    </article>
+  }
+</app-modal>

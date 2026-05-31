@@ -1,0 +1,239 @@
+<!DOCTYPE html><html lang="pt"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-morphism {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px border rgba(60, 40, 20, 0.08);
+        }
+        .shadow-premium {
+            box-shadow: 0px 12px 40px rgba(60, 40, 20, 0.12);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#4e4637",
+                        "tertiary-fixed-dim": "#feb78a",
+                        "on-secondary-container": "#5c0033",
+                        "tertiary-container": "#d59369",
+                        "surface-container": "#f7ece6",
+                        "primary-fixed": "#ffdea4",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#f1e6e1",
+                        "surface-tint": "#7b5900",
+                        "primary-fixed-dim": "#f0bf5c",
+                        "surface-bright": "#fff8f5",
+                        "on-tertiary-container": "#592c0a",
+                        "on-secondary-fixed-variant": "#8d0051",
+                        "on-secondary-fixed": "#3e0020",
+                        "surface": "#fff8f5",
+                        "inverse-surface": "#352f2c",
+                        "outline-variant": "#d2c5b1",
+                        "on-primary-container": "#4b3500",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#ffd9e4",
+                        "on-tertiary-fixed": "#311300",
+                        "inverse-on-surface": "#faeee9",
+                        "surface-container-highest": "#ebe0db",
+                        "surface-container-low": "#fdf1ec",
+                        "primary-container": "#c89b3c",
+                        "on-background": "#201b18",
+                        "secondary-fixed-dim": "#ffb0cc",
+                        "on-error-container": "#93000a",
+                        "background": "#fff8f5",
+                        "inverse-primary": "#f0bf5c",
+                        "on-surface": "#201b18",
+                        "outline": "#807665",
+                        "tertiary": "#87512c",
+                        "secondary": "#b7056b",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#5d4200",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffdbc7",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#ebe0db",
+                        "surface-dim": "#e3d8d3",
+                        "secondary-container": "#fe4ea2",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#261900",
+                        "primary": "#7b5900",
+                        "on-tertiary-fixed-variant": "#6b3a17"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "margin-desktop": "40px",
+                        "xs": "4px",
+                        "max-width": "1200px",
+                        "xl": "32px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "gutter": "20px",
+                        "base": "4px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "label-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<!-- Blurred Background Content (Simulated Feed/Profile) -->
+<div class="fixed inset-0 flex">
+<!-- SideNav Anchor Component -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-surface-container-low shadow-sm flex flex-col py-lg px-md z-10">
+<div class="mb-xxl px-sm">
+<img alt="NzolaNet Logo" class="h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpLIT9lYZQLmvSQlcMOK-B4MbG8aIta0GyIsHF66iaU1UPYoH_Exb548a15rlO790IyNeA4DZS2eQmBmx1kljBsMNWHixAXijZutdx_lg85myKurk2IXtcx-m4yuZEjs2ZU7G01l8I4UDYMHWvgxLm17f-ii1RS8yILAa3W7EeVVdbt3eCXYfqDyjrUQsylL8ZWBJ3YY-kdK4JTXijdYem69O6H6Y4sCIOa-0-qlT830nc1zA3oFkLZm3HLucH_2RbqoNae4FeqCGY">
+</div>
+<nav class="flex-1 space-y-sm">
+<div class="flex items-center gap-md p-md rounded-xl text-primary font-bold border-r-4 border-primary bg-surface-container-high transition-all">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-lg text-label-lg">Incio</span>
+</div>
+<div class="flex items-center gap-md p-md rounded-xl text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-lg text-label-lg">Perfil</span>
+</div>
+<div class="flex items-center gap-md p-md rounded-xl text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-lg text-label-lg">Grupos</span>
+</div>
+<div class="flex items-center gap-md p-md rounded-xl text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-label-lg text-label-lg">Mercado</span>
+</div>
+<div class="flex items-center gap-md p-md rounded-xl text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="event">event</span>
+<span class="font-label-lg text-label-lg">Eventos</span>
+</div><div class="flex items-center gap-md p-md rounded-xl text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span class="font-label-lg text-label-lg">Kizomba Hub</span>
+</div></nav>
+</aside>
+<!-- Main Content Area (Blurred) -->
+<main class="ml-64 flex-1 p-margin-desktop space-y-lg blur-[2px] opacity-40">
+<header class="flex justify-between items-center mb-xl">
+<h1 class="font-headline-lg text-headline-lg">Feed Recente</h1>
+<div class="flex gap-md">
+<div class="bg-surface-container-high h-12 w-12 rounded-full"></div>
+<div class="bg-surface-container-high h-12 w-64 rounded-full"></div>
+</div>
+</header>
+<!-- Bento Grid Content Simulation -->
+<div class="grid grid-cols-12 gap-gutter max-w-[1200px]">
+<div class="col-span-8 space-y-lg">
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-[0px_4px_20px_rgba(60,40,20,0.04)] h-64"></div>
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-[0px_4px_20px_rgba(60,40,20,0.04)] h-96"></div>
+</div>
+<div class="col-span-4 space-y-lg">
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-[0px_4px_20px_rgba(60,40,20,0.04)] h-48"></div>
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-[0px_4px_20px_rgba(60,40,20,0.04)] h-80"></div>
+</div>
+</div>
+</main>
+</div>
+<!-- Modal Overlay (Backdrop) -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-on-background/20 backdrop-blur-sm transition-opacity duration-300" id="modal-overlay" style="opacity: 1;">
+<!-- Success Modal -->
+<div aria-labelledby="modal-title" aria-modal="true" class="relative w-full max-w-[520px] bg-surface-container-lowest rounded-[1rem] shadow-premium p-xxl flex flex-col items-center text-center transform transition-all scale-100 duration-300" role="dialog" style="transform: scale(1);">
+<!-- Close Button (Top Right) -->
+<button class="absolute top-lg right-lg text-on-surface-variant hover:bg-surface-container-high p-xs rounded-full transition-colors" onclick="closeModal()">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<!-- Success Icon Section -->
+<div class="mb-xl">
+<div class="w-24 h-24 bg-primary-fixed rounded-full flex items-center justify-center animate-pulse">
+<span class="material-symbols-outlined text-primary text-[48px]" data-icon="check_circle" style="font-variation-settings: 'wght' 600;">check_circle</span>
+</div>
+</div>
+<!-- Content Section -->
+<div class="space-y-md mb-xxl">
+<h2 class="font-headline-md text-headline-md text-on-surface" id="modal-title">
+                    Ação Realizada com Sucesso!
+                </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant px-md">
+                    A tua operação foi concluída. Agora podes continuar a navegar e explorar a plataforma.
+                </p>
+</div>
+<!-- Action Button -->
+<button class="w-full bg-primary-container text-on-primary font-label-lg text-label-lg py-md rounded-full shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200" onclick="closeModal()">
+                Continuar
+            </button>
+<!-- Decorative Subtle Pattern -->
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary-fixed to-transparent opacity-30"></div>
+</div>
+</div>
+<script>
+        function closeModal() {
+            const overlay = document.getElementById('modal-overlay');
+            const modal = overlay.querySelector('div');
+            
+            // Outward animation
+            modal.style.transform = 'scale(0.95)';
+            overlay.style.opacity = '0';
+            
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                // Optional: Restore main content focus/blur
+                document.querySelector('main').classList.remove('blur-[2px]', 'opacity-40');
+            }, 300);
+        }
+
+        // Entrance animation trigger
+        window.addEventListener('DOMContentLoaded', () => {
+            const overlay = document.getElementById('modal-overlay');
+            const modal = overlay.querySelector('div');
+            
+            overlay.style.opacity = '0';
+            modal.style.transform = 'scale(0.9)';
+            
+            requestAnimationFrame(() => {
+                overlay.style.opacity = '1';
+                modal.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+
+
+</body></html>
