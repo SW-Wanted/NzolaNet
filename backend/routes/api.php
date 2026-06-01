@@ -16,7 +16,8 @@ Route::get('/', fn () => response()->json([
     'data' => [
         'name' => 'NzolaNet API',
         'version' => '1.0.0',
-        'documentation' => 'docs/openapi/nzolanet.yaml',
+        'documentation' => url('/docs'),
+        'openapi' => url('/docs/openapi.yaml'),
     ],
 ]));
 

@@ -101,11 +101,23 @@ Se ainda não existir:
 cp .env.example .env
 ```
 
-Gera a chave da aplicação:
+Gera a chave da aplicação (duas opções):
 
+# Opção A — local (usar se vai executar `artisan` no host)
 ```bash
+composer install
+cp .env.example .env
 php artisan key:generate
 ```
+
+# Opção B — recomendado com Docker: gere a chave dentro do container
+```bash
+cp .env.example .env
+docker compose up -d --build
+docker compose exec php-fpm php artisan key:generate --force
+```
+
+Nota: se preferires executar `php artisan` no host, garante que já correste `composer install` na pasta `backend/`. O fluxo Docker já instala dependências durante o build da imagem, mas o bind-mount do código (`.:/var/www/html`) pode sobrescrever o `vendor/` que foi gerado na imagem — veja a secção "Voltar dependências vs Docker" abaixo.
 
 ### 2. Subir com Docker
 
@@ -191,7 +203,9 @@ No Docker:
 ```bash
 docker compose exec php-fpm php artisan migrate --seed
 docker compose exec php-fpm php artisan migrate:fresh --seed
-docker compose exec php-fpm php artisan db:show
+# Nota: `php artisan db:show` não é um comando padrão do Laravel — pode ser personalizado neste projecto.
+# Se não existir, use `migrate:status` ou entre no container `mysql` e inspeccione a base de dados.
+docker compose exec php-fpm php artisan migrate:status
 docker compose exec php-fpm php artisan tinker
 ```
 
@@ -347,6 +361,21 @@ Podes abrir esse ficheiro em:
 - Postman Import
 - Insomnia Import
 
+Para abrir a interface de testes (Swagger UI) já integrada e visível no navegador, depois de levantar os serviços com Docker, execute:
+
+```bash
+# Linux (abre o browser padrão)
+xdg-open http://localhost:8000/docs || true
+
+# macOS
+open http://localhost:8000/docs || true
+
+# Windows (PowerShell)
+start http://localhost:8000/docs || true
+```
+
+Isto abre `http://localhost:8000/docs` que carrega o `docs/openapi/nzolanet.yaml` na Swagger UI (botão "Authorize" disponível para Bearer token).
+
 Se quiseres testar manualmente pela coleção gerada, importa o YAML e usa o token Bearer obtido no login.
 
 ## Testes
@@ -400,6 +429,10 @@ docker compose exec php-fpm php artisan config:clear
 docker compose exec php-fpm php artisan cache:clear
 docker compose exec php-fpm php artisan route:clear
 docker compose exec php-fpm php artisan view:clear
+
+# Nota sobre dependências e `vendor/`:
+# - Se preferires executar `artisan` no host, corre `composer install` localmente antes.
+# - Se preferires o fluxo Docker (recomendado), usa `docker compose up -d --build` e execute `docker compose exec php-fpm ...` para todos os comandos `artisan`.
 ```
 
 ## Guia de Uso Rápido
