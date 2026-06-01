@@ -1,0 +1,660 @@
+openapi: 3.0.3
+info:
+  title: NzolaNet API
+  version: 1.0.0
+  description: API REST da rede social NzolaNet para autenticacao, perfis, publicacoes, bazes, comentarios, feed, notificacoes e moderacao.
+servers:
+  - url: http://localhost:8080/api
+security:
+  - bearerAuth: []
+tags:
+  - name: Auth
+  - name: Users
+  - name: Posts
+  - name: Likes
+  - name: Comments
+  - name: Feed
+  - name: Notifications
+  - name: Admin
+paths:
+  /auth/register:
+    post:
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: Utilizador registado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /auth/login:
+    post:
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login realizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /auth/forgot-password:
+    post:
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /auth/reset-password:
+    post:
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token, email, password, password_confirmation]
+              properties:
+                token:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 8
+                password_confirmation:
+                  type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /auth/me:
+    get:
+      tags: [Auth]
+      responses:
+        '200':
+          $ref: '#/components/responses/UserSuccess'
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      responses:
+        '200':
+          description: Token renovado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /auth/logout:
+    post:
+      tags: [Auth]
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /users/{id}:
+    get:
+      tags: [Users]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserSuccess'
+  /users/profile:
+    put:
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserSuccess'
+  /users/profile-photo:
+    post:
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [photo]
+              properties:
+                photo:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          $ref: '#/components/responses/UserSuccess'
+  /users/{id}/follow:
+    post:
+      tags: [Users]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+    delete:
+      tags: [Users]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /users/{id}/followers:
+    get:
+      tags: [Users]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserCollectionSuccess'
+  /users/{id}/following:
+    get:
+      tags: [Users]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserCollectionSuccess'
+  /posts:
+    get:
+      tags: [Posts]
+      parameters:
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          $ref: '#/components/responses/PostCollectionSuccess'
+    post:
+      tags: [Posts]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostWriteRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/PostSuccess'
+  /posts/{id}:
+    get:
+      tags: [Posts]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/PostSuccess'
+    put:
+      tags: [Posts]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostUpdateRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/PostSuccess'
+    delete:
+      tags: [Posts]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /posts/{id}/like:
+    post:
+      tags: [Likes]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '201':
+          $ref: '#/components/responses/LikeSuccess'
+    delete:
+      tags: [Likes]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/LikeSuccess'
+  /posts/{id}/comments:
+    get:
+      tags: [Comments]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          $ref: '#/components/responses/CommentCollectionSuccess'
+    post:
+      tags: [Comments]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentWriteRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CommentSuccess'
+  /comments/{id}:
+    put:
+      tags: [Comments]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentWriteRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CommentSuccess'
+    delete:
+      tags: [Comments]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /feed:
+    get:
+      tags: [Feed]
+      parameters:
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          $ref: '#/components/responses/PostCollectionSuccess'
+  /feed/following:
+    get:
+      tags: [Feed]
+      parameters:
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          $ref: '#/components/responses/PostCollectionSuccess'
+  /notifications:
+    get:
+      tags: [Notifications]
+      parameters:
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          $ref: '#/components/responses/NotificationCollectionSuccess'
+  /notifications/{id}/read:
+    patch:
+      tags: [Notifications]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/NotificationSuccess'
+  /admin/comments/{id}:
+    delete:
+      tags: [Admin]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Sanctum
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    PerPage:
+      name: per_page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 15
+  responses:
+    Success:
+      description: Operacao realizada com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiSuccess'
+    UserSuccess:
+      description: Utilizador
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ApiSuccess'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+    UserCollectionSuccess:
+      description: Lista paginada de utilizadores
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaginatedUsers'
+    PostSuccess:
+      description: Publicacao
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ApiSuccess'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Post'
+    PostCollectionSuccess:
+      description: Lista paginada de publicacoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaginatedPosts'
+    CommentSuccess:
+      description: Comentario
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ApiSuccess'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Comment'
+    CommentCollectionSuccess:
+      description: Lista paginada de comentarios
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaginatedComments'
+    NotificationSuccess:
+      description: Notificacao
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ApiSuccess'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Notification'
+    NotificationCollectionSuccess:
+      description: Lista paginada de notificacoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaginatedNotifications'
+    LikeSuccess:
+      description: Contagem de bazes
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ApiSuccess'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      likes_count:
+                        type: integer
+  schemas:
+    ApiSuccess:
+      type: object
+      required: [success, message, data]
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+        data:
+          nullable: true
+    ApiError:
+      type: object
+      required: [success, message, errors]
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+        errors:
+          type: object
+    RegisterRequest:
+      type: object
+      required: [name, email, password, password_confirmation]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        password_confirmation:
+          type: string
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+    UpdateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        bio:
+          type: string
+          nullable: true
+        is_private:
+          type: boolean
+    PostWriteRequest:
+      type: object
+      required: [content]
+      properties:
+        content:
+          type: string
+        image:
+          type: string
+          format: binary
+        video:
+          type: string
+          format: binary
+    PostUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/PostWriteRequest'
+        - type: object
+          properties:
+            remove_image:
+              type: boolean
+            remove_video:
+              type: boolean
+    CommentWriteRequest:
+      type: object
+      required: [content]
+      properties:
+        content:
+          type: string
+    AuthResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiSuccess'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                user:
+                  $ref: '#/components/schemas/User'
+                access_token:
+                  type: string
+                token_type:
+                  type: string
+                  example: Bearer
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+          nullable: true
+        profile_photo:
+          type: string
+          nullable: true
+        profile_photo_url:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        is_private:
+          type: boolean
+        role:
+          type: string
+          enum: [user, admin]
+        followers_count:
+          type: integer
+        following_count:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+        author:
+          $ref: '#/components/schemas/User'
+        author_name:
+          type: string
+        author_photo:
+          type: string
+          nullable: true
+        published_at:
+          type: string
+          format: date-time
+        content:
+          type: string
+        image_url:
+          type: string
+          nullable: true
+        video_url:
+          type: string
+          nullable: true
+        likes_count:
+          type: integer
+        comments_count:
+          type: integer
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        post_id:
+          type: integer
+        author:
+          $ref: '#/components/schemas/User'
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    Notification:
+      type: object
+      properties:
+        id:
+          type: integer
+        recipient_id:
+          type: integer
+        sender:
+          $ref: '#/components/schemas/User'
+        type:
+          type: string
+          enum: [follow, like, comment]
+        data:
+          type: object
+        is_read:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+    PaginationEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/ApiSuccess'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items: {}
+                links:
+                  type: object
+                meta:
+                  type: object
+    PaginatedUsers:
+      allOf:
+        - $ref: '#/components/schemas/PaginationEnvelope'
+    PaginatedPosts:
+      allOf:
+        - $ref: '#/components/schemas/PaginationEnvelope'
+    PaginatedComments:
+      allOf:
+        - $ref: '#/components/schemas/PaginationEnvelope'
+    PaginatedNotifications:
+      allOf:
+        - $ref: '#/components/schemas/PaginationEnvelope'
