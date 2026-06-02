@@ -23,9 +23,18 @@
       }
       <input class="campo-formulario" formControlName="senha" placeholder="Senha" type="password" />
       @if (submetido && formulario.controls.senha.invalid) {
-        <span class="mensagem-campo">A senha deve ter pelo menos 6 caracteres.</span>
+        <span class="mensagem-campo">A senha deve ter pelo menos 8 caracteres.</span>
       }
-      <button class="botao-destaque" type="submit">Registar</button>
+      @if (erroApi) {
+        <span class="mensagem-campo">{{ erroApi }}</span>
+      }
+      <button class="botao-destaque" type="submit" [disabled]="emSubmissao">
+        @if (emSubmissao) {
+          A registar...
+        } @else {
+          Registar
+        }
+      </button>
       <p class="texto-cartao">Já tem conta? <a routerLink="/entrar">Entrar</a></p>
     </form>
   </section>

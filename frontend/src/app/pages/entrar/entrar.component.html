@@ -21,7 +21,16 @@
       @if (submetido && formulario.controls.senha.invalid) {
         <span class="mensagem-campo">A senha deve ter pelo menos 6 caracteres.</span>
       }
-      <button class="botao-destaque" type="submit">Entrar</button>
+      @if (erroApi) {
+        <span class="mensagem-campo">{{ erroApi }}</span>
+      }
+      <button class="botao-destaque" type="submit" [disabled]="emSubmissao">
+        @if (emSubmissao) {
+          A entrar...
+        } @else {
+          Entrar
+        }
+      </button>
       <a class="botao-fantasma" routerLink="/recuperar-senha">Esqueceu a senha?</a>
       <p class="texto-cartao">Ainda não tem conta? <a routerLink="/registo">Criar conta</a></p>
     </form>
