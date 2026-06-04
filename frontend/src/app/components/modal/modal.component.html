@@ -1,18 +1,31 @@
 @if (aberto) {
-  <div class="modal-overlay" role="presentation" (click)="fechar.emit()">
+  <div
+    class="modal-overlay"
+    [class.modal-overlay--drawer]="variante === 'drawer'"
+    role="presentation"
+    (click)="fechar.emit()"
+  >
     <section
       class="modal"
       [class.modal--grande]="largura === 'grande'"
+      [class.modal--drawer]="variante === 'drawer'"
       role="dialog"
       aria-modal="true"
       [attr.aria-label]="titulo"
       (click)="$event.stopPropagation()"
     >
       <header class="modal__cabecalho">
-        <h2>{{ titulo }}</h2>
-        <button class="modal__fechar" type="button" aria-label="Fechar" (click)="fechar.emit()">
-          <span class="material-symbols-outlined">close</span>
+        <button class="modal__fechar modal__fechar--voltar" type="button" aria-label="Fechar" (click)="fechar.emit()">
+          <span class="material-symbols-outlined">{{ variante === 'drawer' ? 'arrow_back' : 'close' }}</span>
         </button>
+        <h2>{{ titulo }}</h2>
+        @if (variante === 'modal') {
+          <button class="modal__fechar" type="button" aria-label="Fechar" (click)="fechar.emit()">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        } @else {
+          <div style="width:40px"></div>
+        }
       </header>
       <div class="modal__conteudo">
         <ng-content />

@@ -10,5 +10,7 @@ export class ModalComponent {
   @Input() aberto = false;
   @Input() titulo = '';
   @Input() largura: 'normal' | 'grande' = 'normal';
+  /** 'modal' = centered overlay, 'drawer' = slides in from the right */
+  @Input() variante: 'modal' | 'drawer' = 'modal';
   @Output() fechar = new EventEmitter<void>();
 }
