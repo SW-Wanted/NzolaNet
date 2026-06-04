@@ -16,13 +16,24 @@
         </p>
       </div>
     </div>
-    <button class="cartao-publicacao__botao-menu" type="button" (click)="alternarMenu()">
+    <button class="cartao-publicacao__botao-menu" type="button" (click)="alternarMenu()" aria-label="Mais opções">
       <span class="material-symbols-outlined">more_horiz</span>
     </button>
     @if (menuAberto()) {
-      <div class="cartao-publicacao__menu">
-        <button type="button" (click)="partilhar()">Copiar ligação</button>
-        <a routerLink="/comentarios">Ver detalhes</a>
+      <div class="cartao-publicacao__menu" role="menu">
+        <button type="button" role="menuitem" (click)="abrirEditar()">
+          <span class="material-symbols-outlined">edit</span>Editar
+        </button>
+        <button type="button" role="menuitem" class="cartao-publicacao__menu-perigo" (click)="abrirConfirmacaoEliminar()">
+          <span class="material-symbols-outlined">delete</span>Eliminar
+        </button>
+        <hr class="cartao-publicacao__menu-divisor" />
+        <button type="button" role="menuitem" (click)="abrirComentarios.emit(publicacao); menuAberto.set(false)">
+          <span class="material-symbols-outlined">chat_bubble_outline</span>Ver detalhes
+        </button>
+        <button type="button" role="menuitem" (click)="partilhar()">
+          <span class="material-symbols-outlined">link</span>Copiar ligação
+        </button>
       </div>
     }
   </div>
@@ -31,7 +42,17 @@
     <p class="cartao-publicacao__conteudo">{{ publicacao.conteudo }}</p>
   </div>
 
-  @if (publicacao.imagem) {
+  @if (publicacao.videoUrl) {
+    <div class="cartao-publicacao__media-container">
+      <video
+        class="cartao-publicacao__video"
+        [src]="publicacao.videoUrl"
+        controls
+        preload="metadata"
+        [attr.aria-label]="'Vídeo de ' + publicacao.autorNome"
+      ></video>
+    </div>
+  } @else if (publicacao.imagem) {
     <div class="cartao-publicacao__imagem-container">
       <img
         [src]="publicacao.imagem"
@@ -52,20 +73,60 @@
       class="cartao-publicacao__accao"
       [class.cartao-publicacao__accao--activo]="bazeActivo()"
       type="button"
+      [attr.aria-pressed]="bazeActivo()"
+      [attr.aria-label]="bazeActivo() ? 'Remover baze' : 'Dar baze'"
       (click)="aoBaze()"
     >
       <span class="material-symbols-outlined">{{ bazeActivo() ? 'favorite' : 'favorite_border' }}</span>
       <span class="cartao-publicacao__accao-texto">Baze</span>
     </button>
 
-    <a class="cartao-publicacao__accao" routerLink="/comentarios">
+    <a class="cartao-publicacao__accao" role="button" tabindex="0"
+      aria-label="Comentar publicação"
+      (click)="abrirComentarios.emit(publicacao)"
+      (keydown.enter)="abrirComentarios.emit(publicacao)"
+    >
       <span class="material-symbols-outlined">chat_bubble_outline</span>
       <span class="cartao-publicacao__accao-texto">Comentar</span>
     </a>
 
-    <button class="cartao-publicacao__accao" type="button" (click)="partilhar()">
+    <button class="cartao-publicacao__accao" type="button" (click)="partilhar()" [attr.aria-label]="partilhado() ? 'Ligação copiada' : 'Partilhar publicação'">
       <span class="material-symbols-outlined">share</span>
       <span class="cartao-publicacao__accao-texto">{{ partilhado() ? 'Ligação copiada' : 'Partilhar' }}</span>
     </button>
   </div>
 </article>
+
+<!-- Modal: Editar Publicação -->
+<app-modal
+  [aberto]="modalEditarAberto()"
+  titulo="Editar publicação"
+  (fechar)="modalEditarAberto.set(false)"
+>
+  <div class="cartao-publicacao__modal-editar">
+    <textarea
+      class="area-formulario"
+      [value]="conteudoEditado()"
+      (input)="conteudoEditado.set($any($event.target).value)"
+      rows="5"
+      aria-label="Conteúdo da publicação"
+    ></textarea>
+    <div class="linha-distribuida" style="margin-top:16px">
+      <button class="botao-contornado" type="button" (click)="modalEditarAberto.set(false)">Cancelar</button>
+      <button class="botao-destaque" type="button" (click)="guardarEdicao()">Guardar</button>
+    </div>
+  </div>
+</app-modal>
+
+<!-- Modal: Confirmar Eliminação -->
+<app-modal
+  [aberto]="modalEliminarAberto()"
+  titulo="Eliminar publicação"
+  (fechar)="modalEliminarAberto.set(false)"
+>
+  <p class="texto-cartao">Tem a certeza que deseja eliminar esta publicação? Esta ação não pode ser desfeita.</p>
+  <div class="linha-distribuida" style="margin-top:24px">
+    <button class="botao-contornado" type="button" (click)="modalEliminarAberto.set(false)">Cancelar</button>
+    <button class="botao-perigo" type="button" (click)="confirmarEliminar()">Eliminar</button>
+  </div>
+</app-modal>
