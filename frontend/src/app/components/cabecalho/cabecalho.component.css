@@ -18,23 +18,7 @@
   margin: 0 auto;
   width: 100%;
   min-height: 48px;
-}
-
-.cabecalho__esquerda {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.cabecalho__logo {
-  display: flex;
-  align-items: center;
-}
-
-.cabecalho__logo-imagem {
-  height: 40px;
-  width: auto;
-  object-fit: contain;
+  gap: 16px;
 }
 
 .cabecalho__pesquisa {
@@ -45,7 +29,7 @@
   border: 1px solid var(--cor-contorno-variante);
   border-radius: 9999px;
   padding: 6px 16px;
-  width: 320px;
+  width: 360px;
   transition: border-color var(--transicao-rapida);
 }
 
