@@ -3,3 +3,39 @@
 .perfil-formulario {
   max-width: 760px;
 }
+
+.perfil-foto-upload {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 20px;
+  border: 1px dashed var(--cor-contorno-variante);
+  border-radius: 16px;
+  background: var(--cor-container-baixo);
+}
+
+.perfil-foto-preview {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--cor-primaria);
+  flex-shrink: 0;
+}
+
+.perfil-foto-accoes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.perfil-foto-label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.perfil-foto-input {
+  display: none;
+}
