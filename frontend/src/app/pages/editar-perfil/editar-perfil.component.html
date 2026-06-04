@@ -16,11 +16,35 @@
             </div>
             <div class="acoes-cabecalho">
               <a class="botao-contornado" routerLink="/perfil">Cancelar</a>
-              <button class="botao-destaque" type="submit" [disabled]="emSubmissao">
-                {{ emSubmissao ? 'A guardar...' : 'Guardar' }}
-              </button>
+              <button class="botao-destaque" type="submit">Guardar</button>
             </div>
           </header>
+
+          <!-- Profile picture upload -->
+          <div class="perfil-foto-upload">
+            <img
+              [src]="avatarPreview()"
+              alt="Foto de perfil"
+              class="perfil-foto-preview"
+            />
+            <div class="perfil-foto-accoes">
+              <label class="botao-contornado perfil-foto-label" for="input-foto">
+                <span class="material-symbols-outlined">photo_camera</span>
+                Alterar foto
+              </label>
+              <input
+                id="input-foto"
+                type="file"
+                accept="image/*"
+                class="perfil-foto-input"
+                aria-label="Selecionar foto de perfil"
+                (change)="aoSelecionarFoto($event)"
+              />
+              <p class="texto-cartao">JPG, PNG ou GIF. Máx. 5 MB.</p>
+            </div>
+          </div>
+
+          <input class="campo-formulario" formControlName="nome" placeholder="Nome completo" />
 
           <!-- Profile picture upload -->
           <div class="perfil-foto-upload">
@@ -50,6 +74,8 @@
           @if (submetido && formulario.controls.nome.invalid) {
             <span class="mensagem-campo">Informe um nome válido.</span>
           }
+          <input class="campo-formulario" formControlName="descricaoCurta" placeholder="Descrição curta" />
+          <textarea class="area-formulario" formControlName="biografia" placeholder="Biografia"></textarea>
           <input class="campo-formulario" formControlName="descricaoCurta" placeholder="Descrição curta" />
           <textarea class="area-formulario" formControlName="biografia" placeholder="Biografia"></textarea>
           @if (submetido && formulario.controls.biografia.invalid) {
