@@ -15,11 +15,33 @@
           <div class="lista-vertical">
             @for (comentario of comentarios(); track comentario.id) {
               <article class="comentario">
-                <div>
-                  <strong>{{ comentario.autor }}</strong>
-                  <p>{{ comentario.texto }}</p>
+                <div class="comentario__conteudo">
+                  <strong class="comentario__autor">{{ comentario.autor }}</strong>
+                  <span class="comentario__data">{{ comentario.estado === 'aprovado' ? 'agora' : 'pendente' }}</span>
+                  @if (editandoId() === comentario.id) {
+                    <input
+                      class="campo-formulario comentario__campo-editar"
+                      [value]="textoEdicao()"
+                      (input)="textoEdicao.set($any($event.target).value)"
+                      aria-label="Editar comentário"
+                    />
+                  } @else {
+                    <p>{{ comentario.texto }}</p>
+                  }
                 </div>
-                <button class="botao-fantasma" type="button" (click)="removerComentario(comentario.id)">Remover</button>
+                <div class="comentario__accoes">
+                  @if (editandoId() === comentario.id) {
+                    <button class="botao-destaque comentario__botao" type="button" (click)="guardarEdicao(comentario.id)">Guardar</button>
+                    <button class="botao-fantasma comentario__botao" type="button" (click)="cancelarEdicao()">Cancelar</button>
+                  } @else {
+                    <button class="botao-fantasma comentario__botao" type="button" (click)="iniciarEdicao(comentario.id, comentario.texto)">
+                      <span class="material-symbols-outlined">edit</span>
+                    </button>
+                    <button class="botao-fantasma comentario__botao comentario__botao--perigo" type="button" (click)="removerComentario(comentario.id)">
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  }
+                </div>
               </article>
             }
           </div>
