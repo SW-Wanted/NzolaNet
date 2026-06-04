@@ -22,6 +22,8 @@ export class CriarPostComponent {
 
   submetido = false;
   anexoSelecionado = signal('');
+  previewMedia = signal('');
+  tipoMedia = signal<'imagem' | 'video'>('imagem');
 
   publicar(): void {
     this.submetido = true;
@@ -33,6 +35,21 @@ export class CriarPostComponent {
 
     this.dados.criarPublicacao(this.formulario.controls.conteudo.value);
     this.router.navigateByUrl('/feed');
+  }
+
+  aoSelecionarMedia(evento: Event, tipo: 'imagem' | 'video'): void {
+    const ficheiro = (evento.target as HTMLInputElement).files?.[0];
+    if (!ficheiro) return;
+    const leitor = new FileReader();
+    leitor.onload = () => {
+      this.previewMedia.set(leitor.result as string);
+      this.tipoMedia.set(tipo);
+    };
+    leitor.readAsDataURL(ficheiro);
+  }
+
+  removerMedia(): void {
+    this.previewMedia.set('');
   }
 
   seleccionarAnexo(tipo: string): void {

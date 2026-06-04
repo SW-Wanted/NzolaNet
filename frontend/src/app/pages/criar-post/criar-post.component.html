@@ -24,15 +24,40 @@
             <span class="mensagem-campo">Escreva pelo menos 10 caracteres antes de publicar.</span>
           }
           <div class="grelha-cartoes">
-            <button class="cartao cartao-preenchido anexo-post" type="button" (click)="seleccionarAnexo('Imagem selecionada')">
+            <label class="cartao cartao-preenchido anexo-post" for="input-imagem">
               <span class="material-symbols-outlined">image</span>Adicionar imagem
-            </button>
-            <button class="cartao cartao-preenchido anexo-post" type="button" (click)="seleccionarAnexo('Vídeo selecionado')">
+              <input
+                id="input-imagem"
+                type="file"
+                accept="image/*"
+                class="perfil-foto-input"
+                aria-label="Selecionar imagem"
+                (change)="aoSelecionarMedia($event, 'imagem')"
+              />
+            </label>
+            <label class="cartao cartao-preenchido anexo-post" for="input-video">
               <span class="material-symbols-outlined">smart_display</span>Adicionar vídeo
-            </button>
+              <input
+                id="input-video"
+                type="file"
+                accept="video/*"
+                class="perfil-foto-input"
+                aria-label="Selecionar vídeo"
+                (change)="aoSelecionarMedia($event, 'video')"
+              />
+            </label>
           </div>
-          @if (anexoSelecionado()) {
-            <p class="texto-cartao">{{ anexoSelecionado() }}</p>
+          @if (previewMedia()) {
+            <div class="media-preview">
+              @if (tipoMedia() === 'imagem') {
+                <img [src]="previewMedia()" alt="Pré-visualização" class="media-preview__imagem" />
+              } @else {
+                <video [src]="previewMedia()" controls class="media-preview__video" aria-label="Pré-visualização do vídeo"></video>
+              }
+              <button class="botao-fantasma media-preview__remover" type="button" (click)="removerMedia()">
+                <span class="material-symbols-outlined">close</span>Remover
+              </button>
+            </div>
           }
           <div class="linha-distribuida">
             <a class="botao-contornado" routerLink="/feed">Cancelar</a>
