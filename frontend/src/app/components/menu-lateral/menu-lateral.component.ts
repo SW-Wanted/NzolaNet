@@ -26,6 +26,7 @@ export class MenuLateralComponent {
 
   itensMenuInferior: ItemMenu[] = [
     { icone: 'settings', etiqueta: 'Definições', rota: '/perfil/editar' },
-    { icone: 'help', etiqueta: 'Ajuda', rota: '/feed/estados' },
+    { icone: 'group_add', etiqueta: 'Sugestões', rota: '/sugestoes' },
+    { icone: 'login', etiqueta: 'Entrar / Registar', rota: '/entrar' },
   ];
 }
