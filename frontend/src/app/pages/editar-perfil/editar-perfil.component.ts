@@ -1,13 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
 import { NzolanetDadosService } from '../../services/nzolanet-dados.service';
 
 @Component({
   selector: 'app-editar-perfil',
-  imports: [CabecalhoComponent, MenuLateralComponent, ReactiveFormsModule],
+  imports: [CabecalhoComponent, MenuLateralComponent, ReactiveFormsModule, RouterLink],
   templateUrl: './editar-perfil.component.html',
   styleUrl: './editar-perfil.component.css',
 })
@@ -17,6 +17,8 @@ export class EditarPerfilComponent {
   private readonly router = inject(Router);
   private readonly utilizador = this.dados.utilizadorActual();
 
+  readonly avatarPreview = signal<string>(this.utilizador.avatar);
+
   formulario = this.formBuilder.nonNullable.group({
     nome: [this.utilizador.nome, [Validators.required, Validators.minLength(3)]],
     descricaoCurta: ['Curadora cultural', [Validators.required]],
@@ -24,6 +26,14 @@ export class EditarPerfilComponent {
   });
 
   submetido = false;
+
+  aoSelecionarFoto(evento: Event): void {
+    const ficheiro = (evento.target as HTMLInputElement).files?.[0];
+    if (!ficheiro) return;
+    const leitor = new FileReader();
+    leitor.onload = () => this.avatarPreview.set(leitor.result as string);
+    leitor.readAsDataURL(ficheiro);
+  }
 
   guardar(): void {
     this.submetido = true;
@@ -38,6 +48,7 @@ export class EditarPerfilComponent {
       ...utilizador,
       nome: valores.nome,
       descricao: valores.biografia,
+      avatar: this.avatarPreview(),
     }));
     this.router.navigateByUrl('/perfil');
   }
