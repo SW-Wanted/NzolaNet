@@ -88,6 +88,9 @@
 
 .cartao-publicacao__menu button,
 .cartao-publicacao__menu a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   padding: 10px 12px;
   border-radius: 8px;
   color: var(--cor-no-superficie);
@@ -98,6 +101,42 @@
 .cartao-publicacao__menu button:hover,
 .cartao-publicacao__menu a:hover {
   background: var(--cor-container);
+}
+
+.cartao-publicacao__menu .material-symbols-outlined {
+  font-size: 18px;
+  color: var(--cor-no-superficie-variante);
+}
+
+.cartao-publicacao__menu-perigo {
+  color: var(--cor-erro) !important;
+}
+
+.cartao-publicacao__menu-perigo .material-symbols-outlined {
+  color: var(--cor-erro) !important;
+}
+
+.cartao-publicacao__menu-divisor {
+  border: none;
+  border-top: 1px solid var(--cor-contorno-variante);
+  margin: 4px 0;
+}
+
+.cartao-publicacao__media-container {
+  width: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+.cartao-publicacao__video {
+  width: 100%;
+  max-height: 400px;
+  display: block;
+  object-fit: contain;
+}
+
+.cartao-publicacao__modal-editar .area-formulario {
+  width: 100%;
 }
 
 .cartao-publicacao__corpo {
