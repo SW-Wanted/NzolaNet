@@ -2,10 +2,18 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  min-height: 100dvh;
+  height: 100dvh;
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
   padding: 24px 16px;
   border-right: 1px solid var(--cor-contorno-variante);
   background: var(--cor-superficie);
+  scrollbar-width: none;
+}
+
+.menu-lateral::-webkit-scrollbar {
+  display: none;
 }
 
 .menu-lateral__marca {

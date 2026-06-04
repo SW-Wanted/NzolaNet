@@ -1,5 +1,6 @@
 .pagina-social {
-  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
   background: var(--cor-fundo);
   color: var(--cor-no-superficie);
 }
@@ -7,11 +8,25 @@
 .estrutura-aplicacao {
   display: grid;
   grid-template-columns: 256px minmax(0, 1fr);
-  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.estrutura-aplicacao > main {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.estrutura-aplicacao > main > app-cabecalho {
+  flex-shrink: 0;
 }
 
 .conteudo-principal {
   min-width: 0;
+  flex: 1;
+  overflow-y: auto;
   padding: 24px clamp(16px, 4vw, 40px) 48px;
 }
 
@@ -262,10 +277,7 @@
   min-height: 100dvh;
   place-items: center;
   padding: 24px;
-  background:
-    linear-gradient(rgba(255, 248, 245, 0.88), rgba(255, 248, 245, 0.94)),
-    url('https://lh3.googleusercontent.com/aida-public/AB6AXuASVyXVtXqL7zFkiKp_wDHrAQkFQsOWoB3HZ3TqAiRNBOvBFfKmtVjXqtxR52DwpO7JFR63uNe3mKwQkPYJ4Pp2xzJGRsyoeUdBxCX5hSrjd1oSWzs8wkQERoIjd5NsdV5vWKpOEqxw7fE0xuXbG5cQ18NOUiOPkNa2Fh9aw3kth-VbOoXZNZIZSVl96H6Z0kVeuc_-aawN2I_4_HvH8r84fGDGFzRqRf87wGaDhKBh_cNHysPe4pJfpR2tFqxZ2EhpsS6ZhqN6Y054')
-      center/cover;
+  background: linear-gradient(135deg, #fff8f5 0%, #fdf1ec 50%, #f7ece6 100%);
 }
 
 .painel-autenticacao {
@@ -288,8 +300,8 @@
 .logo-autenticacao {
   width: 48px;
   height: 48px;
-  border-radius: 14px;
-  object-fit: cover;
+  border-radius: 0;
+  object-fit: contain;
 }
 
 .navegacao-inferior {
@@ -299,14 +311,27 @@
 @media (max-width: 900px) {
   .estrutura-aplicacao {
     grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+
+  .pagina-social {
+    height: auto;
+    overflow: visible;
+  }
+
+  .estrutura-aplicacao > main {
+    height: auto;
+    overflow: visible;
+  }
+
+  .conteudo-principal {
+    overflow-y: visible;
+    padding-bottom: 96px;
   }
 
   app-menu-lateral {
     display: none;
-  }
-
-  .conteudo-principal {
-    padding-bottom: 96px;
   }
 
   .cabecalho-pagina,
