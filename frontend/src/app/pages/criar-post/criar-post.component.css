@@ -13,3 +13,42 @@
   color: var(--cor-primaria);
   font-weight: 700;
 }
+
+.anexo-post {
+  cursor: pointer;
+}
+
+.perfil-foto-input {
+  display: none;
+}
+
+.media-preview {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--cor-container-baixo);
+}
+
+.media-preview__imagem {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  display: block;
+}
+
+.media-preview__video {
+  width: 100%;
+  max-height: 320px;
+  display: block;
+}
+
+.media-preview__remover {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 12px;
+  gap: 4px;
+}

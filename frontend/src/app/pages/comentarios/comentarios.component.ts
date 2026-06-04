@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
@@ -20,6 +20,9 @@ export class ComentariosComponent {
   });
   submetido = false;
 
+  editandoId = signal<string | null>(null);
+  textoEdicao = signal('');
+
   adicionarComentario(): void {
     this.submetido = true;
 
@@ -35,5 +38,24 @@ export class ComentariosComponent {
 
   removerComentario(id: string): void {
     this.dados.removerComentario(id);
+  }
+
+  iniciarEdicao(id: string, texto: string): void {
+    this.editandoId.set(id);
+    this.textoEdicao.set(texto);
+  }
+
+  cancelarEdicao(): void {
+    this.editandoId.set(null);
+    this.textoEdicao.set('');
+  }
+
+  guardarEdicao(id: string): void {
+    const texto = this.textoEdicao().trim();
+    if (!texto) return;
+    this.dados.comentarios.update((lista) =>
+      lista.map((c) => c.id === id ? { ...c, texto } : c)
+    );
+    this.cancelarEdicao();
   }
 }
