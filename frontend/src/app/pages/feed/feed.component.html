@@ -6,6 +6,8 @@
       <div class="conteudo-principal">
         <div class="conteudo-limite grelha-bento">
           <section class="coluna">
+
+            <!-- Composer card -->
             <div class="cartao cartao-preenchido">
               <div class="linha-centro">
                 <img
@@ -13,17 +15,53 @@
                   class="avatar-redondo"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeKsXhqv8NVr26FuplH0IFQZlvDDjnwvqQJm1vrJ5yPeOyV4at0I864L0B4Vljr0XkSJLMag717M-qwKgFaekUuyjWNL7zLCzxBnIBLc_p1hqrjYGPyvdjMaE0BbX_TNeE88sYgDdqfA21K1yZXGWuT4Rr5CwnNdJEMIS_1hS039VozIvB2YOB8L5Mzpjae-zQsWd3wrIhizI6FQ3ALITZ9kIOZMgAORgh3RuTIMAdkD2YZocaAJGwop2qQfleyMClx3uQnzb_xXmt"
                 />
-                <a class="campo-publicacao" routerLink="/criar-post">Partilhar cultura angolana...</a>
+                <button class="campo-publicacao" type="button" (click)="abrirCriarPost()">
+                  Partilhar cultura angolana...
+                </button>
               </div>
               <div class="atalhos-publicacao">
-                <button type="button" routerLink="/criar-post"><span class="material-symbols-outlined">image</span>Foto</button>
-                <button type="button" routerLink="/criar-post"><span class="material-symbols-outlined">smart_display</span>Vídeo</button>
-                <button type="button" routerLink="/eventos"><span class="material-symbols-outlined">event</span>Evento</button>
+                <button type="button" (click)="abrirCriarPost()">
+                  <span class="material-symbols-outlined">image</span>Foto
+                </button>
+                <button type="button" (click)="abrirCriarPost()">
+                  <span class="material-symbols-outlined">smart_display</span>Vídeo
+                </button>
+                <button type="button" routerLink="/eventos">
+                  <span class="material-symbols-outlined">event</span>Evento
+                </button>
               </div>
             </div>
 
+            <!-- Feed filter tabs -->
+            <div class="feed-filtros">
+              <button
+                class="feed-filtro"
+                [class.feed-filtro--activo]="filtroActivo() === 'todos'"
+                type="button"
+                (click)="filtroActivo.set('todos')"
+              >Todos</button>
+              <button
+                class="feed-filtro"
+                [class.feed-filtro--activo]="filtroActivo() === 'seguidos'"
+                type="button"
+                (click)="filtroActivo.set('seguidos')"
+              >Seguidos</button>
+            </div>
+
+            <!-- Refresh -->
+            <div class="feed-barra-actualizar">
+              <button class="botao-contornado feed-botao-actualizar" type="button" (click)="aoAtualizar()">
+                <span class="material-symbols-outlined">refresh</span>Atualizar feed
+              </button>
+            </div>
+
             @for (publicacao of publicacoes(); track publicacao.id) {
-              <app-cartao-publicacao [publicacao]="publicacao" />
+              <app-cartao-publicacao
+                [publicacao]="publicacao"
+                (eliminar)="aoEliminar($event)"
+                (editar)="aoEditar($event)"
+                (abrirComentarios)="abrirComentarios($event)"
+              />
             }
           </section>
 
@@ -46,26 +84,26 @@
               </div>
               <div class="lista-vertical">
                 <div class="item-lista">
-                  <img
-                    alt="Auroval Banger"
-                    class="avatar-redondo"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM36i0IWTLeke9cjwtTJMlYBZ98WBh6yDSy3OVvjaDv8NV4VNBd5h1k4adv-7ncp_JsTIYQ7MgpQMOe4g4x08d5DeLnxKR3dd5ym0dJfhVMc1Z4D9Skukt8HkfsTSBTbjzG308I65hSZZdkXoDQ7F4UmXDZ7NSZQ6CCrOcn0w39BgXdfSqhfofVs0gGzHEVx4K_ITKDjiRBjClvAeIVNXc4YTf1n7Al_OslNEZ2yguWUGZO7kSoHQgYCWvU5S3NtqlKZ4T4B-tM01W"
-                  />
+                  <img alt="Auroval Banger" class="avatar-redondo"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM36i0IWTLeke9cjwtTJMlYBZ98WBh6yDSy3OVvjaDv8NV4VNBd5h1k4adv-7ncp_JsTIYQ7MgpQMOe4g4x08d5DeLnxKR3dd5ym0dJfhVMc1Z4D9Skukt8HkfsTSBTbjzG308I65hSZZdkXoDQ7F4UmXDZ7NSZQ6CCrOcn0w39BgXdfSqhfofVs0gGzHEVx4K_ITKDjiRBjClvAeIVNXc4YTf1n7Al_OslNEZ2yguWUGZO7kSoHQgYCWvU5S3NtqlKZ4T4B-tM01W" />
                   <div>
                     <strong>Auroval Banger</strong>
                     <p class="texto-cartao">@nzolanetvive</p>
                   </div>
+                  <button class="botao-contornado" type="button" style="margin-left:auto" (click)="alternarSeguir('auroval')">
+                    {{ seguindo['auroval'] ? 'A seguir' : 'Seguir' }}
+                  </button>
                 </div>
                 <div class="item-lista">
-                  <img
-                    alt="Sonca Awrama"
-                    class="avatar-redondo"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEOSkDw4tgJcVw5GSD0c-W0NT4wn67wjBsApzX7EWAookXz9Di2R1FCBpAFk4eTy5_mLptwQ42qbxPBLxL3KREHOTwR3bKNeBSQz8f2APMR9OhkJ_MOauh7PkW6wgoynxvRSLpJr13a5JUE1OKmt8Mpbqs4zLeK8J4_rS825INSMWklOJVH4BAd9e3y-rTCxPXtOoGb4mqgcidEqXExMdeZUzjAIkx1_Dj4gy30Cu8Hjb1ujdtsrRn5qpXViatVkqxzb3NoH4OqLtY"
-                  />
+                  <img alt="Sonca Awrama" class="avatar-redondo"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEOSkDw4tgJcVw5GSD0c-W0NT4wn67wjBsApzX7EWAookXz9Di2R1FCBpAFk4eTy5_mLptwQ42qbxPBLxL3KREHOTwR3bKNeBSQz8f2APMR9OhkJ_MOauh7PkW6wgoynxvRSLpJr13a5JUE1OKmt8Mpbqs4zLeK8J4_rS825INSMWklOJVH4BAd9e3y-rTCxPXtOoGb4mqgcidEqXExMdeZUzjAIkx1_Dj4gy30Cu8Hjb1ujdtsrRn5qpXViatVkqxzb3NoH4OqLtY" />
                   <div>
                     <strong>Sonca Awrama</strong>
                     <p class="texto-cartao">@nzolanetinar</p>
                   </div>
+                  <button class="botao-contornado" type="button" style="margin-left:auto" (click)="alternarSeguir('sonca')">
+                    {{ seguindo['sonca'] ? 'A seguir' : 'Seguir' }}
+                  </button>
                 </div>
               </div>
             </div>
@@ -82,3 +120,141 @@
   <a routerLink="/mercado"><span class="material-symbols-outlined">storefront</span>Loja</a>
   <a routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
 </nav>
+
+<!-- ── Modal: Criar Publicação ──────────────────────────────────── -->
+<app-modal titulo="Criar publicação" [aberto]="modalCriarAberto()" largura="grande" (fechar)="modalCriarAberto.set(false)">
+  <div class="criar-post-modal">
+    <div class="criar-post-autor">
+      <img class="avatar-redondo criar-post-avatar"
+        alt="Utilizador"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeKsXhqv8NVr26FuplH0IFQZlvDDjnwvqQJm1vrJ5yPeOyV4at0I864L0B4Vljr0XkSJLMag717M-qwKgFaekUuyjWNL7zLCzxBnIBLc_p1hqrjYGPyvdjMaE0BbX_TNeE88sYgDdqfA21K1yZXGWuT4Rr5CwnNdJEMIS_1hS039VozIvB2YOB8L5Mzpjae-zQsWd3wrIhizI6FQ3ALITZ9kIOZMgAORgh3RuTIMAdkD2YZocaAJGwop2qQfleyMClx3uQnzb_xXmt"
+      />
+      <div>
+        <strong>Ana Mwene</strong>
+        <span class="texto-cartao">@anamwene</span>
+      </div>
+    </div>
+    <form [formGroup]="formularioCriar" (ngSubmit)="publicar()">
+      <textarea
+        class="criar-post-textarea"
+        formControlName="conteudo"
+        placeholder="O que está a acontecer na cultura angolana?"
+        rows="5"
+        autofocus
+      ></textarea>
+      @if (criarSubmetido && formularioCriar.controls.conteudo.invalid) {
+        <span class="mensagem-campo">Escreva pelo menos 10 caracteres.</span>
+      }
+      @if (previewMedia()) {
+        <div class="media-preview">
+          @if (tipoMedia() === 'imagem') {
+            <img [src]="previewMedia()" alt="Pré-visualização" class="media-preview__imagem" />
+          } @else {
+            <video [src]="previewMedia()" controls class="media-preview__video"></video>
+          }
+          <button class="media-preview__remover" type="button" (click)="removerMedia()">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+      }
+      <div class="criar-post-rodape">
+        <div class="criar-post-anexos">
+          <label class="criar-post-anexo" for="modal-input-imagem" title="Adicionar imagem">
+            <span class="material-symbols-outlined">image</span>
+            <input id="modal-input-imagem" type="file" accept="image/*" (change)="aoSelecionarMedia($event, 'imagem')" />
+          </label>
+          <label class="criar-post-anexo" for="modal-input-video" title="Adicionar vídeo">
+            <span class="material-symbols-outlined">smart_display</span>
+            <input id="modal-input-video" type="file" accept="video/*" (change)="aoSelecionarMedia($event, 'video')" />
+          </label>
+          <button class="criar-post-anexo" type="button" title="Emoji">
+            <span class="material-symbols-outlined">sentiment_satisfied</span>
+          </button>
+          <button class="criar-post-anexo" type="button" title="Localização">
+            <span class="material-symbols-outlined">location_on</span>
+          </button>
+        </div>
+        <button class="botao-destaque" type="submit">Publicar</button>
+      </div>
+    </form>
+  </div>
+</app-modal>
+
+<!-- ── Drawer: Detalhes + Comentários ──────────────────────────── -->
+<app-modal
+  [aberto]="drawerComentariosAberto()"
+  titulo="Comentários"
+  variante="drawer"
+  (fechar)="fecharComentarios()"
+>
+  @if (publicacaoActiva(); as pub) {
+    <!-- Post summary -->
+    <div class="drawer-post-resumo">
+      <div class="cartao-publicacao__autor" style="margin-bottom:12px">
+        <img [src]="pub.autorAvatar" [alt]="pub.autorNome" class="cartao-publicacao__avatar" />
+        <div>
+          <strong>{{ pub.autorNome }}</strong>
+          <p class="texto-cartao">{{ pub.tempoPublicacao }}</p>
+        </div>
+      </div>
+      <p class="drawer-post-conteudo">{{ pub.conteudo }}</p>
+      @if (pub.imagem) {
+        <img [src]="pub.imagem" [alt]="pub.imagemAlt || ''" class="drawer-post-imagem" />
+      }
+      <p class="drawer-post-stats">{{ pub.contagemBazes }} bazes · {{ pub.contagemComentarios }} comentários</p>
+    </div>
+
+    <div class="drawer-divisor"></div>
+
+    <!-- Comments list -->
+    <div class="drawer-comentarios-lista">
+      @for (comentario of comentarios(); track comentario.id) {
+        <article class="comentario">
+          <div class="comentario__conteudo">
+            <strong class="comentario__autor">{{ comentario.autor }}</strong>
+            <span class="comentario__data">agora</span>
+            @if (editandoComentarioId() === comentario.id) {
+              <input
+                class="campo-formulario comentario__campo-editar"
+                [value]="textoEdicaoComentario()"
+                (input)="textoEdicaoComentario.set($any($event.target).value)"
+              />
+            } @else {
+              <p>{{ comentario.texto }}</p>
+            }
+          </div>
+          <div class="comentario__accoes">
+            @if (editandoComentarioId() === comentario.id) {
+              <button class="botao-destaque comentario__botao" type="button" (click)="guardarEdicaoComentario(comentario.id)">Guardar</button>
+              <button class="botao-fantasma comentario__botao" type="button" (click)="cancelarEdicaoComentario()">Cancelar</button>
+            } @else {
+              <button class="botao-fantasma comentario__botao" type="button" (click)="iniciarEdicaoComentario(comentario.id, comentario.texto)">
+                <span class="material-symbols-outlined">edit</span>
+              </button>
+              <button class="botao-fantasma comentario__botao comentario__botao--perigo" type="button" (click)="removerComentario(comentario.id)">
+                <span class="material-symbols-outlined">delete</span>
+              </button>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+
+  <!-- Comment input -->
+  <div class="drawer-comentario-form">
+    <form [formGroup]="formularioComentario" (ngSubmit)="adicionarComentario()" class="drawer-comentario-input">
+      <input
+        class="campo-formulario"
+        formControlName="texto"
+        placeholder="Escrever comentário..."
+      />
+      <button class="botao-destaque" type="submit">
+        <span class="material-symbols-outlined">send</span>
+      </button>
+    </form>
+    @if (comentarioSubmetido && formularioComentario.controls.texto.invalid) {
+      <span class="mensagem-campo">Escreva um comentário antes de enviar.</span>
+    }
+  </div>
+</app-modal>
