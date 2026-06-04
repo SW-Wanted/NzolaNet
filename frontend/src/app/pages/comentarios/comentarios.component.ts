@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
@@ -36,21 +36,9 @@ export class ComentariosComponent implements OnInit {
   });
 
   submetido = false;
-  editandoId = signal<number | null>(null);
-  textoEdicao = signal('');
 
-  ngOnInit(): void {
-    this.posts.getGlobalFeed().subscribe({
-      next: (posts) => {
-        const post = posts[0] ?? null;
-        this.postAtual.set(post);
-        if (post) {
-          this.carregarComentarios(post.id);
-        }
-      },
-      error: () => this.erroApi.set('Nao foi possivel carregar publicacoes para comentarios.'),
-    });
-  }
+  editandoId = signal<string | null>(null);
+  textoEdicao = signal('');
 
   adicionarComentario(): void {
     this.submetido = true;
@@ -72,14 +60,11 @@ export class ComentariosComponent implements OnInit {
     });
   }
 
-  removerComentario(id: number): void {
-    this.comments.deleteComment(id).subscribe({
-      next: () => this.comentarios.update((lista) => lista.filter((comentario) => comentario.id !== id)),
-      error: () => this.erroApi.set('Nao foi possivel remover o comentario.'),
-    });
+  removerComentario(id: string): void {
+    this.dados.removerComentario(id);
   }
 
-  iniciarEdicao(id: number, texto: string): void {
+  iniciarEdicao(id: string, texto: string): void {
     this.editandoId.set(id);
     this.textoEdicao.set(texto);
   }
@@ -89,40 +74,12 @@ export class ComentariosComponent implements OnInit {
     this.textoEdicao.set('');
   }
 
-  guardarEdicao(id: number): void {
+  guardarEdicao(id: string): void {
     const texto = this.textoEdicao().trim();
-
-    if (texto.length < 3) {
-      this.erroApi.set('O comentario precisa de pelo menos 3 caracteres.');
-      return;
-    }
-
-    this.comments.updateComment(id, texto).subscribe({
-      next: (comment) => {
-        this.comentarios.update((lista) =>
-          lista.map((item) => (item.id === id ? this.toView(comment) : item)),
-        );
-        this.cancelarEdicao();
-      },
-      error: () => this.erroApi.set('Nao foi possivel editar o comentario.'),
-    });
-  }
-
-  private carregarComentarios(postId: number): void {
-    this.comments.getComments(postId).subscribe({
-      next: (comments) => this.comentarios.set(comments.map((comment) => this.toView(comment))),
-      error: () => this.erroApi.set('Nao foi possivel carregar comentarios.'),
-    });
-  }
-
-  private toView(comment: Comment): ComentarioView {
-    return {
-      id: comment.id,
-      autor: comment.author.name,
-      texto: comment.content,
-      estado: 'aprovado',
-      podeEditar: comment.can_update ?? false,
-      podeEliminar: comment.can_delete ?? false,
-    };
+    if (!texto) return;
+    this.dados.comentarios.update((lista) =>
+      lista.map((c) => c.id === id ? { ...c, texto } : c)
+    );
+    this.cancelarEdicao();
   }
 }

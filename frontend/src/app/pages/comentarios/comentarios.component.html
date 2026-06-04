@@ -31,7 +31,7 @@
                       class="campo-formulario comentario__campo-editar"
                       [value]="textoEdicao()"
                       (input)="textoEdicao.set($any($event.target).value)"
-                      aria-label="Editar comentario"
+                      aria-label="Editar comentário"
                     />
                   } @else {
                     <p>{{ comentario.texto }}</p>
@@ -42,16 +42,12 @@
                     <button class="botao-destaque comentario__botao" type="button" (click)="guardarEdicao(comentario.id)">Guardar</button>
                     <button class="botao-fantasma comentario__botao" type="button" (click)="cancelarEdicao()">Cancelar</button>
                   } @else {
-                    @if (comentario.podeEditar) {
-                      <button class="botao-fantasma comentario__botao" type="button" (click)="iniciarEdicao(comentario.id, comentario.texto)">
-                        <span class="material-symbols-outlined">edit</span>
-                      </button>
-                    }
-                    @if (comentario.podeEliminar) {
-                      <button class="botao-fantasma comentario__botao comentario__botao--perigo" type="button" (click)="removerComentario(comentario.id)">
-                        <span class="material-symbols-outlined">delete</span>
-                      </button>
-                    }
+                    <button class="botao-fantasma comentario__botao" type="button" (click)="iniciarEdicao(comentario.id, comentario.texto)">
+                      <span class="material-symbols-outlined">edit</span>
+                    </button>
+                    <button class="botao-fantasma comentario__botao comentario__botao--perigo" type="button" (click)="removerComentario(comentario.id)">
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
                   }
                 </div>
               </article>
