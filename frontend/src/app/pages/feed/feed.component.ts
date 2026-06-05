@@ -1,18 +1,15 @@
-<<<<<<< Updated upstream
-import { Component, computed, inject, signal } from '@angular/core';
-=======
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
->>>>>>> Stashed changes
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
 import { CartaoPublicacaoComponent, Publicacao } from '../../components/cartao-publicacao/cartao-publicacao.component';
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
 import { ModalComponent } from '../../components/modal/modal.component';
-import { Comment, Post } from '../../models/fase1.model';
+import { Comment, Post, User } from '../../models/fase1.model';
 import { AuthService } from '../../services/auth.service';
 import { CommentService } from '../../services/comment.service';
 import { PostService } from '../../services/post.service';
+import { UserService } from '../../services/user.service';
 
 interface ComentarioView {
   id: number;
@@ -43,15 +40,10 @@ export class FeedComponent implements OnInit {
   private readonly comentariosApi = inject(CommentService);
   private readonly fb = inject(FormBuilder);
   private readonly postsApi = inject(PostService);
+  private readonly userService = inject(UserService);
 
   filtroActivo = signal<'todos' | 'seguidos'>('todos');
-  seguindo: Record<string, boolean> = { auroval: false, sonca: false };
-<<<<<<< Updated upstream
-  private readonly autoresSeguidos = new Set(['pub-1']);
-  private readonly dados = inject(NzolanetDadosService);
-  private readonly fb = inject(FormBuilder);
-=======
->>>>>>> Stashed changes
+  sugestoes = signal<User[]>([]);
 
   modalCriarAberto = signal(false);
   criarSubmetido = false;
@@ -85,11 +77,9 @@ export class FeedComponent implements OnInit {
   readonly avatarActual = computed(() => this.utilizadorActual()?.profile_photo ?? DEFAULT_AVATAR);
   readonly nomeActual = computed(() => this.utilizadorActual()?.name ?? 'Utilizador NzolaNet');
 
-<<<<<<< Updated upstream
-  // ── Follow ────────────────────────────────────────────────────────
-=======
   ngOnInit(): void {
     this.carregarFeed();
+    this.carregarSugestoes();
   }
 
   selecionarFiltro(filtro: 'todos' | 'seguidos'): void {
@@ -97,9 +87,20 @@ export class FeedComponent implements OnInit {
     this.carregarFeed();
   }
 
->>>>>>> Stashed changes
-  alternarSeguir(chave: string): void {
-    this.seguindo = { ...this.seguindo, [chave]: !this.seguindo[chave] };
+  alternarSeguir(sugestao: User): void {
+    const request = sugestao.is_following
+      ? this.userService.unfollow(sugestao.id)
+      : this.userService.toggleFollow(sugestao.id);
+
+    request.subscribe({
+      next: () => {
+        this.sugestoes.update((lista) =>
+          lista.map((u) =>
+            u.id === sugestao.id ? { ...u, is_following: !sugestao.is_following } : u,
+          ),
+        );
+      },
+    });
   }
 
   abrirCriarPost(): void {
@@ -120,20 +121,22 @@ export class FeedComponent implements OnInit {
     }
 
     this.emPublicacao.set(true);
-    this.postsApi.createPost(this.formularioCriar.controls.conteudo.value.trim(), this.mediaSelecionada).subscribe({
-      next: () => {
-        this.modalCriarAberto.set(false);
-        this.formularioCriar.reset();
-        this.removerMedia();
-        this.criarSubmetido = false;
-        this.emPublicacao.set(false);
-        this.carregarFeed();
-      },
-      error: () => {
-        this.erroCriar.set('Nao foi possivel publicar. Confirme o texto e o ficheiro selecionado.');
-        this.emPublicacao.set(false);
-      },
-    });
+    this.postsApi
+      .createPost(this.formularioCriar.controls.conteudo.value.trim(), this.mediaSelecionada)
+      .subscribe({
+        next: () => {
+          this.modalCriarAberto.set(false);
+          this.formularioCriar.reset();
+          this.removerMedia();
+          this.criarSubmetido = false;
+          this.emPublicacao.set(false);
+          this.carregarFeed();
+        },
+        error: () => {
+          this.erroCriar.set('Não foi possível publicar. Confirme o texto e o ficheiro selecionado.');
+          this.emPublicacao.set(false);
+        },
+      });
   }
 
   aoSelecionarMedia(evento: Event, tipo: 'imagem' | 'video'): void {
@@ -145,10 +148,13 @@ export class FeedComponent implements OnInit {
     }
 
     const limiteMb = tipo === 'imagem' ? 8 : 50;
-    const tipoValido = tipo === 'imagem' ? ficheiro.type.startsWith('image/') : ficheiro.type.startsWith('video/');
+    const tipoValido =
+      tipo === 'imagem' ? ficheiro.type.startsWith('image/') : ficheiro.type.startsWith('video/');
 
     if (!tipoValido || ficheiro.size > limiteMb * 1024 * 1024) {
-      this.erroCriar.set(`Selecione um ficheiro ${tipo === 'imagem' ? 'de imagem' : 'de video'} valido ate ${limiteMb} MB.`);
+      this.erroCriar.set(
+        `Selecione um ficheiro ${tipo === 'imagem' ? 'de imagem' : 'de vídeo'} válido até ${limiteMb} MB.`,
+      );
       input.value = '';
       return;
     }
@@ -194,15 +200,17 @@ export class FeedComponent implements OnInit {
       return;
     }
 
-    this.comentariosApi.addComment(publicacao.id, this.formularioComentario.controls.texto.value.trim()).subscribe({
-      next: (comentario) => {
-        this.comentarios.update((lista) => [...lista, this.toComentarioView(comentario)]);
-        this.formularioComentario.reset();
-        this.comentarioSubmetido = false;
-        this.atualizarContagemComentarios(publicacao.id, 1);
-      },
-      error: () => this.erroComentario.set('Nao foi possivel adicionar o comentario.'),
-    });
+    this.comentariosApi
+      .addComment(publicacao.id, this.formularioComentario.controls.texto.value.trim())
+      .subscribe({
+        next: (comentario) => {
+          this.comentarios.update((lista) => [...lista, this.toComentarioView(comentario)]);
+          this.formularioComentario.reset();
+          this.comentarioSubmetido = false;
+          this.atualizarContagemComentarios(publicacao.id, 1);
+        },
+        error: () => this.erroComentario.set('Não foi possível adicionar o comentário.'),
+      });
   }
 
   removerComentario(id: number): void {
@@ -215,7 +223,7 @@ export class FeedComponent implements OnInit {
           this.atualizarContagemComentarios(publicacao.id, -1);
         }
       },
-      error: () => this.erroComentario.set('Nao foi possivel remover o comentario.'),
+      error: () => this.erroComentario.set('Não foi possível remover o comentário.'),
     });
   }
 
@@ -233,7 +241,7 @@ export class FeedComponent implements OnInit {
     const texto = this.textoEdicaoComentario().trim();
 
     if (texto.length < 3) {
-      this.erroComentario.set('O comentario precisa de pelo menos 3 caracteres.');
+      this.erroComentario.set('O comentário precisa de pelo menos 3 caracteres.');
       return;
     }
 
@@ -244,14 +252,15 @@ export class FeedComponent implements OnInit {
         );
         this.cancelarEdicaoComentario();
       },
-      error: () => this.erroComentario.set('Nao foi possivel editar o comentario.'),
+      error: () => this.erroComentario.set('Não foi possível editar o comentário.'),
     });
   }
 
   aoEliminar(id: number): void {
     this.postsApi.deletePost(id).subscribe({
-      next: () => this.publicacoes.update((lista) => lista.filter((publicacao) => publicacao.id !== id)),
-      error: () => this.erroFeed.set('Nao foi possivel eliminar a publicacao.'),
+      next: () =>
+        this.publicacoes.update((lista) => lista.filter((publicacao) => publicacao.id !== id)),
+      error: () => this.erroFeed.set('Não foi possível eliminar a publicação.'),
     });
   }
 
@@ -263,7 +272,7 @@ export class FeedComponent implements OnInit {
           lista.map((item) => (item.id === publicacao.id ? publicacao : item)),
         );
       },
-      error: () => this.erroFeed.set('Nao foi possivel editar a publicacao.'),
+      error: () => this.erroFeed.set('Não foi possível editar a publicação.'),
     });
   }
 
@@ -296,9 +305,10 @@ export class FeedComponent implements OnInit {
     this.carregandoFeed.set(true);
     this.erroFeed.set('');
 
-    const request = this.filtroActivo() === 'seguidos'
-      ? this.postsApi.getFollowingFeed()
-      : this.postsApi.getGlobalFeed();
+    const request =
+      this.filtroActivo() === 'seguidos'
+        ? this.postsApi.getFollowingFeed()
+        : this.postsApi.getGlobalFeed();
 
     request.subscribe({
       next: (posts) => {
@@ -306,8 +316,19 @@ export class FeedComponent implements OnInit {
         this.carregandoFeed.set(false);
       },
       error: () => {
-        this.erroFeed.set('Nao foi possivel carregar o feed.');
+        this.erroFeed.set(
+          'Não foi possível carregar o feed. Verifique a sua ligação ao servidor.',
+        );
         this.carregandoFeed.set(false);
+      },
+    });
+  }
+
+  private carregarSugestoes(): void {
+    const currentUserId = this.auth.currentUser()?.id;
+    this.userService.getUsers().subscribe({
+      next: (users) => {
+        this.sugestoes.set(users.filter((u) => u.id !== currentUserId).slice(0, 3));
       },
     });
   }
@@ -317,8 +338,9 @@ export class FeedComponent implements OnInit {
     this.comentarios.set([]);
 
     this.comentariosApi.getComments(postId).subscribe({
-      next: (comentarios) => this.comentarios.set(comentarios.map((comentario) => this.toComentarioView(comentario))),
-      error: () => this.erroComentario.set('Nao foi possivel carregar os comentarios.'),
+      next: (comentarios) =>
+        this.comentarios.set(comentarios.map((comentario) => this.toComentarioView(comentario))),
+      error: () => this.erroComentario.set('Não foi possível carregar os comentários.'),
     });
   }
 
@@ -326,7 +348,10 @@ export class FeedComponent implements OnInit {
     this.publicacoes.update((lista) =>
       lista.map((publicacao) =>
         publicacao.id === postId
-          ? { ...publicacao, contagemComentarios: Math.max(0, publicacao.contagemComentarios + delta) }
+          ? {
+              ...publicacao,
+              contagemComentarios: Math.max(0, publicacao.contagemComentarios + delta),
+            }
           : publicacao,
       ),
     );
@@ -350,7 +375,7 @@ export class FeedComponent implements OnInit {
       tempoPublicacao: this.formatarData(post.created_at),
       conteudo: post.content,
       imagem: post.image ?? undefined,
-      imagemAlt: `Publicacao de ${post.author.name}`,
+      imagemAlt: `Publicação de ${post.author.name}`,
       videoUrl: post.video ?? undefined,
       contagemBazes: post.likes_count ?? 0,
       contagemComentarios: post.comments_count,

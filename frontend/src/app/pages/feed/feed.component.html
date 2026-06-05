@@ -8,8 +8,6 @@
           <section class="coluna">
 
             <!-- Composer card -->
-
-            <!-- Composer card -->
             <div class="cartao cartao-preenchido">
               <div class="linha-centro">
                 <img
@@ -20,20 +18,8 @@
                 <button class="campo-publicacao" type="button" (click)="abrirCriarPost()">
                   Partilhar cultura angolana...
                 </button>
-                <button class="campo-publicacao" type="button" (click)="abrirCriarPost()">
-                  Partilhar cultura angolana...
-                </button>
               </div>
               <div class="atalhos-publicacao">
-                <button type="button" (click)="abrirCriarPost()">
-                  <span class="material-symbols-outlined">image</span>Foto
-                </button>
-                <button type="button" (click)="abrirCriarPost()">
-                  <span class="material-symbols-outlined">smart_display</span>Vídeo
-                </button>
-                <button type="button" routerLink="/eventos">
-                  <span class="material-symbols-outlined">event</span>Evento
-                </button>
                 <button type="button" (click)="abrirCriarPost()">
                   <span class="material-symbols-outlined">image</span>Foto
                 </button>
@@ -74,7 +60,7 @@
             }
             @if (carregandoFeed()) {
               <div class="cartao cartao-preenchido">
-                <p class="texto-cartao">A carregar publicaÃ§Ãµes...</p>
+                <p class="texto-cartao">A carregar publicações...</p>
               </div>
             }
             @for (publicacao of publicacoes(); track publicacao.id) {
@@ -88,7 +74,7 @@
             } @empty {
               @if (!carregandoFeed()) {
                 <div class="cartao cartao-preenchido">
-                  <p class="texto-cartao">Ainda nÃ£o existem publicaÃ§Ãµes neste feed.</p>
+                  <p class="texto-cartao">Ainda não existem publicações neste feed.</p>
                 </div>
               }
             }
@@ -112,38 +98,29 @@
                 <a class="botao-fantasma" routerLink="/sugestoes">Ver todas</a>
               </div>
               <div class="lista-vertical">
-                <div class="item-lista">
-                  <img alt="Auroval Banger" class="avatar-redondo"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM36i0IWTLeke9cjwtTJMlYBZ98WBh6yDSy3OVvjaDv8NV4VNBd5h1k4adv-7ncp_JsTIYQ7MgpQMOe4g4x08d5DeLnxKR3dd5ym0dJfhVMc1Z4D9Skukt8HkfsTSBTbjzG308I65hSZZdkXoDQ7F4UmXDZ7NSZQ6CCrOcn0w39BgXdfSqhfofVs0gGzHEVx4K_ITKDjiRBjClvAeIVNXc4YTf1n7Al_OslNEZ2yguWUGZO7kSoHQgYCWvU5S3NtqlKZ4T4B-tM01W" />
-                  <img alt="Auroval Banger" class="avatar-redondo"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM36i0IWTLeke9cjwtTJMlYBZ98WBh6yDSy3OVvjaDv8NV4VNBd5h1k4adv-7ncp_JsTIYQ7MgpQMOe4g4x08d5DeLnxKR3dd5ym0dJfhVMc1Z4D9Skukt8HkfsTSBTbjzG308I65hSZZdkXoDQ7F4UmXDZ7NSZQ6CCrOcn0w39BgXdfSqhfofVs0gGzHEVx4K_ITKDjiRBjClvAeIVNXc4YTf1n7Al_OslNEZ2yguWUGZO7kSoHQgYCWvU5S3NtqlKZ4T4B-tM01W" />
-                  <div>
-                    <strong>Auroval Banger</strong>
-                    <p class="texto-cartao">@nzolanetvive</p>
+                @for (sugestao of sugestoes(); track sugestao.id) {
+                  <div class="item-lista">
+                    <img
+                      [alt]="sugestao.name"
+                      class="avatar-redondo"
+                      [src]="sugestao.profile_photo || 'https://ui-avatars.com/api/?background=111827&color=ffffff&name=' + sugestao.name"
+                    />
+                    <div>
+                      <strong>{{ sugestao.name }}</strong>
+                      <p class="texto-cartao">{{ sugestao.followers_count }} seguidores</p>
+                    </div>
+                    <button
+                      class="botao-contornado"
+                      type="button"
+                      style="margin-left:auto"
+                      (click)="alternarSeguir(sugestao)"
+                    >
+                      {{ sugestao.is_following ? 'A seguir' : 'Seguir' }}
+                    </button>
                   </div>
-                  <button class="botao-contornado" type="button" style="margin-left:auto" (click)="alternarSeguir('auroval')">
-                    {{ seguindo['auroval'] ? 'A seguir' : 'Seguir' }}
-                  </button>
-                  <button class="botao-contornado" type="button" style="margin-left:auto" (click)="alternarSeguir('auroval')">
-                    {{ seguindo['auroval'] ? 'A seguir' : 'Seguir' }}
-                  </button>
-                </div>
-                <div class="item-lista">
-                  <img alt="Sonca Awrama" class="avatar-redondo"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEOSkDw4tgJcVw5GSD0c-W0NT4wn67wjBsApzX7EWAookXz9Di2R1FCBpAFk4eTy5_mLptwQ42qbxPBLxL3KREHOTwR3bKNeBSQz8f2APMR9OhkJ_MOauh7PkW6wgoynxvRSLpJr13a5JUE1OKmt8Mpbqs4zLeK8J4_rS825INSMWklOJVH4BAd9e3y-rTCxPXtOoGb4mqgcidEqXExMdeZUzjAIkx1_Dj4gy30Cu8Hjb1ujdtsrRn5qpXViatVkqxzb3NoH4OqLtY" />
-                  <img alt="Sonca Awrama" class="avatar-redondo"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEOSkDw4tgJcVw5GSD0c-W0NT4wn67wjBsApzX7EWAookXz9Di2R1FCBpAFk4eTy5_mLptwQ42qbxPBLxL3KREHOTwR3bKNeBSQz8f2APMR9OhkJ_MOauh7PkW6wgoynxvRSLpJr13a5JUE1OKmt8Mpbqs4zLeK8J4_rS825INSMWklOJVH4BAd9e3y-rTCxPXtOoGb4mqgcidEqXExMdeZUzjAIkx1_Dj4gy30Cu8Hjb1ujdtsrRn5qpXViatVkqxzb3NoH4OqLtY" />
-                  <div>
-                    <strong>Sonca Awrama</strong>
-                    <p class="texto-cartao">@nzolanetinar</p>
-                  </div>
-                  <button class="botao-contornado" type="button" style="margin-left:auto" (click)="alternarSeguir('sonca')">
-                    {{ seguindo['sonca'] ? 'A seguir' : 'Seguir' }}
-                  </button>
-                  <button class="botao-contornado" type="button" style="margin-left:auto" (click)="alternarSeguir('sonca')">
-                    {{ seguindo['sonca'] ? 'A seguir' : 'Seguir' }}
-                  </button>
-                </div>
+                } @empty {
+                  <p class="texto-cartao">Sem sugestões de momento.</p>
+                }
               </div>
             </div>
           </aside>
@@ -288,6 +265,8 @@
             }
           </div>
         </article>
+      } @empty {
+        <p class="texto-cartao" style="text-align:center; padding: 16px 0">Sem comentários ainda. Seja o primeiro!</p>
       }
     </div>
   }
