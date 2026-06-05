@@ -12,6 +12,9 @@
       </div>
     </div>
     <h2 class="titulo-pagina">Entrar</h2>
+    @if (erroServidor) {
+      <p class="mensagem-campo" role="alert">{{ erroServidor }}</p>
+    }
     <form class="formulario" [formGroup]="formulario" (ngSubmit)="entrar()">
       <input
         class="campo-formulario"

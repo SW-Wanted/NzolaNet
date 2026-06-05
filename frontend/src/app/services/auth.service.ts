@@ -85,6 +85,10 @@ export class AuthService {
       );
   }
 
+  checkApiStatus(): Observable<void> {
+    return this.http.get<ApiResponse<null>>(API_URL).pipe(map(() => undefined));
+  }
+
   logout(): Observable<void> {
     return this.http.post<ApiResponse<null>>(`${API_URL}/auth/logout`, null).pipe(
       map(() => undefined),

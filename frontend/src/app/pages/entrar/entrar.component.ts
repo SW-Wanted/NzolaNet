@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
@@ -11,7 +11,7 @@ import { mensagemErroHttp } from '../../utils/erro.utils';
   templateUrl: './entrar.component.html',
   styleUrl: './entrar.component.css',
 })
-export class EntrarComponent {
+export class EntrarComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly formBuilder = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
@@ -25,6 +25,22 @@ export class EntrarComponent {
   submetido = false;
   emSubmissao = false;
   erroApi: string | null = null;
+  erroServidor: string | null = null;
+
+  ngOnInit(): void {
+    this.verificarServidor();
+  }
+
+  private verificarServidor(): void {
+    this.authService.checkApiStatus().subscribe({
+      next: () => {
+        this.erroServidor = null;
+      },
+      error: (err) => {
+        this.erroServidor = mensagemErroHttp(err);
+      },
+    });
+  }
 
   entrar(): void {
     this.submetido = true;
