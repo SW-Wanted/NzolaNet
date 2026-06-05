@@ -6,6 +6,7 @@ import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral
 import { Comment, Post } from '../../models/fase1.model';
 import { CommentService } from '../../services/comment.service';
 import { PostService } from '../../services/post.service';
+import { mensagemErroHttp } from '../../utils/erro.utils';
 
 interface ComentarioView {
   id: number;
@@ -67,14 +68,14 @@ export class ComentariosComponent implements OnInit {
         this.formulario.reset();
         this.submetido = false;
       },
-      error: () => this.erroApi.set('Não foi possível adicionar o comentário.'),
+      error: (err) => this.erroApi.set(mensagemErroHttp(err)),
     });
   }
 
   removerComentario(id: number): void {
     this.comments.deleteComment(id).subscribe({
       next: () => this.comentarios.update((lista) => lista.filter((c) => c.id !== id)),
-      error: () => this.erroApi.set('Não foi possível remover o comentário.'),
+      error: (err) => this.erroApi.set(mensagemErroHttp(err)),
     });
   }
 
@@ -101,14 +102,14 @@ export class ComentariosComponent implements OnInit {
         );
         this.cancelarEdicao();
       },
-      error: () => this.erroApi.set('Não foi possível editar o comentário.'),
+      error: (err) => this.erroApi.set(mensagemErroHttp(err)),
     });
   }
 
   private carregarPost(id: number): void {
     this.posts.getPost(id).subscribe({
       next: (post) => this.postAtual.set(post),
-      error: () => this.erroApi.set('Não foi possível carregar a publicação.'),
+      error: (err) => this.erroApi.set(mensagemErroHttp(err)),
     });
   }
 
@@ -120,8 +121,8 @@ export class ComentariosComponent implements OnInit {
         this.comentarios.set(lista.map((c) => this.toView(c)));
         this.carregando.set(false);
       },
-      error: () => {
-        this.erroApi.set('Não foi possível carregar os comentários.');
+      error: (err) => {
+        this.erroApi.set(mensagemErroHttp(err));
         this.carregando.set(false);
       },
     });
