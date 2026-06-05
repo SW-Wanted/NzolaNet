@@ -34,12 +34,6 @@ Route::prefix('auth')->group(function (): void {
     });
 });
 
-Route::fallback(fn () => response()->json([
-    'success' => false,
-    'message' => 'Rota da API nao encontrada',
-    'errors' => [],
-], 404));
-
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('users', [UserController::class, 'index']);
     Route::get('users/{id}', [UserController::class, 'show'])->whereNumber('id');
@@ -51,6 +45,7 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('users/{user}/following', [UserController::class, 'following']);
 
     Route::apiResource('posts', PostController::class);
+    Route::get('posts/{post}/likes', [LikeController::class, 'index']);
     Route::post('posts/{post}/like', [LikeController::class, 'store']);
     Route::delete('posts/{post}/like', [LikeController::class, 'destroy']);
     Route::get('posts/{post}/comments', [CommentController::class, 'index']);
@@ -69,3 +64,9 @@ Route::middleware('auth:sanctum')->group(function (): void {
         Route::delete('comments/{comment}', [ModerationController::class, 'destroyComment']);
     });
 });
+
+Route::fallback(fn () => response()->json([
+    'success' => false,
+    'message' => 'Rota da API nao encontrada',
+    'errors' => [],
+], 404));

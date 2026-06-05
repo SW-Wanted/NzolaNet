@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\UserResource;
 use App\Models\Post;
 use App\Services\LikeService;
 use Illuminate\Http\JsonResponse;
@@ -18,6 +19,14 @@ class LikeController extends ApiController
         return $this->success([
             'likes_count' => $this->likes->like($request->user()->id, $post),
         ], 'Baze adicionada com sucesso', 201);
+    }
+
+    public function index(Post $post): JsonResponse
+    {
+        return $this->success(
+            UserResource::collection($this->likes->usersForPost($post)),
+            'Bazes listados com sucesso'
+        );
     }
 
     public function destroy(Request $request, Post $post): JsonResponse

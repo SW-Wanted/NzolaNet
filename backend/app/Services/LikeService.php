@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Events\PostLiked;
 use App\Models\Post;
 use App\Repositories\Contracts\LikeRepositoryInterface;
+use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
 
 class LikeService
@@ -35,5 +36,10 @@ class LikeService
         $this->likes->delete($userId, $post->id);
 
         return $this->likes->countForPost($post->id);
+    }
+
+    public function usersForPost(Post $post): Collection
+    {
+        return $this->likes->usersForPost($post->id);
     }
 }

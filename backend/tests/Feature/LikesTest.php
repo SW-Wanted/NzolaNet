@@ -30,4 +30,22 @@ class LikesTest extends TestCase
             ->assertOk()
             ->assertJsonPath('data.likes_count', 0);
     }
+
+    public function test_user_can_list_people_who_liked_a_post(): void
+    {
+        $viewer = User::factory()->create();
+        $liker = User::factory()->create(['name' => 'Maria Nzola']);
+        $post = Post::factory()->create();
+        Sanctum::actingAs($liker);
+
+        $this->postJson("/api/posts/{$post->id}/like")
+            ->assertCreated();
+
+        Sanctum::actingAs($viewer);
+
+        $this->getJson("/api/posts/{$post->id}/likes")
+            ->assertOk()
+            ->assertJsonPath('data.0.id', $liker->id)
+            ->assertJsonPath('data.0.name', 'Maria Nzola');
+    }
 }

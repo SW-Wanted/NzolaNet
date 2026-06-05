@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Like;
 use App\Repositories\Contracts\LikeRepositoryInterface;
+use Illuminate\Support\Collection;
 
 class EloquentLikeRepository implements LikeRepositoryInterface
 {
@@ -34,5 +35,17 @@ class EloquentLikeRepository implements LikeRepositoryInterface
     public function countForPost(int $postId): int
     {
         return Like::query()->where('post_id', $postId)->count();
+    }
+
+    public function usersForPost(int $postId): Collection
+    {
+        return Like::query()
+            ->where('post_id', $postId)
+            ->with(['user' => fn ($query) => $query->withCount(['followers', 'following'])])
+            ->latest()
+            ->get()
+            ->pluck('user')
+            ->filter()
+            ->values();
     }
 }
