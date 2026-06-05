@@ -5,6 +5,7 @@ import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.compone
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { mensagemErroHttp } from '../../utils/erro.utils';
 
 const DEFAULT_AVATAR = 'https://ui-avatars.com/api/?background=111827&color=ffffff&name=NzolaNet';
 
@@ -98,8 +99,8 @@ export class EditarPerfilComponent implements OnInit {
               },
             });
           },
-          error: () => {
-            this.erroApi.set('Não foi possível guardar as alterações. Tente novamente.');
+          error: (err) => {
+            this.erroApi.set(mensagemErroHttp(err));
             this.emSubmissao.set(false);
           },
         });
@@ -108,8 +109,8 @@ export class EditarPerfilComponent implements OnInit {
     if (this.fotoSelecionada) {
       this.userService.uploadProfilePhoto(this.fotoSelecionada).subscribe({
         next: () => guardarPerfil(),
-        error: () => {
-          this.erroApi.set('Não foi possível fazer o upload da foto. Tente novamente.');
+        error: (err) => {
+          this.erroApi.set(mensagemErroHttp(err));
           this.emSubmissao.set(false);
         },
       });
