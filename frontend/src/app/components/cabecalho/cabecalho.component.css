@@ -109,8 +109,37 @@
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
-  border: none;
+  border: 2px solid var(--cor-container-primaria);
   cursor: pointer;
+  transition: opacity var(--transicao-rapida);
+}
+
+.cabecalho__avatar:hover {
+  opacity: 0.85;
+}
+
+.cabecalho__botao-sair {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--cor-erro);
+  cursor: pointer;
+  transition: background-color var(--transicao-rapida), color var(--transicao-rapida);
+  margin-left: 4px;
+}
+
+.cabecalho__botao-sair:hover {
+  background-color: var(--cor-container-erro);
+  color: var(--cor-no-container-erro);
+}
+
+.cabecalho__botao-sair .material-symbols-outlined {
+  font-size: 20px;
 }
 
 @media (max-width: 768px) {

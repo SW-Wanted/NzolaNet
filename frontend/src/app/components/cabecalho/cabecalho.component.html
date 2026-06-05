@@ -7,31 +7,43 @@
         class="cabecalho__pesquisa-campo"
         placeholder="Pesquisar"
         type="text"
-        (input)="aoPesquisar($event)"
+        [value]="termoPesquisa()"
+        (input)="termoPesquisa.set($any($event.target).value)"
       />
     </div>
 
     <div class="cabecalho__direita">
-      <button class="cabecalho__botao-icone" type="button" routerLink="/feed/estados">
+      <button class="cabecalho__botao-icone" type="button" routerLink="/feed/estados" aria-label="Estados">
         <span class="material-symbols-outlined">grid_view</span>
       </button>
 
-      <button class="cabecalho__botao-icone cabecalho__botao-icone--com-badge" type="button" routerLink="/comentarios/moderacao">
-        <span class="material-symbols-outlined">notifications</span>
-        @if (temNotificacoes) {
-          <span class="cabecalho__badge-notificacao"></span>
-        }
-      </button>
+      @if (isAuthenticated()) {
+        <button class="cabecalho__botao-icone" type="button" routerLink="/comentarios/moderacao" aria-label="Notificações">
+          <span class="material-symbols-outlined">notifications</span>
+        </button>
 
-      <div class="cabecalho__utilizador">
-        <a routerLink="/perfil" aria-label="Ver perfil">
-          <img
-            alt="Foto de perfil"
-            class="cabecalho__avatar"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9fc3LgEcIoMRyzygrtvD6C_iV8JhkmmaTtxcLnjXD5lVR1x07sV9E-OOXCJagLASt999mjLIwu6YevVPZ9BueZGq2OkQ3cpJ6V-L79xUftQINDSPLvDya9eyFOEDMGzG-VLGz9cEhiU5wZ84QJHkmQKU_IsBm27u3btYmWHZeDYzt6VilY2lglbx7nO2C_uLNlR-r5pwZXfpMwboIrTTD_kU3x4KlgqWyjnp7lgqyiY6uE4qzxCtwRNTnYq5VF14sb6avLWA8Iy9s"
-          />
-        </a>
-      </div>
+        <div class="cabecalho__utilizador">
+          <a routerLink="/perfil" [attr.aria-label]="'Ver perfil de ' + nomeUtilizador()">
+            <img
+              [alt]="nomeUtilizador()"
+              class="cabecalho__avatar"
+              [src]="avatar()"
+              [title]="nomeUtilizador()"
+            />
+          </a>
+          <button
+            class="cabecalho__botao-sair"
+            type="button"
+            (click)="sairDaSessao()"
+            aria-label="Terminar sessão"
+            title="Terminar sessão"
+          >
+            <span class="material-symbols-outlined">logout</span>
+          </button>
+        </div>
+      } @else {
+        <a class="botao-contornado" routerLink="/entrar">Entrar</a>
+      }
     </div>
 
   </div>
