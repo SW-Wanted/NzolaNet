@@ -1,7 +1,9 @@
 import { HttpErrorResponse, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { Observable, catchError, finalize, map, shareReplay, switchMap, throwError } from 'rxjs';
+import { Observable, TimeoutError, catchError, finalize, map, shareReplay, switchMap, throwError, timeout } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+
+const REQUEST_TIMEOUT_MS = 15000;
 
 let refreshTokenRequest$: Observable<string> | null = null;
 
@@ -11,7 +13,20 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
   const authenticatedRequest = token ? withBearerToken(request, token) : request;
 
   return next(authenticatedRequest).pipe(
+    timeout(REQUEST_TIMEOUT_MS),
     catchError((error: unknown) => {
+      if (error instanceof TimeoutError) {
+        return throwError(
+          () =>
+            new HttpErrorResponse({
+              status: 0,
+              statusText: 'Timeout',
+              url: request.url,
+              error: 'Servidor não respondeu dentro do tempo esperado.',
+            }),
+        );
+      }
+
       if (!shouldRefreshToken(error, request, authService)) {
         return throwError(() => error);
       }
