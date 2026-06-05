@@ -99,14 +99,53 @@
 
           <aside class="coluna">
             <div class="cartao cartao-preenchido">
-              <span class="rotulo-seccao">Tendências</span>
-              <h2 class="titulo-cartao">Cultura em alta</h2>
-              <div class="lista-vertical painel-tags">
-                <span class="pilula pilula-primaria">#Kizomba</span>
-                <span class="pilula">#ArteAngolana</span>
-                <span class="pilula">#Luanda</span>
-                <span class="pilula pilula-secundaria">#Semba</span>
-              </div>
+              <span class="rotulo-seccao">Radar do feed</span>
+              <h2 class="titulo-cartao">Movimento NzolaNet</h2>
+
+              @if (carregandoFeed()) {
+                <div class="painel-radar">
+                  @for (i of [1, 2, 3]; track i) {
+                    <div class="skeleton skeleton-radar"></div>
+                  }
+                </div>
+                <div class="skeleton skeleton-aside-linha"></div>
+                <div class="skeleton skeleton-aside-linha"></div>
+              } @else {
+                <div class="painel-radar">
+                  @for (destaque of destaquesFeed(); track destaque.rotulo) {
+                    <div class="radar-metrica">
+                      <span class="material-symbols-outlined">{{ destaque.icone }}</span>
+                      <strong>{{ destaque.valor }}</strong>
+                      <small>{{ destaque.rotulo }}</small>
+                    </div>
+                  }
+                </div>
+
+                @if (publicacaoEmAlta(); as destaquePost) {
+                  <a class="publicacao-em-alta" [routerLink]="['/utilizador', destaquePost.autorId]">
+                    <span class="material-symbols-outlined">local_fire_department</span>
+                    <div>
+                      <strong>{{ destaquePost.autorNome }}</strong>
+                      <p>{{ destaquePost.contagemBazes }} bazes · {{ destaquePost.contagemComentarios }} comentários</p>
+                    </div>
+                  </a>
+                }
+
+                <div class="actividade-feed">
+                  <span class="rotulo-seccao">Atividade recente</span>
+                  @for (item of actividadeRecente(); track item.id) {
+                    <a class="actividade-feed__item" [routerLink]="['/utilizador', item.autorId]">
+                      <img [src]="item.autorAvatar" [alt]="item.autorNome" />
+                      <div>
+                        <strong>{{ item.autorNome }}</strong>
+                        <p>{{ item.tempoPublicacao }}</p>
+                      </div>
+                    </a>
+                  } @empty {
+                    <p class="texto-cartao">Sem atividade por enquanto.</p>
+                  }
+                </div>
+              }
             </div>
 
             <div class="cartao cartao-preenchido">
@@ -276,6 +315,7 @@
     <div class="drawer-comentarios-lista">
       @for (comentario of comentarios(); track comentario.id) {
         <article class="comentario">
+          <img class="comentario__avatar" [src]="comentario.autorAvatar" [alt]="comentario.autor" />
           <div class="comentario__conteudo">
             <strong class="comentario__autor">{{ comentario.autor }}</strong>
             <span class="comentario__data">{{ comentario.data }}</span>

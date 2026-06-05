@@ -32,6 +32,95 @@
   margin-top: 16px;
 }
 
+.painel-radar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.radar-metrica {
+  min-height: 86px;
+  border-radius: 8px;
+  background: var(--cor-container);
+  border: 1px solid var(--cor-contorno-variante);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.radar-metrica .material-symbols-outlined {
+  color: var(--cor-primaria);
+  font-size: 20px;
+}
+
+.radar-metrica strong {
+  color: var(--cor-no-superficie);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.radar-metrica small {
+  color: var(--cor-no-superficie-variante);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.publicacao-em-alta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--cor-primaria) 10%, transparent);
+  color: inherit;
+  text-decoration: none;
+}
+
+.publicacao-em-alta .material-symbols-outlined {
+  color: var(--cor-primaria);
+  font-size: 28px;
+}
+
+.publicacao-em-alta p,
+.actividade-feed__item p {
+  margin: 2px 0 0;
+  color: var(--cor-no-superficie-variante);
+  font-size: 12px;
+}
+
+.actividade-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.actividade-feed__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.actividade-feed__item:hover strong,
+.publicacao-em-alta:hover strong {
+  text-decoration: underline;
+}
+
+.actividade-feed__item img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--cor-contorno-variante);
+}
+
 .feed-barra-actualizar {
   display: flex;
   justify-content: center;
@@ -384,6 +473,10 @@
   width: 100%;
 }
 
+.skeleton-radar {
+  height: 86px;
+}
+
 .skeleton-aside-item {
   display: flex;
   align-items: center;
@@ -436,4 +529,55 @@
 @keyframes toast-in {
   from { opacity: 0; transform: translateX(-50%) translateY(12px); }
   to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.comentario {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.comentario__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--cor-contorno-variante);
+  flex-shrink: 0;
+}
+
+.comentario__conteudo {
+  flex: 1;
+  min-width: 0;
+  border-radius: 8px;
+  background: var(--cor-container);
+  padding: 9px 12px;
+}
+
+.comentario__autor {
+  display: block;
+  font-size: 13px;
+}
+
+.comentario__data {
+  display: block;
+  margin-top: 2px;
+  color: var(--cor-no-superficie-variante);
+  font-size: 11px;
+}
+
+.comentario__conteudo p {
+  margin: 6px 0 0;
+  line-height: 1.45;
+}
+
+.comentario__accoes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.comentario__botao {
+  min-height: 32px;
+  padding: 6px 8px;
 }

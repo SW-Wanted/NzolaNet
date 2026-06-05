@@ -15,10 +15,17 @@ import { mensagemErroHttp } from '../../utils/erro.utils';
 interface ComentarioView {
   id: number;
   autor: string;
+  autorAvatar: string;
   texto: string;
   data: string;
   podeEditar: boolean;
   podeEliminar: boolean;
+}
+
+interface DestaqueFeed {
+  rotulo: string;
+  valor: number;
+  icone: string;
 }
 
 function avatarFallback(name: string): string {
@@ -81,6 +88,24 @@ export class FeedComponent implements OnInit {
   readonly utilizadorActual = computed(() => this.auth.currentUser());
   readonly avatarActual = computed(() => this.utilizadorActual()?.profile_photo ?? avatarFallback(this.nomeActual()));
   readonly nomeActual = computed(() => this.utilizadorActual()?.name ?? 'Utilizador NzolaNet');
+  readonly destaquesFeed = computed<DestaqueFeed[]>(() => {
+    const publicacoes = this.publicacoes();
+    const bazes = publicacoes.reduce((total, post) => total + post.contagemBazes, 0);
+    const comentarios = publicacoes.reduce((total, post) => total + post.contagemComentarios, 0);
+
+    return [
+      { rotulo: 'Publicações', valor: publicacoes.length, icone: 'article' },
+      { rotulo: 'Bazes', valor: bazes, icone: 'favorite' },
+      { rotulo: 'Comentários', valor: comentarios, icone: 'chat_bubble' },
+    ];
+  });
+  readonly publicacaoEmAlta = computed(() =>
+    [...this.publicacoes()].sort(
+      (a, b) =>
+        b.contagemBazes + b.contagemComentarios - (a.contagemBazes + a.contagemComentarios),
+    )[0] ?? null,
+  );
+  readonly actividadeRecente = computed(() => this.publicacoes().slice(0, 3));
 
   ngOnInit(): void {
     this.carregarFeed();
@@ -399,6 +424,7 @@ export class FeedComponent implements OnInit {
     return {
       id: comment.id,
       autor: comment.author.name,
+      autorAvatar: comment.author.profile_photo ?? avatarFallback(comment.author.name),
       texto: comment.content,
       data: this.formatarData(comment.created_at),
       podeEditar: comment.can_update ?? false,
