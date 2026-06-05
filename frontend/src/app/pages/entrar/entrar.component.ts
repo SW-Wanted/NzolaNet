@@ -1,6 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { finalize } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { mensagemErroHttp } from '../../utils/erro.utils';
@@ -11,11 +12,12 @@ import { mensagemErroHttp } from '../../utils/erro.utils';
   templateUrl: './entrar.component.html',
   styleUrl: './entrar.component.css',
 })
-export class EntrarComponent implements OnInit {
+export class EntrarComponent {
   private readonly authService = inject(AuthService);
   private readonly formBuilder = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   formulario = this.formBuilder.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -25,22 +27,6 @@ export class EntrarComponent implements OnInit {
   submetido = false;
   emSubmissao = false;
   erroApi: string | null = null;
-  erroServidor: string | null = null;
-
-  ngOnInit(): void {
-    this.verificarServidor();
-  }
-
-  private verificarServidor(): void {
-    this.authService.checkApiStatus().subscribe({
-      next: () => {
-        this.erroServidor = null;
-      },
-      error: (err) => {
-        this.erroServidor = mensagemErroHttp(err);
-      },
-    });
-  }
 
   entrar(): void {
     this.submetido = true;
@@ -59,6 +45,7 @@ export class EntrarComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.emSubmissao = false;
+          this.cdr.markForCheck();
         }),
       )
       .subscribe({
@@ -67,7 +54,12 @@ export class EntrarComponent implements OnInit {
           void this.router.navigateByUrl(returnUrl);
         },
         error: (err) => {
-          this.erroApi = mensagemErroHttp(err);
+          if (err instanceof HttpErrorResponse && err.status === 401) {
+            this.erroApi = 'Email ou senha incorretos. Verifique as suas credenciais.';
+          } else {
+            this.erroApi = mensagemErroHttp(err);
+          }
+          this.cdr.markForCheck();
         },
       });
   }

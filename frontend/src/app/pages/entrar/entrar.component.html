@@ -12,34 +12,39 @@
       </div>
     </div>
     <h2 class="titulo-pagina">Entrar</h2>
-    @if (erroServidor) {
-      <p class="mensagem-campo" role="alert">{{ erroServidor }}</p>
+    @if (erroApi) {
+      <div class="alerta alerta-erro" role="alert">{{ erroApi }}</div>
     }
     <form class="formulario" [formGroup]="formulario" (ngSubmit)="entrar()">
-      <input
-        class="campo-formulario"
-        formControlName="email"
-        placeholder="Email"
-        type="email"
-      />
-      @if (submetido && formulario.controls.email.invalid) {
-        <span class="mensagem-campo">Informe um email válido.</span>
-      }
-      <input
-        class="campo-formulario"
-        formControlName="senha"
-        placeholder="Senha"
-        type="password"
-      />
-      @if (submetido && formulario.controls.senha.invalid) {
-        <span class="mensagem-campo">A senha deve ter pelo menos 6 caracteres.</span>
-      }
-      @if (erroApi) {
-        <p class="mensagem-campo" role="alert">{{ erroApi }}</p>
-      }
+      <div class="grupo-campo">
+        <input
+          class="campo-formulario"
+          [class.campo-invalido]="submetido && formulario.controls.email.invalid"
+          formControlName="email"
+          placeholder="Email"
+          type="email"
+          autocomplete="email"
+        />
+        @if (submetido && formulario.controls.email.invalid) {
+          <span class="mensagem-campo" role="alert">Informe um email válido.</span>
+        }
+      </div>
+      <div class="grupo-campo">
+        <input
+          class="campo-formulario"
+          [class.campo-invalido]="submetido && formulario.controls.senha.invalid"
+          formControlName="senha"
+          placeholder="Senha"
+          type="password"
+          autocomplete="current-password"
+        />
+        @if (submetido && formulario.controls.senha.invalid) {
+          <span class="mensagem-campo" role="alert">A senha deve ter pelo menos 6 caracteres.</span>
+        }
+      </div>
       <button class="botao-destaque" type="submit" [disabled]="emSubmissao">
         @if (emSubmissao) {
-          A entrar...
+          <span class="spinner-botao"></span> A entrar…
         } @else {
           Entrar
         }
