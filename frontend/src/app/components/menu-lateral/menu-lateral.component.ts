@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, computed, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 interface ItemMenu {
   icone: string;
@@ -15,6 +16,12 @@ interface ItemMenu {
   styleUrl: './menu-lateral.component.css',
 })
 export class MenuLateralComponent {
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+
+  readonly isAuthenticated = computed(() => this.auth.isAuthenticated());
+  readonly isAdmin = computed(() => this.auth.currentUser()?.role === 'admin');
+
   itensMenuSuperior: ItemMenu[] = [
     { icone: 'home', etiqueta: 'Início', rota: '/feed' },
     { icone: 'video_library', etiqueta: 'Kizomba Hub', rota: '/kizomba-hub' },
@@ -27,6 +34,15 @@ export class MenuLateralComponent {
   itensMenuInferior: ItemMenu[] = [
     { icone: 'settings', etiqueta: 'Definições', rota: '/perfil/editar' },
     { icone: 'group_add', etiqueta: 'Sugestões', rota: '/sugestoes' },
-    { icone: 'login', etiqueta: 'Entrar / Registar', rota: '/entrar' },
   ];
+
+  sairDaSessao(): void {
+    this.auth.logout().subscribe({
+      next: () => this.router.navigateByUrl('/entrar'),
+      error: () => {
+        this.auth.clearSession();
+        this.router.navigateByUrl('/entrar');
+      },
+    });
+  }
 }

@@ -11,31 +11,70 @@
     </div>
   </div>
 
-  <div class="menu-lateral__grupo">
-    @for (item of itensMenuSuperior; track item.etiqueta) {
+  @if (isAuthenticated()) {
+    <div class="menu-lateral__grupo">
+      @for (item of itensMenuSuperior; track item.etiqueta) {
+        <a
+          class="menu-lateral__item"
+          [routerLink]="item.rota"
+          routerLinkActive="menu-lateral__item--activo"
+        >
+          <span class="material-symbols-outlined menu-lateral__icone">{{ item.icone }}</span>
+          <span class="menu-lateral__etiqueta">{{ item.etiqueta }}</span>
+        </a>
+      }
+      @if (isAdmin()) {
+        <a
+          class="menu-lateral__item"
+          routerLink="/comentarios/moderacao"
+          routerLinkActive="menu-lateral__item--activo"
+        >
+          <span class="material-symbols-outlined menu-lateral__icone">admin_panel_settings</span>
+          <span class="menu-lateral__etiqueta">Moderação</span>
+        </a>
+      }
+    </div>
+
+    <div class="menu-lateral__separador"></div>
+
+    <div class="menu-lateral__grupo">
+      @for (item of itensMenuInferior; track item.etiqueta) {
+        <a
+          class="menu-lateral__item"
+          [routerLink]="item.rota"
+          routerLinkActive="menu-lateral__item--activo"
+        >
+          <span class="material-symbols-outlined menu-lateral__icone">{{ item.icone }}</span>
+          <span class="menu-lateral__etiqueta">{{ item.etiqueta }}</span>
+        </a>
+      }
+      <button
+        class="menu-lateral__item menu-lateral__item--sair"
+        type="button"
+        (click)="sairDaSessao()"
+      >
+        <span class="material-symbols-outlined menu-lateral__icone">logout</span>
+        <span class="menu-lateral__etiqueta">Terminar sessão</span>
+      </button>
+    </div>
+  } @else {
+    <div class="menu-lateral__grupo">
       <a
         class="menu-lateral__item"
-        [routerLink]="item.rota"
+        routerLink="/entrar"
         routerLinkActive="menu-lateral__item--activo"
       >
-        <span class="material-symbols-outlined menu-lateral__icone">{{ item.icone }}</span>
-        <span class="menu-lateral__etiqueta">{{ item.etiqueta }}</span>
+        <span class="material-symbols-outlined menu-lateral__icone">login</span>
+        <span class="menu-lateral__etiqueta">Entrar</span>
       </a>
-    }
-  </div>
-
-  <div class="menu-lateral__separador"></div>
-
-  <div class="menu-lateral__grupo">
-    @for (item of itensMenuInferior; track item.etiqueta) {
       <a
         class="menu-lateral__item"
-        [routerLink]="item.rota"
+        routerLink="/registo"
         routerLinkActive="menu-lateral__item--activo"
       >
-        <span class="material-symbols-outlined menu-lateral__icone">{{ item.icone }}</span>
-        <span class="menu-lateral__etiqueta">{{ item.etiqueta }}</span>
+        <span class="material-symbols-outlined menu-lateral__icone">person_add</span>
+        <span class="menu-lateral__etiqueta">Registar</span>
       </a>
-    }
-  </div>
+    </div>
+  }
 </nav>

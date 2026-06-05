@@ -98,3 +98,20 @@
 .menu-lateral__etiqueta {
   flex: 1;
 }
+
+.menu-lateral__item--sair {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  color: var(--cor-erro);
+}
+
+.menu-lateral__item--sair:hover {
+  background-color: var(--cor-container-erro);
+  color: var(--cor-no-container-erro);
+}
+
+.menu-lateral__item--sair .menu-lateral__icone {
+  color: inherit;
+}
