@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID, computed, signal } from '@angular/core';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, finalize, map, of, shareReplay, tap } from 'rxjs';
 import { AuthResponse, User } from '../models/fase1.model';
 
 interface ApiResponse<T> {
@@ -47,11 +47,10 @@ const USER_KEY = 'nzolanet.auth.user';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly authState = signal<AuthState>({ token: null, user: null });
+  private currentUserRequest$: Observable<User | null> | null = null;
 
   readonly currentUser = computed(() => this.authState().user);
-  readonly isAuthenticated = computed(() =>
-    Boolean(this.authState().token && this.authState().user),
-  );
+  readonly isAuthenticated = computed(() => Boolean(this.authState().token));
 
   constructor(
     private readonly http: HttpClient,
@@ -61,6 +60,10 @@ export class AuthService {
       token: this.readTokenFromStorage(),
       user: this.readUserFromStorage(),
     });
+
+    if (this.authState().token) {
+      this.refreshCurrentUser().subscribe({ error: () => undefined });
+    }
   }
 
   get token(): string | null {
@@ -125,6 +128,23 @@ export class AuthService {
       map((response) => this.toUser(response.data)),
       tap((user) => this.persistUser(user)),
     );
+  }
+
+  refreshCurrentUser(): Observable<User | null> {
+    if (!this.token) {
+      return of(null);
+    }
+
+    if (!this.currentUserRequest$) {
+      this.currentUserRequest$ = this.getCurrentUserFromServer().pipe(
+        finalize(() => {
+          this.currentUserRequest$ = null;
+        }),
+        shareReplay({ bufferSize: 1, refCount: false }),
+      );
+    }
+
+    return this.currentUserRequest$;
   }
 
   clearSession(): void {
