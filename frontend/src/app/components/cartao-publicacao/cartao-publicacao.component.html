@@ -17,7 +17,6 @@
       </div>
     </div>
     <button class="cartao-publicacao__botao-menu" type="button" (click)="alternarMenu()" aria-label="Mais opções">
-    <button class="cartao-publicacao__botao-menu" type="button" (click)="alternarMenu()" aria-label="Mais opções">
       <span class="material-symbols-outlined">more_horiz</span>
     </button>
     @if (menuAberto()) {
@@ -60,17 +59,6 @@
       ></video>
     </div>
   } @else if (publicacao.imagem) {
-  @if (publicacao.videoUrl) {
-    <div class="cartao-publicacao__media-container">
-      <video
-        class="cartao-publicacao__video"
-        [src]="publicacao.videoUrl"
-        controls
-        preload="metadata"
-        [attr.aria-label]="'Vídeo de ' + publicacao.autorNome"
-      ></video>
-    </div>
-  } @else if (publicacao.imagem) {
     <div class="cartao-publicacao__imagem-container">
       <img
         [src]="publicacao.imagem"
@@ -93,8 +81,6 @@
       type="button"
       [attr.aria-pressed]="bazeActivo()"
       [attr.aria-label]="bazeActivo() ? 'Remover baze' : 'Dar baze'"
-      [attr.aria-pressed]="bazeActivo()"
-      [attr.aria-label]="bazeActivo() ? 'Remover baze' : 'Dar baze'"
       (click)="aoBaze()"
     >
       <span class="material-symbols-outlined">{{ bazeActivo() ? 'favorite' : 'favorite_border' }}</span>
@@ -106,17 +92,16 @@
       (click)="abrirComentarios.emit(publicacao)"
       (keydown.enter)="abrirComentarios.emit(publicacao)"
     >
-    <a class="cartao-publicacao__accao" role="button" tabindex="0"
-      aria-label="Comentar publicação"
-      (click)="abrirComentarios.emit(publicacao)"
-      (keydown.enter)="abrirComentarios.emit(publicacao)"
-    >
       <span class="material-symbols-outlined">chat_bubble_outline</span>
       <span class="cartao-publicacao__accao-texto">Comentar</span>
     </a>
 
-    <button class="cartao-publicacao__accao" type="button" (click)="partilhar()" [attr.aria-label]="partilhado() ? 'Ligação copiada' : 'Partilhar publicação'">
-    <button class="cartao-publicacao__accao" type="button" (click)="partilhar()" [attr.aria-label]="partilhado() ? 'Ligação copiada' : 'Partilhar publicação'">
+    <button
+      class="cartao-publicacao__accao"
+      type="button"
+      (click)="partilhar()"
+      [attr.aria-label]="partilhado() ? 'Ligação copiada' : 'Partilhar publicação'"
+    >
       <span class="material-symbols-outlined">share</span>
       <span class="cartao-publicacao__accao-texto">{{ partilhado() ? 'Ligação copiada' : 'Partilhar' }}</span>
     </button>
@@ -137,43 +122,12 @@
       rows="5"
       aria-label="Conteúdo da publicação"
     ></textarea>
+    @if (conteudoEditado().trim().length < 10) {
+      <span class="mensagem-campo">O conteúdo precisa de pelo menos 10 caracteres.</span>
+    }
     <div class="linha-distribuida" style="margin-top:16px">
       <button class="botao-contornado" type="button" (click)="modalEditarAberto.set(false)">Cancelar</button>
-      <button class="botao-destaque" type="button" (click)="guardarEdicao()">Guardar</button>
-    </div>
-  </div>
-</app-modal>
-
-<!-- Modal: Confirmar Eliminação -->
-<app-modal
-  [aberto]="modalEliminarAberto()"
-  titulo="Eliminar publicação"
-  (fechar)="modalEliminarAberto.set(false)"
->
-  <p class="texto-cartao">Tem a certeza que deseja eliminar esta publicação? Esta ação não pode ser desfeita.</p>
-  <div class="linha-distribuida" style="margin-top:24px">
-    <button class="botao-contornado" type="button" (click)="modalEliminarAberto.set(false)">Cancelar</button>
-    <button class="botao-perigo" type="button" (click)="confirmarEliminar()">Eliminar</button>
-  </div>
-</app-modal>
-
-<!-- Modal: Editar Publicação -->
-<app-modal
-  [aberto]="modalEditarAberto()"
-  titulo="Editar publicação"
-  (fechar)="modalEditarAberto.set(false)"
->
-  <div class="cartao-publicacao__modal-editar">
-    <textarea
-      class="area-formulario"
-      [value]="conteudoEditado()"
-      (input)="conteudoEditado.set($any($event.target).value)"
-      rows="5"
-      aria-label="Conteúdo da publicação"
-    ></textarea>
-    <div class="linha-distribuida" style="margin-top:16px">
-      <button class="botao-contornado" type="button" (click)="modalEditarAberto.set(false)">Cancelar</button>
-      <button class="botao-destaque" type="button" (click)="guardarEdicao()">Guardar</button>
+      <button class="botao-destaque" type="button" (click)="guardarEdicao()" [disabled]="conteudoEditado().trim().length < 10">Guardar</button>
     </div>
   </div>
 </app-modal>
