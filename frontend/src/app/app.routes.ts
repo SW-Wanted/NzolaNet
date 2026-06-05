@@ -15,23 +15,28 @@ import { PerfilUtilizadorComponent } from './pages/perfil-utilizador/perfil-util
 import { RecuperarSenhaComponent } from './pages/recuperar-senha/recuperar-senha.component';
 import { RegistoComponent } from './pages/registo/registo.component';
 import { SugestoesConexaoComponent } from './pages/sugestoes-conexao/sugestoes-conexao.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'feed' },
-  { path: 'feed', component: FeedComponent },
+  { path: 'feed', component: FeedComponent, canActivate: [authGuard] },
   { path: 'entrar', component: EntrarComponent },
   { path: 'registo', component: RegistoComponent },
   { path: 'recuperar-senha', component: RecuperarSenhaComponent },
-  { path: 'perfil', component: PerfilUtilizadorComponent },
-  { path: 'perfil/editar', component: EditarPerfilComponent },
-  { path: 'criar-post', component: CriarPostComponent },
+  { path: 'perfil', component: PerfilUtilizadorComponent, canActivate: [authGuard] },
+  { path: 'perfil/editar', component: EditarPerfilComponent, canActivate: [authGuard] },
+  { path: 'criar-post', component: CriarPostComponent, canActivate: [authGuard] },
   { path: 'grupos', component: GruposComunidadesComponent },
   { path: 'mercado', component: NzolaMarketComponent },
   { path: 'eventos', component: EventosCulturaisComponent },
   { path: 'kizomba-hub', component: KizombaHubComponent },
-  { path: 'sugestoes', component: SugestoesConexaoComponent },
-  { path: 'comentarios', component: ComentariosComponent },
-  { path: 'comentarios/moderacao', component: ModeracaoComentariosComponent },
+  { path: 'sugestoes', component: SugestoesConexaoComponent, canActivate: [authGuard] },
+  { path: 'comentarios', component: ComentariosComponent, canActivate: [authGuard] },
+  {
+    path: 'comentarios/moderacao',
+    component: ModeracaoComentariosComponent,
+    canActivate: [authGuard],
+  },
   { path: 'feed/estados', component: EstadosFeedComponent },
   { path: 'sucesso', component: ModalSucessoComponent },
   { path: '**', redirectTo: 'feed' },

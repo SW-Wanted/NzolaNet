@@ -18,6 +18,14 @@ class UserController extends ApiController
     {
     }
 
+    public function index(Request $request): JsonResponse
+    {
+        return $this->success(
+            UserResource::collection($this->users->suggestions($request->user(), $this->perPage($request))),
+            'Utilizadores listados com sucesso'
+        );
+    }
+
     public function show(Request $request, int $id): JsonResponse
     {
         return $this->success(new UserResource($this->users->profile($request->user(), $id)), 'Perfil obtido com sucesso');

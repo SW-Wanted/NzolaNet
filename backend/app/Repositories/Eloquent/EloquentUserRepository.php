@@ -26,6 +26,15 @@ class EloquentUserRepository implements UserRepositoryInterface
             ->findOrFail($id);
     }
 
+    public function listExcept(int $userId, int $perPage = 20): LengthAwarePaginator
+    {
+        return User::query()
+            ->whereKeyNot($userId)
+            ->withCount(['followers', 'following'])
+            ->latest()
+            ->paginate($perPage);
+    }
+
     public function update(User $user, array $data): User
     {
         $user->fill($data)->save();

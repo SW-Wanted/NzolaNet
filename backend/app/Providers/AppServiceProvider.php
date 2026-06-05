@@ -24,6 +24,7 @@ use App\Repositories\Eloquent\EloquentPostRepository;
 use App\Repositories\Eloquent\EloquentUserRepository;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -52,5 +53,11 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(UserFollowed::class, CreateFollowNotification::class);
         Event::listen(PostLiked::class, CreateLikeNotification::class);
         Event::listen(CommentCreated::class, CreateCommentNotification::class);
+
+        ResetPassword::createUrlUsing(function (object $user, string $token): string {
+            $frontendUrl = rtrim((string) config('app.frontend_url', 'http://localhost:4200'), '/');
+
+            return "{$frontendUrl}/recuperar-senha?token={$token}&email=".urlencode((string) $user->email);
+        });
     }
 }

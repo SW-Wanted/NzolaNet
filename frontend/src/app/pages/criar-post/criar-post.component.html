@@ -23,6 +23,9 @@
           @if (submetido && formulario.controls.conteudo.invalid) {
             <span class="mensagem-campo">Escreva pelo menos 10 caracteres antes de publicar.</span>
           }
+          @if (erroApi()) {
+            <span class="mensagem-campo">{{ erroApi() }}</span>
+          }
           <div class="grelha-cartoes">
             <label class="cartao cartao-preenchido anexo-post" for="input-imagem">
               <span class="material-symbols-outlined">image</span>Adicionar imagem
@@ -61,7 +64,9 @@
           }
           <div class="linha-distribuida">
             <a class="botao-contornado" routerLink="/feed">Cancelar</a>
-            <button class="botao-destaque" type="submit">Publicar</button>
+            <button class="botao-destaque" type="submit" [disabled]="emSubmissao">
+              {{ emSubmissao ? 'A publicar...' : 'Publicar' }}
+            </button>
           </div>
         </form>
       </div>

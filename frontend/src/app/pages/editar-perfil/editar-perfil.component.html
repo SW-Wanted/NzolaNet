@@ -16,7 +16,9 @@
             </div>
             <div class="acoes-cabecalho">
               <a class="botao-contornado" routerLink="/perfil">Cancelar</a>
-              <button class="botao-destaque" type="submit">Guardar</button>
+              <button class="botao-destaque" type="submit" [disabled]="emSubmissao()">
+                {{ emSubmissao() ? 'A guardar...' : 'Guardar' }}
+              </button>
             </div>
           </header>
 
@@ -46,18 +48,24 @@
 
           <input class="campo-formulario" formControlName="nome" placeholder="Nome completo" />
           @if (submetido && formulario.controls.nome.invalid) {
-            <span class="mensagem-campo">Informe um nome válido.</span>
+            <span class="mensagem-campo">Informe um nome válido (mínimo 3 caracteres).</span>
           }
+
           <input class="campo-formulario" formControlName="descricaoCurta" placeholder="Descrição curta" />
+
           <textarea class="area-formulario" formControlName="biografia" placeholder="Biografia"></textarea>
           @if (submetido && formulario.controls.biografia.invalid) {
-            <span class="mensagem-campo">A biografia precisa de mais detalhes.</span>
+            <span class="mensagem-campo">A biografia não pode ter mais de 1000 caracteres.</span>
           }
-          <div class="grupo-botoes">
-            <span class="pilula pilula-primaria">Kizomba</span>
-            <span class="pilula">Semba</span>
-            <span class="pilula">Arte</span>
-          </div>
+
+          <label class="linha-centro">
+            <input type="checkbox" formControlName="privado" />
+            Perfil privado
+          </label>
+
+          @if (erroApi()) {
+            <span class="mensagem-campo">{{ erroApi() }}</span>
+          }
         </form>
       </div>
     </main>

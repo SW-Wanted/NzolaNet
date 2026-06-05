@@ -21,13 +21,19 @@
     </button>
     @if (menuAberto()) {
       <div class="cartao-publicacao__menu" role="menu">
-        <button type="button" role="menuitem" (click)="abrirEditar()">
-          <span class="material-symbols-outlined">edit</span>Editar
-        </button>
-        <button type="button" role="menuitem" class="cartao-publicacao__menu-perigo" (click)="abrirConfirmacaoEliminar()">
-          <span class="material-symbols-outlined">delete</span>Eliminar
-        </button>
-        <hr class="cartao-publicacao__menu-divisor" />
+        @if (publicacao.podeEditar) {
+          <button type="button" role="menuitem" (click)="abrirEditar()">
+            <span class="material-symbols-outlined">edit</span>Editar
+          </button>
+        }
+        @if (publicacao.podeEliminar) {
+          <button type="button" role="menuitem" class="cartao-publicacao__menu-perigo" (click)="abrirConfirmacaoEliminar()">
+            <span class="material-symbols-outlined">delete</span>Eliminar
+          </button>
+        }
+        @if (publicacao.podeEditar || publicacao.podeEliminar) {
+          <hr class="cartao-publicacao__menu-divisor" />
+        }
         <button type="button" role="menuitem" (click)="abrirComentarios.emit(publicacao); menuAberto.set(false)">
           <span class="material-symbols-outlined">chat_bubble_outline</span>Ver detalhes
         </button>
@@ -90,7 +96,12 @@
       <span class="cartao-publicacao__accao-texto">Comentar</span>
     </a>
 
-    <button class="cartao-publicacao__accao" type="button" (click)="partilhar()" [attr.aria-label]="partilhado() ? 'Ligação copiada' : 'Partilhar publicação'">
+    <button
+      class="cartao-publicacao__accao"
+      type="button"
+      (click)="partilhar()"
+      [attr.aria-label]="partilhado() ? 'Ligação copiada' : 'Partilhar publicação'"
+    >
       <span class="material-symbols-outlined">share</span>
       <span class="cartao-publicacao__accao-texto">{{ partilhado() ? 'Ligação copiada' : 'Partilhar' }}</span>
     </button>
@@ -111,9 +122,12 @@
       rows="5"
       aria-label="Conteúdo da publicação"
     ></textarea>
+    @if (conteudoEditado().trim().length < 10) {
+      <span class="mensagem-campo">O conteúdo precisa de pelo menos 10 caracteres.</span>
+    }
     <div class="linha-distribuida" style="margin-top:16px">
       <button class="botao-contornado" type="button" (click)="modalEditarAberto.set(false)">Cancelar</button>
-      <button class="botao-destaque" type="button" (click)="guardarEdicao()">Guardar</button>
+      <button class="botao-destaque" type="button" (click)="guardarEdicao()" [disabled]="conteudoEditado().trim().length < 10">Guardar</button>
     </div>
   </div>
 </app-modal>

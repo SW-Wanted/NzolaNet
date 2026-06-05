@@ -23,6 +23,11 @@ class PostResource extends JsonResource
             'video_url' => $this->video_path ? Storage::disk('public')->url($this->video_path) : null,
             'likes_count' => $this->whenCounted('likes'),
             'comments_count' => $this->whenCounted('comments'),
+            'liked_by_me' => $request->user()
+                ? $this->likes()->where('user_id', $request->user()->id)->exists()
+                : false,
+            'can_update' => $request->user()?->can('update', $this->resource) ?? false,
+            'can_delete' => $request->user()?->can('delete', $this->resource) ?? false,
             'created_at' => $this->created_at?->toISOString(),
             'updated_at' => $this->updated_at?->toISOString(),
         ];
