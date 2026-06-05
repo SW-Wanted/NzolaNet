@@ -36,6 +36,16 @@ const BACKEND_URL = 'http://localhost:8000';
 export class CommentService {
   constructor(private readonly http: HttpClient) {}
 
+  getAllComments(): Observable<Comment[]> {
+    return this.http
+      .get<ApiResponse<RawComment[] | PaginatedData<RawComment>>>(`${API_URL}/admin/comments`)
+      .pipe(
+        map((response) =>
+          this.unwrapArray(response.data).map((comment) => this.toComment(comment)),
+        ),
+      );
+  }
+
   getComments(postId: number): Observable<Comment[]> {
     return this.http
       .get<

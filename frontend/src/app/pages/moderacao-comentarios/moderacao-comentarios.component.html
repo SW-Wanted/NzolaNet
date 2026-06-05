@@ -12,24 +12,52 @@
             </div>
             <a class="botao-contornado" routerLink="/feed">Voltar ao feed</a>
           </header>
+
+          @if (erroApi()) {
+            <div class="cartao cartao-preenchido" style="margin-bottom: 16px">
+              <p class="mensagem-campo">{{ erroApi() }}</p>
+            </div>
+          }
+
           <section class="cartao cartao-preenchido tabela-moderacao">
             <div class="linha-tabela cabecalho-tabela">
-              <span>Autor</span><span>Comentário</span><span>Estado</span><span>Ações</span>
+              <span>Autor</span><span>Comentário</span><span>Publicação</span><span>Ações</span>
             </div>
-            @for (comentario of comentariosPendentes(); track comentario.id) {
-              <div class="linha-tabela">
-                <span>{{ comentario.autor }}</span>
-                <span>{{ comentario.texto }}</span>
-                <span class="pilula pilula-secundaria">Pendente</span>
-                <span class="grupo-botoes">
-                  <button class="botao-contornado" type="button" (click)="moderarComentario(comentario.id, 'aprovado')">Aprovar</button>
-                  <button class="botao-perigo" type="button" (click)="moderarComentario(comentario.id, 'removido')">Remover</button>
-                </span>
-              </div>
-            } @empty {
-              <div class="linha-tabela">
-                <span>Sem pendentes</span><span>Todos os comentários foram moderados.</span><span class="pilula">Concluído</span><span></span>
-              </div>
+
+            @if (carregando()) {
+              @for (i of [1, 2, 3, 4, 5]; track i) {
+                <div class="linha-tabela skeleton-linha">
+                  <span class="skeleton skeleton-cell"></span>
+                  <span class="skeleton skeleton-cell skeleton-cell--larga"></span>
+                  <span class="skeleton skeleton-cell skeleton-cell--curta"></span>
+                  <span class="skeleton skeleton-cell skeleton-cell--curta"></span>
+                </div>
+              }
+            } @else {
+              @for (comentario of comentarios(); track comentario.id) {
+                <div class="linha-tabela">
+                  <span>{{ comentario.author.name }}</span>
+                  <span>{{ comentario.content }}</span>
+                  <span>Post #{{ comentario.post_id }}</span>
+                  <span class="grupo-botoes">
+                    <button
+                      class="botao-perigo"
+                      type="button"
+                      [disabled]="removendoId() === comentario.id"
+                      (click)="removerComentario(comentario.id)"
+                    >
+                      {{ removendoId() === comentario.id ? 'A remover...' : 'Remover' }}
+                    </button>
+                  </span>
+                </div>
+              } @empty {
+                <div class="linha-tabela">
+                  <span>Sem comentários</span>
+                  <span>Não existem comentários para moderar.</span>
+                  <span class="pilula">Concluído</span>
+                  <span></span>
+                </div>
+              }
             }
           </section>
         </div>

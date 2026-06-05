@@ -20,3 +20,39 @@
   font-weight: 800;
   text-transform: uppercase;
 }
+
+/* ── Skeleton Loading ──────────────────────────────── */
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--cor-container) 25%,
+    var(--cor-superficie-variante) 50%,
+    var(--cor-container) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+.skeleton-linha {
+  pointer-events: none;
+}
+
+.skeleton-cell {
+  height: 16px;
+  width: 80%;
+  display: block;
+}
+
+.skeleton-cell--larga {
+  width: 90%;
+}
+
+.skeleton-cell--curta {
+  width: 60%;
+}
