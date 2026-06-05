@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 import { CommentService } from '../../services/comment.service';
 import { PostService } from '../../services/post.service';
 import { UserService } from '../../services/user.service';
+import { mensagemErroHttp } from '../../utils/erro.utils';
 
 interface ComentarioView {
   id: number;
@@ -132,8 +133,8 @@ export class FeedComponent implements OnInit {
           this.emPublicacao.set(false);
           this.carregarFeed();
         },
-        error: () => {
-          this.erroCriar.set('Não foi possível publicar. Confirme o texto e o ficheiro selecionado.');
+        error: (err) => {
+          this.erroCriar.set(mensagemErroHttp(err));
           this.emPublicacao.set(false);
         },
       });
@@ -209,7 +210,7 @@ export class FeedComponent implements OnInit {
           this.comentarioSubmetido = false;
           this.atualizarContagemComentarios(publicacao.id, 1);
         },
-        error: () => this.erroComentario.set('Não foi possível adicionar o comentário.'),
+        error: (err) => this.erroComentario.set(mensagemErroHttp(err)),
       });
   }
 
@@ -223,7 +224,7 @@ export class FeedComponent implements OnInit {
           this.atualizarContagemComentarios(publicacao.id, -1);
         }
       },
-      error: () => this.erroComentario.set('Não foi possível remover o comentário.'),
+      error: (err) => this.erroComentario.set(mensagemErroHttp(err)),
     });
   }
 
@@ -252,7 +253,7 @@ export class FeedComponent implements OnInit {
         );
         this.cancelarEdicaoComentario();
       },
-      error: () => this.erroComentario.set('Não foi possível editar o comentário.'),
+      error: (err) => this.erroComentario.set(mensagemErroHttp(err)),
     });
   }
 
@@ -260,7 +261,7 @@ export class FeedComponent implements OnInit {
     this.postsApi.deletePost(id).subscribe({
       next: () =>
         this.publicacoes.update((lista) => lista.filter((publicacao) => publicacao.id !== id)),
-      error: () => this.erroFeed.set('Não foi possível eliminar a publicação.'),
+      error: (err) => this.erroFeed.set(mensagemErroHttp(err)),
     });
   }
 
@@ -272,7 +273,7 @@ export class FeedComponent implements OnInit {
           lista.map((item) => (item.id === publicacao.id ? publicacao : item)),
         );
       },
-      error: () => this.erroFeed.set('Não foi possível editar a publicação.'),
+      error: (err) => this.erroFeed.set(mensagemErroHttp(err)),
     });
   }
 
@@ -315,10 +316,8 @@ export class FeedComponent implements OnInit {
         this.publicacoes.set(posts.map((post) => this.toPublicacao(post)));
         this.carregandoFeed.set(false);
       },
-      error: () => {
-        this.erroFeed.set(
-          'Não foi possível carregar o feed. Verifique a sua ligação ao servidor.',
-        );
+      error: (err) => {
+        this.erroFeed.set(mensagemErroHttp(err));
         this.carregandoFeed.set(false);
       },
     });
@@ -340,7 +339,7 @@ export class FeedComponent implements OnInit {
     this.comentariosApi.getComments(postId).subscribe({
       next: (comentarios) =>
         this.comentarios.set(comentarios.map((comentario) => this.toComentarioView(comentario))),
-      error: () => this.erroComentario.set('Não foi possível carregar os comentários.'),
+      error: (err) => this.erroComentario.set(mensagemErroHttp(err)),
     });
   }
 

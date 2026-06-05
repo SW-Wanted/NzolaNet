@@ -59,9 +59,26 @@
               <p class="mensagem-campo">{{ erroFeed() }}</p>
             }
             @if (carregandoFeed()) {
-              <div class="cartao cartao-preenchido">
-                <p class="texto-cartao">A carregar publicações...</p>
-              </div>
+              @for (i of [1, 2, 3]; track i) {
+                <div class="cartao cartao-preenchido skeleton-cartao">
+                  <div class="skeleton-cabecalho">
+                    <div class="skeleton skeleton-avatar"></div>
+                    <div class="skeleton-info">
+                      <div class="skeleton skeleton-nome"></div>
+                      <div class="skeleton skeleton-tempo"></div>
+                    </div>
+                  </div>
+                  <div class="skeleton skeleton-corpo-linha"></div>
+                  <div class="skeleton skeleton-corpo-linha"></div>
+                  <div class="skeleton skeleton-corpo-linha--curta skeleton-corpo-linha"></div>
+                  <div class="skeleton skeleton-imagem"></div>
+                  <div class="skeleton-acoes">
+                    <div class="skeleton skeleton-accao"></div>
+                    <div class="skeleton skeleton-accao"></div>
+                    <div class="skeleton skeleton-accao"></div>
+                  </div>
+                </div>
+              }
             }
             @for (publicacao of publicacoes(); track publicacao.id) {
               <app-cartao-publicacao
