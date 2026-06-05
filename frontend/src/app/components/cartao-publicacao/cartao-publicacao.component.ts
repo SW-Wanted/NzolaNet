@@ -15,6 +15,7 @@ export interface Publicacao {
   imagem?: string;
   imagemAlt?: string;
   videoUrl?: string;
+  videoUrl?: string;
   contagemBazes: number;
   contagemComentarios: number;
   contagemPartilhas: number;
@@ -46,6 +47,12 @@ export class CartaoPublicacaoComponent implements OnInit, OnChanges {
   conteudoEditado = signal('');
 
   constructor(private readonly fb: FormBuilder) {}
+  modalEliminarAberto = signal(false);
+  modalEditarAberto = signal(false);
+
+  conteudoEditado = signal('');
+
+  constructor(private readonly fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.sincronizarEstado();
@@ -60,6 +67,7 @@ export class CartaoPublicacaoComponent implements OnInit, OnChanges {
   private sincronizarEstado(): void {
     this.contagemBaze.set(this.publicacao.contagemBazes);
     this.bazeActivo.set(this.publicacao.temBaze ?? false);
+    this.conteudoEditado.set(this.publicacao.conteudo);
     this.conteudoEditado.set(this.publicacao.conteudo);
   }
 
@@ -95,8 +103,33 @@ export class CartaoPublicacaoComponent implements OnInit, OnChanges {
     this.modalEliminarAberto.set(false);
   }
 
+  abrirEditar(): void {
+    this.conteudoEditado.set(this.publicacao.conteudo);
+    this.modalEditarAberto.set(true);
+    this.menuAberto.set(false);
+  }
+
+  guardarEdicao(): void {
+    const texto = this.conteudoEditado().trim();
+    if (texto.length >= 10) {
+      this.editar.emit({ id: this.publicacao.id, conteudo: texto });
+      this.modalEditarAberto.set(false);
+    }
+  }
+
+  abrirConfirmacaoEliminar(): void {
+    this.modalEliminarAberto.set(true);
+    this.menuAberto.set(false);
+  }
+
+  confirmarEliminar(): void {
+    this.eliminar.emit(this.publicacao.id);
+    this.modalEliminarAberto.set(false);
+  }
+
   partilhar(): void {
     this.partilhado.set(true);
+    this.menuAberto.set(false);
     this.menuAberto.set(false);
     window.setTimeout(() => this.partilhado.set(false), 1800);
   }

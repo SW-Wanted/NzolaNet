@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Router, RouterLink } from '@angular/router';
@@ -24,6 +25,8 @@ export class EditarPerfilComponent implements OnInit {
 
   readonly avatarPreview = signal<string>(this.utilizador.avatar);
 
+  readonly avatarPreview = signal<string>(this.utilizador.avatar);
+
   formulario = this.formBuilder.nonNullable.group({
     nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
     descricaoCurta: ['Perfil NzolaNet'],
@@ -32,6 +35,14 @@ export class EditarPerfilComponent implements OnInit {
   });
 
   submetido = false;
+
+  aoSelecionarFoto(evento: Event): void {
+    const ficheiro = (evento.target as HTMLInputElement).files?.[0];
+    if (!ficheiro) return;
+    const leitor = new FileReader();
+    leitor.onload = () => this.avatarPreview.set(leitor.result as string);
+    leitor.readAsDataURL(ficheiro);
+  }
 
   aoSelecionarFoto(evento: Event): void {
     const ficheiro = (evento.target as HTMLInputElement).files?.[0];
@@ -56,6 +67,7 @@ export class EditarPerfilComponent implements OnInit {
       ...utilizador,
       nome: valores.nome,
       descricao: valores.biografia,
+      avatar: this.avatarPreview(),
       avatar: this.avatarPreview(),
     }));
     this.router.navigateByUrl('/perfil');

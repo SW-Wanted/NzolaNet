@@ -8,6 +8,8 @@
           <section class="coluna">
 
             <!-- Composer card -->
+
+            <!-- Composer card -->
             <div class="cartao cartao-preenchido">
               <div class="linha-centro">
                 <img
@@ -18,8 +20,20 @@
                 <button class="campo-publicacao" type="button" (click)="abrirCriarPost()">
                   Partilhar cultura angolana...
                 </button>
+                <button class="campo-publicacao" type="button" (click)="abrirCriarPost()">
+                  Partilhar cultura angolana...
+                </button>
               </div>
               <div class="atalhos-publicacao">
+                <button type="button" (click)="abrirCriarPost()">
+                  <span class="material-symbols-outlined">image</span>Foto
+                </button>
+                <button type="button" (click)="abrirCriarPost()">
+                  <span class="material-symbols-outlined">smart_display</span>Vídeo
+                </button>
+                <button type="button" routerLink="/eventos">
+                  <span class="material-symbols-outlined">event</span>Evento
+                </button>
                 <button type="button" (click)="abrirCriarPost()">
                   <span class="material-symbols-outlined">image</span>Foto
                 </button>
@@ -101,6 +115,8 @@
                 <div class="item-lista">
                   <img alt="Auroval Banger" class="avatar-redondo"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM36i0IWTLeke9cjwtTJMlYBZ98WBh6yDSy3OVvjaDv8NV4VNBd5h1k4adv-7ncp_JsTIYQ7MgpQMOe4g4x08d5DeLnxKR3dd5ym0dJfhVMc1Z4D9Skukt8HkfsTSBTbjzG308I65hSZZdkXoDQ7F4UmXDZ7NSZQ6CCrOcn0w39BgXdfSqhfofVs0gGzHEVx4K_ITKDjiRBjClvAeIVNXc4YTf1n7Al_OslNEZ2yguWUGZO7kSoHQgYCWvU5S3NtqlKZ4T4B-tM01W" />
+                  <img alt="Auroval Banger" class="avatar-redondo"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM36i0IWTLeke9cjwtTJMlYBZ98WBh6yDSy3OVvjaDv8NV4VNBd5h1k4adv-7ncp_JsTIYQ7MgpQMOe4g4x08d5DeLnxKR3dd5ym0dJfhVMc1Z4D9Skukt8HkfsTSBTbjzG308I65hSZZdkXoDQ7F4UmXDZ7NSZQ6CCrOcn0w39BgXdfSqhfofVs0gGzHEVx4K_ITKDjiRBjClvAeIVNXc4YTf1n7Al_OslNEZ2yguWUGZO7kSoHQgYCWvU5S3NtqlKZ4T4B-tM01W" />
                   <div>
                     <strong>Auroval Banger</strong>
                     <p class="texto-cartao">@nzolanetvive</p>
@@ -108,14 +124,22 @@
                   <button class="botao-contornado" type="button" style="margin-left:auto" (click)="alternarSeguir('auroval')">
                     {{ seguindo['auroval'] ? 'A seguir' : 'Seguir' }}
                   </button>
+                  <button class="botao-contornado" type="button" style="margin-left:auto" (click)="alternarSeguir('auroval')">
+                    {{ seguindo['auroval'] ? 'A seguir' : 'Seguir' }}
+                  </button>
                 </div>
                 <div class="item-lista">
+                  <img alt="Sonca Awrama" class="avatar-redondo"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEOSkDw4tgJcVw5GSD0c-W0NT4wn67wjBsApzX7EWAookXz9Di2R1FCBpAFk4eTy5_mLptwQ42qbxPBLxL3KREHOTwR3bKNeBSQz8f2APMR9OhkJ_MOauh7PkW6wgoynxvRSLpJr13a5JUE1OKmt8Mpbqs4zLeK8J4_rS825INSMWklOJVH4BAd9e3y-rTCxPXtOoGb4mqgcidEqXExMdeZUzjAIkx1_Dj4gy30Cu8Hjb1ujdtsrRn5qpXViatVkqxzb3NoH4OqLtY" />
                   <img alt="Sonca Awrama" class="avatar-redondo"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEOSkDw4tgJcVw5GSD0c-W0NT4wn67wjBsApzX7EWAookXz9Di2R1FCBpAFk4eTy5_mLptwQ42qbxPBLxL3KREHOTwR3bKNeBSQz8f2APMR9OhkJ_MOauh7PkW6wgoynxvRSLpJr13a5JUE1OKmt8Mpbqs4zLeK8J4_rS825INSMWklOJVH4BAd9e3y-rTCxPXtOoGb4mqgcidEqXExMdeZUzjAIkx1_Dj4gy30Cu8Hjb1ujdtsrRn5qpXViatVkqxzb3NoH4OqLtY" />
                   <div>
                     <strong>Sonca Awrama</strong>
                     <p class="texto-cartao">@nzolanetinar</p>
                   </div>
+                  <button class="botao-contornado" type="button" style="margin-left:auto" (click)="alternarSeguir('sonca')">
+                    {{ seguindo['sonca'] ? 'A seguir' : 'Seguir' }}
+                  </button>
                   <button class="botao-contornado" type="button" style="margin-left:auto" (click)="alternarSeguir('sonca')">
                     {{ seguindo['sonca'] ? 'A seguir' : 'Seguir' }}
                   </button>
