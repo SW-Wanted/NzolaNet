@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
@@ -19,6 +19,8 @@ export class FeedComponent {
   filtroActivo = signal<'todos' | 'seguidos'>('todos');
   seguindo: Record<string, boolean> = { auroval: false, sonca: false };
   private readonly autoresSeguidos = new Set(['pub-1']);
+  private readonly dados = inject(NzolanetDadosService);
+  private readonly fb = inject(FormBuilder);
 
   // ── Create Post modal ─────────────────────────────────────────────
   modalCriarAberto = signal(false);
@@ -65,11 +67,6 @@ export class FeedComponent {
     }
     return lista;
   });
-
-  constructor(
-    private readonly dados: NzolanetDadosService,
-    private readonly fb: FormBuilder,
-  ) {}
 
   // ── Follow ────────────────────────────────────────────────────────
   alternarSeguir(chave: string): void {
