@@ -1,7 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { mensagemErroHttp } from '../../utils/erro.utils';
 
 @Component({
   selector: 'app-entrar',
@@ -36,15 +38,21 @@ export class EntrarComponent {
     const { email, senha } = this.formulario.getRawValue();
     this.emSubmissao = true;
 
-    this.authService.login({ email, password: senha }).subscribe({
-      next: () => {
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/feed';
-        void this.router.navigateByUrl(returnUrl);
-      },
-      error: () => {
-        this.erroApi = 'Nao foi possivel iniciar sessao. Confirme as credenciais.';
-        this.emSubmissao = false;
-      },
-    });
+    this.authService
+      .login({ email, password: senha })
+      .pipe(
+        finalize(() => {
+          this.emSubmissao = false;
+        }),
+      )
+      .subscribe({
+        next: () => {
+          const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/feed';
+          void this.router.navigateByUrl(returnUrl);
+        },
+        error: (err) => {
+          this.erroApi = mensagemErroHttp(err);
+        },
+      });
   }
 }

@@ -13,16 +13,26 @@
     </div>
     <h2 class="titulo-pagina">Entrar</h2>
     <form class="formulario" [formGroup]="formulario" (ngSubmit)="entrar()">
-      <input class="campo-formulario" formControlName="email" placeholder="Email" type="email" />
+      <input
+        class="campo-formulario"
+        formControlName="email"
+        placeholder="Email"
+        type="email"
+      />
       @if (submetido && formulario.controls.email.invalid) {
         <span class="mensagem-campo">Informe um email válido.</span>
       }
-      <input class="campo-formulario" formControlName="senha" placeholder="Senha" type="password" />
+      <input
+        class="campo-formulario"
+        formControlName="senha"
+        placeholder="Senha"
+        type="password"
+      />
       @if (submetido && formulario.controls.senha.invalid) {
         <span class="mensagem-campo">A senha deve ter pelo menos 6 caracteres.</span>
       }
       @if (erroApi) {
-        <span class="mensagem-campo">{{ erroApi }}</span>
+        <p class="mensagem-campo" role="alert">{{ erroApi }}</p>
       }
       <button class="botao-destaque" type="submit" [disabled]="emSubmissao">
         @if (emSubmissao) {
