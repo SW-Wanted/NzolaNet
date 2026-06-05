@@ -313,8 +313,9 @@
 .autenticacao {
   display: grid;
   min-height: 100dvh;
-  place-items: center;
-  padding: 24px;
+  align-items: start;
+  justify-items: center;
+  padding: clamp(40px, 10vh, 120px) 24px 24px;
   background: linear-gradient(135deg, #fff8f5 0%, #fdf1ec 50%, #f7ece6 100%);
 }
 
