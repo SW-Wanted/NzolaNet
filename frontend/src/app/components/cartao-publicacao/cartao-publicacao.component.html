@@ -21,13 +21,19 @@
     </button>
     @if (menuAberto()) {
       <div class="cartao-publicacao__menu" role="menu">
-        <button type="button" role="menuitem" (click)="abrirEditar()">
-          <span class="material-symbols-outlined">edit</span>Editar
-        </button>
-        <button type="button" role="menuitem" class="cartao-publicacao__menu-perigo" (click)="abrirConfirmacaoEliminar()">
-          <span class="material-symbols-outlined">delete</span>Eliminar
-        </button>
-        <hr class="cartao-publicacao__menu-divisor" />
+        @if (publicacao.podeEditar) {
+          <button type="button" role="menuitem" (click)="abrirEditar()">
+            <span class="material-symbols-outlined">edit</span>Editar
+          </button>
+        }
+        @if (publicacao.podeEliminar) {
+          <button type="button" role="menuitem" class="cartao-publicacao__menu-perigo" (click)="abrirConfirmacaoEliminar()">
+            <span class="material-symbols-outlined">delete</span>Eliminar
+          </button>
+        }
+        @if (publicacao.podeEditar || publicacao.podeEliminar) {
+          <hr class="cartao-publicacao__menu-divisor" />
+        }
         <button type="button" role="menuitem" (click)="abrirComentarios.emit(publicacao); menuAberto.set(false)">
           <span class="material-symbols-outlined">chat_bubble_outline</span>Ver detalhes
         </button>

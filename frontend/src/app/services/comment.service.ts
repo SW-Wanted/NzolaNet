@@ -24,10 +24,13 @@ interface RawComment {
   content: string;
   author: RawUser;
   post_id: number;
+  can_update?: boolean;
+  can_delete?: boolean;
   created_at?: string | null;
 }
 
 const API_URL = 'http://localhost:8000/api';
+const BACKEND_URL = 'http://localhost:8000';
 
 @Injectable({ providedIn: 'root' })
 export class CommentService {
@@ -79,6 +82,8 @@ export class CommentService {
       content: comment.content,
       author: this.toUser(comment.author),
       post_id: comment.post_id,
+      can_update: comment.can_update ?? false,
+      can_delete: comment.can_delete ?? false,
       created_at: comment.created_at ?? '',
     };
   }
@@ -88,12 +93,22 @@ export class CommentService {
       id: user.id,
       name: user.name,
       email: user.email ?? null,
-      profile_photo: user.profile_photo_url ?? user.profile_photo ?? null,
+      profile_photo: this.absoluteUrl(user.profile_photo_url ?? user.profile_photo ?? null),
       bio: user.bio ?? null,
+      is_private: user.is_private ?? false,
+      is_following: user.is_following ?? false,
       followers_count: user.followers_count ?? 0,
       following_count: user.following_count ?? 0,
       posts_count: user.posts_count ?? 0,
       role: user.role ?? 'user',
     };
+  }
+
+  private absoluteUrl(url: string | null): string | null {
+    if (!url) {
+      return null;
+    }
+
+    return url.startsWith('http') || url.startsWith('data:') ? url : `${BACKEND_URL}${url}`;
   }
 }

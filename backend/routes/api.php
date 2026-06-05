@@ -41,6 +41,7 @@ Route::fallback(fn () => response()->json([
 ], 404));
 
 Route::middleware('auth:sanctum')->group(function (): void {
+    Route::get('users', [UserController::class, 'index']);
     Route::get('users/{id}', [UserController::class, 'show'])->whereNumber('id');
     Route::put('users/profile', [UserController::class, 'updateProfile']);
     Route::post('users/profile-photo', [UserController::class, 'updateProfilePhoto']);

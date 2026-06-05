@@ -28,13 +28,18 @@ interface RawPost {
   video?: string | null;
   video_url?: string | null;
   video_path?: string | null;
+  likes_count?: number;
   comments_count?: number;
+  liked_by_me?: boolean;
+  can_update?: boolean;
+  can_delete?: boolean;
   author: RawUser;
   created_at?: string | null;
   published_at?: string | null;
 }
 
 const API_URL = 'http://localhost:8000/api';
+const BACKEND_URL = 'http://localhost:8000';
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
@@ -43,6 +48,12 @@ export class PostService {
   getGlobalFeed(): Observable<Post[]> {
     return this.http
       .get<ApiResponse<RawPost[] | PaginatedData<RawPost>>>(`${API_URL}/feed`)
+      .pipe(map((response) => this.unwrapArray(response.data).map((post) => this.toPost(post))));
+  }
+
+  getFollowingFeed(): Observable<Post[]> {
+    return this.http
+      .get<ApiResponse<RawPost[] | PaginatedData<RawPost>>>(`${API_URL}/feed/following`)
       .pipe(map((response) => this.unwrapArray(response.data).map((post) => this.toPost(post))));
   }
 
@@ -69,6 +80,18 @@ export class PostService {
     return this.http.delete<ApiResponse<null>>(`${API_URL}/posts/${id}`).pipe(map(() => undefined));
   }
 
+  likePost(id: number): Observable<number> {
+    return this.http
+      .post<ApiResponse<{ likes_count: number }>>(`${API_URL}/posts/${id}/like`, null)
+      .pipe(map((response) => response.data.likes_count));
+  }
+
+  unlikePost(id: number): Observable<number> {
+    return this.http
+      .delete<ApiResponse<{ likes_count: number }>>(`${API_URL}/posts/${id}/like`)
+      .pipe(map((response) => response.data.likes_count));
+  }
+
   private mediaFieldName(file: File): 'image' | 'video' {
     return file.type.startsWith('video/') ? 'video' : 'image';
   }
@@ -81,9 +104,13 @@ export class PostService {
     return {
       id: post.id,
       content: post.content,
-      image: post.image ?? post.image_url ?? post.image_path ?? null,
-      video: post.video ?? post.video_url ?? post.video_path ?? null,
+      image: this.absoluteUrl(post.image ?? post.image_url ?? post.image_path ?? null),
+      video: this.absoluteUrl(post.video ?? post.video_url ?? post.video_path ?? null),
       comments_count: post.comments_count ?? 0,
+      likes_count: post.likes_count ?? 0,
+      liked_by_me: post.liked_by_me ?? false,
+      can_update: post.can_update ?? false,
+      can_delete: post.can_delete ?? false,
       author: this.toUser(post.author),
       created_at: post.created_at ?? post.published_at ?? '',
     };
@@ -94,12 +121,22 @@ export class PostService {
       id: user.id,
       name: user.name,
       email: user.email ?? null,
-      profile_photo: user.profile_photo_url ?? user.profile_photo ?? null,
+      profile_photo: this.absoluteUrl(user.profile_photo_url ?? user.profile_photo ?? null),
       bio: user.bio ?? null,
+      is_private: user.is_private ?? false,
+      is_following: user.is_following ?? false,
       followers_count: user.followers_count ?? 0,
       following_count: user.following_count ?? 0,
       posts_count: user.posts_count ?? 0,
       role: user.role ?? 'user',
     };
+  }
+
+  private absoluteUrl(url: string | null): string | null {
+    if (!url) {
+      return null;
+    }
+
+    return url.startsWith('http') || url.startsWith('data:') ? url : `${BACKEND_URL}${url}`;
   }
 }

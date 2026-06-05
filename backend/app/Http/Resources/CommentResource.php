@@ -14,6 +14,8 @@ class CommentResource extends JsonResource
             'post_id' => $this->post_id,
             'author' => new UserResource($this->whenLoaded('user')),
             'content' => $this->content,
+            'can_update' => $request->user()?->can('update', $this->resource) ?? false,
+            'can_delete' => $request->user()?->can('delete', $this->resource) ?? false,
             'created_at' => $this->created_at?->toISOString(),
             'updated_at' => $this->updated_at?->toISOString(),
         ];

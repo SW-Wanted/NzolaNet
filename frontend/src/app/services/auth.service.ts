@@ -40,6 +40,7 @@ interface AuthState {
 }
 
 const API_URL = 'http://localhost:8000/api';
+const BACKEND_URL = 'http://localhost:8000';
 const TOKEN_KEY = 'nzolanet.auth.token';
 const USER_KEY = 'nzolanet.auth.user';
 
@@ -89,6 +90,23 @@ export class AuthService {
       map(() => undefined),
       tap(() => this.clearSession()),
     );
+  }
+
+  forgotPassword(email: string): Observable<void> {
+    return this.http
+      .post<ApiResponse<null>>(`${API_URL}/auth/forgot-password`, { email })
+      .pipe(map(() => undefined));
+  }
+
+  resetPassword(payload: {
+    token: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+  }): Observable<void> {
+    return this.http
+      .post<ApiResponse<null>>(`${API_URL}/auth/reset-password`, payload)
+      .pipe(map(() => undefined));
   }
 
   refreshToken(): Observable<AuthResponse> {
@@ -174,8 +192,10 @@ export class AuthService {
       id: user.id,
       name: user.name,
       email: user.email ?? null,
-      profile_photo: user.profile_photo_url ?? user.profile_photo ?? null,
+      profile_photo: this.absoluteUrl(user.profile_photo_url ?? user.profile_photo ?? null),
       bio: user.bio ?? null,
+      is_private: user.is_private ?? false,
+      is_following: user.is_following ?? false,
       followers_count: user.followers_count ?? 0,
       following_count: user.following_count ?? 0,
       posts_count: user.posts_count ?? 0,
@@ -185,5 +205,13 @@ export class AuthService {
 
   private isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);
+  }
+
+  private absoluteUrl(url: string | null): string | null {
+    if (!url) {
+      return null;
+    }
+
+    return url.startsWith('http') || url.startsWith('data:') ? url : `${BACKEND_URL}${url}`;
   }
 }

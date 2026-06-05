@@ -30,7 +30,7 @@ export const routes: Routes = [
   { path: 'mercado', component: NzolaMarketComponent },
   { path: 'eventos', component: EventosCulturaisComponent },
   { path: 'kizomba-hub', component: KizombaHubComponent },
-  { path: 'sugestoes', component: SugestoesConexaoComponent },
+  { path: 'sugestoes', component: SugestoesConexaoComponent, canActivate: [authGuard] },
   { path: 'comentarios', component: ComentariosComponent, canActivate: [authGuard] },
   {
     path: 'comentarios/moderacao',

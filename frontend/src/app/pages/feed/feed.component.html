@@ -13,7 +13,7 @@
                 <img
                   alt="Utilizador"
                   class="avatar-redondo"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeKsXhqv8NVr26FuplH0IFQZlvDDjnwvqQJm1vrJ5yPeOyV4at0I864L0B4Vljr0XkSJLMag717M-qwKgFaekUuyjWNL7zLCzxBnIBLc_p1hqrjYGPyvdjMaE0BbX_TNeE88sYgDdqfA21K1yZXGWuT4Rr5CwnNdJEMIS_1hS039VozIvB2YOB8L5Mzpjae-zQsWd3wrIhizI6FQ3ALITZ9kIOZMgAORgh3RuTIMAdkD2YZocaAJGwop2qQfleyMClx3uQnzb_xXmt"
+                  [src]="avatarActual()"
                 />
                 <button class="campo-publicacao" type="button" (click)="abrirCriarPost()">
                   Partilhar cultura angolana...
@@ -38,13 +38,13 @@
                 class="feed-filtro"
                 [class.feed-filtro--activo]="filtroActivo() === 'todos'"
                 type="button"
-                (click)="filtroActivo.set('todos')"
+                (click)="selecionarFiltro('todos')"
               >Todos</button>
               <button
                 class="feed-filtro"
                 [class.feed-filtro--activo]="filtroActivo() === 'seguidos'"
                 type="button"
-                (click)="filtroActivo.set('seguidos')"
+                (click)="selecionarFiltro('seguidos')"
               >Seguidos</button>
             </div>
 
@@ -55,13 +55,28 @@
               </button>
             </div>
 
+            @if (erroFeed()) {
+              <p class="mensagem-campo">{{ erroFeed() }}</p>
+            }
+            @if (carregandoFeed()) {
+              <div class="cartao cartao-preenchido">
+                <p class="texto-cartao">A carregar publicaÃ§Ãµes...</p>
+              </div>
+            }
             @for (publicacao of publicacoes(); track publicacao.id) {
               <app-cartao-publicacao
                 [publicacao]="publicacao"
                 (eliminar)="aoEliminar($event)"
                 (editar)="aoEditar($event)"
                 (abrirComentarios)="abrirComentarios($event)"
+                (alternarBaze)="aoAlternarBaze($event)"
               />
+            } @empty {
+              @if (!carregandoFeed()) {
+                <div class="cartao cartao-preenchido">
+                  <p class="texto-cartao">Ainda nÃ£o existem publicaÃ§Ãµes neste feed.</p>
+                </div>
+              }
             }
           </section>
 
@@ -127,11 +142,11 @@
     <div class="criar-post-autor">
       <img class="avatar-redondo criar-post-avatar"
         alt="Utilizador"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeKsXhqv8NVr26FuplH0IFQZlvDDjnwvqQJm1vrJ5yPeOyV4at0I864L0B4Vljr0XkSJLMag717M-qwKgFaekUuyjWNL7zLCzxBnIBLc_p1hqrjYGPyvdjMaE0BbX_TNeE88sYgDdqfA21K1yZXGWuT4Rr5CwnNdJEMIS_1hS039VozIvB2YOB8L5Mzpjae-zQsWd3wrIhizI6FQ3ALITZ9kIOZMgAORgh3RuTIMAdkD2YZocaAJGwop2qQfleyMClx3uQnzb_xXmt"
+        [src]="avatarActual()"
       />
       <div>
-        <strong>Ana Mwene</strong>
-        <span class="texto-cartao">@anamwene</span>
+        <strong>{{ nomeActual() }}</strong>
+        <span class="texto-cartao">Conta autenticada</span>
       </div>
     </div>
     <form [formGroup]="formularioCriar" (ngSubmit)="publicar()">
@@ -144,6 +159,9 @@
       ></textarea>
       @if (criarSubmetido && formularioCriar.controls.conteudo.invalid) {
         <span class="mensagem-campo">Escreva pelo menos 10 caracteres.</span>
+      }
+      @if (erroCriar()) {
+        <span class="mensagem-campo">{{ erroCriar() }}</span>
       }
       @if (previewMedia()) {
         <div class="media-preview">
@@ -174,7 +192,9 @@
             <span class="material-symbols-outlined">location_on</span>
           </button>
         </div>
-        <button class="botao-destaque" type="submit">Publicar</button>
+        <button class="botao-destaque" type="submit" [disabled]="emPublicacao()">
+          {{ emPublicacao() ? 'A publicar...' : 'Publicar' }}
+        </button>
       </div>
     </form>
   </div>
@@ -201,6 +221,9 @@
       @if (pub.imagem) {
         <img [src]="pub.imagem" [alt]="pub.imagemAlt || ''" class="drawer-post-imagem" />
       }
+      @if (pub.videoUrl) {
+        <video [src]="pub.videoUrl" controls class="drawer-post-imagem"></video>
+      }
       <p class="drawer-post-stats">{{ pub.contagemBazes }} bazes · {{ pub.contagemComentarios }} comentários</p>
     </div>
 
@@ -212,7 +235,7 @@
         <article class="comentario">
           <div class="comentario__conteudo">
             <strong class="comentario__autor">{{ comentario.autor }}</strong>
-            <span class="comentario__data">agora</span>
+            <span class="comentario__data">{{ comentario.data }}</span>
             @if (editandoComentarioId() === comentario.id) {
               <input
                 class="campo-formulario comentario__campo-editar"
@@ -228,12 +251,16 @@
               <button class="botao-destaque comentario__botao" type="button" (click)="guardarEdicaoComentario(comentario.id)">Guardar</button>
               <button class="botao-fantasma comentario__botao" type="button" (click)="cancelarEdicaoComentario()">Cancelar</button>
             } @else {
-              <button class="botao-fantasma comentario__botao" type="button" (click)="iniciarEdicaoComentario(comentario.id, comentario.texto)">
-                <span class="material-symbols-outlined">edit</span>
-              </button>
-              <button class="botao-fantasma comentario__botao comentario__botao--perigo" type="button" (click)="removerComentario(comentario.id)">
-                <span class="material-symbols-outlined">delete</span>
-              </button>
+              @if (comentario.podeEditar) {
+                <button class="botao-fantasma comentario__botao" type="button" (click)="iniciarEdicaoComentario(comentario.id, comentario.texto)">
+                  <span class="material-symbols-outlined">edit</span>
+                </button>
+              }
+              @if (comentario.podeEliminar) {
+                <button class="botao-fantasma comentario__botao comentario__botao--perigo" type="button" (click)="removerComentario(comentario.id)">
+                  <span class="material-symbols-outlined">delete</span>
+                </button>
+              }
             }
           </div>
         </article>
@@ -243,6 +270,9 @@
 
   <!-- Comment input -->
   <div class="drawer-comentario-form">
+    @if (erroComentario()) {
+      <span class="mensagem-campo">{{ erroComentario() }}</span>
+    }
     <form [formGroup]="formularioComentario" (ngSubmit)="adicionarComentario()" class="drawer-comentario-input">
       <input
         class="campo-formulario"

@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
-import { NzolanetDadosService } from '../../services/nzolanet-dados.service';
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'app-criar-post',
@@ -12,8 +12,8 @@ import { NzolanetDadosService } from '../../services/nzolanet-dados.service';
   styleUrl: './criar-post.component.css',
 })
 export class CriarPostComponent {
-  private readonly dados = inject(NzolanetDadosService);
   private readonly formBuilder = inject(FormBuilder);
+  private readonly posts = inject(PostService);
   private readonly router = inject(Router);
 
   formulario = this.formBuilder.nonNullable.group({
@@ -21,9 +21,12 @@ export class CriarPostComponent {
   });
 
   submetido = false;
+  emSubmissao = false;
+  erroApi = signal('');
   anexoSelecionado = signal('');
   previewMedia = signal('');
   tipoMedia = signal<'imagem' | 'video'>('imagem');
+  private mediaSelecionada: File | undefined;
 
   publicar(): void {
     this.submetido = true;
@@ -33,23 +36,41 @@ export class CriarPostComponent {
       return;
     }
 
-    this.dados.criarPublicacao(this.formulario.controls.conteudo.value);
-    this.router.navigateByUrl('/feed');
+    this.emSubmissao = true;
+    this.erroApi.set('');
+
+    this.posts.createPost(this.formulario.controls.conteudo.value.trim(), this.mediaSelecionada).subscribe({
+      next: () => void this.router.navigateByUrl('/feed'),
+      error: () => {
+        this.erroApi.set('Nao foi possivel publicar. Confirme o texto e o ficheiro selecionado.');
+        this.emSubmissao = false;
+      },
+    });
   }
 
   aoSelecionarMedia(evento: Event, tipo: 'imagem' | 'video'): void {
     const ficheiro = (evento.target as HTMLInputElement).files?.[0];
     if (!ficheiro) return;
-    const leitor = new FileReader();
-    leitor.onload = () => {
-      this.previewMedia.set(leitor.result as string);
-      this.tipoMedia.set(tipo);
-    };
-    leitor.readAsDataURL(ficheiro);
+    const limiteMb = tipo === 'imagem' ? 8 : 50;
+    const tipoValido = tipo === 'imagem' ? ficheiro.type.startsWith('image/') : ficheiro.type.startsWith('video/');
+
+    if (!tipoValido || ficheiro.size > limiteMb * 1024 * 1024) {
+      this.erroApi.set(`Selecione um ficheiro ${tipo === 'imagem' ? 'de imagem' : 'de video'} valido ate ${limiteMb} MB.`);
+      (evento.target as HTMLInputElement).value = '';
+      return;
+    }
+
+    this.mediaSelecionada = ficheiro;
+    this.previewMedia.set(URL.createObjectURL(ficheiro));
+    this.tipoMedia.set(tipo);
   }
 
   removerMedia(): void {
+    if (this.previewMedia().startsWith('blob:')) {
+      URL.revokeObjectURL(this.previewMedia());
+    }
     this.previewMedia.set('');
+    this.mediaSelecionada = undefined;
   }
 
   seleccionarAnexo(tipo: string): void {

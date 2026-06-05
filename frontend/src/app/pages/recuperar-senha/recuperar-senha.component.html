@@ -1,14 +1,31 @@
 <main class="autenticacao">
   <section class="painel-autenticacao">
     <h1 class="titulo-pagina">Recuperar senha</h1>
-    <p class="descricao-pagina">Digite o email da sua conta para receber o link de recuperação.</p>
+    <p class="descricao-pagina">
+      {{ modoReset() ? 'Defina uma nova senha para a sua conta.' : 'Digite o email da sua conta para receber o link de recuperacao.' }}
+    </p>
     <form class="formulario" [formGroup]="formulario" (ngSubmit)="enviarLink()">
       <input class="campo-formulario" formControlName="email" placeholder="Email" type="email" />
       @if (submetido && formulario.controls.email.invalid) {
-        <span class="mensagem-campo">Informe um email válido.</span>
+        <span class="mensagem-campo">Informe um email valido.</span>
       }
-      <button class="botao-destaque" type="submit">Enviar link</button>
-      <a class="botao-fantasma" routerLink="/entrar">Voltar ao início de sessão</a>
+
+      @if (modoReset()) {
+        <input class="campo-formulario" formControlName="senha" placeholder="Nova senha" type="password" />
+        <input class="campo-formulario" formControlName="confirmarSenha" placeholder="Confirmar senha" type="password" />
+      }
+
+      @if (mensagem()) {
+        <span class="aviso-sucesso">{{ mensagem() }}</span>
+      }
+      @if (erroApi()) {
+        <span class="mensagem-campo">{{ erroApi() }}</span>
+      }
+
+      <button class="botao-destaque" type="submit" [disabled]="emSubmissao">
+        {{ emSubmissao ? 'A processar...' : (modoReset() ? 'Redefinir senha' : 'Enviar link') }}
+      </button>
+      <a class="botao-fantasma" routerLink="/entrar">Voltar ao inicio de sessao</a>
     </form>
   </section>
 </main>

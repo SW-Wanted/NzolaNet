@@ -14,6 +14,8 @@ interface UserRepositoryInterface
 
     public function findOrFail(int $id): User;
 
+    public function listExcept(int $userId, int $perPage = 20): LengthAwarePaginator;
+
     public function update(User $user, array $data): User;
 
     public function follow(int $followerId, int $followingId): void;

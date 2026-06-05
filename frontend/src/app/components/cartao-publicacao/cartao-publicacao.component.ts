@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { ModalComponent } from '../modal/modal.component';
 
 export interface Publicacao {
-  id: string;
+  id: number;
+  autorId: number;
   autorNome: string;
   autorAvatar: string;
   autorDescricao?: string;
@@ -19,19 +19,22 @@ export interface Publicacao {
   contagemComentarios: number;
   contagemPartilhas: number;
   temBaze?: boolean;
+  podeEditar?: boolean;
+  podeEliminar?: boolean;
 }
 
 @Component({
   selector: 'app-cartao-publicacao',
-  imports: [CommonModule, RouterLink, ModalComponent, ReactiveFormsModule],
+  imports: [CommonModule, ModalComponent, ReactiveFormsModule],
   templateUrl: './cartao-publicacao.component.html',
   styleUrl: './cartao-publicacao.component.css'
 })
-export class CartaoPublicacaoComponent implements OnInit {
+export class CartaoPublicacaoComponent implements OnInit, OnChanges {
   @Input() publicacao!: Publicacao;
-  @Output() eliminar = new EventEmitter<string>();
-  @Output() editar = new EventEmitter<{ id: string; conteudo: string }>();
+  @Output() eliminar = new EventEmitter<number>();
+  @Output() editar = new EventEmitter<{ id: number; conteudo: string }>();
   @Output() abrirComentarios = new EventEmitter<Publicacao>();
+  @Output() alternarBaze = new EventEmitter<Publicacao>();
 
   bazeActivo = signal(false);
   contagemBaze = signal(0);
@@ -45,19 +48,23 @@ export class CartaoPublicacaoComponent implements OnInit {
   constructor(private readonly fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.sincronizarEstado();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['publicacao']) {
+      this.sincronizarEstado();
+    }
+  }
+
+  private sincronizarEstado(): void {
     this.contagemBaze.set(this.publicacao.contagemBazes);
     this.bazeActivo.set(this.publicacao.temBaze ?? false);
     this.conteudoEditado.set(this.publicacao.conteudo);
   }
 
   aoBaze(): void {
-    if (this.bazeActivo()) {
-      this.contagemBaze.update(c => c - 1);
-      this.bazeActivo.set(false);
-    } else {
-      this.contagemBaze.update(c => c + 1);
-      this.bazeActivo.set(true);
-    }
+    this.alternarBaze.emit(this.publicacao);
   }
 
   alternarMenu(): void {

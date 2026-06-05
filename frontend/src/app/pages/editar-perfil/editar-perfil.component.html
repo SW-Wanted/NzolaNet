@@ -16,7 +16,9 @@
             </div>
             <div class="acoes-cabecalho">
               <a class="botao-contornado" routerLink="/perfil">Cancelar</a>
-              <button class="botao-destaque" type="submit">Guardar</button>
+              <button class="botao-destaque" type="submit" [disabled]="emSubmissao">
+                {{ emSubmissao ? 'A guardar...' : 'Guardar' }}
+              </button>
             </div>
           </header>
 
@@ -52,6 +54,13 @@
           <textarea class="area-formulario" formControlName="biografia" placeholder="Biografia"></textarea>
           @if (submetido && formulario.controls.biografia.invalid) {
             <span class="mensagem-campo">A biografia precisa de mais detalhes.</span>
+          }
+          <label class="linha-centro">
+            <input type="checkbox" formControlName="privado" />
+            Perfil privado
+          </label>
+          @if (erroApi()) {
+            <span class="mensagem-campo">{{ erroApi() }}</span>
           }
           <div class="grupo-botoes">
             <span class="pilula pilula-primaria">Kizomba</span>

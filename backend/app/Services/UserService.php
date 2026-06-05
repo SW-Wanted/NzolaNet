@@ -30,6 +30,11 @@ class UserService
         return $profile;
     }
 
+    public function suggestions(User $viewer, int $perPage = 20): LengthAwarePaginator
+    {
+        return $this->users->listExcept($viewer->id, $perPage);
+    }
+
     public function updateProfile(User $user, UpdateUserDTO $dto): User
     {
         return $this->users->update($user, $dto->toArray());

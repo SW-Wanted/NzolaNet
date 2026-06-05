@@ -7,11 +7,19 @@
         <section class="conteudo-limite cartao cartao-preenchido painel-comentarios">
           <header class="cabecalho-pagina">
             <div>
-              <span class="rotulo-seccao">Discussão</span>
-              <h1 class="titulo-pagina">Comentários</h1>
+              <span class="rotulo-seccao">Discussao</span>
+              <h1 class="titulo-pagina">Comentarios</h1>
+              @if (postAtual(); as post) {
+                <p class="descricao-pagina">{{ post.content }}</p>
+              }
             </div>
             <a class="botao-contornado" routerLink="/feed">Fechar</a>
           </header>
+
+          @if (erroApi()) {
+            <span class="mensagem-campo">{{ erroApi() }}</span>
+          }
+
           <div class="lista-vertical">
             @for (comentario of comentarios(); track comentario.id) {
               <article class="comentario">
@@ -23,7 +31,7 @@
                       class="campo-formulario comentario__campo-editar"
                       [value]="textoEdicao()"
                       (input)="textoEdicao.set($any($event.target).value)"
-                      aria-label="Editar comentário"
+                      aria-label="Editar comentario"
                     />
                   } @else {
                     <p>{{ comentario.texto }}</p>
@@ -34,23 +42,30 @@
                     <button class="botao-destaque comentario__botao" type="button" (click)="guardarEdicao(comentario.id)">Guardar</button>
                     <button class="botao-fantasma comentario__botao" type="button" (click)="cancelarEdicao()">Cancelar</button>
                   } @else {
-                    <button class="botao-fantasma comentario__botao" type="button" (click)="iniciarEdicao(comentario.id, comentario.texto)">
-                      <span class="material-symbols-outlined">edit</span>
-                    </button>
-                    <button class="botao-fantasma comentario__botao comentario__botao--perigo" type="button" (click)="removerComentario(comentario.id)">
-                      <span class="material-symbols-outlined">delete</span>
-                    </button>
+                    @if (comentario.podeEditar) {
+                      <button class="botao-fantasma comentario__botao" type="button" (click)="iniciarEdicao(comentario.id, comentario.texto)">
+                        <span class="material-symbols-outlined">edit</span>
+                      </button>
+                    }
+                    @if (comentario.podeEliminar) {
+                      <button class="botao-fantasma comentario__botao comentario__botao--perigo" type="button" (click)="removerComentario(comentario.id)">
+                        <span class="material-symbols-outlined">delete</span>
+                      </button>
+                    }
                   }
                 </div>
               </article>
+            } @empty {
+              <p class="texto-cartao">Ainda nao existem comentarios para a publicacao mais recente.</p>
             }
           </div>
+
           <form class="linha-centro formulario-comentario" [formGroup]="formulario" (ngSubmit)="adicionarComentario()">
-            <input class="campo-formulario" formControlName="texto" placeholder="Escrever comentário..." />
+            <input class="campo-formulario" formControlName="texto" placeholder="Escrever comentario..." />
             <button class="botao-destaque" type="submit">Enviar</button>
           </form>
           @if (submetido && formulario.controls.texto.invalid) {
-            <span class="mensagem-campo">Escreva um comentário antes de enviar.</span>
+            <span class="mensagem-campo">Escreva um comentario antes de enviar.</span>
           }
         </section>
       </div>
