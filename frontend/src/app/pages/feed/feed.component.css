@@ -251,6 +251,34 @@
 }
 
 /* ── Comments Drawer ───────────────────────────────── */
+.drawer-autor-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 12px;
+}
+
+.drawer-autor-row:hover .drawer-autor-nome {
+  text-decoration: underline;
+}
+
+.drawer-autor-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--cor-contorno-variante);
+  flex-shrink: 0;
+}
+
+.drawer-autor-nome {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cor-no-superficie);
+}
+
 .drawer-post-resumo {
   margin-bottom: 4px;
 }
@@ -311,4 +339,101 @@
 .drawer-comentario-input .botao-destaque {
   padding: 10px 14px;
   min-height: unset;
+}
+
+/* ── Follow Button ──────────────────────────────── */
+.botao-seguir-sugestao {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 150ms ease;
+  border: 2px solid var(--cor-primaria);
+  color: var(--cor-primaria);
+  background: transparent;
+  white-space: nowrap;
+}
+
+.botao-seguir-sugestao:hover {
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+.botao-seguir-sugestao--activo {
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+.botao-seguir-sugestao--activo:hover {
+  opacity: 0.85;
+}
+
+/* ── Aside Skeleton ─────────────────────────────── */
+.skeleton-aside-titulo {
+  height: 16px;
+  width: 60%;
+  margin-bottom: 8px;
+}
+
+.skeleton-aside-linha {
+  height: 14px;
+  width: 100%;
+}
+
+.skeleton-aside-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.skeleton-aside-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skeleton-aside-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton-aside-nome {
+  height: 13px;
+  width: 70%;
+}
+
+.skeleton-aside-sub {
+  height: 11px;
+  width: 45%;
+}
+
+/* ── Toast / Snackbar ───────────────────────────── */
+.toast-indisponivel {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 9999;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  animation: toast-in 220ms ease;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }

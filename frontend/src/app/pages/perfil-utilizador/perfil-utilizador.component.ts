@@ -6,8 +6,6 @@ import { Post } from '../../models/fase1.model';
 import { AuthService } from '../../services/auth.service';
 import { PostService } from '../../services/post.service';
 
-const DEFAULT_AVATAR = 'https://ui-avatars.com/api/?background=111827&color=ffffff&name=NzolaNet';
-
 @Component({
   selector: 'app-perfil-utilizador',
   imports: [CabecalhoComponent, MenuLateralComponent, RouterLink],
@@ -21,7 +19,10 @@ export class PerfilUtilizadorComponent implements OnInit {
   readonly utilizador = this.auth.currentUser;
   readonly publicacoes = signal<Post[]>([]);
   readonly eventos = signal<unknown[]>([]);
-  readonly avatar = computed(() => this.utilizador()?.profile_photo ?? DEFAULT_AVATAR);
+  readonly avatar = computed(() => {
+    const u = this.utilizador();
+    return u?.profile_photo ?? `https://ui-avatars.com/api/?background=111827&color=ffffff&name=${encodeURIComponent(u?.name ?? 'Utilizador')}`;
+  });
 
   ngOnInit(): void {
     this.auth.getCurrentUserFromServer().subscribe();

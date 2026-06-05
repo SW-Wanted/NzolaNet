@@ -1,0 +1,74 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <div class="conteudo-limite">
+
+          @if (carregando()) {
+            <div class="cartao cartao-preenchido perfil-skeleton">
+              <div class="skeleton skeleton-capa"></div>
+              <div class="perfil-skeleton-corpo">
+                <div class="skeleton skeleton-avatar-perfil"></div>
+                <div class="skeleton skeleton-nome-perfil"></div>
+                <div class="skeleton skeleton-bio-perfil"></div>
+              </div>
+            </div>
+          } @else if (erro()) {
+            <div class="cartao cartao-preenchido">
+              <p class="mensagem-campo">{{ erro() }}</p>
+              <a class="botao-contornado" routerLink="/feed" style="margin-top:16px;display:inline-block">Voltar ao feed</a>
+            </div>
+          } @else if (utilizador(); as u) {
+            <article class="cartao perfil-capa">
+              <div class="capa-perfil"></div>
+              <div class="perfil-conteudo">
+                <img [src]="avatar()" [alt]="u.name" class="avatar-perfil" />
+                <div>
+                  <h1 class="titulo-pagina">{{ u.name }}</h1>
+                  <p class="descricao-pagina">{{ u.bio || 'Utilizador NzolaNet' }}</p>
+                </div>
+                @if (ehEuProprio()) {
+                  <a class="botao-destaque" routerLink="/perfil/editar">Editar perfil</a>
+                } @else {
+                  <button
+                    class="botao-seguir"
+                    [class.botao-seguir--activo]="u.is_following"
+                    type="button"
+                    [disabled]="emSeguindo()"
+                    (click)="alternarSeguir()"
+                  >
+                    @if (u.is_following) {
+                      <span class="material-symbols-outlined">person_check</span>A seguir
+                    } @else {
+                      <span class="material-symbols-outlined">person_add</span>Seguir
+                    }
+                  </button>
+                }
+              </div>
+            </article>
+
+            <div class="cartao cartao-preenchido estatisticas-barra">
+              <div class="estatistica-item">
+                <strong>{{ u.posts_count }}</strong>
+                <span>Publicações</span>
+              </div>
+              <div class="estatistica-separador"></div>
+              <div class="estatistica-item">
+                <strong>{{ u.followers_count }}</strong>
+                <span>Seguidores</span>
+              </div>
+              <div class="estatistica-separador"></div>
+              <div class="estatistica-item">
+                <strong>{{ u.following_count }}</strong>
+                <span>A seguir</span>
+              </div>
+            </div>
+          }
+
+        </div>
+      </div>
+    </main>
+  </div>
+</section>

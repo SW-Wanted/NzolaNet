@@ -1,5 +1,6 @@
 import { HttpErrorResponse, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, TimeoutError, catchError, finalize, map, shareReplay, switchMap, throwError, timeout } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
@@ -9,6 +10,7 @@ let refreshTokenRequest$: Observable<string> | null = null;
 
 export const authInterceptor: HttpInterceptorFn = (request, next) => {
   const authService = inject(AuthService);
+  const router = inject(Router);
   const token = authService.token;
   const authenticatedRequest = token ? withBearerToken(request, token) : request;
 
@@ -35,6 +37,7 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
         switchMap((newToken) => next(withBearerToken(request, newToken))),
         catchError((refreshError: unknown) => {
           authService.clearSession();
+          router.navigateByUrl('/entrar');
           return throwError(() => refreshError);
         }),
       );

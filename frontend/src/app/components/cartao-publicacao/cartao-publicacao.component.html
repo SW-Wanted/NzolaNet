@@ -1,6 +1,6 @@
 <article class="cartao-publicacao">
   <div class="cartao-publicacao__cabecalho">
-    <div class="cartao-publicacao__autor">
+    <a class="cartao-publicacao__autor" [routerLink]="['/utilizador', publicacao.autorId]">
       <img
         [src]="publicacao.autorAvatar"
         [alt]="publicacao.autorNome"
@@ -15,7 +15,7 @@
           }
         </p>
       </div>
-    </div>
+    </a>
     <button class="cartao-publicacao__botao-menu" type="button" (click)="alternarMenu()" aria-label="Mais opções">
       <span class="material-symbols-outlined">more_horiz</span>
     </button>
@@ -69,9 +69,22 @@
   }
 
   <div class="cartao-publicacao__estatisticas">
-    <span class="cartao-publicacao__estatistica-texto">
-      {{ contagemBaze() }} bazes • {{ publicacao.contagemComentarios }} comentários
-    </span>
+    <button
+      class="cartao-publicacao__estatistica-btn"
+      type="button"
+      [disabled]="contagemBaze() === 0"
+      (click)="abrirBazes()"
+    >
+      {{ contagemBaze() }} {{ contagemBaze() === 1 ? 'baze' : 'bazes' }}
+    </button>
+    <span class="cartao-publicacao__estatistica-sep">•</span>
+    <button
+      class="cartao-publicacao__estatistica-btn"
+      type="button"
+      (click)="abrirComentarios.emit(publicacao)"
+    >
+      {{ publicacao.contagemComentarios }} {{ publicacao.contagemComentarios === 1 ? 'comentário' : 'comentários' }}
+    </button>
   </div>
 
   <div class="cartao-publicacao__accoes">
@@ -143,4 +156,31 @@
     <button class="botao-contornado" type="button" (click)="modalEliminarAberto.set(false)">Cancelar</button>
     <button class="botao-perigo" type="button" (click)="confirmarEliminar()">Eliminar</button>
   </div>
+</app-modal>
+
+<!-- Modal: Quem deu Baze -->
+<app-modal
+  [aberto]="modalBazesAberto()"
+  titulo="Bazes"
+  (fechar)="modalBazesAberto.set(false)"
+>
+  @if (carregandoLikers()) {
+    <p class="texto-cartao" style="text-align:center;padding:16px">A carregar...</p>
+  } @else if (likers().length === 0) {
+    <p class="texto-cartao" style="text-align:center;padding:16px">Sem bazes ainda.</p>
+  } @else {
+    <div class="modal-likers-lista">
+      @for (liker of likers(); track liker.id) {
+        <a class="modal-liker-item" [routerLink]="['/utilizador', liker.id]" (click)="modalBazesAberto.set(false)">
+          <img
+            class="modal-liker-avatar"
+            [src]="liker.profile_photo || 'https://ui-avatars.com/api/?background=111827&color=ffffff&name=' + liker.name"
+            [alt]="liker.name"
+          />
+          <span class="modal-liker-nome">{{ liker.name }}</span>
+          <span class="material-symbols-outlined modal-liker-icone">favorite</span>
+        </a>
+      }
+    </div>
+  }
 </app-modal>

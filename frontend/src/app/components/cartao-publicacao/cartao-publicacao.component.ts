@@ -1,5 +1,8 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { User } from '../../models/fase1.model';
+import { PostService } from '../../services/post.service';
 import { ModalComponent } from '../modal/modal.component';
 
 export interface Publicacao {
@@ -24,11 +27,13 @@ export interface Publicacao {
 
 @Component({
   selector: 'app-cartao-publicacao',
-  imports: [CommonModule, ModalComponent],
+  imports: [CommonModule, RouterLink, ModalComponent],
   templateUrl: './cartao-publicacao.component.html',
   styleUrl: './cartao-publicacao.component.css'
 })
 export class CartaoPublicacaoComponent implements OnInit, OnChanges {
+  private readonly postService = inject(PostService);
+
   @Input() publicacao!: Publicacao;
   @Output() eliminar = new EventEmitter<number>();
   @Output() editar = new EventEmitter<{ id: number; conteudo: string }>();
@@ -42,6 +47,10 @@ export class CartaoPublicacaoComponent implements OnInit, OnChanges {
   modalEliminarAberto = signal(false);
   modalEditarAberto = signal(false);
   conteudoEditado = signal('');
+
+  modalBazesAberto = signal(false);
+  likers = signal<User[]>([]);
+  carregandoLikers = signal(false);
 
   ngOnInit(): void {
     this.sincronizarEstado();
@@ -91,9 +100,30 @@ export class CartaoPublicacaoComponent implements OnInit, OnChanges {
     this.modalEliminarAberto.set(false);
   }
 
+  abrirBazes(): void {
+    if (this.contagemBaze() === 0) return;
+    this.modalBazesAberto.set(true);
+    this.carregandoLikers.set(true);
+    this.postService.getPostLikers(this.publicacao.id).subscribe({
+      next: (users) => {
+        this.likers.set(users);
+        this.carregandoLikers.set(false);
+      },
+      error: () => this.carregandoLikers.set(false),
+    });
+  }
+
   partilhar(): void {
-    this.partilhado.set(true);
+    const url = `${window.location.origin}/feed?post=${this.publicacao.id}`;
     this.menuAberto.set(false);
-    window.setTimeout(() => this.partilhado.set(false), 1800);
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => {
+        this.partilhado.set(true);
+        window.setTimeout(() => this.partilhado.set(false), 2000);
+      });
+    } else {
+      this.partilhado.set(true);
+      window.setTimeout(() => this.partilhado.set(false), 2000);
+    }
   }
 }

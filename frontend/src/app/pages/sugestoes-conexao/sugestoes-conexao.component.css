@@ -2,9 +2,9 @@
 
 .sugestao-cartao {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr auto auto;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 @media (max-width: 560px) {
@@ -20,4 +20,34 @@
   background: var(--cor-primaria-fixo);
   color: var(--cor-no-container-primaria);
   font-weight: 700;
+}
+
+.botao-seguir-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 150ms ease;
+  border: 2px solid var(--cor-primaria);
+  color: var(--cor-primaria);
+  background: transparent;
+  white-space: nowrap;
+}
+
+.botao-seguir-card:hover {
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+.botao-seguir-card--activo {
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+.botao-seguir-card--activo:hover {
+  opacity: 0.85;
 }

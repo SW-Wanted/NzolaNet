@@ -26,7 +26,7 @@
                 <button type="button" (click)="abrirCriarPost()">
                   <span class="material-symbols-outlined">smart_display</span>Vídeo
                 </button>
-                <button type="button" routerLink="/eventos">
+                <button type="button" (click)="mostrarIndisponivel('Criação de eventos não disponível de momento.')">
                   <span class="material-symbols-outlined">event</span>Evento
                 </button>
               </div>
@@ -115,28 +115,49 @@
                 <a class="botao-fantasma" routerLink="/sugestoes">Ver todas</a>
               </div>
               <div class="lista-vertical">
-                @for (sugestao of sugestoes(); track sugestao.id) {
-                  <div class="item-lista">
-                    <img
-                      [alt]="sugestao.name"
-                      class="avatar-redondo"
-                      [src]="sugestao.profile_photo || 'https://ui-avatars.com/api/?background=111827&color=ffffff&name=' + sugestao.name"
-                    />
-                    <div>
-                      <strong>{{ sugestao.name }}</strong>
-                      <p class="texto-cartao">{{ sugestao.followers_count }} seguidores</p>
+                @if (carregandoFeed()) {
+                  @for (i of [1, 2, 3]; track i) {
+                    <div class="skeleton-aside-item">
+                      <div class="skeleton skeleton-aside-avatar"></div>
+                      <div class="skeleton-aside-info">
+                        <div class="skeleton skeleton-aside-nome"></div>
+                        <div class="skeleton skeleton-aside-sub"></div>
+                      </div>
                     </div>
-                    <button
-                      class="botao-contornado"
-                      type="button"
-                      style="margin-left:auto"
-                      (click)="alternarSeguir(sugestao)"
-                    >
-                      {{ sugestao.is_following ? 'A seguir' : 'Seguir' }}
-                    </button>
-                  </div>
-                } @empty {
-                  <p class="texto-cartao">Sem sugestões de momento.</p>
+                  }
+                } @else {
+                  @for (sugestao of sugestoes(); track sugestao.id) {
+                    <div class="item-lista">
+                      <a [routerLink]="['/utilizador', sugestao.id]">
+                        <img
+                          [alt]="sugestao.name"
+                          class="avatar-redondo"
+                          [src]="sugestao.profile_photo || 'https://ui-avatars.com/api/?background=111827&color=ffffff&name=' + sugestao.name"
+                        />
+                      </a>
+                      <div>
+                        <a [routerLink]="['/utilizador', sugestao.id]" style="text-decoration:none;color:inherit">
+                          <strong>{{ sugestao.name }}</strong>
+                        </a>
+                        <p class="texto-cartao">{{ sugestao.followers_count }} seguidores</p>
+                      </div>
+                      <button
+                        class="botao-seguir-sugestao"
+                        [class.botao-seguir-sugestao--activo]="sugestao.is_following"
+                        type="button"
+                        style="margin-left:auto"
+                        (click)="alternarSeguir(sugestao)"
+                      >
+                        @if (sugestao.is_following) {
+                          <span class="material-symbols-outlined" style="font-size:16px">person_check</span>A seguir
+                        } @else {
+                          Seguir
+                        }
+                      </button>
+                    </div>
+                  } @empty {
+                    <p class="texto-cartao">Sem sugestões de momento.</p>
+                  }
                 }
               </div>
             </div>
@@ -153,6 +174,10 @@
   <a routerLink="/mercado"><span class="material-symbols-outlined">storefront</span>Loja</a>
   <a routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
 </nav>
+
+@if (toastIndisponivel()) {
+  <div class="toast-indisponivel">{{ toastIndisponivel() }}</div>
+}
 
 <!-- ── Modal: Criar Publicação ──────────────────────────────────── -->
 <app-modal titulo="Criar publicação" [aberto]="modalCriarAberto()" largura="grande" (fechar)="modalCriarAberto.set(false)">
@@ -203,10 +228,10 @@
             <span class="material-symbols-outlined">smart_display</span>
             <input id="modal-input-video" type="file" accept="video/*" (change)="aoSelecionarMedia($event, 'video')" />
           </label>
-          <button class="criar-post-anexo" type="button" title="Emoji">
+          <button class="criar-post-anexo" type="button" title="Emoji" (click)="mostrarIndisponivel('Emojis não disponíveis de momento.')">
             <span class="material-symbols-outlined">sentiment_satisfied</span>
           </button>
-          <button class="criar-post-anexo" type="button" title="Localização">
+          <button class="criar-post-anexo" type="button" title="Localização" (click)="mostrarIndisponivel('Localização não disponível de momento.')">
             <span class="material-symbols-outlined">location_on</span>
           </button>
         </div>
@@ -228,13 +253,13 @@
   @if (publicacaoActiva(); as pub) {
     <!-- Post summary -->
     <div class="drawer-post-resumo">
-      <div class="cartao-publicacao__autor" style="margin-bottom:12px">
-        <img [src]="pub.autorAvatar" [alt]="pub.autorNome" class="cartao-publicacao__avatar" />
+      <a class="drawer-autor-row" [routerLink]="['/utilizador', pub.autorId]">
+        <img [src]="pub.autorAvatar" [alt]="pub.autorNome" class="drawer-autor-avatar" />
         <div>
-          <strong>{{ pub.autorNome }}</strong>
+          <strong class="drawer-autor-nome">{{ pub.autorNome }}</strong>
           <p class="texto-cartao">{{ pub.tempoPublicacao }}</p>
         </div>
-      </div>
+      </a>
       <p class="drawer-post-conteudo">{{ pub.conteudo }}</p>
       @if (pub.imagem) {
         <img [src]="pub.imagem" [alt]="pub.imagemAlt || ''" class="drawer-post-imagem" />

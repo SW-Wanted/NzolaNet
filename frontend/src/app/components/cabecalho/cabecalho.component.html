@@ -1,24 +1,21 @@
 <header class="cabecalho">
   <div class="cabecalho__container">
 
-    <div class="cabecalho__pesquisa">
+    <form class="cabecalho__pesquisa" (ngSubmit)="pesquisar()" role="search">
       <span class="material-symbols-outlined cabecalho__pesquisa-icone">search</span>
       <input
         class="cabecalho__pesquisa-campo"
-        placeholder="Pesquisar"
-        type="text"
+        placeholder="Pesquisar pessoas..."
+        type="search"
         [value]="termoPesquisa()"
         (input)="termoPesquisa.set($any($event.target).value)"
+        (keydown.enter)="pesquisar()"
       />
-    </div>
+    </form>
 
     <div class="cabecalho__direita">
-      <button class="cabecalho__botao-icone" type="button" routerLink="/feed/estados" aria-label="Estados">
-        <span class="material-symbols-outlined">grid_view</span>
-      </button>
-
       @if (isAuthenticated()) {
-        <button class="cabecalho__botao-icone" type="button" routerLink="/comentarios/moderacao" aria-label="Notificações">
+        <button class="cabecalho__botao-icone" type="button" routerLink="/notificacoes" aria-label="Notificações">
           <span class="material-symbols-outlined">notifications</span>
         </button>
 

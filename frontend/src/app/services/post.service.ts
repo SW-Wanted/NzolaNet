@@ -86,6 +86,17 @@ export class PostService {
     return this.http.delete<ApiResponse<null>>(`${API_URL}/posts/${id}`).pipe(map(() => undefined));
   }
 
+  getPostLikers(id: number): Observable<User[]> {
+    return this.http
+      .get<ApiResponse<RawUser[] | { data: RawUser[] }>>(`${API_URL}/posts/${id}/likes`)
+      .pipe(
+        map((response) => {
+          const raw = Array.isArray(response.data) ? response.data : (response.data as { data: RawUser[] }).data;
+          return raw.map((u) => this.toUser(u));
+        }),
+      );
+  }
+
   likePost(id: number): Observable<number> {
     return this.http
       .post<ApiResponse<{ likes_count: number }>>(`${API_URL}/posts/${id}/like`, null)

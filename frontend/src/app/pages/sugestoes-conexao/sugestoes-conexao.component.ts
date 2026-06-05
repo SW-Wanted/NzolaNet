@@ -1,25 +1,39 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, computed, signal } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
 import { User } from '../../models/fase1.model';
 import { UserService } from '../../services/user.service';
 
-const DEFAULT_AVATAR = 'https://ui-avatars.com/api/?background=111827&color=ffffff&name=NzolaNet';
 
 @Component({
   selector: 'app-sugestoes-conexao',
-  imports: [CabecalhoComponent, MenuLateralComponent],
+  imports: [CabecalhoComponent, MenuLateralComponent, RouterLink],
   templateUrl: './sugestoes-conexao.component.html',
   styleUrl: './sugestoes-conexao.component.css',
 })
 export class SugestoesConexaoComponent implements OnInit {
+  private termoBusca = signal('');
+
   pessoas = signal<User[]>([]);
   feedback = signal('');
   carregando = signal(false);
 
-  constructor(private readonly users: UserService) {}
+  readonly pessoasFiltradas = computed(() => {
+    const termo = this.termoBusca().toLowerCase().trim();
+    if (!termo) return this.pessoas();
+    return this.pessoas().filter((p) => p.name.toLowerCase().includes(termo));
+  });
+
+  constructor(
+    private readonly users: UserService,
+    private readonly route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
+    this.route.queryParamMap.subscribe((params) => {
+      this.termoBusca.set(params.get('q') ?? '');
+    });
     this.carregarPessoas();
   }
 
@@ -47,7 +61,7 @@ export class SugestoesConexaoComponent implements OnInit {
   }
 
   avatar(user: User): string {
-    return user.profile_photo ?? DEFAULT_AVATAR;
+    return user.profile_photo ?? `https://ui-avatars.com/api/?background=111827&color=ffffff&name=${encodeURIComponent(user.name)}`;
   }
 
   private carregarPessoas(): void {

@@ -21,7 +21,9 @@ interface ComentarioView {
   podeEliminar: boolean;
 }
 
-const DEFAULT_AVATAR = 'https://ui-avatars.com/api/?background=111827&color=ffffff&name=NzolaNet';
+function avatarFallback(name: string): string {
+  return `https://ui-avatars.com/api/?background=111827&color=ffffff&name=${encodeURIComponent(name)}`;
+}
 
 @Component({
   selector: 'app-feed',
@@ -53,6 +55,8 @@ export class FeedComponent implements OnInit {
   previewMedia = signal('');
   tipoMedia = signal<'imagem' | 'video'>('imagem');
   private mediaSelecionada: File | undefined;
+  toastIndisponivel = signal('');
+  private toastTimer: ReturnType<typeof setTimeout> | undefined;
 
   readonly formularioCriar = this.fb.nonNullable.group({
     conteudo: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(5000)]],
@@ -75,7 +79,7 @@ export class FeedComponent implements OnInit {
   erroFeed = signal('');
 
   readonly utilizadorActual = computed(() => this.auth.currentUser());
-  readonly avatarActual = computed(() => this.utilizadorActual()?.profile_photo ?? DEFAULT_AVATAR);
+  readonly avatarActual = computed(() => this.utilizadorActual()?.profile_photo ?? avatarFallback(this.nomeActual()));
   readonly nomeActual = computed(() => this.utilizadorActual()?.name ?? 'Utilizador NzolaNet');
 
   ngOnInit(): void {
@@ -102,6 +106,12 @@ export class FeedComponent implements OnInit {
         );
       },
     });
+  }
+
+  mostrarIndisponivel(mensagem = 'Funcionalidade não disponível de momento.'): void {
+    if (this.toastTimer) clearTimeout(this.toastTimer);
+    this.toastIndisponivel.set(mensagem);
+    this.toastTimer = setTimeout(() => this.toastIndisponivel.set(''), 3000);
   }
 
   abrirCriarPost(): void {
@@ -369,7 +379,7 @@ export class FeedComponent implements OnInit {
       id: post.id,
       autorId: post.author.id,
       autorNome: post.author.name,
-      autorAvatar: post.author.profile_photo ?? DEFAULT_AVATAR,
+      autorAvatar: post.author.profile_photo ?? avatarFallback(post.author.name),
       autorDescricao: post.author.bio ?? undefined,
       tempoPublicacao: this.formatarData(post.created_at),
       conteudo: post.content,

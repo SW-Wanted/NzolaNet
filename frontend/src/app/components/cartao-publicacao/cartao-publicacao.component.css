@@ -18,6 +18,13 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.cartao-publicacao__autor:hover .cartao-publicacao__nome-autor {
+  text-decoration: underline;
 }
 
 .cartao-publicacao__avatar {
@@ -162,15 +169,80 @@
 }
 
 .cartao-publicacao__estatisticas {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   padding: 8px 16px;
   border-top: 1px solid var(--cor-contorno-variante);
   border-bottom: 1px solid var(--cor-contorno-variante);
 }
 
-.cartao-publicacao__estatistica-texto {
+.cartao-publicacao__estatistica-btn {
   font-size: var(--fonte-tamanho-label-sm);
   font-weight: var(--fonte-peso-medio);
   color: var(--cor-no-superficie-variante);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+
+.cartao-publicacao__estatistica-btn:hover:not(:disabled) {
+  color: var(--cor-primaria);
+  text-decoration: underline;
+}
+
+.cartao-publicacao__estatistica-btn:disabled {
+  cursor: default;
+}
+
+.cartao-publicacao__estatistica-sep {
+  font-size: var(--fonte-tamanho-label-sm);
+  color: var(--cor-no-superficie-variante);
+}
+
+/* ── Likers modal ──────────────────────────────── */
+.modal-likers-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal-liker-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--cor-no-superficie);
+  transition: background 150ms ease;
+}
+
+.modal-liker-item:hover {
+  background: var(--cor-container);
+}
+
+.modal-liker-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--cor-contorno-variante);
+  flex-shrink: 0;
+}
+
+.modal-liker-nome {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.modal-liker-icone {
+  font-size: 18px;
+  color: var(--cor-secundaria);
+  font-variation-settings: 'FILL' 1;
 }
 
 .cartao-publicacao__accoes {

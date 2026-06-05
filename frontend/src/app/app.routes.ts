@@ -3,7 +3,6 @@ import { ComentariosComponent } from './pages/comentarios/comentarios.component'
 import { CriarPostComponent } from './pages/criar-post/criar-post.component';
 import { EditarPerfilComponent } from './pages/editar-perfil/editar-perfil.component';
 import { EntrarComponent } from './pages/entrar/entrar.component';
-import { EstadosFeedComponent } from './pages/estados-feed/estados-feed.component';
 import { EventosCulturaisComponent } from './pages/eventos-culturais/eventos-culturais.component';
 import { FeedComponent } from './pages/feed/feed.component';
 import { GruposComunidadesComponent } from './pages/grupos-comunidades/grupos-comunidades.component';
@@ -14,6 +13,8 @@ import { NzolaMarketComponent } from './pages/nzola-market/nzola-market.componen
 import { PerfilUtilizadorComponent } from './pages/perfil-utilizador/perfil-utilizador.component';
 import { RecuperarSenhaComponent } from './pages/recuperar-senha/recuperar-senha.component';
 import { RegistoComponent } from './pages/registo/registo.component';
+import { NotificacoesComponent } from './pages/notificacoes/notificacoes.component';
+import { PerfilPublicoComponent } from './pages/perfil-publico/perfil-publico.component';
 import { SugestoesConexaoComponent } from './pages/sugestoes-conexao/sugestoes-conexao.component';
 import { authGuard } from './guards/auth.guard';
 
@@ -30,6 +31,8 @@ export const routes: Routes = [
   { path: 'mercado', component: NzolaMarketComponent },
   { path: 'eventos', component: EventosCulturaisComponent },
   { path: 'kizomba-hub', component: KizombaHubComponent },
+  { path: 'notificacoes', component: NotificacoesComponent, canActivate: [authGuard] },
+  { path: 'utilizador/:id', component: PerfilPublicoComponent, canActivate: [authGuard] },
   { path: 'sugestoes', component: SugestoesConexaoComponent, canActivate: [authGuard] },
   { path: 'comentarios', component: ComentariosComponent, canActivate: [authGuard] },
   {
@@ -37,7 +40,7 @@ export const routes: Routes = [
     component: ModeracaoComentariosComponent,
     canActivate: [authGuard],
   },
-  { path: 'feed/estados', component: EstadosFeedComponent },
+  { path: 'feed/estados', redirectTo: 'feed', pathMatch: 'full' },
   { path: 'sucesso', component: ModalSucessoComponent },
   { path: '**', redirectTo: 'feed' },
 ];
