@@ -45,6 +45,12 @@ const BACKEND_URL = 'http://localhost:8000';
 export class PostService {
   constructor(private readonly http: HttpClient) {}
 
+  getPost(id: number): Observable<Post> {
+    return this.http
+      .get<ApiResponse<RawPost>>(`${API_URL}/posts/${id}`)
+      .pipe(map((response) => this.toPost(response.data)));
+  }
+
   getGlobalFeed(): Observable<Post[]> {
     return this.http
       .get<ApiResponse<RawPost[] | PaginatedData<RawPost>>>(`${API_URL}/feed`)
