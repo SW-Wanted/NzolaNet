@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef} from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -13,6 +14,7 @@ export class RegistoComponent {
   private readonly authService = inject(AuthService);
   private readonly formBuilder = inject(FormBuilder);
   private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   formulario = this.formBuilder.nonNullable.group({
     nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -47,9 +49,13 @@ export class RegistoComponent {
         next: () => {
           void this.router.navigateByUrl('/feed');
         },
-        error: () => {
-          this.erroApi = 'Nao foi possivel criar a conta. Verifique os dados informados.';
+        error: (err: unknown) => {
           this.emSubmissao = false;
+          if (err instanceof HttpErrorResponse && err.status === 422)
+            this.erroApi = 'Email já está em uso. Por favor, escolha outro.';
+          else
+              this.erroApi = 'Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.';
+          this.cdr.markForCheck();
         },
       });
   }
