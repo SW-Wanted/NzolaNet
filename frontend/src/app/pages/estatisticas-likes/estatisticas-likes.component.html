@@ -1,0 +1,67 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <div class="conteudo-limite">
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Estatísticas</span>
+              <h1 class="titulo-pagina">Publicações mais apreciadas</h1>
+            </div>
+            <a class="botao-contornado" routerLink="/feed">Voltar ao feed</a>
+          </header>
+
+          @if (erro()) {
+            <div class="cartao cartao-preenchido" style="margin-bottom: 16px">
+              <p class="mensagem-campo">{{ erro() }}</p>
+            </div>
+          }
+
+          @if (carregando()) {
+            @for (i of [1, 2, 3, 4, 5]; track i) {
+              <div class="cartao cartao-preenchido likes-skeleton">
+                <div class="likes-skeleton__posicao skeleton"></div>
+                <div class="likes-skeleton__info">
+                  <div class="skeleton likes-skeleton__nome"></div>
+                  <div class="skeleton likes-skeleton__texto"></div>
+                  <div class="skeleton likes-skeleton__texto likes-skeleton__texto--curto"></div>
+                </div>
+                <div class="likes-skeleton__contagem skeleton"></div>
+              </div>
+            }
+          } @else if (publicacoes().length === 0) {
+            <div class="cartao cartao-preenchido likes-vazio">
+              <span class="material-symbols-outlined likes-icone-vazio">favorite_border</span>
+              <p class="notificacoes-titulo">Ainda sem publicações</p>
+              <p class="texto-cartao">Não existem publicações para mostrar de momento.</p>
+            </div>
+          } @else {
+            @for (publicacao of publicacoes(); track publicacao.id; let posicao = $index) {
+              <article class="cartao cartao-preenchido likes-linha">
+                <span class="likes-posicao" [class.likes-posicao--top]="posicao < 3">
+                  {{ posicao + 1 }}
+                </span>
+                <div class="likes-conteudo">
+                  <p class="likes-autor">{{ publicacao.author.name }}</p>
+                  <p class="likes-texto">{{ publicacao.content }}</p>
+                </div>
+                <div class="likes-metricas">
+                  <span class="likes-baze">
+                    <span class="material-symbols-outlined">favorite</span>
+                    {{ publicacao.likes_count ?? 0 }}
+                  </span>
+                  <span class="likes-comentario">
+                    <span class="material-symbols-outlined">chat_bubble</span>
+                    {{ publicacao.comments_count }}
+                  </span>
+                </div>
+              </article>
+            }
+          }
+        </div>
+      </div>
+    </main>
+  </div>
+</section>

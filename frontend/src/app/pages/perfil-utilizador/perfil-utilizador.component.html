@@ -29,9 +29,16 @@
               </p>
               <div class="estatisticas-perfil">
                 <strong>{{ utilizador()?.followers_count ?? 0 }}<span>Seguidores</span></strong>
-                <strong>{{ publicacoes().length }}<span>Publicações</span></strong>
+                @if (carregandoPosts()) {
+                  <strong>…<span>Publicações</span></strong>
+                } @else {
+                  <strong>{{ publicacoes().length }}<span>Publicações</span></strong>
+                }
                 <strong>{{ eventos().length }}<span>Eventos</span></strong>
               </div>
+              @if (erroPosts()) {
+                <p class="mensagem-campo" style="margin-top: 8px">{{ erroPosts() }}</p>
+              }
             </section>
             <section class="cartao cartao-preenchido">
               <h2 class="titulo-cartao">Interesses</h2>

@@ -1,0 +1,135 @@
+@import '../telas.css';
+
+.cabecalho-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.notificacoes-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.notificacoes-icone {
+  font-size: 56px;
+  color: var(--cor-no-superficie-variante);
+}
+
+.notificacoes-titulo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cor-no-superficie);
+}
+
+.notificacoes-erro {
+  margin-bottom: 16px;
+}
+
+.notificacao-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--cor-contorno);
+  position: relative;
+}
+
+.notificacao-item:last-child {
+  border-bottom: none;
+}
+
+.notificacao-item--nao-lida {
+  background-color: color-mix(in srgb, var(--cor-primaria) 6%, transparent);
+  margin: 0 -16px;
+  padding: 14px 16px;
+  border-radius: 8px;
+}
+
+.notificacao-icone-tipo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--cor-superficie-variante);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.notificacao-icone-tipo .material-symbols-outlined {
+  font-size: 18px;
+  color: var(--cor-primaria);
+}
+
+.notificacao-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.notificacao-corpo {
+  flex: 1;
+  min-width: 0;
+}
+
+.notificacao-texto {
+  font-size: 14px;
+  color: var(--cor-no-superficie);
+  margin: 0 0 2px;
+}
+
+.notificacao-data {
+  font-size: 12px;
+  color: var(--cor-no-superficie-variante);
+}
+
+.notificacao-botao-lida {
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+/* Skeleton */
+.notificacao-skeleton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--cor-contorno);
+}
+
+.notificacao-skeleton:last-child {
+  border-bottom: none;
+}
+
+.skeleton-avatar-notif {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skeleton-notif-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton-notif-linha {
+  height: 14px;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.skeleton-notif-linha--curta {
+  width: 40%;
+}

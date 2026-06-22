@@ -3,6 +3,7 @@ import { ComentariosComponent } from './pages/comentarios/comentarios.component'
 import { CriarPostComponent } from './pages/criar-post/criar-post.component';
 import { EditarPerfilComponent } from './pages/editar-perfil/editar-perfil.component';
 import { EntrarComponent } from './pages/entrar/entrar.component';
+import { EstatisticasLikesComponent } from './pages/estatisticas-likes/estatisticas-likes.component';
 import { EventosCulturaisComponent } from './pages/eventos-culturais/eventos-culturais.component';
 import { FeedComponent } from './pages/feed/feed.component';
 import { GruposComunidadesComponent } from './pages/grupos-comunidades/grupos-comunidades.component';
@@ -40,6 +41,7 @@ export const routes: Routes = [
     component: ModeracaoComentariosComponent,
     canActivate: [authGuard],
   },
+  { path: 'estatisticas-likes', component: EstatisticasLikesComponent, canActivate: [authGuard] },
   { path: 'feed/estados', redirectTo: 'feed', pathMatch: 'full' },
   { path: 'sucesso', component: ModalSucessoComponent },
   { path: '**', redirectTo: 'feed' },

@@ -19,17 +19,35 @@ export class PerfilUtilizadorComponent implements OnInit {
   readonly utilizador = this.auth.currentUser;
   readonly publicacoes = signal<Post[]>([]);
   readonly eventos = signal<unknown[]>([]);
+  readonly carregandoPosts = signal(false);
+  readonly erroPosts = signal('');
+
   readonly avatar = computed(() => {
     const u = this.utilizador();
-    return u?.profile_photo ?? `https://ui-avatars.com/api/?background=111827&color=ffffff&name=${encodeURIComponent(u?.name ?? 'Utilizador')}`;
+    return (
+      u?.profile_photo ??
+      `https://ui-avatars.com/api/?background=111827&color=ffffff&name=${encodeURIComponent(u?.name ?? 'Utilizador')}`
+    );
   });
 
   ngOnInit(): void {
     this.auth.getCurrentUserFromServer().subscribe();
+    this.carregarPublicacoes();
+  }
+
+  private carregarPublicacoes(): void {
+    this.carregandoPosts.set(true);
+    this.erroPosts.set('');
+
     this.posts.getGlobalFeed().subscribe({
       next: (posts) => {
         const currentUserId = this.auth.currentUser()?.id;
         this.publicacoes.set(posts.filter((post) => post.author.id === currentUserId));
+        this.carregandoPosts.set(false);
+      },
+      error: () => {
+        this.erroPosts.set('Não foi possível carregar as publicações.');
+        this.carregandoPosts.set(false);
       },
     });
   }

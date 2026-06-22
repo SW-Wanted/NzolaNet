@@ -1,0 +1,82 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <div class="conteudo-limite">
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Actividade</span>
+              <h1 class="titulo-pagina">Notificações</h1>
+            </div>
+            <a class="botao-contornado" routerLink="/feed">Voltar ao feed</a>
+          </header>
+
+          @if (erroApi()) {
+            <div class="cartao cartao-preenchido notificacoes-erro">
+              <p class="mensagem-campo">{{ erroApi() }}</p>
+            </div>
+          }
+
+          @if (carregando()) {
+            <div class="cartao cartao-preenchido">
+              @for (i of [1, 2, 3, 4, 5]; track i) {
+                <div class="notificacao-skeleton">
+                  <div class="skeleton skeleton-avatar-notif"></div>
+                  <div class="skeleton-notif-info">
+                    <div class="skeleton skeleton-notif-linha"></div>
+                    <div class="skeleton skeleton-notif-linha skeleton-notif-linha--curta"></div>
+                  </div>
+                </div>
+              }
+            </div>
+          } @else if (notificacoes().length === 0 && !erroApi()) {
+            <div class="cartao cartao-preenchido notificacoes-vazio">
+              <span class="material-symbols-outlined notificacoes-icone">notifications_off</span>
+              <p class="notificacoes-titulo">Sem notificações de momento</p>
+              <p class="texto-cartao">Aqui aparecerão os seus bazes, comentários e novos seguidores.</p>
+            </div>
+          } @else {
+            <div class="cartao cartao-preenchido">
+              @for (notificacao of notificacoes(); track notificacao.id) {
+                <article
+                  class="notificacao-item"
+                  [class.notificacao-item--nao-lida]="!notificacao.is_read"
+                >
+                  <div class="notificacao-icone-tipo">
+                    <span class="material-symbols-outlined">{{ iconeDeTipo(notificacao.type) }}</span>
+                  </div>
+                  <img
+                    class="notificacao-avatar"
+                    [src]="notificacao.sender?.profile_photo || avatarFallback(notificacao.sender?.name || 'N')"
+                    [alt]="notificacao.sender?.name"
+                  />
+                  <div class="notificacao-corpo">
+                    <p class="notificacao-texto">
+                      <strong>{{ notificacao.sender?.name }}</strong>
+                      {{ rotuloDeTipo(notificacao.type) }}
+                    </p>
+                    @if (formatarData(notificacao.created_at)) {
+                      <span class="notificacao-data">{{ formatarData(notificacao.created_at) }}</span>
+                    }
+                  </div>
+                  @if (!notificacao.is_read) {
+                    <button
+                      class="botao-fantasma notificacao-botao-lida"
+                      type="button"
+                      title="Marcar como lida"
+                      (click)="marcarComoLida(notificacao.id)"
+                    >
+                      <span class="material-symbols-outlined">done</span>
+                    </button>
+                  }
+                </article>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </main>
+  </div>
+</section>

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { mensagemErroHttp } from '../../utils/erro.utils';
 
 @Component({
   selector: 'app-registo',
@@ -47,8 +48,8 @@ export class RegistoComponent {
         next: () => {
           void this.router.navigateByUrl('/feed');
         },
-        error: () => {
-          this.erroApi = 'Nao foi possivel criar a conta. Verifique os dados informados.';
+        error: (err) => {
+          this.erroApi = mensagemErroHttp(err);
           this.emSubmissao = false;
         },
       });
