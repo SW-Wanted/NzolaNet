@@ -14,15 +14,18 @@
     <h2 class="titulo-pagina">Criar conta</h2>
     <form class="formulario" [formGroup]="formulario" (ngSubmit)="registar()">
       <input class="campo-formulario" formControlName="nome" placeholder="Nome completo" />
-      @if (submetido && formulario.controls.nome.invalid) {
+      @if (formulario.controls.nome.value.length == 0 && formulario.controls.nome.invalid) {
         <span class="mensagem-campo">Informe o nome completo.</span>
       }
+      @else if (formulario.controls.nome.dirty && formulario.controls.nome.invalid) {
+        <span class="mensagem-campo">O nome deve ter pelo menos 3 caracteres.</span>
+      }
       <input class="campo-formulario" formControlName="email" placeholder="Email" type="email" />
-      @if (submetido && formulario.controls.email.invalid) {
+      @if (formulario.controls.email.dirty && formulario.controls.email.invalid) {
         <span class="mensagem-campo">Informe um email válido.</span>
       }
       <input class="campo-formulario" formControlName="senha" placeholder="Senha" type="password" />
-      @if (submetido && formulario.controls.senha.invalid) {
+      @if (formulario.controls.senha.dirty && formulario.controls.senha.invalid) {
         <span class="mensagem-campo">A senha deve ter pelo menos 8 caracteres.</span>
       }
       @if (erroApi) {
