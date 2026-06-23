@@ -1,0 +1,83 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <div class="conteudo-limite">
+
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Conexões</span>
+              <h1 class="titulo-pagina">Seguidores</h1>
+              <p class="descricao-pagina">Pessoas que seguem o seu perfil na comunidade.</p>
+            </div>
+            <a class="botao-contornado" routerLink="/perfil">
+              <span class="material-symbols-outlined">arrow_back</span>Voltar ao perfil
+            </a>
+          </header>
+
+          @if (erro()) {
+            <div class="cartao cartao-preenchido seguidores-erro">
+              <span class="material-symbols-outlined seguidores-erro-icone">wifi_off</span>
+              <p class="seguidores-titulo">Algo correu mal</p>
+              <p class="texto-cartao">{{ erro() }}</p>
+              <a class="botao-contornado" routerLink="/perfil" style="margin-top: 16px">
+                <span class="material-symbols-outlined">arrow_back</span>Voltar ao perfil
+              </a>
+            </div>
+          } @else if (carregando()) {
+            <div class="cartao cartao-preenchido">
+              @for (i of [1, 2, 3, 4, 5]; track i) {
+                <div class="seguidor-skeleton">
+                  <div class="skeleton skeleton-avatar-seg"></div>
+                  <div class="skeleton-seg-info">
+                    <div class="skeleton skeleton-seg-nome"></div>
+                    <div class="skeleton skeleton-seg-sub"></div>
+                  </div>
+                  <div class="skeleton skeleton-seg-botao"></div>
+                </div>
+              }
+            </div>
+          } @else if (seguidores().length === 0) {
+            <div class="cartao cartao-preenchido seguidores-vazio">
+              <span class="material-symbols-outlined seguidores-icone">group_off</span>
+              <p class="seguidores-titulo">Ainda sem seguidores</p>
+              <p class="texto-cartao">
+                Partilhe conteúdo cultural e interaja com a comunidade para atrair seguidores.
+              </p>
+              <a class="botao-destaque" routerLink="/feed" style="margin-top: 16px">Ir para o feed</a>
+            </div>
+          } @else {
+            <div class="grelha-cartoes">
+              @for (seguidor of seguidores(); track seguidor.id) {
+                <article class="cartao cartao-preenchido seguidor-cartao">
+                  <a [routerLink]="['/utilizador', seguidor.id]">
+                    <img [src]="avatar(seguidor)" [alt]="seguidor.name" class="avatar-redondo" />
+                  </a>
+                  <div class="seguidor-info">
+                    <a [routerLink]="['/utilizador', seguidor.id]" class="seguidor-nome">
+                      {{ seguidor.name }}
+                    </a>
+                    <p class="texto-cartao">{{ seguidor.followers_count }} seguidores</p>
+                  </div>
+                  <a class="botao-fantasma seguidor-link" [routerLink]="['/utilizador', seguidor.id]">
+                    Ver perfil
+                  </a>
+                </article>
+              }
+            </div>
+          }
+
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<nav class="navegacao-inferior">
+  <a routerLink="/feed"><span class="material-symbols-outlined">home</span>Início</a>
+  <a routerLink="/eventos"><span class="material-symbols-outlined">event</span>Eventos</a>
+  <a routerLink="/mercado"><span class="material-symbols-outlined">storefront</span>Loja</a>
+  <a class="ativo" routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
+</nav>

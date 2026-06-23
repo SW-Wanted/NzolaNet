@@ -5,57 +5,130 @@
       <app-cabecalho />
       <div class="conteudo-principal">
         <div class="conteudo-limite">
+
           <header class="cabecalho-pagina">
             <div>
               <span class="rotulo-seccao">Conexões</span>
-              <h1 class="titulo-pagina">Sugestões para seguir</h1>
-              <p class="descricao-pagina">Pessoas e criadores ligados aos seus interesses culturais.</p>
+              <h1 class="titulo-pagina">
+                @if (termoPesquisa()) {
+                  Resultados para "{{ termoPesquisa() }}"
+                } @else {
+                  Sugestões para seguir
+                }
+              </h1>
+              <p class="descricao-pagina">
+                @if (termoPesquisa()) {
+                  Utilizadores encontrados na comunidade NzolaNet.
+                } @else {
+                  Pessoas e criadores ligados aos seus interesses culturais.
+                }
+              </p>
             </div>
           </header>
+
           @if (feedback()) {
             <p class="aviso-sucesso">{{ feedback() }}</p>
           }
-          @if (carregando()) {
-            <p class="texto-cartao">A carregar sugestÃµes...</p>
-          }
-          <div class="grelha-cartoes">
-            @for (pessoa of pessoasFiltradas(); track pessoa.id) {
-              <article class="cartao cartao-preenchido sugestao-cartao">
-                <a [routerLink]="['/utilizador', pessoa.id]">
-                  <img
-                    [alt]="pessoa.name"
-                    class="avatar-redondo"
-                    [src]="avatar(pessoa)"
-                  />
+
+          @if (erro()) {
+            <div class="cartao cartao-preenchido sugestoes-estado sugestoes-erro">
+              <span class="material-symbols-outlined sugestoes-estado-icone">wifi_off</span>
+              <p class="sugestoes-estado-titulo">Não foi possível carregar</p>
+              <p class="texto-cartao">{{ erro() }}</p>
+              <button
+                class="botao-contornado"
+                type="button"
+                style="margin-top: 16px"
+                (click)="carregarPessoas()"
+              >
+                <span class="material-symbols-outlined">refresh</span>Tentar novamente
+              </button>
+            </div>
+          } @else if (carregando()) {
+            <div class="grelha-cartoes">
+              @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+                <div class="cartao cartao-preenchido sugestao-cartao">
+                  <div class="skeleton skeleton-avatar-sug"></div>
+                  <div class="skeleton-sug-info">
+                    <div class="skeleton skeleton-sug-nome"></div>
+                    <div class="skeleton skeleton-sug-sub"></div>
+                  </div>
+                  <div class="skeleton skeleton-sug-botao"></div>
+                  <div class="skeleton skeleton-sug-botao"></div>
+                </div>
+              }
+            </div>
+          } @else if (pessoasFiltradas().length === 0) {
+            <div class="cartao cartao-preenchido sugestoes-estado sugestoes-vazio">
+              <span class="material-symbols-outlined sugestoes-estado-icone">
+                @if (termoPesquisa()) { search_off } @else { group_off }
+              </span>
+              <p class="sugestoes-estado-titulo">
+                @if (termoPesquisa()) {
+                  Nenhum utilizador encontrado para "{{ termoPesquisa() }}"
+                } @else {
+                  Ainda não existem outros utilizadores
+                }
+              </p>
+              <p class="texto-cartao">
+                @if (termoPesquisa()) {
+                  Tente pesquisar com um nome diferente ou explore a comunidade.
+                } @else {
+                  Volte mais tarde para descobrir criadores e membros da comunidade.
+                }
+              </p>
+              @if (termoPesquisa()) {
+                <a class="botao-contornado" routerLink="/sugestoes" style="margin-top: 16px">
+                  <span class="material-symbols-outlined">group_add</span>Ver todas as sugestões
                 </a>
-                <a [routerLink]="['/utilizador', pessoa.id]" style="text-decoration:none;color:inherit">
-                  <h2 class="titulo-cartao">{{ pessoa.name }}</h2>
-                  <p class="texto-cartao">{{ pessoa.followers_count }} seguidores</p>
-                </a>
-                <a class="botao-fantasma" [routerLink]="['/utilizador', pessoa.id]">Ver perfil</a>
-                <button
-                  class="botao-seguir-card"
-                  [class.botao-seguir-card--activo]="pessoa.is_following"
-                  type="button"
-                  (click)="alternarSeguir(pessoa)"
-                >
-                  @if (pessoa.is_following) {
-                    <span class="material-symbols-outlined" style="font-size:16px">person_check</span>A seguir
-                  } @else {
-                    <span class="material-symbols-outlined" style="font-size:16px">person_add</span>Seguir
-                  }
-                </button>
-              </article>
-            } @empty {
-              @if (!carregando()) {
+              }
+            </div>
+          } @else {
+            <div class="grelha-cartoes">
+              @for (pessoa of pessoasFiltradas(); track pessoa.id) {
                 <article class="cartao cartao-preenchido sugestao-cartao">
-                  <p class="texto-cartao">Ainda nÃ£o existem outros utilizadores para seguir.</p>
+                  <a [routerLink]="['/utilizador', pessoa.id]">
+                    <img
+                      [alt]="pessoa.name"
+                      class="avatar-redondo"
+                      [src]="avatar(pessoa)"
+                    />
+                  </a>
+                  <a
+                    [routerLink]="['/utilizador', pessoa.id]"
+                    class="sugestao-info"
+                    style="text-decoration: none; color: inherit"
+                  >
+                    <h2 class="titulo-cartao">{{ pessoa.name }}</h2>
+                    <p class="texto-cartao">{{ pessoa.followers_count }} seguidores</p>
+                  </a>
+                  <a class="botao-fantasma" [routerLink]="['/utilizador', pessoa.id]">Ver perfil</a>
+                  <button
+                    class="botao-seguir-card"
+                    [class.botao-seguir-card--activo]="pessoa.is_following"
+                    type="button"
+                    (click)="alternarSeguir(pessoa)"
+                  >
+                    @if (pessoa.is_following) {
+                      <span class="material-symbols-outlined" style="font-size: 16px">person_check</span>A seguir
+                    } @else {
+                      <span class="material-symbols-outlined" style="font-size: 16px">person_add</span>Seguir
+                    }
+                  </button>
                 </article>
               }
-            }
-          </div>
+            </div>
+          }
+
         </div>
       </div>
     </main>
   </div>
 </section>
+
+<nav class="navegacao-inferior">
+  <a routerLink="/feed"><span class="material-symbols-outlined">home</span>Início</a>
+  <a routerLink="/eventos"><span class="material-symbols-outlined">event</span>Eventos</a>
+  <a routerLink="/mercado"><span class="material-symbols-outlined">storefront</span>Loja</a>
+  <a routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
+</nav>

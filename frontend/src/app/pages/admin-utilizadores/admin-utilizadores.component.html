@@ -1,0 +1,327 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <div class="conteudo-limite">
+
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Administração</span>
+              <h1 class="titulo-pagina">Gestão de Utilizadores</h1>
+              <p class="descricao-pagina">Consulte e gira os membros da comunidade NzolaNet.</p>
+            </div>
+            @if (total() > 0) {
+              <div class="acoes-cabecalho">
+                <span class="pilula">{{ total() }} utilizadores</span>
+              </div>
+            }
+          </header>
+
+          <!-- Filters bar -->
+          <div class="admin-filtros">
+            <div class="admin-pesquisa-wrapper">
+              <span class="material-symbols-outlined admin-pesquisa-icone">search</span>
+              <input
+                class="admin-pesquisa"
+                type="search"
+                placeholder="Pesquisar por nome ou e-mail..."
+                [value]="termoBusca()"
+                (input)="termoBusca.set($any($event.target).value)"
+              />
+            </div>
+            <div class="admin-filtro-role">
+              <button
+                class="admin-filtro-botao"
+                [class.admin-filtro-botao--activo]="filtroRole() === 'todos'"
+                type="button"
+                (click)="filtroRole.set('todos')"
+              >Todos</button>
+              <button
+                class="admin-filtro-botao"
+                [class.admin-filtro-botao--activo]="filtroRole() === 'user'"
+                type="button"
+                (click)="filtroRole.set('user')"
+              >Utilizadores</button>
+              <button
+                class="admin-filtro-botao"
+                [class.admin-filtro-botao--activo]="filtroRole() === 'admin'"
+                type="button"
+                (click)="filtroRole.set('admin')"
+              >Administradores</button>
+            </div>
+          </div>
+
+          <!-- Error state -->
+          @if (erro()) {
+            <div class="cartao cartao-preenchido admin-estado">
+              <span class="material-symbols-outlined admin-estado-icone">error_outline</span>
+              <p class="admin-estado-titulo">Erro ao carregar</p>
+              <p class="texto-cartao">{{ erro() }}</p>
+              <button class="botao-contornado" type="button" style="margin-top:16px" (click)="carregarPagina(1)">
+                <span class="material-symbols-outlined">refresh</span>Tentar novamente
+              </button>
+            </div>
+
+          <!-- Loading skeleton -->
+          } @else if (carregando()) {
+            <div class="admin-tabela-wrapper">
+              <table class="admin-tabela">
+                <thead>
+                  <tr>
+                    <th>Utilizador</th>
+                    <th>Função</th>
+                    <th>Seguidores</th>
+                    <th>Publicações</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (i of [1,2,3,4,5,6,7,8]; track i) {
+                    <tr>
+                      <td>
+                        <div class="admin-utilizador-cell">
+                          <div class="skeleton" style="width:40px;height:40px;border-radius:50%"></div>
+                          <div>
+                            <div class="skeleton" style="width:120px;height:14px;margin-bottom:4px"></div>
+                            <div class="skeleton" style="width:160px;height:12px"></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td><div class="skeleton" style="width:90px;height:24px;border-radius:999px"></div></td>
+                      <td><div class="skeleton" style="width:40px;height:14px"></div></td>
+                      <td><div class="skeleton" style="width:40px;height:14px"></div></td>
+                      <td><div class="skeleton" style="width:120px;height:32px;border-radius:8px"></div></td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+
+          <!-- Empty state -->
+          } @else if (utilizadoresFiltrados().length === 0) {
+            <div class="cartao cartao-preenchido admin-estado">
+              <span class="material-symbols-outlined admin-estado-icone">
+                @if (termoBusca() || filtroRole() !== 'todos') { search_off } @else { group_off }
+              </span>
+              <p class="admin-estado-titulo">
+                @if (termoBusca() || filtroRole() !== 'todos') {
+                  Nenhum utilizador encontrado
+                } @else {
+                  Sem utilizadores registados
+                }
+              </p>
+              <p class="texto-cartao">
+                @if (termoBusca() || filtroRole() !== 'todos') {
+                  Tente ajustar os filtros de pesquisa.
+                } @else {
+                  Ainda nenhum membro se registou na plataforma.
+                }
+              </p>
+              @if (termoBusca() || filtroRole() !== 'todos') {
+                <button class="botao-contornado" type="button" style="margin-top:16px"
+                  (click)="termoBusca.set(''); filtroRole.set('todos')">
+                  <span class="material-symbols-outlined">clear_all</span>Limpar filtros
+                </button>
+              }
+            </div>
+
+          <!-- Users table -->
+          } @else {
+            <div class="admin-tabela-wrapper">
+              <table class="admin-tabela">
+                <thead>
+                  <tr>
+                    <th>Utilizador</th>
+                    <th>Função</th>
+                    <th>Seguidores</th>
+                    <th>Publicações</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (u of utilizadoresFiltrados(); track u.id) {
+                    <tr>
+                      <td>
+                        <div class="admin-utilizador-cell">
+                          <img [src]="avatar(u)" [alt]="u.name" class="admin-utilizador-avatar" />
+                          <div>
+                            <strong class="admin-utilizador-nome">{{ u.name }}</strong>
+                            @if (u.email) {
+                              <p class="admin-utilizador-email">{{ u.email }}</p>
+                            }
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="pilula" [class.pilula-primaria]="u.role === 'admin'">
+                          <span class="material-symbols-outlined" style="font-size:14px">
+                            {{ u.role === 'admin' ? 'admin_panel_settings' : 'person' }}
+                          </span>
+                          {{ rolePilula(u.role) }}
+                        </span>
+                      </td>
+                      <td class="admin-num">{{ u.followers_count }}</td>
+                      <td class="admin-num">{{ u.posts_count }}</td>
+                      <td>
+                        <div class="admin-accoes">
+                          <a class="botao-fantasma admin-btn" [routerLink]="['/utilizador', u.id]">
+                            <span class="material-symbols-outlined">open_in_new</span>Perfil
+                          </a>
+                          <button class="botao-fantasma admin-btn" type="button" (click)="verDetalhe(u)">
+                            <span class="material-symbols-outlined">info</span>Detalhes
+                          </button>
+                          <button
+                            class="botao-fantasma admin-btn admin-btn--aviso"
+                            type="button"
+                            title="Funcionalidade requer endpoint de backend"
+                            (click)="mostrarAviso('Bloquear/desbloquear utilizadores requer um endpoint de backend dedicado que não está disponível nesta versão da API.')"
+                          >
+                            <span class="material-symbols-outlined">block</span>Bloquear
+                          </button>
+                          <button
+                            class="botao-fantasma admin-btn admin-btn--perigo"
+                            type="button"
+                            title="Funcionalidade requer endpoint de backend"
+                            (click)="mostrarAviso('Eliminar utilizadores requer um endpoint de backend dedicado (DELETE /api/admin/users/:id) que não está disponível nesta versão da API.')"
+                          >
+                            <span class="material-symbols-outlined">delete</span>Eliminar
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Mobile cards -->
+            <div class="admin-cards-mobile">
+              @for (u of utilizadoresFiltrados(); track u.id) {
+                <div class="cartao cartao-preenchido admin-card-mobile">
+                  <div class="admin-card-mobile__cabecalho">
+                    <img [src]="avatar(u)" [alt]="u.name" class="admin-utilizador-avatar" />
+                    <div style="flex:1;min-width:0">
+                      <strong class="admin-utilizador-nome">{{ u.name }}</strong>
+                      @if (u.email) {
+                        <p class="admin-utilizador-email">{{ u.email }}</p>
+                      }
+                    </div>
+                    <span class="pilula" [class.pilula-primaria]="u.role === 'admin'">
+                      {{ rolePilula(u.role) }}
+                    </span>
+                  </div>
+                  <div class="admin-card-mobile__stats">
+                    <span><strong>{{ u.followers_count }}</strong> seguidores</span>
+                    <span><strong>{{ u.posts_count }}</strong> publicações</span>
+                  </div>
+                  <div class="admin-accoes">
+                    <a class="botao-contornado admin-btn" [routerLink]="['/utilizador', u.id]">
+                      <span class="material-symbols-outlined">person</span>Perfil
+                    </a>
+                    <button class="botao-contornado admin-btn" type="button" (click)="verDetalhe(u)">
+                      <span class="material-symbols-outlined">info</span>Detalhes
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+
+            <!-- Pagination -->
+            @if (ultimaPagina() > 1) {
+              <div class="admin-paginacao">
+                <button
+                  class="botao-contornado"
+                  type="button"
+                  [disabled]="paginaActual() <= 1"
+                  (click)="paginaAnterior()"
+                >
+                  <span class="material-symbols-outlined">chevron_left</span>Anterior
+                </button>
+                <span class="admin-paginacao-info">Página {{ paginaActual() }} de {{ ultimaPagina() }}</span>
+                <button
+                  class="botao-contornado"
+                  type="button"
+                  [disabled]="paginaActual() >= ultimaPagina()"
+                  (click)="proximaPagina()"
+                >
+                  Seguinte<span class="material-symbols-outlined">chevron_right</span>
+                </button>
+              </div>
+            }
+          }
+
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<nav class="navegacao-inferior">
+  <a routerLink="/feed"><span class="material-symbols-outlined">home</span>Início</a>
+  <a routerLink="/sugestoes"><span class="material-symbols-outlined">group_add</span>Sugestões</a>
+  <a routerLink="/chat"><span class="material-symbols-outlined">chat</span>Chat</a>
+  <a routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
+</nav>
+
+<!-- Modal: User Detail -->
+<app-modal
+  [aberto]="modalDetalheAberto()"
+  titulo="Detalhes do utilizador"
+  (fechar)="modalDetalheAberto.set(false)"
+>
+  @if (utilizadorDetalhe(); as u) {
+    <div class="admin-detalhe">
+      <div class="admin-detalhe__cabecalho">
+        <img [src]="avatar(u)" [alt]="u.name" class="admin-detalhe__avatar" />
+        <div>
+          <h3 class="admin-detalhe__nome">{{ u.name }}</h3>
+          @if (u.email) {
+            <p class="texto-cartao">{{ u.email }}</p>
+          }
+          <span class="pilula" [class.pilula-primaria]="u.role === 'admin'" style="margin-top:8px">
+            {{ rolePilula(u.role) }}
+          </span>
+        </div>
+      </div>
+      @if (u.bio) {
+        <p class="admin-detalhe__bio">{{ u.bio }}</p>
+      }
+      <div class="admin-detalhe__stats">
+        <div class="admin-detalhe__stat">
+          <strong>{{ u.followers_count }}</strong>
+          <span>Seguidores</span>
+        </div>
+        <div class="admin-detalhe__stat">
+          <strong>{{ u.following_count }}</strong>
+          <span>A seguir</span>
+        </div>
+        <div class="admin-detalhe__stat">
+          <strong>{{ u.posts_count }}</strong>
+          <span>Publicações</span>
+        </div>
+      </div>
+      <div class="linha-distribuida" style="margin-top:24px">
+        <a class="botao-contornado" [routerLink]="['/utilizador', u.id]" (click)="modalDetalheAberto.set(false)">
+          <span class="material-symbols-outlined">open_in_new</span>Ver perfil público
+        </a>
+        <button class="botao-destaque" type="button" (click)="modalDetalheAberto.set(false)">Fechar</button>
+      </div>
+    </div>
+  }
+</app-modal>
+
+<!-- Modal: Feature not available -->
+<app-modal
+  [aberto]="modalAvisoAberto()"
+  titulo="Funcionalidade não disponível"
+  (fechar)="modalAvisoAberto.set(false)"
+>
+  <div style="display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center;padding:8px 0">
+    <span class="material-symbols-outlined" style="font-size:56px;color:var(--cor-primaria)">api</span>
+    <p class="texto-cartao">{{ mensagemAviso() }}</p>
+    <p class="texto-cartao">Para implementar esta funcionalidade é necessário adicionar o endpoint correspondente ao backend Laravel.</p>
+    <button class="botao-destaque" type="button" (click)="modalAvisoAberto.set(false)">Entendido</button>
+  </div>
+</app-modal>

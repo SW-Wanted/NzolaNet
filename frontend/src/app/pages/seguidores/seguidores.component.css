@@ -1,0 +1,130 @@
+@import '../telas.css';
+
+.seguidor-cartao {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.seguidor-info {
+  min-width: 0;
+}
+
+.seguidor-nome {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cor-no-superficie);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+  transition: color var(--transicao-rapida);
+}
+
+.seguidor-nome:hover {
+  color: var(--cor-primaria);
+}
+
+.seguidor-link {
+  white-space: nowrap;
+}
+
+/* Skeleton */
+.seguidor-skeleton {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--cor-contorno-variante);
+}
+
+.seguidor-skeleton:last-child {
+  border-bottom: none;
+}
+
+.skeleton-avatar-seg {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skeleton-seg-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.skeleton-seg-nome {
+  height: 16px;
+  border-radius: 4px;
+  width: 160px;
+  max-width: 100%;
+}
+
+.skeleton-seg-sub {
+  height: 12px;
+  border-radius: 4px;
+  width: 100px;
+  max-width: 100%;
+}
+
+.skeleton-seg-botao {
+  height: 36px;
+  width: 90px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+/* Empty state */
+.seguidores-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.seguidores-icone {
+  font-size: 56px;
+  color: var(--cor-no-superficie-variante);
+}
+
+.seguidores-titulo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cor-no-superficie);
+}
+
+/* Error state */
+.seguidores-erro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.seguidores-erro-icone {
+  font-size: 48px;
+  color: var(--cor-erro);
+  opacity: 0.7;
+}
+
+@media (max-width: 560px) {
+  .seguidor-cartao {
+    grid-template-columns: auto 1fr;
+  }
+
+  .seguidor-link {
+    display: none;
+  }
+}

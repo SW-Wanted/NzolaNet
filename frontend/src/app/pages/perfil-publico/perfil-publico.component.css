@@ -1,6 +1,6 @@
 @import '../telas.css';
 
-/* ── Perfil Card ─────────────────────────────── */
+/* ── Profile card ─────────────────────────────── */
 .perfil-capa {
   padding: 0;
   overflow: hidden;
@@ -20,6 +20,11 @@
   flex-wrap: wrap;
 }
 
+.perfil-texto {
+  flex: 1;
+  min-width: 0;
+}
+
 .avatar-perfil {
   width: 88px;
   height: 88px;
@@ -30,7 +35,7 @@
   flex-shrink: 0;
 }
 
-/* ── Estatísticas ─────────────────────────────── */
+/* ── Stats bar ─────────────────────────────────── */
 .estatisticas-barra {
   display: flex;
   align-items: center;
@@ -63,7 +68,7 @@
   background: var(--cor-contorno-variante);
 }
 
-/* ── Follow Button ────────────────────────────── */
+/* ── Follow button ────────────────────────────── */
 .botao-seguir {
   display: inline-flex;
   align-items: center;
@@ -78,9 +83,10 @@
   color: var(--cor-primaria);
   background: transparent;
   margin-left: auto;
+  flex-shrink: 0;
 }
 
-.botao-seguir:hover {
+.botao-seguir:hover:not(:disabled) {
   background: var(--cor-primaria);
   color: #fff;
 }
@@ -90,7 +96,7 @@
   color: #fff;
 }
 
-.botao-seguir--activo:hover {
+.botao-seguir--activo:hover:not(:disabled) {
   background: transparent;
   color: var(--cor-primaria);
 }
@@ -100,7 +106,20 @@
   cursor: not-allowed;
 }
 
-/* ── Skeleton ─────────────────────────────────── */
+/* ── Publications section ─────────────────────── */
+.pub-secao {
+  margin-top: 8px;
+}
+
+.pub-secao-cabecalho {
+  margin-bottom: 20px;
+}
+
+.pub-secao-cabecalho .titulo-cartao {
+  margin-top: 6px;
+}
+
+/* ── Posts skeleton ───────────────────────────── */
 @keyframes skeleton-shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
@@ -118,9 +137,11 @@
   border-radius: 8px;
 }
 
+/* Profile loading skeletons */
 .perfil-skeleton {
   padding: 0;
   overflow: hidden;
+  margin-bottom: 16px;
 }
 
 .skeleton-capa {
@@ -150,4 +171,131 @@
 .skeleton-bio-perfil {
   height: 16px;
   width: 300px;
+  max-width: 100%;
+}
+
+.skeleton-stat {
+  height: 44px;
+  width: 72px;
+  border-radius: 8px;
+}
+
+/* Post card skeletons */
+.skeleton-cartao-pub {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+}
+
+.skeleton-cabecalho-pub {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skeleton-avatar-pub {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skeleton-pub-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.skeleton-pub-nome {
+  height: 14px;
+  width: 40%;
+}
+
+.skeleton-pub-tempo {
+  height: 12px;
+  width: 25%;
+}
+
+.skeleton-pub-linha {
+  height: 14px;
+  width: 100%;
+}
+
+.skeleton-pub-linha--curta {
+  width: 65%;
+}
+
+/* ── Empty & error states ─────────────────────── */
+.perfil-pub-estado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 64px 24px;
+  text-align: center;
+}
+
+.perfil-pub-estado-icone {
+  font-size: 56px;
+  color: var(--cor-no-superficie-variante);
+  opacity: 0.6;
+}
+
+.perfil-pub-erro .perfil-pub-estado-icone {
+  color: var(--cor-erro);
+  opacity: 0.7;
+}
+
+.perfil-pub-estado-titulo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cor-no-superficie);
+}
+
+.pub-estado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.pub-estado-icone {
+  font-size: 48px;
+  color: var(--cor-no-superficie-variante);
+  opacity: 0.6;
+}
+
+.pub-estado-erro .pub-estado-icone {
+  color: var(--cor-erro);
+  opacity: 0.7;
+}
+
+.pub-estado-titulo {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--cor-no-superficie);
+}
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 600px) {
+  .perfil-conteudo {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .botao-seguir {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .skeleton-bio-perfil {
+    width: 100%;
+  }
 }

@@ -1,10 +1,11 @@
-import { Component, OnInit, computed, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
 import { User } from '../../models/fase1.model';
+import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
-
 
 @Component({
   selector: 'app-sugestoes-conexao',
@@ -12,17 +13,26 @@ import { UserService } from '../../services/user.service';
   templateUrl: './sugestoes-conexao.component.html',
   styleUrl: './sugestoes-conexao.component.css',
 })
-export class SugestoesConexaoComponent implements OnInit {
+export class SugestoesConexaoComponent implements OnInit, OnDestroy {
+  private readonly auth = inject(AuthService);
   private termoBusca = signal('');
+  private sub?: Subscription;
 
   pessoas = signal<User[]>([]);
   feedback = signal('');
-  carregando = signal(false);
+  erro = signal('');
+  carregando = signal(true);
+  termoPesquisa = signal('');
 
   readonly pessoasFiltradas = computed(() => {
     const termo = this.termoBusca().toLowerCase().trim();
-    if (!termo) return this.pessoas();
-    return this.pessoas().filter((p) => p.name.toLowerCase().includes(termo));
+    const currentId = this.auth.currentUser()?.id;
+    const lista = this.pessoas().filter((p) => p.id !== currentId);
+    if (!termo) return lista;
+    return lista.filter((p) =>
+      p.name.toLowerCase().includes(termo) ||
+      (p.email ?? '').toLowerCase().includes(termo)
+    );
   });
 
   constructor(
@@ -31,15 +41,39 @@ export class SugestoesConexaoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe((params) => {
-      this.termoBusca.set(params.get('q') ?? '');
+    this.sub = this.route.queryParamMap.subscribe((params) => {
+      const q = params.get('q') ?? '';
+      this.termoBusca.set(q);
+      this.termoPesquisa.set(q);
     });
     this.carregarPessoas();
   }
 
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
+
+  carregarPessoas(): void {
+    this.carregando.set(true);
+    this.erro.set('');
+    this.feedback.set('');
+    this.users.getUsers().subscribe({
+      next: (users) => {
+        this.pessoas.set(users);
+        this.carregando.set(false);
+      },
+      error: () => {
+        this.erro.set('Não foi possível carregar as sugestões. Verifique a sua ligação e tente novamente.');
+        this.carregando.set(false);
+      },
+    });
+  }
+
   alternarSeguir(pessoa: User): void {
     this.feedback.set('');
-    const request = pessoa.is_following ? this.users.unfollow(pessoa.id) : this.users.toggleFollow(pessoa.id);
+    const request = pessoa.is_following
+      ? this.users.unfollow(pessoa.id)
+      : this.users.toggleFollow(pessoa.id);
 
     request.subscribe({
       next: () => {
@@ -54,27 +88,18 @@ export class SugestoesConexaoComponent implements OnInit {
               : item,
           ),
         );
-        this.feedback.set(pessoa.is_following ? 'Utilizador removido dos seguidos.' : 'Utilizador seguido com sucesso.');
+        this.feedback.set(
+          pessoa.is_following ? 'Deixou de seguir este utilizador.' : 'Utilizador seguido com sucesso.',
+        );
       },
-      error: () => this.feedback.set('Nao foi possivel atualizar esta conexao.'),
+      error: () => this.feedback.set('Não foi possível atualizar esta ligação. Tente novamente.'),
     });
   }
 
   avatar(user: User): string {
-    return user.profile_photo ?? `https://ui-avatars.com/api/?background=111827&color=ffffff&name=${encodeURIComponent(user.name)}`;
-  }
-
-  private carregarPessoas(): void {
-    this.carregando.set(true);
-    this.users.getUsers().subscribe({
-      next: (users) => {
-        this.pessoas.set(users);
-        this.carregando.set(false);
-      },
-      error: () => {
-        this.feedback.set('Nao foi possivel carregar sugestoes reais.');
-        this.carregando.set(false);
-      },
-    });
+    return (
+      user.profile_photo ??
+      `https://ui-avatars.com/api/?background=111827&color=ffffff&name=${encodeURIComponent(user.name)}`
+    );
   }
 }

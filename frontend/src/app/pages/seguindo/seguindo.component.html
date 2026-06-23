@@ -1,0 +1,101 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <div class="conteudo-limite">
+
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Conexões</span>
+              <h1 class="titulo-pagina">A Seguir</h1>
+              <p class="descricao-pagina">Criadores e membros que está a acompanhar.</p>
+            </div>
+            <a class="botao-contornado" routerLink="/perfil">
+              <span class="material-symbols-outlined">arrow_back</span>Voltar ao perfil
+            </a>
+          </header>
+
+          @if (feedback()) {
+            <div class="aviso-feedback">{{ feedback() }}</div>
+          }
+
+          @if (erro()) {
+            <div class="cartao cartao-preenchido seguindo-erro">
+              <span class="material-symbols-outlined seguindo-erro-icone">wifi_off</span>
+              <p class="seguindo-titulo">Algo correu mal</p>
+              <p class="texto-cartao">{{ erro() }}</p>
+              <a class="botao-contornado" routerLink="/perfil" style="margin-top: 16px">
+                <span class="material-symbols-outlined">arrow_back</span>Voltar ao perfil
+              </a>
+            </div>
+          } @else if (carregando()) {
+            <div class="cartao cartao-preenchido">
+              @for (i of [1, 2, 3, 4, 5]; track i) {
+                <div class="seguindo-skeleton">
+                  <div class="skeleton skeleton-avatar-seg"></div>
+                  <div class="skeleton-seg-info">
+                    <div class="skeleton skeleton-seg-nome"></div>
+                    <div class="skeleton skeleton-seg-sub"></div>
+                  </div>
+                  <div class="skeleton skeleton-seg-botao"></div>
+                </div>
+              }
+            </div>
+          } @else if (seguindo().length === 0) {
+            <div class="cartao cartao-preenchido seguindo-vazio">
+              <span class="material-symbols-outlined seguindo-icone">person_search</span>
+              <p class="seguindo-titulo">Ainda não segue ninguém</p>
+              <p class="texto-cartao">
+                Descubra criadores e membros da comunidade para acompanhar o seu trabalho.
+              </p>
+              <a class="botao-destaque" routerLink="/sugestoes" style="margin-top: 16px">
+                <span class="material-symbols-outlined">group_add</span>Ver sugestões
+              </a>
+            </div>
+          } @else {
+            <div class="grelha-cartoes">
+              @for (pessoa of seguindo(); track pessoa.id) {
+                <article class="cartao cartao-preenchido seguindo-cartao">
+                  <a [routerLink]="['/utilizador', pessoa.id]">
+                    <img [src]="avatar(pessoa)" [alt]="pessoa.name" class="avatar-redondo" />
+                  </a>
+                  <div class="seguindo-info">
+                    <a [routerLink]="['/utilizador', pessoa.id]" class="seguindo-nome">
+                      {{ pessoa.name }}
+                    </a>
+                    <p class="texto-cartao">{{ pessoa.followers_count }} seguidores</p>
+                  </div>
+                  <div class="seguindo-acoes">
+                    <a class="botao-fantasma" [routerLink]="['/utilizador', pessoa.id]">Ver perfil</a>
+                    <button
+                      class="botao-seguindo"
+                      type="button"
+                      [disabled]="emAlterar() === pessoa.id"
+                      (click)="deixarDeSeguir(pessoa)"
+                    >
+                      @if (emAlterar() === pessoa.id) {
+                        <span class="spinner-botao spinner-escuro"></span>
+                      } @else {
+                        <span class="material-symbols-outlined">person_check</span>A seguir
+                      }
+                    </button>
+                  </div>
+                </article>
+              }
+            </div>
+          }
+
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<nav class="navegacao-inferior">
+  <a routerLink="/feed"><span class="material-symbols-outlined">home</span>Início</a>
+  <a routerLink="/eventos"><span class="material-symbols-outlined">event</span>Eventos</a>
+  <a routerLink="/mercado"><span class="material-symbols-outlined">storefront</span>Loja</a>
+  <a class="ativo" routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
+</nav>

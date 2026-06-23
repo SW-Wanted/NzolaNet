@@ -28,25 +28,45 @@
                 Partilha histórias, eventos e referências da cultura angolana contemporânea.
               </p>
               <div class="estatisticas-perfil">
-                <strong>{{ utilizador()?.followers_count ?? 0 }}<span>Seguidores</span></strong>
+                <a class="estatistica-link" routerLink="/perfil/seguidores">
+                  <strong>{{ utilizador()?.followers_count ?? 0 }}</strong><span>Seguidores</span>
+                </a>
+                <a class="estatistica-link" routerLink="/perfil/seguindo">
+                  <strong>{{ utilizador()?.following_count ?? 0 }}</strong><span>A seguir</span>
+                </a>
                 @if (carregandoPosts()) {
-                  <strong>…<span>Publicações</span></strong>
+                  <a class="estatistica-link" routerLink="/minhas-publicacoes">
+                    <strong>…</strong><span>Publicações</span>
+                  </a>
                 } @else {
-                  <strong>{{ publicacoes().length }}<span>Publicações</span></strong>
+                  <a class="estatistica-link" routerLink="/minhas-publicacoes">
+                    <strong>{{ publicacoes().length }}</strong><span>Publicações</span>
+                  </a>
                 }
-                <strong>{{ eventos().length }}<span>Eventos</span></strong>
               </div>
               @if (erroPosts()) {
                 <p class="mensagem-campo" style="margin-top: 8px">{{ erroPosts() }}</p>
               }
             </section>
             <section class="cartao cartao-preenchido">
-              <h2 class="titulo-cartao">Interesses</h2>
-              <div class="grupo-botoes">
-                <span class="pilula pilula-primaria">Kizomba</span>
-                <span class="pilula">Semba</span>
-                <span class="pilula">Arte</span>
-                <span class="pilula pilula-secundaria">Eventos</span>
+              <h2 class="titulo-cartao">Acesso rápido</h2>
+              <div class="acoes-perfil-rapido">
+                <a class="acao-rapida" routerLink="/minhas-publicacoes">
+                  <span class="material-symbols-outlined">article</span>
+                  <span>Minhas publicações</span>
+                </a>
+                <a class="acao-rapida" routerLink="/perfil/seguidores">
+                  <span class="material-symbols-outlined">group</span>
+                  <span>Seguidores</span>
+                </a>
+                <a class="acao-rapida" routerLink="/perfil/seguindo">
+                  <span class="material-symbols-outlined">person_check</span>
+                  <span>A seguir</span>
+                </a>
+                <a class="acao-rapida" routerLink="/notificacoes">
+                  <span class="material-symbols-outlined">notifications</span>
+                  <span>Notificações</span>
+                </a>
               </div>
             </section>
           </div>

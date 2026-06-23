@@ -46,7 +46,7 @@ export interface AuthResponse {
 export interface Notification {
   id: number;
   recipient_id: number;
-  sender: User;
+  sender: User | null;
   type: 'like' | 'comment' | 'follow' | string;
   data: Record<string, unknown>;
   is_read: boolean;

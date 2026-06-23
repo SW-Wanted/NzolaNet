@@ -1,3 +1,10 @@
+/* ── Hidden overlay (modal closed but DOM preserved) ── */
+.modal-overlay--oculto {
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
 /* ── Centered modal overlay ── */
 .modal-overlay {
   position: fixed;
