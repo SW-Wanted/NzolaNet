@@ -1,0 +1,130 @@
+@import '../admin-comum.css';
+
+.denuncia-filtro-titulo {
+  align-self: center;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cor-no-superficie-variante);
+  margin-right: 4px;
+}
+
+.denuncia-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.denuncia-cartao {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.denuncia-cartao__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.denuncia-cartao__motivo {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--cor-no-superficie);
+}
+
+.denuncia-cartao__conteudo {
+  display: flex;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--cor-container-baixo);
+  border: 1px solid var(--cor-contorno-variante);
+  color: var(--cor-no-superficie);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.denuncia-cartao__conteudo .material-symbols-outlined {
+  color: var(--cor-primaria);
+  flex-shrink: 0;
+}
+
+.denuncia-cartao__conteudo p {
+  margin: 0;
+}
+
+.denuncia-cartao__pessoas {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+
+.denuncia-pessoa {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.denuncia-pessoa__rotulo {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cor-no-superficie-variante);
+}
+
+.denuncia-cartao__data {
+  margin-left: auto;
+}
+
+.denuncia-cartao__accoes {
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid var(--cor-contorno-variante);
+}
+
+/* ── Detalhe ────────────────────────────────────── */
+.denuncia-detalhe {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.denuncia-detalhe__seccao {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cor-no-superficie-variante);
+}
+
+.denuncia-detalhe__imagem {
+  margin-top: 12px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--cor-contorno-variante);
+}
+
+.denuncia-detalhe__accoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--cor-contorno-variante);
+}
+
+@media (max-width: 600px) {
+  .denuncia-lista {
+    grid-template-columns: 1fr;
+  }
+}

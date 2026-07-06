@@ -1,0 +1,202 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral-admin />
+    <main>
+      <app-cabecalho-admin />
+      <div class="conteudo-principal">
+        <div class="conteudo-limite">
+
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Administração</span>
+              <h1 class="titulo-pagina">Gestão de Denúncias</h1>
+              <p class="descricao-pagina">Analise e resolva as denúncias submetidas pela comunidade.</p>
+            </div>
+            <div class="acoes-cabecalho">
+              <span class="pilula pilula-primaria">{{ contagemPendentes() }} pendentes</span>
+              <span class="pilula">{{ filtradas().length }} listadas</span>
+            </div>
+          </header>
+
+          <!-- Filtros -->
+          <div class="admin-filtros">
+            <div class="admin-filtro-role">
+              <span class="denuncia-filtro-titulo">Estado:</span>
+              <button class="admin-filtro-botao" [class.admin-filtro-botao--activo]="filtroEstado() === 'todas'" type="button" (click)="filtroEstado.set('todas')">Todas</button>
+              <button class="admin-filtro-botao" [class.admin-filtro-botao--activo]="filtroEstado() === 'pendente'" type="button" (click)="filtroEstado.set('pendente')">Pendentes</button>
+              <button class="admin-filtro-botao" [class.admin-filtro-botao--activo]="filtroEstado() === 'aceite'" type="button" (click)="filtroEstado.set('aceite')">Aceites</button>
+              <button class="admin-filtro-botao" [class.admin-filtro-botao--activo]="filtroEstado() === 'rejeitada'" type="button" (click)="filtroEstado.set('rejeitada')">Rejeitadas</button>
+            </div>
+            <div class="admin-filtro-role">
+              <span class="denuncia-filtro-titulo">Tipo:</span>
+              <button class="admin-filtro-botao" [class.admin-filtro-botao--activo]="filtroTipo() === 'todos'" type="button" (click)="filtroTipo.set('todos')">Todos</button>
+              <button class="admin-filtro-botao" [class.admin-filtro-botao--activo]="filtroTipo() === 'publicacao'" type="button" (click)="filtroTipo.set('publicacao')">Publicações</button>
+              <button class="admin-filtro-botao" [class.admin-filtro-botao--activo]="filtroTipo() === 'comentario'" type="button" (click)="filtroTipo.set('comentario')">Comentários</button>
+            </div>
+          </div>
+
+          @if (filtradas().length === 0) {
+            <div class="cartao cartao-preenchido admin-estado">
+              <span class="material-symbols-outlined admin-estado-icone">verified_user</span>
+              <p class="admin-estado-titulo">Sem denúncias para mostrar</p>
+              <p class="texto-cartao">Não há denúncias que correspondam aos filtros selecionados.</p>
+            </div>
+          } @else {
+            <div class="denuncia-lista">
+              @for (d of filtradas(); track d.id) {
+                <article class="cartao cartao-preenchido denuncia-cartao">
+                  <div class="denuncia-cartao__topo">
+                    <span class="pilula" [class.pilula-primaria]="d.tipoAlvo === 'publicacao'" [class.pilula-secundaria]="d.tipoAlvo === 'comentario'">
+                      <span class="material-symbols-outlined" style="font-size:14px">
+                        {{ d.tipoAlvo === 'publicacao' ? 'article' : 'chat_bubble' }}
+                      </span>
+                      {{ d.tipoAlvo === 'publicacao' ? 'Publicação' : 'Comentário' }}
+                    </span>
+                    <span class="admin-estado-pilula" [class]="'admin-estado-pilula--' + d.estado">
+                      {{ rotuloEstado(d.estado) }}
+                    </span>
+                  </div>
+
+                  <h3 class="denuncia-cartao__motivo">{{ d.motivo }}</h3>
+                  @if (d.descricao) {
+                    <p class="texto-cartao">{{ d.descricao }}</p>
+                  }
+
+                  <div class="denuncia-cartao__conteudo">
+                    <span class="material-symbols-outlined">format_quote</span>
+                    <p>{{ d.conteudo }}</p>
+                  </div>
+
+                  <div class="denuncia-cartao__pessoas">
+                    <div class="denuncia-pessoa">
+                      <img class="admin-utilizador-avatar" [src]="d.denuncianteAvatar" [alt]="d.denunciante" />
+                      <div>
+                        <span class="denuncia-pessoa__rotulo">Denunciante</span>
+                        <strong class="admin-utilizador-nome">{{ d.denunciante }}</strong>
+                      </div>
+                    </div>
+                    <div class="denuncia-pessoa">
+                      <img class="admin-utilizador-avatar" [src]="d.autorConteudoAvatar" [alt]="d.autorConteudo" />
+                      <div>
+                        <span class="denuncia-pessoa__rotulo">Autor do conteúdo</span>
+                        <strong class="admin-utilizador-nome">{{ d.autorConteudo }}</strong>
+                      </div>
+                    </div>
+                    <span class="admin-utilizador-email denuncia-cartao__data">{{ formatarData(d.data) }}</span>
+                  </div>
+
+                  <div class="linha-distribuida denuncia-cartao__accoes">
+                    <button class="botao-contornado" type="button" (click)="verDetalhe(d)">
+                      <span class="material-symbols-outlined">visibility</span>Visualizar
+                    </button>
+                    @if (d.estado === 'pendente') {
+                      <div class="grupo-botoes">
+                        <button class="botao-contornado" type="button" (click)="rejeitar(d)">
+                          <span class="material-symbols-outlined">close</span>Rejeitar
+                        </button>
+                        <button class="botao-destaque" type="button" (click)="aceitar(d)">
+                          <span class="material-symbols-outlined">check</span>Aceitar
+                        </button>
+                      </div>
+                    }
+                  </div>
+                </article>
+              }
+            </div>
+          }
+
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<app-menu-inferior-admin />
+
+<!-- Modal: detalhe da denúncia -->
+<app-modal [aberto]="modalDetalheAberto()" titulo="Detalhe da denúncia" largura="grande" (fechar)="modalDetalheAberto.set(false)">
+  @if (detalhe(); as d) {
+    <div class="denuncia-detalhe">
+      <div class="denuncia-cartao__topo">
+        <span class="pilula" [class.pilula-primaria]="d.tipoAlvo === 'publicacao'" [class.pilula-secundaria]="d.tipoAlvo === 'comentario'">
+          {{ d.tipoAlvo === 'publicacao' ? 'Publicação' : 'Comentário' }}
+        </span>
+        <span class="admin-estado-pilula" [class]="'admin-estado-pilula--' + d.estado">{{ rotuloEstado(d.estado) }}</span>
+      </div>
+
+      @if (feedback()) {
+        <div class="alerta" style="background:rgba(200,155,60,0.14);color:var(--cor-primaria);border:1px solid rgba(200,155,60,0.3)">
+          {{ feedback() }}
+        </div>
+      }
+
+      <div class="admin-detalhe__linha">
+        <span class="admin-detalhe__rotulo">Motivo</span>
+        <strong>{{ d.motivo }}</strong>
+      </div>
+      @if (d.descricao) {
+        <div class="admin-detalhe__linha">
+          <span class="admin-detalhe__rotulo">Descrição</span>
+          <span class="texto-cartao" style="margin:0">{{ d.descricao }}</span>
+        </div>
+      }
+      <div class="admin-detalhe__linha">
+        <span class="admin-detalhe__rotulo">Data</span>
+        <span class="texto-cartao" style="margin:0">{{ formatarData(d.data) }}</span>
+      </div>
+
+      <!-- Conteúdo denunciado -->
+      <h4 class="denuncia-detalhe__seccao">Conteúdo denunciado</h4>
+      <div class="denuncia-cartao__conteudo">
+        <span class="material-symbols-outlined">format_quote</span>
+        <p>{{ d.conteudo }}</p>
+      </div>
+      @if (d.imagemConteudo) {
+        <img class="denuncia-detalhe__imagem" [src]="d.imagemConteudo" alt="Conteúdo denunciado" />
+      }
+
+      <!-- Autor do conteúdo -->
+      <h4 class="denuncia-detalhe__seccao">Autor do conteúdo</h4>
+      <a class="item-lista admin-item-link" [routerLink]="['/utilizador', d.autorConteudoId]">
+        <img class="admin-utilizador-avatar" [src]="d.autorConteudoAvatar" [alt]="d.autorConteudo" />
+        <div style="flex:1">
+          <strong class="admin-utilizador-nome">{{ d.autorConteudo }}</strong>
+          <p class="admin-utilizador-email">Ver perfil do utilizador</p>
+        </div>
+        <span class="material-symbols-outlined" style="color:var(--cor-no-superficie-variante)">open_in_new</span>
+      </a>
+
+      <!-- Denunciante -->
+      <h4 class="denuncia-detalhe__seccao">Denunciado por</h4>
+      <div class="item-lista">
+        <img class="admin-utilizador-avatar" [src]="d.denuncianteAvatar" [alt]="d.denunciante" />
+        <strong class="admin-utilizador-nome">{{ d.denunciante }}</strong>
+      </div>
+
+      <!-- Ações -->
+      <div class="denuncia-detalhe__accoes">
+        @if (d.estado === 'pendente') {
+          <button class="botao-contornado" type="button" (click)="rejeitar(d)">
+            <span class="material-symbols-outlined">close</span>Rejeitar denúncia
+          </button>
+          <button class="botao-destaque" type="button" (click)="aceitar(d)">
+            <span class="material-symbols-outlined">check</span>Aceitar denúncia
+          </button>
+        }
+        <button class="botao-perigo" type="button" (click)="pedirEliminarConteudo(d)">
+          <span class="material-symbols-outlined">delete</span>
+          Eliminar {{ d.tipoAlvo === 'publicacao' ? 'publicação' : 'comentário' }}
+        </button>
+      </div>
+    </div>
+  }
+</app-modal>
+
+<app-dialogo-confirmacao
+  [aberto]="alvoEliminarConteudo() !== null"
+  titulo="Eliminar conteúdo denunciado"
+  mensagem="Tem a certeza que deseja eliminar o conteúdo denunciado? A denúncia será marcada como aceite. Esta ação não pode ser desfeita."
+  rotuloConfirmar="Eliminar"
+  (confirmar)="confirmarEliminarConteudo()"
+  (cancelar)="alvoEliminarConteudo.set(null)"
+/>
