@@ -25,7 +25,6 @@ export class MenuLateralComponent {
   itensMenuSuperior: ItemMenu[] = [
     { icone: 'home', etiqueta: 'Início', rota: '/feed' },
     { icone: 'person', etiqueta: 'Perfil', rota: '/perfil' },
-    { icone: 'chat', etiqueta: 'Mensagens', rota: '/chat' },
   ];
 
   itensMenuInferior: ItemMenu[] = [
