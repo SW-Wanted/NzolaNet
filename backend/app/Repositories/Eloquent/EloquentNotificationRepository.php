@@ -22,7 +22,7 @@ class EloquentNotificationRepository implements NotificationRepositoryInterface
     public function forUser(int $userId, int $perPage = 15): LengthAwarePaginator
     {
         return Notification::query()
-            ->with(['sender'])
+            ->with(['sender' => fn ($query) => $query->withCount(['followers', 'following', 'posts'])])
             ->where('recipient_id', $userId)
             ->latest()
             ->paginate($perPage);
@@ -39,6 +39,6 @@ class EloquentNotificationRepository implements NotificationRepositoryInterface
     {
         $notification->forceFill(['is_read' => true])->save();
 
-        return $notification->refresh()->load(['sender']);
+        return $notification->refresh()->load(['sender' => fn ($query) => $query->withCount(['followers', 'following', 'posts'])]);
     }
 }

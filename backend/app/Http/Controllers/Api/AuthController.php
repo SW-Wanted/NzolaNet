@@ -35,7 +35,7 @@ class AuthController extends ApiController
 
     public function me(Request $request): JsonResponse
     {
-        return $this->success(new UserResource($request->user()->loadCount(['followers', 'following'])), 'Utilizador autenticado');
+        return $this->success(new UserResource($request->user()->loadCount(['followers', 'following', 'posts'])), 'Utilizador autenticado');
     }
 
     public function refresh(Request $request): JsonResponse
@@ -88,6 +88,11 @@ class AuthController extends ApiController
                     ? \Illuminate\Support\Facades\Storage::disk('public')->url($user->profile_photo)
                     : null,
                 'bio' => $user->bio,
+                'followers_count' => $user->followers_count ?? 0,
+                'following_count' => $user->following_count ?? 0,
+                'posts_count' => $user->posts_count ?? 0,
+                'created_at' => $user->created_at?->toISOString(),
+                'updated_at' => $user->updated_at?->toISOString(),
             ],
             'access_token' => $payload['token'],
             'token_type' => $payload['token_type'],

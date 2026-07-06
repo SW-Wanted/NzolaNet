@@ -23,7 +23,8 @@ class UsersTest extends TestCase
             'is_private' => true,
         ])->assertOk()
             ->assertJsonPath('data.name', 'Novo Nome')
-            ->assertJsonPath('data.is_private', true);
+            ->assertJsonPath('data.is_private', true)
+            ->assertJsonStructure(['data' => ['followers_count', 'following_count', 'posts_count']]);
 
         $this->postJson("/api/users/{$target->id}/follow")
             ->assertOk()
@@ -42,6 +43,22 @@ class UsersTest extends TestCase
             'follower_id' => $viewer->id,
             'following_id' => $target->id,
         ]);
+    }
+
+    public function test_user_listing_includes_follow_state_and_counts(): void
+    {
+        $viewer = User::factory()->create();
+        $target = User::factory()->hasPosts(2)->create();
+        $viewer->following()->attach($target->id);
+        Sanctum::actingAs($viewer);
+
+        $this->getJson('/api/users?per_page=10')
+            ->assertOk()
+            ->assertJsonFragment([
+                'id' => $target->id,
+                'is_following' => true,
+                'posts_count' => 2,
+            ]);
     }
 
     public function test_private_profile_requires_follow_permission(): void

@@ -12,7 +12,11 @@ class NotificationResource extends JsonResource
         return [
             'id' => $this->id,
             'recipient_id' => $this->recipient_id,
-            'sender' => new UserResource($this->whenLoaded('sender')),
+            'sender' => $this->when(
+                $this->relationLoaded('sender') && $this->sender,
+                fn () => new UserResource($this->sender),
+                null
+            ),
             'type' => $this->type?->value ?? $this->type,
             'data' => $this->data,
             'is_read' => $this->is_read,

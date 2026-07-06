@@ -116,6 +116,14 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Success'
+  /users:
+    get:
+      tags: [Users]
+      parameters:
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserCollectionSuccess'
   /users/{id}:
     get:
       tags: [Users]
@@ -331,6 +339,14 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Success'
+  /admin/comments:
+    get:
+      tags: [Admin]
+      parameters:
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          $ref: '#/components/responses/CommentCollectionSuccess'
 components:
   securitySchemes:
     bearerAuth:
@@ -568,6 +584,10 @@ components:
           type: integer
         following_count:
           type: integer
+        posts_count:
+          type: integer
+        is_following:
+          type: boolean
         created_at:
           type: string
           format: date-time
@@ -588,7 +608,13 @@ components:
           format: date-time
         content:
           type: string
+        image:
+          type: string
+          nullable: true
         image_url:
+          type: string
+          nullable: true
+        video:
           type: string
           nullable: true
         video_url:
@@ -598,6 +624,12 @@ components:
           type: integer
         comments_count:
           type: integer
+        liked_by_me:
+          type: boolean
+        can_update:
+          type: boolean
+        can_delete:
+          type: boolean
     Comment:
       type: object
       properties:
@@ -609,6 +641,10 @@ components:
           $ref: '#/components/schemas/User'
         content:
           type: string
+        can_update:
+          type: boolean
+        can_delete:
+          type: boolean
         created_at:
           type: string
           format: date-time
