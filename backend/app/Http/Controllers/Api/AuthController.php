@@ -74,11 +74,20 @@ class AuthController extends ApiController
 
     private function authPayload(array $payload, string $message, int $status = 200): JsonResponse
     {
+        $user = $payload['user'];
+
         return $this->success([
             'user' => [
-                'id' => $payload['user']->id,
-                'name' => $payload['user']->name,
-                'email' => $payload['user']->email,
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role?->value ?? $user->role,
+                'is_private' => $user->is_private,
+                'profile_photo' => $user->profile_photo,
+                'profile_photo_url' => $user->profile_photo
+                    ? \Illuminate\Support\Facades\Storage::disk('public')->url($user->profile_photo)
+                    : null,
+                'bio' => $user->bio,
             ],
             'access_token' => $payload['token'],
             'token_type' => $payload['token_type'],
