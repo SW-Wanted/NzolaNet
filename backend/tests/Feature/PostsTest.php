@@ -19,7 +19,11 @@ class PostsTest extends TestCase
 
         $created = $this->postJson('/api/posts', ['content' => 'Primeira publicacao NzolaNet'])
             ->assertCreated()
-            ->assertJsonPath('data.content', 'Primeira publicacao NzolaNet');
+            ->assertJsonPath('data.content', 'Primeira publicacao NzolaNet')
+            ->assertJsonPath('data.liked_by_me', false)
+            ->assertJsonPath('data.can_update', true)
+            ->assertJsonPath('data.can_delete', true)
+            ->assertJsonStructure(['data' => ['image', 'image_url', 'video', 'video_url', 'author' => ['posts_count']]]);
 
         $postId = $created->json('data.id');
 

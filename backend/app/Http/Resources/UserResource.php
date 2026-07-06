@@ -21,6 +21,7 @@ class UserResource extends JsonResource
             'role' => $this->role?->value ?? $this->role,
             'followers_count' => $this->whenCounted('followers'),
             'following_count' => $this->whenCounted('following'),
+            'posts_count' => $this->whenCounted('posts'),
             'is_following' => $request->user() && $request->user()->id !== $this->id
                 ? $request->user()->following()->whereKey($this->id)->exists()
                 : false,

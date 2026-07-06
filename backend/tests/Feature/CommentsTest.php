@@ -46,4 +46,17 @@ class CommentsTest extends TestCase
             ->assertOk()
             ->assertJsonPath('success', true);
     }
+
+    public function test_admin_can_list_comments_for_moderation(): void
+    {
+        $admin = User::factory()->create(['role' => UserRole::Admin->value]);
+        $comment = Comment::factory()->create(['content' => 'Comentario para moderacao']);
+        Sanctum::actingAs($admin);
+
+        $this->getJson('/api/admin/comments')
+            ->assertOk()
+            ->assertJsonPath('data.data.0.id', $comment->id)
+            ->assertJsonPath('data.data.0.content', 'Comentario para moderacao')
+            ->assertJsonStructure(['data' => ['data' => [['author' => ['posts_count'], 'can_delete']]]]);
+    }
 }

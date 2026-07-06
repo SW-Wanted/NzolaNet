@@ -11,13 +11,15 @@ class EloquentPostRepository implements PostRepositoryInterface
 {
     public function create(array $data): Post
     {
-        return Post::query()->create($data)->load(['user'])->loadCount(['likes', 'comments']);
+        return Post::query()->create($data)
+            ->load(['user' => fn ($query) => $query->withCount(['followers', 'following', 'posts'])])
+            ->loadCount(['likes', 'comments']);
     }
 
     public function findOrFail(int $id): Post
     {
         return Post::query()
-            ->with(['user'])
+            ->with(['user' => fn ($query) => $query->withCount(['followers', 'following', 'posts'])])
             ->withCount(['likes', 'comments'])
             ->findOrFail($id);
     }
@@ -26,7 +28,9 @@ class EloquentPostRepository implements PostRepositoryInterface
     {
         $post->fill($data)->save();
 
-        return $post->refresh()->load(['user'])->loadCount(['likes', 'comments']);
+        return $post->refresh()
+            ->load(['user' => fn ($query) => $query->withCount(['followers', 'following', 'posts'])])
+            ->loadCount(['likes', 'comments']);
     }
 
     public function delete(Post $post): bool
@@ -37,7 +41,7 @@ class EloquentPostRepository implements PostRepositoryInterface
     public function recent(int $perPage = 15): LengthAwarePaginator
     {
         return Post::query()
-            ->with(['user'])
+            ->with(['user' => fn ($query) => $query->withCount(['followers', 'following', 'posts'])])
             ->withCount(['likes', 'comments'])
             ->latest()
             ->paginate($perPage);
@@ -46,7 +50,7 @@ class EloquentPostRepository implements PostRepositoryInterface
     public function fromUsers(Collection $userIds, int $perPage = 15): LengthAwarePaginator
     {
         return Post::query()
-            ->with(['user'])
+            ->with(['user' => fn ($query) => $query->withCount(['followers', 'following', 'posts'])])
             ->withCount(['likes', 'comments'])
             ->whereIn('user_id', $userIds)
             ->latest()

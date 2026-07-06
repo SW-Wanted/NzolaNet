@@ -44,4 +44,9 @@ class CommentService
     {
         return $this->comments->forPost($postId, $perPage);
     }
+
+    public function latest(int $perPage = 15): LengthAwarePaginator
+    {
+        return $this->comments->latest($perPage);
+    }
 }

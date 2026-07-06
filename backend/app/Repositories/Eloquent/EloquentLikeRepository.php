@@ -41,7 +41,7 @@ class EloquentLikeRepository implements LikeRepositoryInterface
     {
         return Like::query()
             ->where('post_id', $postId)
-            ->with(['user' => fn ($query) => $query->withCount(['followers', 'following'])])
+            ->with(['user' => fn ($query) => $query->withCount(['followers', 'following', 'posts'])])
             ->latest()
             ->get()
             ->pluck('user')

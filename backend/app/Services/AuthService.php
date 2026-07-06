@@ -73,7 +73,7 @@ class AuthService
     private function tokenResponse(User $user): array
     {
         return [
-            'user' => $user->loadCount(['followers', 'following']),
+            'user' => $user->loadCount(['followers', 'following', 'posts']),
             'token' => $user->createToken('nzolanet-api')->plainTextToken,
             'token_type' => 'Bearer',
         ];

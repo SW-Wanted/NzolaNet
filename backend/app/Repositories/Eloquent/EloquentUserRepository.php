@@ -22,7 +22,7 @@ class EloquentUserRepository implements UserRepositoryInterface
     public function findOrFail(int $id): User
     {
         return User::query()
-            ->withCount(['followers', 'following'])
+            ->withCount(['followers', 'following', 'posts'])
             ->findOrFail($id);
     }
 
@@ -30,7 +30,7 @@ class EloquentUserRepository implements UserRepositoryInterface
     {
         return User::query()
             ->whereKeyNot($userId)
-            ->withCount(['followers', 'following'])
+            ->withCount(['followers', 'following', 'posts'])
             ->latest()
             ->paginate($perPage);
     }
@@ -39,7 +39,7 @@ class EloquentUserRepository implements UserRepositoryInterface
     {
         $user->fill($data)->save();
 
-        return $user->refresh()->loadCount(['followers', 'following']);
+        return $user->refresh()->loadCount(['followers', 'following', 'posts']);
     }
 
     public function follow(int $followerId, int $followingId): void
@@ -62,12 +62,12 @@ class EloquentUserRepository implements UserRepositoryInterface
 
     public function followers(User $user, int $perPage = 15): LengthAwarePaginator
     {
-        return $user->followers()->withCount(['followers', 'following'])->latest('followers.created_at')->paginate($perPage);
+        return $user->followers()->withCount(['followers', 'following', 'posts'])->latest('followers.created_at')->paginate($perPage);
     }
 
     public function following(User $user, int $perPage = 15): LengthAwarePaginator
     {
-        return $user->following()->withCount(['followers', 'following'])->latest('followers.created_at')->paginate($perPage);
+        return $user->following()->withCount(['followers', 'following', 'posts'])->latest('followers.created_at')->paginate($perPage);
     }
 
     public function followingIds(int $userId): Collection

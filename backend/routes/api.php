@@ -61,6 +61,7 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::patch('notifications/{id}/read', [NotificationController::class, 'markAsRead'])->whereNumber('id');
 
     Route::middleware('admin')->prefix('admin')->group(function (): void {
+        Route::get('comments', [ModerationController::class, 'comments']);
         Route::delete('comments/{comment}', [ModerationController::class, 'destroyComment']);
     });
 });

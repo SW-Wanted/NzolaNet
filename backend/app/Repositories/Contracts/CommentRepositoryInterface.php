@@ -16,4 +16,6 @@ interface CommentRepositoryInterface
     public function delete(Comment $comment): bool;
 
     public function forPost(int $postId, int $perPage = 15): LengthAwarePaginator;
+
+    public function latest(int $perPage = 15): LengthAwarePaginator;
 }
