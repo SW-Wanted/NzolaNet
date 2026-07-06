@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { User } from '../../models/fase1.model';
 import { PostService } from '../../services/post.service';
 import { ModalComponent } from '../modal/modal.component';
+import { ModalDenunciaComponent } from '../modal-denuncia/modal-denuncia.component';
 
 export interface Publicacao {
   id: number;
@@ -27,7 +28,7 @@ export interface Publicacao {
 
 @Component({
   selector: 'app-cartao-publicacao',
-  imports: [CommonModule, RouterLink, ModalComponent],
+  imports: [CommonModule, RouterLink, ModalComponent, ModalDenunciaComponent],
   templateUrl: './cartao-publicacao.component.html',
   styleUrl: './cartao-publicacao.component.css'
 })
@@ -51,6 +52,8 @@ export class CartaoPublicacaoComponent implements OnInit, OnChanges {
   modalBazesAberto = signal(false);
   likers = signal<User[]>([]);
   carregandoLikers = signal(false);
+
+  modalDenunciaAberto = signal(false);
 
   ngOnInit(): void {
     this.sincronizarEstado();
@@ -92,6 +95,11 @@ export class CartaoPublicacaoComponent implements OnInit, OnChanges {
 
   abrirConfirmacaoEliminar(): void {
     this.modalEliminarAberto.set(true);
+    this.menuAberto.set(false);
+  }
+
+  abrirDenuncia(): void {
+    this.modalDenunciaAberto.set(true);
     this.menuAberto.set(false);
   }
 

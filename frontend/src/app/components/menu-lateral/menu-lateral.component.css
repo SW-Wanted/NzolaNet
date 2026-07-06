@@ -61,6 +61,22 @@
   margin: 8px 0;
 }
 
+.menu-lateral__seccao-rotulo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 16px 8px;
+  color: var(--cor-primaria);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.menu-lateral__seccao-rotulo .material-symbols-outlined {
+  font-size: 18px;
+}
+
 .menu-lateral__item {
   display: flex;
   align-items: center;

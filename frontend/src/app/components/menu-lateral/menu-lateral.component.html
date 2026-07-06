@@ -23,25 +23,29 @@
           <span class="menu-lateral__etiqueta">{{ item.etiqueta }}</span>
         </a>
       }
-      @if (isAdmin()) {
-        <a
-          class="menu-lateral__item"
-          routerLink="/comentarios/moderacao"
-          routerLinkActive="menu-lateral__item--activo"
-        >
-          <span class="material-symbols-outlined menu-lateral__icone">admin_panel_settings</span>
-          <span class="menu-lateral__etiqueta">Moderação</span>
-        </a>
-        <a
-          class="menu-lateral__item"
-          routerLink="/admin/utilizadores"
-          routerLinkActive="menu-lateral__item--activo"
-        >
-          <span class="material-symbols-outlined menu-lateral__icone">manage_accounts</span>
-          <span class="menu-lateral__etiqueta">Gestão users</span>
-        </a>
-      }
     </div>
+
+    @if (isAdmin()) {
+      <div class="menu-lateral__separador"></div>
+
+      <div class="menu-lateral__grupo">
+        <span class="menu-lateral__seccao-rotulo">
+          <span class="material-symbols-outlined">shield_person</span>
+          Administração
+        </span>
+        @for (item of itensMenuAdmin; track item.rota) {
+          <a
+            class="menu-lateral__item"
+            [routerLink]="item.rota"
+            [routerLinkActiveOptions]="{ exact: item.rota === '/admin' }"
+            routerLinkActive="menu-lateral__item--activo"
+          >
+            <span class="material-symbols-outlined menu-lateral__icone">{{ item.icone }}</span>
+            <span class="menu-lateral__etiqueta">{{ item.etiqueta }}</span>
+          </a>
+        }
+      </div>
+    }
 
     <div class="menu-lateral__separador"></div>
 

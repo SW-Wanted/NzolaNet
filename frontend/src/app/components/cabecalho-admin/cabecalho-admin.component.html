@@ -1,0 +1,19 @@
+<header class="cabecalho-admin">
+  <div class="cabecalho-admin__distintivo">
+    <span class="material-symbols-outlined">shield_person</span>
+    <span>Painel de Administração</span>
+  </div>
+
+  <div class="cabecalho-admin__direita">
+    <a class="cabecalho-admin__link" routerLink="/feed" title="Ver aplicação">
+      <span class="material-symbols-outlined">public</span>
+    </a>
+    <div class="cabecalho-admin__utilizador">
+      <img class="cabecalho-admin__avatar" [src]="avatar()" [alt]="nome()" [title]="nome()" />
+      <div class="cabecalho-admin__nome">
+        <strong>{{ nome() }}</strong>
+        <span>Administrador</span>
+      </div>
+    </div>
+  </div>
+</header>

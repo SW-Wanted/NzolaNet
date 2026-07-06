@@ -33,6 +33,12 @@ export class MenuLateralComponent {
     { icone: 'group_add', etiqueta: 'Sugestões', rota: '/sugestoes' },
   ];
 
+  itensMenuAdmin: ItemMenu[] = [
+    { icone: 'dashboard', etiqueta: 'Dashboard', rota: '/admin' },
+    { icone: 'group', etiqueta: 'Utilizadores', rota: '/admin/utilizadores' },
+    { icone: 'flag', etiqueta: 'Denúncias', rota: '/admin/denuncias' },
+  ];
+
   sairDaSessao(): void {
     this.auth.logout().subscribe({
       next: () => this.router.navigateByUrl('/entrar'),
