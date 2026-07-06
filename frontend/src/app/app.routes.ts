@@ -22,6 +22,8 @@ import { SeguidoresComponent } from './pages/seguidores/seguidores.component';
 import { SeguindoComponent } from './pages/seguindo/seguindo.component';
 import { SugestoesConexaoComponent } from './pages/sugestoes-conexao/sugestoes-conexao.component';
 import { AdminUtilizadoresComponent } from './pages/admin-utilizadores/admin-utilizadores.component';
+import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
+import { AdminDenunciasComponent } from './pages/admin/admin-denuncias/admin-denuncias.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
@@ -49,7 +51,9 @@ export const routes: Routes = [
   { path: 'comentarios/moderacao', component: ModeracaoComentariosComponent, canActivate: [authGuard] },
   { path: 'estatisticas-likes', component: EstatisticasLikesComponent, canActivate: [authGuard] },
   { path: 'chat', component: ChatComponent, canActivate: [authGuard] },
+  { path: 'admin', component: AdminDashboardComponent, canActivate: [adminGuard] },
   { path: 'admin/utilizadores', component: AdminUtilizadoresComponent, canActivate: [adminGuard] },
+  { path: 'admin/denuncias', component: AdminDenunciasComponent, canActivate: [adminGuard] },
   { path: 'feed/estados', redirectTo: 'feed', pathMatch: 'full' },
   { path: 'sucesso', component: ModalSucessoComponent },
   { path: '**', component: NaoEncontradoComponent },
