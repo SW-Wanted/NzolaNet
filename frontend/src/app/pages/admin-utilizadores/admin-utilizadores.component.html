@@ -1,8 +1,8 @@
 <section class="pagina-social">
   <div class="estrutura-aplicacao">
-    <app-menu-lateral />
+    <app-menu-lateral-admin />
     <main>
-      <app-cabecalho />
+      <app-cabecalho-admin />
       <div class="conteudo-principal">
         <div class="conteudo-limite">
 
@@ -258,12 +258,7 @@
   </div>
 </section>
 
-<nav class="navegacao-inferior">
-  <a routerLink="/feed"><span class="material-symbols-outlined">home</span>Início</a>
-  <a routerLink="/sugestoes"><span class="material-symbols-outlined">group_add</span>Sugestões</a>
-  <a routerLink="/chat"><span class="material-symbols-outlined">chat</span>Chat</a>
-  <a routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
-</nav>
+<app-menu-inferior-admin />
 
 <!-- Modal: User Detail -->
 <app-modal

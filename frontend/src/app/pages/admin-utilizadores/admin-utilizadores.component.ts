@@ -1,14 +1,21 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
-import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
+import { CabecalhoAdminComponent } from '../../components/cabecalho-admin/cabecalho-admin.component';
+import { MenuLateralAdminComponent } from '../../components/menu-lateral-admin/menu-lateral-admin.component';
+import { MenuInferiorAdminComponent } from '../../components/menu-inferior-admin/menu-inferior-admin.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { User } from '../../models/fase1.model';
 import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-admin-utilizadores',
-  imports: [CabecalhoComponent, MenuLateralComponent, RouterLink, ModalComponent],
+  imports: [
+    CabecalhoAdminComponent,
+    MenuLateralAdminComponent,
+    MenuInferiorAdminComponent,
+    RouterLink,
+    ModalComponent,
+  ],
   templateUrl: './admin-utilizadores.component.html',
   styleUrl: './admin-utilizadores.component.css',
 })

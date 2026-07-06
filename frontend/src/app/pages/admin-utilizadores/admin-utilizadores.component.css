@@ -332,6 +332,12 @@
 }
 
 /* ── Responsive ──────────────────────────────── */
+@media (max-width: 900px) {
+  app-menu-lateral-admin {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
   .admin-tabela-wrapper {
     display: none;
