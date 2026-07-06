@@ -64,6 +64,11 @@
                           <span class="material-symbols-outlined">delete</span>
                         </button>
                       }
+                      @if (!comentario.podeEditar && !comentario.podeEliminar) {
+                        <button class="botao-fantasma comentario__botao" type="button" title="Denunciar comentário" (click)="abrirDenuncia(comentario)">
+                          <span class="material-symbols-outlined">flag</span>
+                        </button>
+                      }
                     }
                   </div>
                 </article>
@@ -85,3 +90,11 @@
     </main>
   </div>
 </section>
+
+<!-- Modal: Denunciar Comentário -->
+<app-modal-denuncia
+  [aberto]="denunciaAberta()"
+  tipoAlvo="comentario"
+  [nomeAlvo]="comentarioDenunciado()?.autor ?? ''"
+  (fechar)="denunciaAberta.set(false)"
+/>
