@@ -5,6 +5,7 @@ import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.compone
 import { CartaoPublicacaoComponent, Publicacao } from '../../components/cartao-publicacao/cartao-publicacao.component';
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
 import { ModalComponent } from '../../components/modal/modal.component';
+import { ModalDenunciaComponent } from '../../components/modal-denuncia/modal-denuncia.component';
 import { Comment, Post, User } from '../../models/fase1.model';
 import { AuthService } from '../../services/auth.service';
 import { CommentService } from '../../services/comment.service';
@@ -40,6 +41,7 @@ function avatarFallback(name: string): string {
     MenuLateralComponent,
     RouterLink,
     ModalComponent,
+    ModalDenunciaComponent,
     ReactiveFormsModule,
   ],
   templateUrl: './feed.component.html',
@@ -76,6 +78,14 @@ export class FeedComponent implements OnInit {
   textoEdicaoComentario = signal('');
   comentarioSubmetido = false;
   erroComentario = signal('');
+
+  denunciaComentarioAberta = signal(false);
+  comentarioDenunciado = signal<ComentarioView | null>(null);
+
+  abrirDenunciaComentario(comentario: ComentarioView): void {
+    this.comentarioDenunciado.set(comentario);
+    this.denunciaComentarioAberta.set(true);
+  }
 
   readonly formularioComentario = this.fb.nonNullable.group({
     texto: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(2000)]],
