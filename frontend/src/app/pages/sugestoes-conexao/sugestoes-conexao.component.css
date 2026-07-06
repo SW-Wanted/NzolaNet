@@ -1,5 +1,6 @@
 @import '../telas.css';
 
+/* ── Card grid item ──────────────────────────── */
 .sugestao-cartao {
   display: grid;
   grid-template-columns: auto 1fr auto auto;
@@ -7,21 +8,18 @@
   gap: 12px;
 }
 
-@media (max-width: 560px) {
-  .sugestao-cartao {
-    grid-template-columns: 1fr;
-  }
+.sugestao-info {
+  min-width: 0;
 }
 
-.aviso-sucesso {
-  margin-bottom: 18px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: var(--cor-primaria-fixo);
-  color: var(--cor-no-container-primaria);
-  font-weight: 700;
+.sugestao-info .titulo-cartao {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
 }
 
+/* ── Follow button ───────────────────────────── */
 .botao-seguir-card {
   display: inline-flex;
   align-items: center;
@@ -50,4 +48,111 @@
 
 .botao-seguir-card--activo:hover {
   opacity: 0.85;
+}
+
+/* ── Feedback banner ──────────────────────────── */
+.aviso-sucesso {
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--cor-primaria-fixo);
+  color: var(--cor-no-container-primaria);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ── Skeleton loading ────────────────────────── */
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--cor-container) 25%,
+    var(--cor-superficie-variante) 50%,
+    var(--cor-container) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+.skeleton-avatar-sug {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skeleton-sug-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.skeleton-sug-nome {
+  height: 16px;
+  width: 70%;
+  max-width: 140px;
+}
+
+.skeleton-sug-sub {
+  height: 12px;
+  width: 45%;
+  max-width: 90px;
+}
+
+.skeleton-sug-botao {
+  height: 36px;
+  width: 86px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+/* ── Empty & error states ────────────────────── */
+.sugestoes-estado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 64px 24px;
+  text-align: center;
+}
+
+.sugestoes-estado-icone {
+  font-size: 56px;
+  color: var(--cor-no-superficie-variante);
+  opacity: 0.6;
+}
+
+.sugestoes-erro .sugestoes-estado-icone {
+  color: var(--cor-erro);
+  opacity: 0.7;
+}
+
+.sugestoes-estado-titulo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cor-no-superficie);
+}
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 640px) {
+  .sugestao-cartao {
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .sugestao-cartao .botao-fantasma {
+    display: none;
+  }
+
+  .botao-seguir-card {
+    grid-column: 2;
+  }
 }

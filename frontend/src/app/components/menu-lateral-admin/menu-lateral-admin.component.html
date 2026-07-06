@@ -1,0 +1,36 @@
+<nav class="menu-lateral">
+  <div class="menu-lateral__marca">
+    <img alt="NzolaNet" class="menu-lateral__logo" src="/logo_sem_fundo.png" />
+    <div>
+      <strong>NzolaNet</strong>
+      <span>Administração</span>
+    </div>
+  </div>
+
+  <div class="menu-lateral__grupo">
+    @for (item of itensGestao; track item.rota) {
+      <a
+        class="menu-lateral__item"
+        [routerLink]="item.rota"
+        [routerLinkActiveOptions]="{ exact: item.rota === '/admin' }"
+        routerLinkActive="menu-lateral__item--activo"
+      >
+        <span class="material-symbols-outlined menu-lateral__icone">{{ item.icone }}</span>
+        <span class="menu-lateral__etiqueta">{{ item.etiqueta }}</span>
+      </a>
+    }
+  </div>
+
+  <div class="menu-lateral__separador"></div>
+
+  <div class="menu-lateral__grupo">
+    <a class="menu-lateral__item" routerLink="/feed">
+      <span class="material-symbols-outlined menu-lateral__icone">arrow_back</span>
+      <span class="menu-lateral__etiqueta">Voltar à aplicação</span>
+    </a>
+    <button class="menu-lateral__item menu-lateral__item--sair" type="button" (click)="sairDaSessao()">
+      <span class="material-symbols-outlined menu-lateral__icone">logout</span>
+      <span class="menu-lateral__etiqueta">Terminar sessão</span>
+    </button>
+  </div>
+</nav>

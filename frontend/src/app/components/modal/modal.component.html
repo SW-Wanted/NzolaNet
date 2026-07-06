@@ -1,9 +1,11 @@
-@if (aberto) {
+@if (foiAberto) {
   <div
     class="modal-overlay"
     [class.modal-overlay--drawer]="variante === 'drawer'"
+    [class.modal-overlay--oculto]="!aberto"
     role="presentation"
     (click)="fechar.emit()"
+    [attr.aria-hidden]="!aberto"
   >
     <section
       class="modal"

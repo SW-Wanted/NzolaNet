@@ -1,67 +1,96 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
+import { Notification } from '../../models/fase1.model';
+import { NotificationService } from '../../services/notification.service';
+import { mensagemErroHttp } from '../../utils/erro.utils';
 
 @Component({
   selector: 'app-notificacoes',
   imports: [CabecalhoComponent, MenuLateralComponent, RouterLink],
-  template: `
-    <section class="pagina-social">
-      <div class="estrutura-aplicacao">
-        <app-menu-lateral />
-        <main>
-          <app-cabecalho />
-          <div class="conteudo-principal">
-            <div class="conteudo-limite">
-              <header class="cabecalho-pagina">
-                <div>
-                  <span class="rotulo-seccao">Actividade</span>
-                  <h1 class="titulo-pagina">Notificações</h1>
-                </div>
-                <a class="botao-contornado" routerLink="/feed">Voltar ao feed</a>
-              </header>
-              <div class="cartao cartao-preenchido notificacoes-vazio">
-                <span class="material-symbols-outlined notificacoes-icone">notifications_off</span>
-                <p class="notificacoes-titulo">Sem notificações de momento</p>
-                <p class="texto-cartao">Aqui aparecerão os seus bazes, comentários e novos seguidores.</p>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
-    </section>
-  `,
-  styles: [`
-    @import '../telas.css';
-
-    .cabecalho-pagina {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 24px;
-    }
-
-    .notificacoes-vazio {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 60px 24px;
-      text-align: center;
-    }
-
-    .notificacoes-icone {
-      font-size: 56px;
-      color: var(--cor-no-superficie-variante);
-    }
-
-    .notificacoes-titulo {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--cor-no-superficie);
-    }
-  `],
+  templateUrl: './notificacoes.component.html',
+  styleUrl: './notificacoes.component.css',
 })
-export class NotificacoesComponent {}
+export class NotificacoesComponent implements OnInit {
+  private readonly notificationService = inject(NotificationService);
+
+  readonly notificacoes = signal<Notification[]>([]);
+  readonly carregando = signal(true);
+  readonly erroApi = signal('');
+
+  ngOnInit(): void {
+    this.carregarNotificacoes();
+  }
+
+  marcarComoLida(id: number): void {
+    this.notificationService.markAsRead(id).subscribe({
+      next: (notificacao) => {
+        this.notificacoes.update((lista) =>
+          lista.map((n) => (n.id === id ? notificacao : n)),
+        );
+      },
+    });
+  }
+
+  rotuloDeTipo(tipo: string): string {
+    switch (tipo) {
+      case 'like':
+        return 'deu baze na sua publicação';
+      case 'comment':
+        return 'comentou a sua publicação';
+      case 'follow':
+        return 'começou a segui-lo';
+      case 'report':
+        return 'submeteu uma denúncia para revisão';
+      default:
+        return 'interagiu consigo';
+    }
+  }
+
+  iconeDeTipo(tipo: string): string {
+    switch (tipo) {
+      case 'like':
+        return 'favorite';
+      case 'comment':
+        return 'chat_bubble';
+      case 'follow':
+        return 'person_add';
+      case 'report':
+        return 'flag';
+      default:
+        return 'notifications';
+    }
+  }
+
+  avatarFallback(name: string): string {
+    return `https://ui-avatars.com/api/?background=111827&color=ffffff&name=${encodeURIComponent(name)}`;
+  }
+
+  formatarData(value: string): string {
+    if (!value) return '';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+    return new Intl.DateTimeFormat('pt-AO', {
+      day: '2-digit',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(date);
+  }
+
+  private carregarNotificacoes(): void {
+    this.carregando.set(true);
+    this.erroApi.set('');
+    this.notificationService.getNotifications().subscribe({
+      next: (lista) => {
+        this.notificacoes.set(lista);
+        this.carregando.set(false);
+      },
+      error: (err) => {
+        this.erroApi.set(mensagemErroHttp(err));
+        this.carregando.set(false);
+      },
+    });
+  }
+}

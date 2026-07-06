@@ -1,0 +1,102 @@
+@import '../telas.css';
+
+.painel-404 {
+  width: min(100%, 480px);
+  padding: 40px 32px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(60, 40, 20, 0.08);
+  box-shadow: var(--sombra-modal);
+  backdrop-filter: blur(16px);
+  text-align: center;
+}
+
+.marca-nome {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--cor-primaria);
+  letter-spacing: -0.01em;
+}
+
+.numero-404 {
+  font-size: clamp(72px, 18vw, 120px);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--cor-primaria);
+  opacity: 0.15;
+  margin: 16px 0 8px;
+  letter-spacing: -0.04em;
+  user-select: none;
+}
+
+.mensagem-404 {
+  margin-bottom: 28px;
+}
+
+.titulo-404 {
+  font-size: clamp(22px, 5vw, 28px);
+  font-weight: 800;
+  color: var(--cor-no-superficie);
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+
+.descricao-404 {
+  color: var(--cor-no-superficie-variante);
+  font-size: 15px;
+  line-height: 22px;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.acoes-404 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.acoes-404 .botao-destaque,
+.acoes-404 .botao-contornado {
+  cursor: pointer;
+}
+
+.dicas-titulo {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cor-no-superficie-variante);
+  margin-bottom: 12px;
+}
+
+.dicas-lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dica-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--cor-container);
+  color: var(--cor-no-superficie-variante);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color var(--transicao-rapida), color var(--transicao-rapida);
+}
+
+.dica-item:hover {
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+.dica-item .material-symbols-outlined {
+  font-size: 16px;
+}

@@ -1,0 +1,68 @@
+<app-modal [aberto]="aberto" [titulo]="titulo()" (fechar)="aoFechar()">
+  @if (enviado()) {
+    <div class="denuncia-sucesso">
+      <span class="material-symbols-outlined denuncia-sucesso__icone">verified</span>
+      <h3 class="denuncia-sucesso__titulo">Denúncia enviada</h3>
+      <p class="texto-cartao">
+        Obrigado por ajudar a manter a NzolaNet segura. A nossa equipa de moderação
+        vai analisar esta denúncia.
+      </p>
+    </div>
+  } @else {
+    <p class="texto-cartao denuncia-intro">
+      Diga-nos porque está a denunciar
+      {{ tipoAlvo === 'comentario' ? 'este comentário' : 'esta publicação' }}
+      @if (nomeAlvo) { de <strong>{{ nomeAlvo }}</strong> }.
+      As denúncias são anónimas.
+    </p>
+
+    <div class="formulario">
+      <div class="grupo-campo">
+        <label class="denuncia-rotulo">Motivo da denúncia</label>
+        <div class="denuncia-motivos">
+          @for (motivo of motivos; track motivo) {
+            <button
+              type="button"
+              class="denuncia-motivo"
+              [class.denuncia-motivo--activo]="motivoSelecionado() === motivo"
+              (click)="motivoSelecionado.set(motivo)"
+            >
+              <span class="denuncia-motivo__marca">
+                @if (motivoSelecionado() === motivo) {
+                  <span class="material-symbols-outlined">radio_button_checked</span>
+                } @else {
+                  <span class="material-symbols-outlined">radio_button_unchecked</span>
+                }
+              </span>
+              {{ motivo }}
+            </button>
+          }
+        </div>
+        @if (submetido() && !motivoSelecionado()) {
+          <span class="mensagem-campo">Selecione um motivo para continuar.</span>
+        }
+      </div>
+
+      <div class="grupo-campo">
+        <label class="denuncia-rotulo" for="denuncia-descricao">Descrição (opcional)</label>
+        <textarea
+          id="denuncia-descricao"
+          class="area-formulario"
+          rows="4"
+          maxlength="500"
+          placeholder="Acrescente detalhes que ajudem a nossa equipa a compreender a situação..."
+          [value]="descricao()"
+          (input)="descricao.set($any($event.target).value)"
+        ></textarea>
+        <span class="denuncia-contador">{{ descricao().length }}/500</span>
+      </div>
+
+      <div class="linha-distribuida" style="margin-top: 8px">
+        <button class="botao-contornado" type="button" (click)="aoFechar()">Cancelar</button>
+        <button class="botao-perigo" type="button" (click)="aoEnviar()">
+          <span class="material-symbols-outlined">flag</span>Enviar denúncia
+        </button>
+      </div>
+    </div>
+  }
+</app-modal>

@@ -15,17 +15,30 @@
                 <div class="skeleton skeleton-bio-perfil"></div>
               </div>
             </div>
+            <div class="cartao cartao-preenchido estatisticas-barra">
+              <div class="skeleton skeleton-stat"></div>
+              <div class="estatistica-separador"></div>
+              <div class="skeleton skeleton-stat"></div>
+              <div class="estatistica-separador"></div>
+              <div class="skeleton skeleton-stat"></div>
+            </div>
           } @else if (erro()) {
-            <div class="cartao cartao-preenchido">
-              <p class="mensagem-campo">{{ erro() }}</p>
-              <a class="botao-contornado" routerLink="/feed" style="margin-top:16px;display:inline-block">Voltar ao feed</a>
+            <div class="cartao cartao-preenchido perfil-pub-estado perfil-pub-erro">
+              <span class="material-symbols-outlined perfil-pub-estado-icone">person_off</span>
+              <p class="perfil-pub-estado-titulo">Perfil não encontrado</p>
+              <p class="texto-cartao">{{ erro() }}</p>
+              <a class="botao-contornado" routerLink="/feed" style="margin-top: 16px">
+                <span class="material-symbols-outlined">home</span>Voltar ao feed
+              </a>
             </div>
           } @else if (utilizador(); as u) {
+
+            <!-- Profile cover + avatar -->
             <article class="cartao perfil-capa">
               <div class="capa-perfil"></div>
               <div class="perfil-conteudo">
                 <img [src]="avatar()" [alt]="u.name" class="avatar-perfil" />
-                <div>
+                <div class="perfil-texto">
                   <h1 class="titulo-pagina">{{ u.name }}</h1>
                   <p class="descricao-pagina">{{ u.bio || 'Utilizador NzolaNet' }}</p>
                 </div>
@@ -39,7 +52,9 @@
                     [disabled]="emSeguindo()"
                     (click)="alternarSeguir()"
                   >
-                    @if (u.is_following) {
+                    @if (emSeguindo()) {
+                      <span class="spinner-botao"></span>
+                    } @else if (u.is_following) {
                       <span class="material-symbols-outlined">person_check</span>A seguir
                     } @else {
                       <span class="material-symbols-outlined">person_add</span>Seguir
@@ -49,6 +64,7 @@
               </div>
             </article>
 
+            <!-- Stats bar -->
             <div class="cartao cartao-preenchido estatisticas-barra">
               <div class="estatistica-item">
                 <strong>{{ u.posts_count }}</strong>
@@ -65,6 +81,59 @@
                 <span>A seguir</span>
               </div>
             </div>
+
+            <!-- Posts section -->
+            <div class="pub-secao">
+              <div class="pub-secao-cabecalho">
+                <span class="rotulo-seccao">Conteúdo</span>
+                <h2 class="titulo-cartao">Publicações de {{ u.name }}</h2>
+              </div>
+
+              @if (erroPosts()) {
+                <div class="cartao cartao-preenchido pub-estado pub-estado-erro">
+                  <span class="material-symbols-outlined pub-estado-icone">wifi_off</span>
+                  <p class="pub-estado-titulo">Não foi possível carregar as publicações</p>
+                  <p class="texto-cartao">{{ erroPosts() }}</p>
+                </div>
+              } @else if (carregandoPosts()) {
+                <div class="coluna">
+                  @for (i of [1, 2]; track i) {
+                    <div class="cartao cartao-preenchido skeleton-cartao-pub">
+                      <div class="skeleton-cabecalho-pub">
+                        <div class="skeleton skeleton-avatar-pub"></div>
+                        <div class="skeleton-pub-info">
+                          <div class="skeleton skeleton-pub-nome"></div>
+                          <div class="skeleton skeleton-pub-tempo"></div>
+                        </div>
+                      </div>
+                      <div class="skeleton skeleton-pub-linha"></div>
+                      <div class="skeleton skeleton-pub-linha"></div>
+                      <div class="skeleton skeleton-pub-linha--curta skeleton-pub-linha"></div>
+                    </div>
+                  }
+                </div>
+              } @else if (publicacoes().length === 0) {
+                <div class="cartao cartao-preenchido pub-estado pub-estado-vazio">
+                  <span class="material-symbols-outlined pub-estado-icone">article</span>
+                  <p class="pub-estado-titulo">Ainda não há publicações</p>
+                  <p class="texto-cartao">
+                    {{ u.name }} ainda não partilhou conteúdo na comunidade NzolaNet.
+                  </p>
+                </div>
+              } @else {
+                <div class="coluna">
+                  @for (publicacao of publicacoes(); track publicacao.id) {
+                    <app-cartao-publicacao
+                      [publicacao]="publicacao"
+                      (eliminar)="aoEliminar($event)"
+                      (editar)="aoEditar($event)"
+                      (alternarBaze)="aoAlternarBaze($event)"
+                    />
+                  }
+                </div>
+              }
+            </div>
+
           }
 
         </div>
@@ -72,3 +141,10 @@
     </main>
   </div>
 </section>
+
+<nav class="navegacao-inferior">
+  <a routerLink="/feed"><span class="material-symbols-outlined">home</span>Início</a>
+  <a routerLink="/eventos"><span class="material-symbols-outlined">event</span>Eventos</a>
+  <a routerLink="/mercado"><span class="material-symbols-outlined">storefront</span>Loja</a>
+  <a routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
+</nav>

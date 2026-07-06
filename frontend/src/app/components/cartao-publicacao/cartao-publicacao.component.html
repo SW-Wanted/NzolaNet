@@ -40,6 +40,11 @@
         <button type="button" role="menuitem" (click)="partilhar()">
           <span class="material-symbols-outlined">link</span>Copiar ligação
         </button>
+        @if (!publicacao.podeEditar && !publicacao.podeEliminar) {
+          <button type="button" role="menuitem" class="cartao-publicacao__menu-perigo" (click)="abrirDenuncia()">
+            <span class="material-symbols-outlined">flag</span>Denunciar
+          </button>
+        }
       </div>
     }
   </div>
@@ -184,3 +189,11 @@
     </div>
   }
 </app-modal>
+
+<!-- Modal: Denunciar Publicação -->
+<app-modal-denuncia
+  [aberto]="modalDenunciaAberto()"
+  tipoAlvo="publicacao"
+  [nomeAlvo]="publicacao.autorNome"
+  (fechar)="modalDenunciaAberto.set(false)"
+/>

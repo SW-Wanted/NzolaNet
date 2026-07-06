@@ -1,0 +1,28 @@
+@if (rota) {
+  <a class="cartao-estatistica" [class]="'cartao-estatistica--' + tom" [routerLink]="rota">
+    <div class="cartao-estatistica__icone">
+      <span class="material-symbols-outlined">{{ icone }}</span>
+    </div>
+    <div class="cartao-estatistica__corpo">
+      <span class="cartao-estatistica__valor">{{ valorFormatado }}</span>
+      <span class="cartao-estatistica__rotulo">{{ rotulo }}</span>
+      @if (variacao) {
+        <span class="cartao-estatistica__variacao">{{ variacao }}</span>
+      }
+    </div>
+    <span class="material-symbols-outlined cartao-estatistica__seta">chevron_right</span>
+  </a>
+} @else {
+  <div class="cartao-estatistica" [class]="'cartao-estatistica--' + tom">
+    <div class="cartao-estatistica__icone">
+      <span class="material-symbols-outlined">{{ icone }}</span>
+    </div>
+    <div class="cartao-estatistica__corpo">
+      <span class="cartao-estatistica__valor">{{ valorFormatado }}</span>
+      <span class="cartao-estatistica__rotulo">{{ rotulo }}</span>
+      @if (variacao) {
+        <span class="cartao-estatistica__variacao">{{ variacao }}</span>
+      }
+    </div>
+  </div>
+}

@@ -1,0 +1,92 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral />
+    <main>
+      <app-cabecalho />
+      <div class="conteudo-principal">
+        <div class="conteudo-limite">
+
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Perfil</span>
+              <h1 class="titulo-pagina">Minhas Publicações</h1>
+              <p class="descricao-pagina">Todas as suas partilhas na comunidade NzolaNet.</p>
+            </div>
+            <div class="acoes-cabecalho">
+              <a class="botao-contornado" routerLink="/perfil">
+                <span class="material-symbols-outlined">arrow_back</span>Voltar ao perfil
+              </a>
+              <a class="botao-destaque" routerLink="/criar-post">
+                <span class="material-symbols-outlined">add</span>Nova publicação
+              </a>
+            </div>
+          </header>
+
+          @if (erro()) {
+            <div class="cartao cartao-preenchido minhas-pub-erro">
+              <span class="material-symbols-outlined minhas-pub-icone-erro">wifi_off</span>
+              <p class="minhas-pub-titulo">Não foi possível carregar as publicações</p>
+              <p class="texto-cartao">{{ erro() }}</p>
+              <button class="botao-contornado" type="button" style="margin-top: 16px" (click)="ngOnInit()">
+                <span class="material-symbols-outlined">refresh</span>Tentar novamente
+              </button>
+            </div>
+          } @else if (carregando()) {
+            <div class="coluna">
+              @for (i of [1, 2, 3]; track i) {
+                <div class="cartao cartao-preenchido skeleton-cartao">
+                  <div class="skeleton-cabecalho">
+                    <div class="skeleton skeleton-avatar"></div>
+                    <div class="skeleton-info">
+                      <div class="skeleton skeleton-nome"></div>
+                      <div class="skeleton skeleton-tempo"></div>
+                    </div>
+                  </div>
+                  <div class="skeleton skeleton-corpo-linha"></div>
+                  <div class="skeleton skeleton-corpo-linha"></div>
+                  <div class="skeleton skeleton-corpo-linha--curta skeleton-corpo-linha"></div>
+                  <div class="skeleton skeleton-imagem"></div>
+                  <div class="skeleton-acoes">
+                    <div class="skeleton skeleton-accao"></div>
+                    <div class="skeleton skeleton-accao"></div>
+                    <div class="skeleton skeleton-accao"></div>
+                  </div>
+                </div>
+              }
+            </div>
+          } @else if (publicacoes().length === 0) {
+            <div class="cartao cartao-preenchido minhas-pub-vazio">
+              <span class="material-symbols-outlined minhas-pub-icone">article</span>
+              <p class="minhas-pub-titulo">Ainda não fez nenhuma publicação</p>
+              <p class="texto-cartao">
+                Partilhe a sua perspectiva sobre a cultura angolana com a comunidade.
+              </p>
+              <a class="botao-destaque" routerLink="/criar-post" style="margin-top: 16px">
+                <span class="material-symbols-outlined">add</span>Criar primeira publicação
+              </a>
+            </div>
+          } @else {
+            <div class="coluna">
+              @for (publicacao of publicacoes(); track publicacao.id) {
+                <app-cartao-publicacao
+                  [publicacao]="publicacao"
+                  (eliminar)="aoEliminar($event)"
+                  (editar)="aoEditar($event)"
+                  (alternarBaze)="aoAlternarBaze($event)"
+                />
+              }
+            </div>
+          }
+
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<nav class="navegacao-inferior">
+  <a routerLink="/feed"><span class="material-symbols-outlined">home</span>Início</a>
+  <a routerLink="/eventos"><span class="material-symbols-outlined">event</span>Eventos</a>
+  <a routerLink="/mercado"><span class="material-symbols-outlined">storefront</span>Loja</a>
+  <a class="ativo" routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
+</nav>

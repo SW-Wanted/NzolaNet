@@ -1,0 +1,117 @@
+<section class="pagina-social">
+  <div class="estrutura-aplicacao">
+    <app-menu-lateral-admin />
+    <main>
+      <app-cabecalho-admin />
+      <div class="conteudo-principal">
+        <div class="conteudo-limite">
+
+          <header class="cabecalho-pagina">
+            <div>
+              <span class="rotulo-seccao">Administração</span>
+              <h1 class="titulo-pagina">Dashboard</h1>
+              <p class="descricao-pagina">Visão geral da atividade da comunidade NzolaNet.</p>
+            </div>
+            @if (denunciasPendentes > 0) {
+              <div class="acoes-cabecalho">
+                <a class="botao-destaque" routerLink="/admin/denuncias">
+                  <span class="material-symbols-outlined">flag</span>
+                  {{ denunciasPendentes }} denúncia(s) pendente(s)
+                </a>
+              </div>
+            }
+          </header>
+
+          <!-- Cartões estatísticos -->
+          <div class="admin-grelha-stats">
+            <app-cartao-estatistica
+              rotulo="Utilizadores" [valor]="totalUtilizadores" icone="group"
+              tom="primaria" variacao="Total de membros" rota="/admin/utilizadores" />
+            <app-cartao-estatistica
+              rotulo="Publicações" [valor]="totalPublicacoes" icone="article"
+              tom="terciaria" variacao="Conteúdo partilhado" />
+            <app-cartao-estatistica
+              rotulo="Comentários" [valor]="totalComentarios" icone="chat_bubble"
+              tom="secundaria" variacao="Interações" />
+            <app-cartao-estatistica
+              rotulo="Bazes" [valor]="totalBazes" icone="favorite"
+              tom="secundaria" variacao="Gostos atribuídos" />
+            <app-cartao-estatistica
+              rotulo="Denúncias" [valor]="totalDenuncias" icone="flag"
+              tom="erro" variacao="{{ denunciasPendentes }} pendentes" rota="/admin/denuncias" />
+          </div>
+
+          <div class="grelha-bento">
+            <!-- Denúncias por rever -->
+            <div class="cartao cartao-preenchido">
+              <div class="linha-distribuida" style="margin-bottom:16px">
+                <h2 class="titulo-cartao">Denúncias por rever</h2>
+                <a class="botao-fantasma" routerLink="/admin/denuncias">Ver todas</a>
+              </div>
+
+              @if (denunciasRecentes().length === 0) {
+                <p class="texto-cartao">Sem denúncias pendentes. 🎉</p>
+              } @else {
+                <div class="lista-vertical">
+                  @for (d of denunciasRecentes(); track d.id) {
+                    <a class="item-lista admin-item-link" routerLink="/admin/denuncias">
+                      <img class="admin-utilizador-avatar" [src]="d.autorConteudoAvatar" [alt]="d.autorConteudo" />
+                      <div style="flex:1;min-width:0">
+                        <strong class="admin-utilizador-nome">{{ d.motivo }}</strong>
+                        <p class="admin-utilizador-email">
+                          {{ d.tipoAlvo === 'publicacao' ? 'Publicação' : 'Comentário' }} de {{ d.autorConteudo }}
+                        </p>
+                      </div>
+                      <span class="admin-estado-pilula admin-estado-pilula--pendente">Pendente</span>
+                    </a>
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Publicações em destaque -->
+            <div class="coluna">
+              <div class="cartao cartao-preenchido">
+                <h2 class="titulo-cartao" style="margin-bottom:16px">Publicações em destaque</h2>
+                <div class="lista-vertical">
+                  @for (p of publicacoesTopo(); track p.id) {
+                    <div class="item-lista">
+                      <img class="admin-utilizador-avatar" [src]="p.autorAvatar" [alt]="p.autor" />
+                      <div style="flex:1;min-width:0">
+                        <strong class="admin-utilizador-nome">{{ p.autor }}</strong>
+                        <p class="admin-utilizador-email" style="max-width:100%">{{ p.conteudo }}</p>
+                      </div>
+                      <span class="pilula pilula-secundaria">
+                        <span class="material-symbols-outlined" style="font-size:14px">favorite</span>
+                        {{ p.bazes }}
+                      </span>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <div class="cartao cartao-preenchido">
+                <h2 class="titulo-cartao" style="margin-bottom:16px">Bazes recentes</h2>
+                <div class="lista-vertical">
+                  @for (b of bazesRecentes(); track b.id) {
+                    <div class="item-lista">
+                      <span class="material-symbols-outlined" style="color:var(--cor-secundaria)">favorite</span>
+                      <p class="texto-cartao" style="margin:0;flex:1">
+                        <strong>{{ b.utilizador }}</strong> deu baze a
+                        <strong>{{ b.autorPublicacao }}</strong>
+                      </p>
+                      <span class="admin-utilizador-email">{{ formatarData(b.data) }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<app-menu-inferior-admin />

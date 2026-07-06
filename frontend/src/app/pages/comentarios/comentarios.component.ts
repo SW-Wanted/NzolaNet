@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
+import { ModalDenunciaComponent } from '../../components/modal-denuncia/modal-denuncia.component';
 import { Comment, Post } from '../../models/fase1.model';
 import { CommentService } from '../../services/comment.service';
 import { PostService } from '../../services/post.service';
@@ -19,7 +20,7 @@ interface ComentarioView {
 
 @Component({
   selector: 'app-comentarios',
-  imports: [CabecalhoComponent, MenuLateralComponent, ReactiveFormsModule, RouterLink],
+  imports: [CabecalhoComponent, MenuLateralComponent, ModalDenunciaComponent, ReactiveFormsModule, RouterLink],
   templateUrl: './comentarios.component.html',
   styleUrl: './comentarios.component.css',
 })
@@ -41,6 +42,14 @@ export class ComentariosComponent implements OnInit {
   submetido = false;
   editandoId = signal<number | null>(null);
   textoEdicao = signal('');
+
+  denunciaAberta = signal(false);
+  comentarioDenunciado = signal<ComentarioView | null>(null);
+
+  abrirDenuncia(comentario: ComentarioView): void {
+    this.comentarioDenunciado.set(comentario);
+    this.denunciaAberta.set(true);
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {

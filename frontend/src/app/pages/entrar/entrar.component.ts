@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { finalize } from 'rxjs';
+import { catchError, finalize, of, switchMap } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { mensagemErroHttp } from '../../utils/erro.utils';
 
@@ -43,6 +43,9 @@ export class EntrarComponent {
     this.authService
       .login({ email, password: senha })
       .pipe(
+        // Hidrata o perfil completo (inclui o papel/role) antes de navegar,
+        // garantindo que a área de administração fica disponível de imediato.
+        switchMap(() => this.authService.refreshCurrentUser().pipe(catchError(() => of(null)))),
         finalize(() => {
           this.emSubmissao = false;
           this.cdr.markForCheck();

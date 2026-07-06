@@ -1,0 +1,10 @@
+<app-modal [aberto]="aberto" [titulo]="titulo" (fechar)="cancelar.emit()">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:8px 0">
+    <span class="material-symbols-outlined" style="font-size:56px;color:var(--cor-erro)">{{ icone }}</span>
+    <p class="texto-cartao" style="font-size:15px">{{ mensagem }}</p>
+  </div>
+  <div class="linha-distribuida" style="margin-top:24px">
+    <button class="botao-contornado" type="button" (click)="cancelar.emit()">{{ rotuloCancelar }}</button>
+    <button class="botao-perigo" type="button" (click)="confirmar.emit()">{{ rotuloConfirmar }}</button>
+  </div>
+</app-modal>

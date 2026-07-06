@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { mensagemErroHttp } from '../../utils/erro.utils';
 
 @Component({
   selector: 'app-registo',
@@ -49,7 +50,8 @@ export class RegistoComponent {
         next: () => {
           void this.router.navigateByUrl('/feed');
         },
-        error: (err: unknown) => {
+        error: (err) => {
+          this.erroApi = mensagemErroHttp(err);
           this.emSubmissao = false;
           if (err instanceof HttpErrorResponse && err.status === 422)
             this.erroApi = 'Email já está em uso. Por favor, escolha outro.';

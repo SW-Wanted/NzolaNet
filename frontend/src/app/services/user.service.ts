@@ -28,10 +28,32 @@ export class UserService {
       .pipe(map((response) => this.toUser(response.data)));
   }
 
-  getUsers(): Observable<User[]> {
+  getUsers(perPage = 50): Observable<User[]> {
     return this.http
-      .get<ApiResponse<RawUser[] | { data: RawUser[] }>>(`${API_URL}/users`)
+      .get<ApiResponse<RawUser[] | { data: RawUser[] }>>(`${API_URL}/users?per_page=${perPage}`)
       .pipe(map((response) => this.unwrapArray(response.data).map((user) => this.toUser(user))));
+  }
+
+  getUsersPage(page: number, perPage = 20): Observable<{ users: User[]; lastPage: number; total: number; currentPage: number }> {
+    return this.http
+      .get<any>(`${API_URL}/users?page=${page}&per_page=${perPage}`)
+      .pipe(
+        map((response) => {
+          const outer = response?.data ?? response;
+          const items: RawUser[] = Array.isArray(outer)
+            ? outer
+            : Array.isArray(outer?.data)
+              ? outer.data
+              : [];
+          const meta = outer?.meta ?? outer;
+          return {
+            users: items.map((u: RawUser) => this.toUser(u)),
+            lastPage: meta?.last_page ?? 1,
+            total: meta?.total ?? items.length,
+            currentPage: meta?.current_page ?? page,
+          };
+        }),
+      );
   }
 
   updateProfile(data: Partial<User>): Observable<User> {
@@ -68,6 +90,19 @@ export class UserService {
       .delete<ApiResponse<null>>(`${API_URL}/users/${userId}/follow`)
       .pipe(map(() => undefined));
   }
+
+  getFollowers(userId: number): Observable<User[]> {
+    return this.http
+      .get<ApiResponse<RawUser[] | { data: RawUser[] }>>(`${API_URL}/users/${userId}/followers`)
+      .pipe(map((response) => this.unwrapArray(response.data).map((user) => this.toUser(user))));
+  }
+
+  getFollowing(userId: number): Observable<User[]> {
+    return this.http
+      .get<ApiResponse<RawUser[] | { data: RawUser[] }>>(`${API_URL}/users/${userId}/following`)
+      .pipe(map((response) => this.unwrapArray(response.data).map((user) => this.toUser(user))));
+  }
+
 
   private unwrapArray<T>(payload: T[] | { data: T[] }): T[] {
     return Array.isArray(payload) ? payload : payload.data;
