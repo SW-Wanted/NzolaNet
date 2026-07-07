@@ -40,6 +40,7 @@ Route::middleware(['auth:sanctum', 'active'])->group(function (): void {
     Route::get('users/{id}', [UserController::class, 'show'])->whereNumber('id');
     Route::put('users/profile', [UserController::class, 'updateProfile']);
     Route::post('users/profile-photo', [UserController::class, 'updateProfilePhoto']);
+    Route::post('users/cover-photo', [UserController::class, 'updateCoverPhoto']);
     Route::post('users/{id}/follow', [UserController::class, 'follow'])->whereNumber('id');
     Route::delete('users/{id}/follow', [UserController::class, 'unfollow'])->whereNumber('id');
     Route::get('users/{user}/followers', [UserController::class, 'followers']);

@@ -51,6 +51,17 @@ class UserService
         ]);
     }
 
+    public function updateCoverPhoto(User $user, UploadedFile $photo): User
+    {
+        if ($user->cover_photo) {
+            Storage::disk('public')->delete($user->cover_photo);
+        }
+
+        return $this->users->update($user, [
+            'cover_photo' => $photo->store('covers', 'public'),
+        ]);
+    }
+
     public function follow(FollowUserDTO $dto): void
     {
         if ($dto->followerId === $dto->followingId) {

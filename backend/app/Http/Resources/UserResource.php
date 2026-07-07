@@ -16,6 +16,8 @@ class UserResource extends JsonResource
             'email' => $this->when($request->user()?->id === $this->id || $request->user()?->isAdmin(), $this->email),
             'profile_photo' => $this->profile_photo,
             'profile_photo_url' => $this->profile_photo ? Storage::disk('public')->url($this->profile_photo) : null,
+            'cover_photo' => $this->cover_photo,
+            'cover_photo_url' => $this->cover_photo ? Storage::disk('public')->url($this->cover_photo) : null,
             'bio' => $this->bio,
             'is_private' => $this->is_private,
             'is_active' => $this->is_active,
