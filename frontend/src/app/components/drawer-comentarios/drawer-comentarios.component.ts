@@ -35,6 +35,7 @@ export class DrawerComentariosComponent implements OnChanges {
 
   @Input() aberto = false;
   @Input() publicacao: Publicacao | null = null;
+  @Input() comentarioDestacadoId: number | null = null;
   @Output() fechar = new EventEmitter<void>();
   @Output() contagemAlterada = new EventEmitter<{ postId: number; delta: number }>();
 
@@ -43,6 +44,7 @@ export class DrawerComentariosComponent implements OnChanges {
   readonly editandoComentarioId = signal<number | null>(null);
   readonly textoEdicaoComentario = signal('');
   comentarioSubmetido = false;
+  readonly enviandoComentario = signal(false);
   readonly erroComentario = signal('');
 
   readonly denunciaComentarioAberta = signal(false);
@@ -81,11 +83,12 @@ export class DrawerComentariosComponent implements OnChanges {
     this.comentarioSubmetido = true;
     this.erroComentario.set('');
 
-    if (!publicacao || this.formularioComentario.invalid) {
+    if (!publicacao || this.formularioComentario.invalid || this.enviandoComentario()) {
       this.formularioComentario.markAllAsTouched();
       return;
     }
 
+    this.enviandoComentario.set(true);
     this.comentariosApi
       .addComment(publicacao.id, this.formularioComentario.controls.texto.value.trim())
       .subscribe({
@@ -93,9 +96,13 @@ export class DrawerComentariosComponent implements OnChanges {
           this.comentarios.update((lista) => [...lista, this.toComentarioView(comentario)]);
           this.formularioComentario.reset();
           this.comentarioSubmetido = false;
+          this.enviandoComentario.set(false);
           this.atualizarContagem(publicacao.id, 1);
         },
-        error: (err) => this.erroComentario.set(mensagemErroHttp(err)),
+        error: (err) => {
+          this.erroComentario.set(mensagemErroHttp(err));
+          this.enviandoComentario.set(false);
+        },
       });
   }
 
@@ -156,8 +163,15 @@ export class DrawerComentariosComponent implements OnChanges {
     this.comentarios.set([]);
 
     this.comentariosApi.getComments(postId).subscribe({
-      next: (comentarios) =>
-        this.comentarios.set(comentarios.map((comentario) => this.toComentarioView(comentario))),
+      next: (comentarios) => {
+        this.comentarios.set(comentarios.map((comentario) => this.toComentarioView(comentario)));
+        if (this.comentarioDestacadoId) {
+          const id = this.comentarioDestacadoId;
+          setTimeout(() =>
+            document.getElementById(`comentario-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+          );
+        }
+      },
       error: (err) => this.erroComentario.set(mensagemErroHttp(err)),
     });
   }

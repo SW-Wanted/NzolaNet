@@ -107,6 +107,7 @@
                     class="botao-seguir-card"
                     [class.botao-seguir-card--activo]="pessoa.is_following"
                     type="button"
+                    [disabled]="seguirEmCurso(pessoa.id)"
                     (click)="alternarSeguir(pessoa)"
                   >
                     @if (pessoa.is_following) {

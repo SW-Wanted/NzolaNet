@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
 import { Notification } from '../../models/fase1.model';
@@ -14,6 +14,7 @@ import { mensagemErroHttp } from '../../utils/erro.utils';
 })
 export class NotificacoesComponent implements OnInit {
   private readonly notificationService = inject(NotificationService);
+  private readonly router = inject(Router);
 
   readonly notificacoes = signal<Notification[]>([]);
   readonly carregando = signal(true);
@@ -31,6 +32,37 @@ export class NotificacoesComponent implements OnInit {
         );
       },
     });
+  }
+
+  abrirNotificacao(n: Notification): void {
+    if (!n.is_read) {
+      this.marcarComoLida(n.id);
+    }
+
+    const remetenteId = n.sender?.id;
+    const postId = n.data['post_id'];
+    const comentarioId = n.data['comment_id'];
+
+    switch (n.type) {
+      case 'follow':
+        if (remetenteId) {
+          this.router.navigate(['/perfil/seguidores'], { queryParams: { destacar: remetenteId } });
+        }
+        break;
+      case 'like':
+        if (postId) {
+          this.router.navigate(['/feed'], { queryParams: { post: postId, bazes: remetenteId ?? null } });
+        }
+        break;
+      case 'comment':
+        if (postId) {
+          this.router.navigate(['/feed'], { queryParams: { post: postId, comentario: comentarioId ?? null } });
+        }
+        break;
+      case 'report_created':
+        this.router.navigateByUrl('/admin/denuncias');
+        break;
+    }
   }
 
   rotuloDeTipo(tipo: string): string {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { Observable, map, tap } from 'rxjs';
 import { Notification, User } from '../models/fase1.model';
 
 interface ApiResponse<T> {
@@ -37,6 +37,8 @@ const BACKEND_URL = 'http://localhost:8000';
 export class NotificationService {
   constructor(private readonly http: HttpClient) {}
 
+  readonly contagemNaoLidas = signal(0);
+
   getNotifications(): Observable<Notification[]> {
     return this.http
       .get<ApiResponse<RawNotification[] | PaginatedData<RawNotification>>>(
@@ -46,13 +48,17 @@ export class NotificationService {
         map((response) =>
           this.unwrapArray(response.data).map((n) => this.toNotification(n)),
         ),
+        tap((lista) => this.contagemNaoLidas.set(lista.filter((n) => !n.is_read).length)),
       );
   }
 
   markAsRead(id: number): Observable<Notification> {
     return this.http
       .patch<ApiResponse<RawNotification>>(`${API_URL}/notifications/${id}/read`, null)
-      .pipe(map((response) => this.toNotification(response.data)));
+      .pipe(
+        map((response) => this.toNotification(response.data)),
+        tap(() => this.contagemNaoLidas.update((valor) => Math.max(0, valor - 1))),
+      );
   }
 
   private unwrapArray<T>(payload: T[] | PaginatedData<T>): T[] {

@@ -43,6 +43,8 @@
                 <article
                   class="notificacao-item"
                   [class.notificacao-item--nao-lida]="!notificacao.is_read"
+                  [class.notificacao-item--clicavel]="notificacao.sender || notificacao.type === 'report_created'"
+                  (click)="abrirNotificacao(notificacao)"
                 >
                   <div class="notificacao-icone-tipo">
                     <span class="material-symbols-outlined">{{ iconeDeTipo(notificacao.type) }}</span>
@@ -66,7 +68,7 @@
                       class="botao-fantasma notificacao-botao-lida"
                       type="button"
                       title="Marcar como lida"
-                      (click)="marcarComoLida(notificacao.id)"
+                      (click)="$event.stopPropagation(); marcarComoLida(notificacao.id)"
                     >
                       <span class="material-symbols-outlined">done</span>
                     </button>

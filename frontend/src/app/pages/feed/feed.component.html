@@ -26,9 +26,6 @@
                 <button type="button" (click)="abrirCriarPost()">
                   <span class="material-symbols-outlined">smart_display</span>Vídeo
                 </button>
-                <button type="button" (click)="mostrarIndisponivel('Criação de eventos não disponível de momento.')">
-                  <span class="material-symbols-outlined">event</span>Evento
-                </button>
               </div>
             </div>
 
@@ -46,6 +43,12 @@
                 type="button"
                 (click)="selecionarFiltro('seguidos')"
               >Seguidos</button>
+              <button
+                class="feed-filtro"
+                [class.feed-filtro--activo]="filtroActivo() === 'populares'"
+                type="button"
+                (click)="selecionarFiltro('populares')"
+              >Mais bazados</button>
             </div>
 
             <!-- Refresh -->
@@ -84,6 +87,7 @@
               <app-cartao-publicacao
                 [publicacao]="publicacao"
                 [destacado]="publicacao.id === postDestacadoId()"
+                [likerDestacadoId]="publicacao.id === postDestacadoId() ? likerDestacadoId() : null"
                 (eliminar)="aoEliminar($event)"
                 (editar)="aoEditar($event)"
                 (abrirComentarios)="abrirComentarios($event)"
@@ -186,6 +190,7 @@
                         [class.botao-seguir-sugestao--activo]="sugestao.is_following"
                         type="button"
                         style="margin-left:auto"
+                        [disabled]="seguirEmCurso(sugestao.id)"
                         (click)="alternarSeguir(sugestao)"
                       >
                         @if (sugestao.is_following) {
@@ -215,9 +220,6 @@
   <a routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
 </nav>
 
-@if (toastIndisponivel()) {
-  <div class="toast-indisponivel">{{ toastIndisponivel() }}</div>
-}
 
 <!-- ── Modal: Criar Publicação ──────────────────────────────────── -->
 <app-modal titulo="Criar publicação" [aberto]="modalCriarAberto()" largura="grande" (fechar)="modalCriarAberto.set(false)">
@@ -281,6 +283,7 @@
 <app-drawer-comentarios
   [aberto]="drawerComentariosAberto()"
   [publicacao]="publicacaoActiva()"
+  [comentarioDestacadoId]="comentarioDestacadoId()"
   (fechar)="fecharComentarios()"
   (contagemAlterada)="aoContagemComentariosAlterada($event)"
 />

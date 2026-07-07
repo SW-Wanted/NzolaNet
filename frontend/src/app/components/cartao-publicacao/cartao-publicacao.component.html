@@ -205,7 +205,12 @@
   } @else {
     <div class="modal-likers-lista">
       @for (liker of likers(); track liker.id) {
-        <a class="modal-liker-item" [routerLink]="['/utilizador', liker.id]" (click)="modalBazesAberto.set(false)">
+        <a
+          class="modal-liker-item"
+          [class.modal-liker-item--destacado]="liker.id === likerDestacadoId"
+          [routerLink]="['/utilizador', liker.id]"
+          (click)="modalBazesAberto.set(false)"
+        >
           <img
             class="modal-liker-avatar"
             [src]="liker.profile_photo || 'https://ui-avatars.com/api/?background=111827&color=ffffff&name=' + liker.name"

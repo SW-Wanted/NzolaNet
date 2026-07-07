@@ -64,6 +64,12 @@ export class PostService {
       .pipe(map((response) => this.unwrapArray(response.data).map((post) => this.toPost(post))));
   }
 
+  getUserPosts(userId: number): Observable<Post[]> {
+    return this.http
+      .get<ApiResponse<RawPost[] | PaginatedData<RawPost>>>(`${API_URL}/users/${userId}/posts`)
+      .pipe(map((response) => this.unwrapArray(response.data).map((post) => this.toPost(post))));
+  }
+
   createPost(content: string, mediaFile?: File): Observable<Post> {
     const formData = new FormData();
     formData.append('content', content);

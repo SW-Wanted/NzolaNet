@@ -22,15 +22,6 @@
               <div class="estatistica-separador"></div>
               <div class="skeleton skeleton-stat"></div>
             </div>
-          } @else if (perfilPrivado()) {
-            <div class="cartao cartao-preenchido perfil-pub-estado perfil-pub-erro">
-              <span class="material-symbols-outlined perfil-pub-estado-icone">lock</span>
-              <p class="perfil-pub-estado-titulo">Este perfil é privado</p>
-              <p class="texto-cartao">Siga este utilizador para poder ver as suas publicações e informações.</p>
-              <a class="botao-contornado" routerLink="/feed" style="margin-top: 16px">
-                <span class="material-symbols-outlined">home</span>Voltar ao feed
-              </a>
-            </div>
           } @else if (erro()) {
             <div class="cartao cartao-preenchido perfil-pub-estado perfil-pub-erro">
               <span class="material-symbols-outlined perfil-pub-estado-icone">person_off</span>
@@ -102,7 +93,15 @@
                 <h2 class="titulo-cartao">Publicações de {{ u.name }}</h2>
               </div>
 
-              @if (erroPosts()) {
+              @if (conteudoPrivado()) {
+                <div class="cartao cartao-preenchido pub-estado pub-estado-vazio">
+                  <span class="material-symbols-outlined pub-estado-icone">lock</span>
+                  <p class="pub-estado-titulo">Este conteúdo é privado</p>
+                  <p class="texto-cartao">
+                    Siga {{ u.name }} para poder ver as suas publicações.
+                  </p>
+                </div>
+              } @else if (erroPosts()) {
                 <div class="cartao cartao-preenchido pub-estado pub-estado-erro">
                   <span class="material-symbols-outlined pub-estado-icone">wifi_off</span>
                   <p class="pub-estado-titulo">Não foi possível carregar as publicações</p>

@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
@@ -53,7 +52,6 @@ export class PerfilPublicoComponent implements OnInit {
   utilizador = signal<User | null>(null);
   carregando = signal(true);
   erro = signal('');
-  perfilPrivado = signal(false);
   emSeguindo = signal(false);
 
   publicacoes = signal<Publicacao[]>([]);
@@ -65,6 +63,10 @@ export class PerfilPublicoComponent implements OnInit {
 
   readonly euProprioId = computed(() => this.auth.currentUser()?.id);
   readonly ehEuProprio = computed(() => this.utilizador()?.id === this.euProprioId());
+  readonly conteudoPrivado = computed(() => {
+    const u = this.utilizador();
+    return Boolean(u?.is_private) && !u?.is_following && !this.ehEuProprio();
+  });
 
   readonly avatar = computed(() => {
     const u = this.utilizador();
@@ -84,12 +86,8 @@ export class PerfilPublicoComponent implements OnInit {
         this.carregando.set(false);
         this.carregarPublicacoes(user.id);
       },
-      error: (err: HttpErrorResponse) => {
-        if (err.status === 403) {
-          this.perfilPrivado.set(true);
-        } else {
-          this.erro.set('Não foi possível carregar o perfil.');
-        }
+      error: () => {
+        this.erro.set('Não foi possível carregar o perfil.');
         this.carregando.set(false);
       },
     });
@@ -104,6 +102,8 @@ export class PerfilPublicoComponent implements OnInit {
       ? this.userService.unfollow(user.id)
       : this.userService.toggleFollow(user.id);
 
+    const eraPrivadoSemVer = this.conteudoPrivado();
+
     req.subscribe({
       next: () => {
         this.utilizador.update((u) =>
@@ -116,6 +116,9 @@ export class PerfilPublicoComponent implements OnInit {
             : u,
         );
         this.emSeguindo.set(false);
+        if (eraPrivadoSemVer) {
+          this.carregarPublicacoes(user.id);
+        }
       },
       error: () => this.emSeguindo.set(false),
     });
@@ -189,10 +192,9 @@ export class PerfilPublicoComponent implements OnInit {
     this.carregandoPosts.set(true);
     this.erroPosts.set('');
 
-    this.postService.getGlobalFeed().subscribe({
+    this.postService.getUserPosts(userId).subscribe({
       next: (posts) => {
-        const doUtilizador = posts.filter((p) => p.author.id === userId);
-        this.publicacoes.set(doUtilizador.map((p) => this.toPublicacao(p)));
+        this.publicacoes.set(posts.map((p) => this.toPublicacao(p)));
         this.carregandoPosts.set(false);
       },
       error: (err) => {

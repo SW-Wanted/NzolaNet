@@ -17,6 +17,9 @@
       @if (isAuthenticated()) {
         <button class="cabecalho__botao-icone" type="button" routerLink="/notificacoes" aria-label="Notificações">
           <span class="material-symbols-outlined">notifications</span>
+          @if (contagemNaoLidas() > 0) {
+            <span class="cabecalho__badge-notificacao">{{ contagemNaoLidas() > 9 ? '9+' : contagemNaoLidas() }}</span>
+          }
         </button>
 
         <div class="cabecalho__utilizador">

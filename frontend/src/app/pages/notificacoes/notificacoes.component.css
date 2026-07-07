@@ -45,6 +45,15 @@
   border-bottom: none;
 }
 
+.notificacao-item--clicavel {
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.notificacao-item--clicavel:hover {
+  background-color: var(--cor-container);
+}
+
 .notificacao-item--nao-lida {
   background-color: color-mix(in srgb, var(--cor-primaria) 6%, transparent);
   margin: 0 -16px;

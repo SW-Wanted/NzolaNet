@@ -291,6 +291,11 @@
   background: var(--cor-container);
 }
 
+.modal-liker-item--destacado {
+  background: var(--cor-container);
+  animation: cartao-publicacao-destaque-pulso 2s ease-out 1;
+}
+
 .modal-liker-avatar {
   width: 36px;
   height: 36px;

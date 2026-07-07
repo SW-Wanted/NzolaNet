@@ -69,8 +69,13 @@ export class SugestoesConexaoComponent implements OnInit, OnDestroy {
     });
   }
 
+  private readonly idsSeguirEmCurso = new Set<number>();
+
   alternarSeguir(pessoa: User): void {
+    if (this.idsSeguirEmCurso.has(pessoa.id)) return;
+    this.idsSeguirEmCurso.add(pessoa.id);
     this.feedback.set('');
+
     const request = pessoa.is_following
       ? this.users.unfollow(pessoa.id)
       : this.users.toggleFollow(pessoa.id);
@@ -91,9 +96,17 @@ export class SugestoesConexaoComponent implements OnInit, OnDestroy {
         this.feedback.set(
           pessoa.is_following ? 'Deixou de seguir este utilizador.' : 'Utilizador seguido com sucesso.',
         );
+        this.idsSeguirEmCurso.delete(pessoa.id);
       },
-      error: () => this.feedback.set('Não foi possível atualizar esta ligação. Tente novamente.'),
+      error: () => {
+        this.feedback.set('Não foi possível atualizar esta ligação. Tente novamente.');
+        this.idsSeguirEmCurso.delete(pessoa.id);
+      },
     });
+  }
+
+  seguirEmCurso(id: number): boolean {
+    return this.idsSeguirEmCurso.has(id);
   }
 
   avatar(user: User): string {

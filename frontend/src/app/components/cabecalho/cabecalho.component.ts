@@ -1,6 +1,7 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { NotificationService } from '../../services/notification.service';
 import { FormsModule } from '@angular/forms';
 
 function avatarFallback(name: string): string {
@@ -13,16 +14,24 @@ function avatarFallback(name: string): string {
   templateUrl: './cabecalho.component.html',
   styleUrl: './cabecalho.component.css',
 })
-export class CabecalhoComponent {
+export class CabecalhoComponent implements OnInit {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly notificationService = inject(NotificationService);
 
   readonly utilizador = computed(() => this.auth.currentUser());
   readonly nomeUtilizador = computed(() => this.utilizador()?.name ?? 'Utilizador');
   readonly avatar = computed(() => this.utilizador()?.profile_photo ?? avatarFallback(this.nomeUtilizador()));
   readonly isAuthenticated = computed(() => this.auth.isAuthenticated());
+  readonly contagemNaoLidas = this.notificationService.contagemNaoLidas;
 
   termoPesquisa = signal('');
+
+  ngOnInit(): void {
+    if (this.isAuthenticated()) {
+      this.notificationService.getNotifications().subscribe();
+    }
+  }
 
   pesquisar(): void {
     const termo = this.termoPesquisa().trim();

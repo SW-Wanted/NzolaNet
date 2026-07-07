@@ -7,6 +7,19 @@
   gap: 14px;
 }
 
+.seguidor-cartao--destacado {
+  animation: seguidor-destaque-pulso 2s ease-out 1;
+}
+
+@keyframes seguidor-destaque-pulso {
+  0% {
+    box-shadow: 0 0 0 3px var(--cor-primaria);
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
 .seguidor-info {
   min-width: 0;
 }

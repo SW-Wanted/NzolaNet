@@ -37,16 +37,6 @@ const BACKEND_URL = 'http://localhost:8000';
 export class CommentService {
   constructor(private readonly http: HttpClient) {}
 
-  getAllComments(): Observable<Comment[]> {
-    return this.http
-      .get<ApiResponse<RawComment[] | PaginatedData<RawComment>>>(`${API_URL}/admin/comments`)
-      .pipe(
-        map((response) =>
-          this.unwrapArray(response.data).map((comment) => this.toComment(comment)),
-        ),
-      );
-  }
-
   getComments(postId: number): Observable<Comment[]> {
     return this.http
       .get<
@@ -74,12 +64,6 @@ export class CommentService {
   deleteComment(id: number): Observable<void> {
     return this.http
       .delete<ApiResponse<null>>(`${API_URL}/comments/${id}`)
-      .pipe(map(() => undefined));
-  }
-
-  adminDeleteComment(id: number): Observable<void> {
-    return this.http
-      .delete<ApiResponse<null>>(`${API_URL}/admin/comments/${id}`)
       .pipe(map(() => undefined));
   }
 

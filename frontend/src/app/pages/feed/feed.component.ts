@@ -44,9 +44,11 @@ export class FeedComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
 
   postDestacadoId = signal<number | null>(null);
+  likerDestacadoId = signal<number | null>(null);
+  comentarioDestacadoId = signal<number | null>(null);
   private destaqueTimer: ReturnType<typeof setTimeout> | undefined;
 
-  filtroActivo = signal<'todos' | 'seguidos'>('todos');
+  filtroActivo = signal<'todos' | 'seguidos' | 'populares'>('todos');
   sugestoes = signal<User[]>([]);
 
   modalCriarAberto = signal(false);
@@ -56,8 +58,6 @@ export class FeedComponent implements OnInit {
   previewMedia = signal('');
   tipoMedia = signal<'imagem' | 'video'>('imagem');
   private mediaSelecionada: File | undefined;
-  toastIndisponivel = signal('');
-  private toastTimer: ReturnType<typeof setTimeout> | undefined;
 
   readonly formularioCriar = this.fb.nonNullable.group({
     conteudo: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(5000)]],
@@ -97,12 +97,17 @@ export class FeedComponent implements OnInit {
     this.carregarSugestoes();
   }
 
-  selecionarFiltro(filtro: 'todos' | 'seguidos'): void {
+  selecionarFiltro(filtro: 'todos' | 'seguidos' | 'populares'): void {
     this.filtroActivo.set(filtro);
     this.carregarFeed();
   }
 
+  private readonly idsSeguirEmCurso = new Set<number>();
+
   alternarSeguir(sugestao: User): void {
+    if (this.idsSeguirEmCurso.has(sugestao.id)) return;
+    this.idsSeguirEmCurso.add(sugestao.id);
+
     const request = sugestao.is_following
       ? this.userService.unfollow(sugestao.id)
       : this.userService.toggleFollow(sugestao.id);
@@ -114,14 +119,14 @@ export class FeedComponent implements OnInit {
             u.id === sugestao.id ? { ...u, is_following: !sugestao.is_following } : u,
           ),
         );
+        this.idsSeguirEmCurso.delete(sugestao.id);
       },
+      error: () => this.idsSeguirEmCurso.delete(sugestao.id),
     });
   }
 
-  mostrarIndisponivel(mensagem = 'Funcionalidade não disponível de momento.'): void {
-    if (this.toastTimer) clearTimeout(this.toastTimer);
-    this.toastIndisponivel.set(mensagem);
-    this.toastTimer = setTimeout(() => this.toastIndisponivel.set(''), 3000);
+  seguirEmCurso(id: number): boolean {
+    return this.idsSeguirEmCurso.has(id);
   }
 
   abrirCriarPost(): void {
@@ -203,6 +208,7 @@ export class FeedComponent implements OnInit {
   fecharComentarios(): void {
     this.drawerComentariosAberto.set(false);
     this.publicacaoActiva.set(null);
+    this.comentarioDestacadoId.set(null);
   }
 
   aoContagemComentariosAlterada(evento: { postId: number; delta: number }): void {
@@ -278,7 +284,11 @@ export class FeedComponent implements OnInit {
 
     request.subscribe({
       next: (posts) => {
-        this.publicacoes.set(posts.map((post) => this.toPublicacao(post)));
+        let publicacoes = posts.map((post) => this.toPublicacao(post));
+        if (this.filtroActivo() === 'populares') {
+          publicacoes = [...publicacoes].sort((a, b) => b.contagemBazes - a.contagemBazes);
+        }
+        this.publicacoes.set(publicacoes);
         this.carregandoFeed.set(false);
         this.destacarPublicacaoPartilhada();
       },
@@ -290,16 +300,29 @@ export class FeedComponent implements OnInit {
   }
 
   private destacarPublicacaoPartilhada(): void {
-    const idParam = this.route.snapshot.queryParamMap.get('post');
+    const params = this.route.snapshot.queryParamMap;
+    const idParam = params.get('post');
     if (!idParam) return;
 
     const id = Number(idParam);
-    if (!this.publicacoes().some((p) => p.id === id)) return;
+    const publicacao = this.publicacoes().find((p) => p.id === id);
+    if (!publicacao) return;
 
     if (this.destaqueTimer) clearTimeout(this.destaqueTimer);
     this.postDestacadoId.set(id);
     setTimeout(() => document.getElementById(`publicacao-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
     this.destaqueTimer = setTimeout(() => this.postDestacadoId.set(null), 2500);
+
+    const bazesParam = params.get('bazes');
+    if (bazesParam) {
+      this.likerDestacadoId.set(Number(bazesParam));
+    }
+
+    const comentarioParam = params.get('comentario');
+    if (comentarioParam) {
+      this.comentarioDestacadoId.set(Number(comentarioParam));
+      this.abrirComentarios(publicacao);
+    }
   }
 
   private carregarSugestoes(): void {

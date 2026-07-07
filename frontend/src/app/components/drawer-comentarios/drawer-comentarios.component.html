@@ -29,7 +29,11 @@
     <!-- Comments list -->
     <div class="drawer-comentarios-lista">
       @for (comentario of comentarios(); track comentario.id) {
-        <article class="comentario">
+        <article
+          class="comentario"
+          [id]="'comentario-' + comentario.id"
+          [class.comentario--destacado]="comentario.id === comentarioDestacadoId"
+        >
           <img class="comentario__avatar" [src]="comentario.autorAvatar" [alt]="comentario.autor" />
           <div class="comentario__conteudo">
             <strong class="comentario__autor">{{ comentario.autor }}</strong>
@@ -84,7 +88,7 @@
         formControlName="texto"
         placeholder="Escrever comentário..."
       />
-      <button class="botao-destaque" type="submit">
+      <button class="botao-destaque" type="submit" [disabled]="enviandoComentario()">
         <span class="material-symbols-outlined">send</span>
       </button>
     </form>

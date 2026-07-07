@@ -95,6 +95,22 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
+  border-radius: 10px;
+}
+
+.comentario--destacado {
+  animation: comentario-destaque-pulso 2s ease-out 1;
+}
+
+@keyframes comentario-destaque-pulso {
+  0% {
+    box-shadow: 0 0 0 3px var(--cor-primaria);
+    background: var(--cor-container);
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+    background: transparent;
+  }
 }
 
 .comentario__avatar {

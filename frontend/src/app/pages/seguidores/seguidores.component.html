@@ -51,7 +51,11 @@
           } @else {
             <div class="grelha-cartoes">
               @for (seguidor of seguidores(); track seguidor.id) {
-                <article class="cartao cartao-preenchido seguidor-cartao">
+                <article
+                  class="cartao cartao-preenchido seguidor-cartao"
+                  [id]="'seguidor-' + seguidor.id"
+                  [class.seguidor-cartao--destacado]="seguidor.id === destacarId()"
+                >
                   <a [routerLink]="['/utilizador', seguidor.id]">
                     <img [src]="avatar(seguidor)" [alt]="seguidor.name" class="avatar-redondo" />
                   </a>

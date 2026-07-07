@@ -10,7 +10,7 @@
 
 .atalhos-publicacao {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   margin-top: 18px;
   padding-top: 18px;
@@ -431,28 +431,5 @@
 .skeleton-aside-sub {
   height: 11px;
   width: 45%;
-}
-
-/* ── Toast / Snackbar ───────────────────────────── */
-.toast-indisponivel {
-  position: fixed;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #333;
-  color: #fff;
-  padding: 12px 24px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 500;
-  z-index: 9999;
-  white-space: nowrap;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-  animation: toast-in 220ms ease;
-}
-
-@keyframes toast-in {
-  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
-  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 

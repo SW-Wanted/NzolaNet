@@ -46,6 +46,7 @@ export class CartaoPublicacaoComponent implements OnInit, OnChanges {
 
   @Input() publicacao!: Publicacao;
   @Input() destacado = false;
+  @Input() likerDestacadoId: number | null = null;
   @Output() eliminar = new EventEmitter<number>();
   @Output() editar = new EventEmitter<PublicacaoEditada>();
   @Output() abrirComentarios = new EventEmitter<Publicacao>();
@@ -78,6 +79,9 @@ export class CartaoPublicacaoComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['publicacao']) {
       this.sincronizarEstado();
+    }
+    if (changes['likerDestacadoId'] && this.likerDestacadoId && !this.modalBazesAberto()) {
+      this.abrirBazes();
     }
   }
 

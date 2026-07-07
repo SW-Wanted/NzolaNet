@@ -227,6 +227,7 @@ export class AuthService {
       following_count: user.following_count ?? 0,
       posts_count: user.posts_count ?? 0,
       role: user.role ?? 'user',
+      created_at: user.created_at ?? undefined,
     };
   }
 

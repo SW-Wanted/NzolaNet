@@ -14,6 +14,7 @@ export interface User {
   following_count: number;
   posts_count: number;
   role: UserRole;
+  created_at?: string;
 }
 
 export interface Post {
