@@ -194,6 +194,7 @@
 <app-modal-denuncia
   [aberto]="modalDenunciaAberto()"
   tipoAlvo="publicacao"
+  [alvoId]="publicacao.id"
   [nomeAlvo]="publicacao.autorNome"
   (fechar)="modalDenunciaAberto.set(false)"
 />

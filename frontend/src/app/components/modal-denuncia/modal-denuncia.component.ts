@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, computed, signal } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
-import { MOTIVOS_DENUNCIA } from '../../mock/admin-mock.data';
+import { ReportService } from '../../services/report.service';
+import { mensagemErroHttp } from '../../utils/erro.utils';
 
 export interface DadosDenuncia {
   motivo: string;
@@ -21,21 +22,26 @@ export interface DadosDenuncia {
   styleUrl: './modal-denuncia.component.css',
 })
 export class ModalDenunciaComponent {
+  constructor(private readonly reports: ReportService) {}
+
   @Input() aberto = false;
   /** Tipo de conteúdo a denunciar (afeta apenas os textos apresentados). */
   @Input() tipoAlvo: 'publicacao' | 'comentario' = 'publicacao';
+  @Input() alvoId: number | null = null;
   /** Nome opcional do autor do conteúdo denunciado. */
   @Input() nomeAlvo = '';
 
   @Output() fechar = new EventEmitter<void>();
   @Output() enviar = new EventEmitter<DadosDenuncia>();
 
-  readonly motivos = MOTIVOS_DENUNCIA;
+  readonly motivos = ['Spam', 'Discurso de ódio', 'Assédio', 'Conteúdo ofensivo', 'Outro'];
 
   motivoSelecionado = signal('');
   descricao = signal('');
   submetido = signal(false);
   enviado = signal(false);
+  enviando = signal(false);
+  erro = signal('');
 
   readonly titulo = computed(() =>
     this.tipoAlvo === 'comentario' ? 'Denunciar comentário' : 'Denunciar publicação',
@@ -53,14 +59,38 @@ export class ModalDenunciaComponent {
       return;
     }
 
-    this.enviar.emit({
+    const dados = {
       motivo: this.motivoSelecionado(),
       descricao: this.descricao().trim(),
-    });
-    this.enviado.set(true);
+    };
 
-    // Fecha automaticamente após confirmar visualmente o envio.
-    setTimeout(() => this.aoFechar(), 1600);
+    if (!this.alvoId) {
+      this.enviar.emit(dados);
+      this.enviado.set(true);
+      setTimeout(() => this.aoFechar(), 1600);
+      return;
+    }
+
+    this.enviando.set(true);
+    this.erro.set('');
+
+    const request =
+      this.tipoAlvo === 'comentario'
+        ? this.reports.reportComment(this.alvoId, dados)
+        : this.reports.reportPost(this.alvoId, dados);
+
+    request.subscribe({
+      next: () => {
+        this.enviar.emit(dados);
+        this.enviado.set(true);
+        this.enviando.set(false);
+        setTimeout(() => this.aoFechar(), 1600);
+      },
+      error: (err) => {
+        this.erro.set(mensagemErroHttp(err));
+        this.enviando.set(false);
+      },
+    });
   }
 
   private reiniciar(): void {
@@ -68,5 +98,7 @@ export class ModalDenunciaComponent {
     this.descricao.set('');
     this.submetido.set(false);
     this.enviado.set(false);
+    this.enviando.set(false);
+    this.erro.set('');
   }
 }

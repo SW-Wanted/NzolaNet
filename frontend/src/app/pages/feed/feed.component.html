@@ -383,6 +383,7 @@
 <app-modal-denuncia
   [aberto]="denunciaComentarioAberta()"
   tipoAlvo="comentario"
+  [alvoId]="comentarioDenunciado()?.id ?? null"
   [nomeAlvo]="comentarioDenunciado()?.autor ?? ''"
   (fechar)="denunciaComentarioAberta.set(false)"
 />

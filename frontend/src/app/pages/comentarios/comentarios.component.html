@@ -95,6 +95,7 @@
 <app-modal-denuncia
   [aberto]="denunciaAberta()"
   tipoAlvo="comentario"
+  [alvoId]="comentarioDenunciado()?.id ?? null"
   [nomeAlvo]="comentarioDenunciado()?.autor ?? ''"
   (fechar)="denunciaAberta.set(false)"
 />
