@@ -1,16 +1,11 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CabecalhoAdminComponent } from '../../../components/cabecalho-admin/cabecalho-admin.component';
 import { CartaoEstatisticaComponent } from '../../../components/cartao-estatistica/cartao-estatistica.component';
 import { MenuLateralAdminComponent } from '../../../components/menu-lateral-admin/menu-lateral-admin.component';
 import { MenuInferiorAdminComponent } from '../../../components/menu-inferior-admin/menu-inferior-admin.component';
-import {
-  BAZES_MOCK,
-  COMENTARIOS_MOCK,
-  DENUNCIAS_MOCK,
-  PUBLICACOES_MOCK,
-  UTILIZADORES_MOCK,
-} from '../../../mock/admin-mock.data';
+import { AdminService } from '../../../services/admin.service';
+import { mensagemErroHttp } from '../../../utils/erro.utils';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -24,22 +19,55 @@ import {
   templateUrl: './admin-dashboard.component.html',
   styleUrl: '../admin-comum.css',
 })
-export class AdminDashboardComponent {
-  readonly totalUtilizadores = UTILIZADORES_MOCK.length;
-  readonly totalPublicacoes = PUBLICACOES_MOCK.length;
-  readonly totalComentarios = COMENTARIOS_MOCK.length;
-  readonly totalBazes = PUBLICACOES_MOCK.reduce((soma, p) => soma + p.bazes, 0);
-  readonly totalDenuncias = DENUNCIAS_MOCK.length;
-  readonly denunciasPendentes = DENUNCIAS_MOCK.filter((d) => d.estado === 'pendente').length;
+export class AdminDashboardComponent implements OnInit {
+  private readonly admin = inject(AdminService);
 
-  readonly bazesRecentes = signal(BAZES_MOCK.slice(0, 5));
-  readonly denunciasRecentes = signal(
-    DENUNCIAS_MOCK.filter((d) => d.estado === 'pendente').slice(0, 3),
-  );
+  readonly carregando = signal(true);
+  readonly erro = signal('');
+  readonly totais = signal({
+    users: 0,
+    active_users: 0,
+    inactive_users: 0,
+    posts: 0,
+    comments: 0,
+    likes: 0,
+    reports: 0,
+    pending_reports: 0,
+  });
 
-  readonly publicacoesTopo = computed(() =>
-    [...PUBLICACOES_MOCK].sort((a, b) => b.bazes - a.bazes).slice(0, 3),
-  );
+  readonly bazesRecentes = signal<any[]>([]);
+  readonly denunciasRecentes = signal<any[]>([]);
+  readonly publicacoesTopo = signal<any[]>([]);
+
+  readonly totalUtilizadores = computed(() => this.totais().users);
+  readonly totalPublicacoes = computed(() => this.totais().posts);
+  readonly totalComentarios = computed(() => this.totais().comments);
+  readonly totalBazes = computed(() => this.totais().likes);
+  readonly totalDenuncias = computed(() => this.totais().reports);
+  readonly denunciasPendentes = computed(() => this.totais().pending_reports);
+
+  ngOnInit(): void {
+    this.carregarDashboard();
+  }
+
+  carregarDashboard(): void {
+    this.carregando.set(true);
+    this.erro.set('');
+
+    this.admin.getDashboard().subscribe({
+      next: (dashboard) => {
+        this.totais.set(dashboard.totals);
+        this.denunciasRecentes.set(dashboard.recent_reports);
+        this.publicacoesTopo.set(dashboard.top_posts);
+        this.bazesRecentes.set(dashboard.recent_likes);
+        this.carregando.set(false);
+      },
+      error: (err) => {
+        this.erro.set(mensagemErroHttp(err));
+        this.carregando.set(false);
+      },
+    });
+  }
 
   formatarData(valor: string): string {
     const data = new Date(valor);

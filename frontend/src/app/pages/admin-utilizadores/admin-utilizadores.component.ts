@@ -5,7 +5,8 @@ import { MenuLateralAdminComponent } from '../../components/menu-lateral-admin/m
 import { MenuInferiorAdminComponent } from '../../components/menu-inferior-admin/menu-inferior-admin.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { User } from '../../models/fase1.model';
-import { UserService } from '../../services/user.service';
+import { AdminService } from '../../services/admin.service';
+import { mensagemErroHttp } from '../../utils/erro.utils';
 
 @Component({
   selector: 'app-admin-utilizadores',
@@ -20,7 +21,7 @@ import { UserService } from '../../services/user.service';
   styleUrl: './admin-utilizadores.component.css',
 })
 export class AdminUtilizadoresComponent implements OnInit {
-  private readonly userService = inject(UserService);
+  private readonly admin = inject(AdminService);
 
   utilizadores = signal<User[]>([]);
   carregando = signal(true);
@@ -55,7 +56,7 @@ export class AdminUtilizadoresComponent implements OnInit {
   carregarPagina(pagina: number): void {
     this.carregando.set(true);
     this.erro.set('');
-    this.userService.getUsersPage(pagina, this.POR_PAGINA).subscribe({
+    this.admin.getUsersPage(pagina, this.POR_PAGINA).subscribe({
       next: ({ users, lastPage, total }) => {
         this.utilizadores.set(users);
         this.paginaActual.set(pagina);
@@ -63,8 +64,8 @@ export class AdminUtilizadoresComponent implements OnInit {
         this.total.set(total);
         this.carregando.set(false);
       },
-      error: () => {
-        this.erro.set('Não foi possível carregar os utilizadores. Verifique a sua ligação e tente novamente.');
+      error: (err) => {
+        this.erro.set(mensagemErroHttp(err));
         this.carregando.set(false);
       },
     });
@@ -86,6 +87,42 @@ export class AdminUtilizadoresComponent implements OnInit {
   mostrarAviso(mensagem: string): void {
     this.mensagemAviso.set(mensagem);
     this.modalAvisoAberto.set(true);
+  }
+
+  alternarEstado(user: User): void {
+    this.erro.set('');
+
+    this.admin.setUserActive(user.id, !(user.is_active ?? true)).subscribe({
+      next: (atualizado) => {
+        this.utilizadores.update((lista) =>
+          lista.map((u) => (u.id === atualizado.id ? atualizado : u)),
+        );
+        const detalhe = this.utilizadorDetalhe();
+        if (detalhe?.id === atualizado.id) {
+          this.utilizadorDetalhe.set(atualizado);
+        }
+      },
+      error: (err) => this.mostrarAviso(mensagemErroHttp(err)),
+    });
+  }
+
+  eliminarUtilizador(user: User): void {
+    const confirmado = window.confirm(`Eliminar definitivamente a conta de ${user.name}?`);
+    if (!confirmado) {
+      return;
+    }
+
+    this.admin.deleteUser(user.id).subscribe({
+      next: () => {
+        this.utilizadores.update((lista) => lista.filter((u) => u.id !== user.id));
+        this.total.update((valor) => Math.max(0, valor - 1));
+        if (this.utilizadorDetalhe()?.id === user.id) {
+          this.modalDetalheAberto.set(false);
+          this.utilizadorDetalhe.set(null);
+        }
+      },
+      error: (err) => this.mostrarAviso(mensagemErroHttp(err)),
+    });
   }
 
   avatar(user: User): string {

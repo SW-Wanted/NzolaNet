@@ -35,7 +35,21 @@
             </div>
           </div>
 
-          @if (filtradas().length === 0) {
+          @if (erro()) {
+            <div class="cartao cartao-preenchido admin-estado">
+              <span class="material-symbols-outlined admin-estado-icone">error_outline</span>
+              <p class="admin-estado-titulo">Erro ao carregar denúncias</p>
+              <p class="texto-cartao">{{ erro() }}</p>
+              <button class="botao-contornado" type="button" style="margin-top:16px" (click)="carregarDenuncias()">
+                <span class="material-symbols-outlined">refresh</span>Tentar novamente
+              </button>
+            </div>
+          } @else if (carregando()) {
+            <div class="cartao cartao-preenchido admin-estado">
+              <span class="material-symbols-outlined admin-estado-icone">hourglass_top</span>
+              <p class="admin-estado-titulo">A carregar denúncias...</p>
+            </div>
+          } @else if (filtradas().length === 0) {
             <div class="cartao cartao-preenchido admin-estado">
               <span class="material-symbols-outlined admin-estado-icone">verified_user</span>
               <p class="admin-estado-titulo">Sem denúncias para mostrar</p>
