@@ -22,9 +22,9 @@ class LikeService
             ]);
         }
 
-        $this->likes->create($userId, $post->id);
+        $like = $this->likes->create($userId, $post->id);
 
-        if ($post->user_id !== $userId) {
+        if ($like->wasRecentlyCreated && $post->user_id !== $userId) {
             event(new PostLiked($userId, $post->id, $post->user_id));
         }
 

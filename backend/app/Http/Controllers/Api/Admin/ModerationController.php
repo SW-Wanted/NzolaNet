@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Enums\UserRole;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\CommentResource;
 use App\Http\Resources\PostResource;
@@ -148,6 +149,32 @@ class ModerationController extends ApiController
         return $this->success(
             new UserResource($user->refresh()->loadCount(['followers', 'following', 'posts'])),
             $user->is_active ? 'Utilizador ativado com sucesso' : 'Utilizador desativado com sucesso'
+        );
+    }
+
+    public function setUserRole(Request $request, User $user): JsonResponse
+    {
+        $data = $request->validate([
+            'role' => ['required', Rule::in([UserRole::Admin->value, UserRole::User->value])],
+        ]);
+
+        if ($request->user()->is($user)) {
+            throw ValidationException::withMessages([
+                'user' => ['Nao pode alterar a propria funcao administrativa.'],
+            ]);
+        }
+
+        if ($user->created_at->lessThanOrEqualTo($request->user()->created_at)) {
+            throw ValidationException::withMessages([
+                'user' => ['So pode alterar a funcao de utilizadores criados depois da sua conta.'],
+            ]);
+        }
+
+        $user->forceFill(['role' => $data['role']])->save();
+
+        return $this->success(
+            new UserResource($user->refresh()->loadCount(['followers', 'following', 'posts'])),
+            'Funcao do utilizador atualizada com sucesso'
         );
     }
 

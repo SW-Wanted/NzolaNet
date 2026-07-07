@@ -18,7 +18,7 @@ interface UserRepositoryInterface
 
     public function update(User $user, array $data): User;
 
-    public function follow(int $followerId, int $followingId): void;
+    public function follow(int $followerId, int $followingId): bool;
 
     public function unfollow(int $followerId, int $followingId): void;
 

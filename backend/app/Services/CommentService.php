@@ -24,7 +24,7 @@ class CommentService
         ]);
 
         if ($comment->post->user_id !== $dto->userId) {
-            event(new CommentCreated($comment->id, $dto->userId, $comment->post->user_id));
+            event(new CommentCreated($comment->id, $dto->postId, $dto->userId, $comment->post->user_id));
         }
 
         return $comment;

@@ -42,9 +42,11 @@ class EloquentUserRepository implements UserRepositoryInterface
         return $user->refresh()->loadCount(['followers', 'following', 'posts']);
     }
 
-    public function follow(int $followerId, int $followingId): void
+    public function follow(int $followerId, int $followingId): bool
     {
-        User::query()->findOrFail($followerId)->following()->syncWithoutDetaching([$followingId]);
+        $result = User::query()->findOrFail($followerId)->following()->syncWithoutDetaching([$followingId]);
+
+        return in_array($followingId, $result['attached'], false);
     }
 
     public function unfollow(int $followerId, int $followingId): void

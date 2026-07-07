@@ -2,12 +2,6 @@
 
 namespace App\Providers;
 
-use App\Events\CommentCreated;
-use App\Events\PostLiked;
-use App\Events\UserFollowed;
-use App\Listeners\CreateCommentNotification;
-use App\Listeners\CreateFollowNotification;
-use App\Listeners\CreateLikeNotification;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Policies\CommentPolicy;
@@ -22,7 +16,6 @@ use App\Repositories\Eloquent\EloquentLikeRepository;
 use App\Repositories\Eloquent\EloquentNotificationRepository;
 use App\Repositories\Eloquent\EloquentPostRepository;
 use App\Repositories\Eloquent\EloquentUserRepository;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\ServiceProvider;
@@ -49,10 +42,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('admin', fn ($user): bool => $user->isAdmin());
         Gate::policy(Post::class, PostPolicy::class);
         Gate::policy(Comment::class, CommentPolicy::class);
-
-        Event::listen(UserFollowed::class, CreateFollowNotification::class);
-        Event::listen(PostLiked::class, CreateLikeNotification::class);
-        Event::listen(CommentCreated::class, CreateCommentNotification::class);
 
         ResetPassword::createUrlUsing(function (object $user, string $token): string {
             $frontendUrl = rtrim((string) config('app.frontend_url', 'http://localhost:4200'), '/');

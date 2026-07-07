@@ -14,9 +14,9 @@ class FeedService
     ) {
     }
 
-    public function global(int $perPage = 15): LengthAwarePaginator
+    public function global(int $viewerId, int $perPage = 15): LengthAwarePaginator
     {
-        return $this->posts->recent($perPage);
+        return $this->posts->recentVisibleTo($viewerId, $perPage);
     }
 
     public function following(int $userId, int $perPage = 15): LengthAwarePaginator

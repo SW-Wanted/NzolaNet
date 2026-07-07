@@ -7,7 +7,6 @@ use App\DTOs\UpdateUserDTO;
 use App\Events\UserFollowed;
 use App\Models\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -19,15 +18,9 @@ class UserService
     {
     }
 
-    public function profile(User $viewer, int $id): User
+    public function profile(int $id): User
     {
-        $profile = $this->users->findOrFail($id);
-
-        if ($profile->is_private && $viewer->isNot($profile) && ! $viewer->isAdmin() && ! $this->users->isFollowing($viewer->id, $profile->id)) {
-            throw new AuthorizationException('Este perfil e privado.');
-        }
-
-        return $profile;
+        return $this->users->findOrFail($id);
     }
 
     public function suggestions(User $viewer, int $perPage = 20): LengthAwarePaginator
@@ -72,12 +65,11 @@ class UserService
 
         $this->users->findOrFail($dto->followingId);
 
-        if ($this->users->isFollowing($dto->followerId, $dto->followingId)) {
-            return;
-        }
+        $seguiuAgora = $this->users->follow($dto->followerId, $dto->followingId);
 
-        $this->users->follow($dto->followerId, $dto->followingId);
-        event(new UserFollowed($dto->followerId, $dto->followingId));
+        if ($seguiuAgora) {
+            event(new UserFollowed($dto->followerId, $dto->followingId));
+        }
     }
 
     public function unfollow(FollowUserDTO $dto): void

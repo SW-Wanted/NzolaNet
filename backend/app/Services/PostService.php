@@ -5,14 +5,19 @@ namespace App\Services;
 use App\DTOs\CreatePostDTO;
 use App\DTOs\UpdatePostDTO;
 use App\Models\Post;
+use App\Models\User;
 use App\Repositories\Contracts\PostRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator as ConcreteLengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
 
 class PostService
 {
-    public function __construct(private readonly PostRepositoryInterface $posts)
-    {
+    public function __construct(
+        private readonly PostRepositoryInterface $posts,
+        private readonly UserRepositoryInterface $users,
+    ) {
     }
 
     public function create(CreatePostDTO $dto): Post
@@ -74,5 +79,21 @@ class PostService
     public function get(int $id): Post
     {
         return $this->posts->findOrFail($id);
+    }
+
+    public function byAuthor(User $viewer, int $authorId, int $perPage = 15): LengthAwarePaginator
+    {
+        $author = $this->users->findOrFail($authorId);
+
+        $podeVer = ! $author->is_private
+            || $viewer->is($author)
+            || $viewer->isAdmin()
+            || $this->users->isFollowing($viewer->id, $author->id);
+
+        if (! $podeVer) {
+            return new ConcreteLengthAwarePaginator([], 0, $perPage);
+        }
+
+        return $this->posts->byAuthor($authorId, $perPage);
     }
 }

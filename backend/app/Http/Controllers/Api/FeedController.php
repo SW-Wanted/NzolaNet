@@ -15,7 +15,10 @@ class FeedController extends ApiController
 
     public function global(Request $request): JsonResponse
     {
-        return $this->success(PostResource::collection($this->feed->global($this->perPage($request))), 'Feed global carregado com sucesso');
+        return $this->success(
+            PostResource::collection($this->feed->global($request->user()->id, $this->perPage($request))),
+            'Feed global carregado com sucesso'
+        );
     }
 
     public function following(Request $request): JsonResponse

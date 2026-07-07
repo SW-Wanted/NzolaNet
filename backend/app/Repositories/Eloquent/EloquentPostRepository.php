@@ -47,12 +47,36 @@ class EloquentPostRepository implements PostRepositoryInterface
             ->paginate($perPage);
     }
 
+    public function recentVisibleTo(int $viewerId, int $perPage = 15): LengthAwarePaginator
+    {
+        return Post::query()
+            ->with(['user' => fn ($query) => $query->withCount(['followers', 'following', 'posts'])])
+            ->withCount(['likes', 'comments'])
+            ->whereHas('user', function ($query) use ($viewerId): void {
+                $query->where('is_private', false)
+                    ->orWhere('id', $viewerId)
+                    ->orWhereHas('followers', fn ($followers) => $followers->where('followers.follower_id', $viewerId));
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
     public function fromUsers(Collection $userIds, int $perPage = 15): LengthAwarePaginator
     {
         return Post::query()
             ->with(['user' => fn ($query) => $query->withCount(['followers', 'following', 'posts'])])
             ->withCount(['likes', 'comments'])
             ->whereIn('user_id', $userIds)
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    public function byAuthor(int $authorId, int $perPage = 15): LengthAwarePaginator
+    {
+        return Post::query()
+            ->with(['user' => fn ($query) => $query->withCount(['followers', 'following', 'posts'])])
+            ->withCount(['likes', 'comments'])
+            ->where('user_id', $authorId)
             ->latest()
             ->paginate($perPage);
     }

@@ -19,7 +19,7 @@ class CreateCommentNotification
             recipientId: $event->recipientId,
             senderId: $event->senderId,
             type: NotificationType::Comment,
-            data: ['comment_id' => $event->commentId, 'message' => 'A sua publicacao recebeu um comentario']
+            data: ['comment_id' => $event->commentId, 'post_id' => $event->postId, 'message' => 'A sua publicacao recebeu um comentario']
         ));
     }
 }

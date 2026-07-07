@@ -27,9 +27,9 @@ class UserController extends ApiController
         );
     }
 
-    public function show(Request $request, int $id): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        return $this->success(new UserResource($this->users->profile($request->user(), $id)), 'Perfil obtido com sucesso');
+        return $this->success(new UserResource($this->users->profile($id)), 'Perfil obtido com sucesso');
     }
 
     public function updateProfile(UpdateUserRequest $request): JsonResponse

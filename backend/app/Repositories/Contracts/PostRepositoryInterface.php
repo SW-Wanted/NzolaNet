@@ -18,5 +18,9 @@ interface PostRepositoryInterface
 
     public function recent(int $perPage = 15): LengthAwarePaginator;
 
+    public function recentVisibleTo(int $viewerId, int $perPage = 15): LengthAwarePaginator;
+
     public function fromUsers(Collection $userIds, int $perPage = 15): LengthAwarePaginator;
+
+    public function byAuthor(int $authorId, int $perPage = 15): LengthAwarePaginator;
 }

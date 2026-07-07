@@ -45,6 +45,7 @@ Route::middleware(['auth:sanctum', 'active'])->group(function (): void {
     Route::delete('users/{id}/follow', [UserController::class, 'unfollow'])->whereNumber('id');
     Route::get('users/{user}/followers', [UserController::class, 'followers']);
     Route::get('users/{user}/following', [UserController::class, 'following']);
+    Route::get('users/{id}/posts', [PostController::class, 'byUser'])->whereNumber('id');
 
     Route::apiResource('posts', PostController::class);
     Route::get('posts/{post}/likes', [LikeController::class, 'index']);
@@ -68,6 +69,7 @@ Route::middleware(['auth:sanctum', 'active'])->group(function (): void {
         Route::get('dashboard', [ModerationController::class, 'dashboard']);
         Route::get('users', [ModerationController::class, 'users']);
         Route::patch('users/{user}/active', [ModerationController::class, 'setUserActive']);
+        Route::patch('users/{user}/role', [ModerationController::class, 'setUserRole']);
         Route::delete('users/{user}', [ModerationController::class, 'destroyUser']);
         Route::get('posts', [ModerationController::class, 'posts']);
         Route::delete('posts/{post}', [ModerationController::class, 'destroyPost']);

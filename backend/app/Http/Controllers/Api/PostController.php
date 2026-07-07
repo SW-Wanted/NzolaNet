@@ -37,6 +37,14 @@ class PostController extends ApiController
         return $this->success(new PostResource($this->posts->get($id)), 'Publicacao obtida com sucesso');
     }
 
+    public function byUser(Request $request, int $id): JsonResponse
+    {
+        return $this->success(
+            PostResource::collection($this->posts->byAuthor($request->user(), $id, $this->perPage($request))),
+            'Publicacoes do utilizador listadas com sucesso'
+        );
+    }
+
     public function update(UpdatePostRequest $request, Post $post): JsonResponse
     {
         $this->authorize('update', $post);
