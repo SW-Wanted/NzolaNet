@@ -38,6 +38,12 @@ class AuthService
             ]);
         }
 
+        if (! $user->is_active) {
+            throw ValidationException::withMessages([
+                'email' => ['Esta conta esta inativa. Contacte a administracao.'],
+            ]);
+        }
+
         return $this->tokenResponse($user);
     }
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\FeedController;
 use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,18 +28,19 @@ Route::prefix('auth')->group(function (): void {
     Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('reset-password', [AuthController::class, 'resetPassword']);
 
-    Route::middleware('auth:sanctum')->group(function (): void {
+    Route::middleware(['auth:sanctum', 'active'])->group(function (): void {
         Route::get('me', [AuthController::class, 'me']);
         Route::post('refresh', [AuthController::class, 'refresh']);
         Route::post('logout', [AuthController::class, 'logout']);
     });
 });
 
-Route::middleware('auth:sanctum')->group(function (): void {
+Route::middleware(['auth:sanctum', 'active'])->group(function (): void {
     Route::get('users', [UserController::class, 'index']);
     Route::get('users/{id}', [UserController::class, 'show'])->whereNumber('id');
     Route::put('users/profile', [UserController::class, 'updateProfile']);
     Route::post('users/profile-photo', [UserController::class, 'updateProfilePhoto']);
+    Route::post('users/cover-photo', [UserController::class, 'updateCoverPhoto']);
     Route::post('users/{id}/follow', [UserController::class, 'follow'])->whereNumber('id');
     Route::delete('users/{id}/follow', [UserController::class, 'unfollow'])->whereNumber('id');
     Route::get('users/{user}/followers', [UserController::class, 'followers']);
@@ -48,11 +50,13 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('posts/{post}/likes', [LikeController::class, 'index']);
     Route::post('posts/{post}/like', [LikeController::class, 'store']);
     Route::delete('posts/{post}/like', [LikeController::class, 'destroy']);
+    Route::post('posts/{post}/report', [ReportController::class, 'reportPost']);
     Route::get('posts/{post}/comments', [CommentController::class, 'index']);
     Route::post('posts/{post}/comments', [CommentController::class, 'store']);
 
     Route::put('comments/{comment}', [CommentController::class, 'update']);
     Route::delete('comments/{comment}', [CommentController::class, 'destroy']);
+    Route::post('comments/{comment}/report', [ReportController::class, 'reportComment']);
 
     Route::get('feed', [FeedController::class, 'global']);
     Route::get('feed/following', [FeedController::class, 'following']);
@@ -61,8 +65,17 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::patch('notifications/{id}/read', [NotificationController::class, 'markAsRead'])->whereNumber('id');
 
     Route::middleware('admin')->prefix('admin')->group(function (): void {
+        Route::get('dashboard', [ModerationController::class, 'dashboard']);
+        Route::get('users', [ModerationController::class, 'users']);
+        Route::patch('users/{user}/active', [ModerationController::class, 'setUserActive']);
+        Route::delete('users/{user}', [ModerationController::class, 'destroyUser']);
+        Route::get('posts', [ModerationController::class, 'posts']);
+        Route::delete('posts/{post}', [ModerationController::class, 'destroyPost']);
         Route::get('comments', [ModerationController::class, 'comments']);
         Route::delete('comments/{comment}', [ModerationController::class, 'destroyComment']);
+        Route::get('reports', [ModerationController::class, 'reports']);
+        Route::get('reports/{report}', [ModerationController::class, 'report']);
+        Route::patch('reports/{report}/resolve', [ModerationController::class, 'resolveReport']);
     });
 });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\DTOs\FollowUserDTO;
 use App\DTOs\UpdateUserDTO;
+use App\Http\Requests\Users\CoverPhotoRequest;
 use App\Http\Requests\Users\ProfilePhotoRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Http\Resources\UserResource;
@@ -44,6 +45,14 @@ class UserController extends ApiController
         return $this->success(
             new UserResource($this->users->updateProfilePhoto($request->user(), $request->file('photo'))),
             'Foto de perfil atualizada com sucesso'
+        );
+    }
+
+    public function updateCoverPhoto(CoverPhotoRequest $request): JsonResponse
+    {
+        return $this->success(
+            new UserResource($this->users->updateCoverPhoto($request->user(), $request->file('photo'))),
+            'Foto de capa atualizada com sucesso'
         );
     }
 
