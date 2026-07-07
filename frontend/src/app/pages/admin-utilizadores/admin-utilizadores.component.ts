@@ -1,6 +1,7 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CabecalhoAdminComponent } from '../../components/cabecalho-admin/cabecalho-admin.component';
+import { DialogoConfirmacaoComponent } from '../../components/dialogo-confirmacao/dialogo-confirmacao.component';
 import { MenuLateralAdminComponent } from '../../components/menu-lateral-admin/menu-lateral-admin.component';
 import { MenuInferiorAdminComponent } from '../../components/menu-inferior-admin/menu-inferior-admin.component';
 import { ModalComponent } from '../../components/modal/modal.component';
@@ -13,6 +14,7 @@ import { mensagemErroHttp } from '../../utils/erro.utils';
   selector: 'app-admin-utilizadores',
   imports: [
     CabecalhoAdminComponent,
+    DialogoConfirmacaoComponent,
     MenuLateralAdminComponent,
     MenuInferiorAdminComponent,
     RouterLink,
@@ -26,6 +28,7 @@ export class AdminUtilizadoresComponent implements OnInit {
   private readonly auth = inject(AuthService);
 
   readonly currentUserId = computed(() => this.auth.currentUser()?.id);
+  readonly currentUserCreatedAt = computed(() => this.auth.currentUser()?.created_at);
 
   utilizadores = signal<User[]>([]);
   carregando = signal(true);
@@ -42,6 +45,9 @@ export class AdminUtilizadoresComponent implements OnInit {
   modalDetalheAberto = signal(false);
   modalAvisoAberto = signal(false);
   mensagemAviso = signal('');
+
+  alvoAlternarFuncao = signal<User | null>(null);
+  alvoEliminar = signal<User | null>(null);
 
   readonly utilizadoresFiltrados = computed(() => {
     const termo = this.termoBusca().toLowerCase().trim();
@@ -110,11 +116,46 @@ export class AdminUtilizadoresComponent implements OnInit {
     });
   }
 
-  eliminarUtilizador(user: User): void {
-    const confirmado = window.confirm(`Eliminar definitivamente a conta de ${user.name}?`);
-    if (!confirmado) {
-      return;
+  podeAlterarFuncao(user: User): boolean {
+    const minhaData = this.currentUserCreatedAt();
+    if (user.id === this.currentUserId() || !user.created_at || !minhaData) {
+      return false;
     }
+    return new Date(user.created_at).getTime() > new Date(minhaData).getTime();
+  }
+
+  pedirAlternarFuncao(user: User): void {
+    this.alvoAlternarFuncao.set(user);
+  }
+
+  confirmarAlternarFuncao(): void {
+    const user = this.alvoAlternarFuncao();
+    this.alvoAlternarFuncao.set(null);
+    if (!user) return;
+
+    const novaFuncao = user.role === 'admin' ? 'user' : 'admin';
+    this.admin.setUserRole(user.id, novaFuncao).subscribe({
+      next: (atualizado) => {
+        this.utilizadores.update((lista) =>
+          lista.map((u) => (u.id === atualizado.id ? atualizado : u)),
+        );
+        const detalhe = this.utilizadorDetalhe();
+        if (detalhe?.id === atualizado.id) {
+          this.utilizadorDetalhe.set(atualizado);
+        }
+      },
+      error: (err) => this.mostrarAviso(mensagemErroHttp(err)),
+    });
+  }
+
+  pedirEliminar(user: User): void {
+    this.alvoEliminar.set(user);
+  }
+
+  confirmarEliminar(): void {
+    const user = this.alvoEliminar();
+    this.alvoEliminar.set(null);
+    if (!user) return;
 
     this.admin.deleteUser(user.id).subscribe({
       next: () => {

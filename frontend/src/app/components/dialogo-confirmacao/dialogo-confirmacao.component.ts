@@ -12,6 +12,7 @@ import { ModalComponent } from '../modal/modal.component';
   selector: 'app-dialogo-confirmacao',
   imports: [ModalComponent],
   templateUrl: './dialogo-confirmacao.component.html',
+  styleUrl: './dialogo-confirmacao.component.css',
 })
 export class DialogoConfirmacaoComponent {
   @Input() aberto = false;

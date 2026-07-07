@@ -175,6 +175,17 @@
                           <button class="botao-fantasma admin-btn" type="button" (click)="verDetalhe(u)">
                             <span class="material-symbols-outlined">info</span>Detalhes
                           </button>
+                          @if (podeAlterarFuncao(u)) {
+                            <button
+                              class="botao-fantasma admin-btn"
+                              type="button"
+                              [title]="u.role === 'admin' ? 'Remover privilégios de administrador' : 'Promover a administrador'"
+                              (click)="pedirAlternarFuncao(u)"
+                            >
+                              <span class="material-symbols-outlined">{{ u.role === 'admin' ? 'remove_moderator' : 'add_moderator' }}</span>
+                              {{ u.role === 'admin' ? 'Despromover' : 'Promover' }}
+                            </button>
+                          }
                           @if (u.id !== currentUserId()) {
                             <button
                               class="botao-fantasma admin-btn admin-btn--aviso"
@@ -189,7 +200,7 @@
                               class="botao-fantasma admin-btn admin-btn--perigo"
                               type="button"
                               title="Eliminar utilizador"
-                              (click)="eliminarUtilizador(u)"
+                              (click)="pedirEliminar(u)"
                             >
                               <span class="material-symbols-outlined">delete</span>Eliminar
                             </button>
@@ -232,6 +243,12 @@
                     <button class="botao-contornado admin-btn" type="button" (click)="verDetalhe(u)">
                       <span class="material-symbols-outlined">info</span>Detalhes
                     </button>
+                    @if (podeAlterarFuncao(u)) {
+                      <button class="botao-contornado admin-btn" type="button" (click)="pedirAlternarFuncao(u)">
+                        <span class="material-symbols-outlined">{{ u.role === 'admin' ? 'remove_moderator' : 'add_moderator' }}</span>
+                        {{ u.role === 'admin' ? 'Despromover' : 'Promover' }}
+                      </button>
+                    }
                     @if (u.id !== currentUserId()) {
                       <button class="botao-contornado admin-btn" type="button" (click)="alternarEstado(u)">
                         <span class="material-symbols-outlined">{{ (u.is_active ?? true) ? 'block' : 'check_circle' }}</span>
@@ -337,3 +354,26 @@
     <button class="botao-destaque" type="button" (click)="modalAvisoAberto.set(false)">Entendido</button>
   </div>
 </app-modal>
+
+<app-dialogo-confirmacao
+  [aberto]="alvoAlternarFuncao() !== null"
+  [titulo]="alvoAlternarFuncao()?.role === 'admin' ? 'Remover privilégios de administrador' : 'Promover a administrador'"
+  [mensagem]="
+    alvoAlternarFuncao()?.role === 'admin'
+      ? 'Remover os privilégios de administrador de ' + alvoAlternarFuncao()?.name + '?'
+      : 'Promover ' + alvoAlternarFuncao()?.name + ' a administrador?'
+  "
+  [rotuloConfirmar]="alvoAlternarFuncao()?.role === 'admin' ? 'Despromover' : 'Promover'"
+  icone="shield_person"
+  (confirmar)="confirmarAlternarFuncao()"
+  (cancelar)="alvoAlternarFuncao.set(null)"
+/>
+
+<app-dialogo-confirmacao
+  [aberto]="alvoEliminar() !== null"
+  titulo="Eliminar utilizador"
+  [mensagem]="'Eliminar definitivamente a conta de ' + alvoEliminar()?.name + '? Esta ação não pode ser desfeita.'"
+  rotuloConfirmar="Eliminar"
+  (confirmar)="confirmarEliminar()"
+  (cancelar)="alvoEliminar.set(null)"
+/>

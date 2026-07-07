@@ -141,6 +141,12 @@ export class AdminService {
       .pipe(map((response) => this.toUser(response.data)));
   }
 
+  setUserRole(userId: number, role: 'admin' | 'user'): Observable<User> {
+    return this.http
+      .patch<ApiResponse<RawUser>>(`${API_URL}/admin/users/${userId}/role`, { role })
+      .pipe(map((response) => this.toUser(response.data)));
+  }
+
   deleteUser(userId: number): Observable<void> {
     return this.http
       .delete<ApiResponse<null>>(`${API_URL}/admin/users/${userId}`)
@@ -220,6 +226,7 @@ export class AdminService {
       following_count: user.following_count ?? 0,
       posts_count: user.posts_count ?? 0,
       role: user.role ?? 'user',
+      created_at: user.created_at ?? undefined,
     };
   }
 

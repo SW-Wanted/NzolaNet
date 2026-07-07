@@ -1,0 +1,42 @@
+.botao-contornado,
+.botao-destaque,
+.botao-perigo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  flex: 1;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.botao-contornado {
+  color: var(--cor-no-superficie);
+  border: 1px solid var(--cor-contorno);
+  background: transparent;
+}
+
+.botao-destaque {
+  color: #fff;
+  background: var(--cor-primaria);
+  box-shadow: 0 8px 22px rgba(123, 89, 0, 0.18);
+}
+
+.botao-perigo {
+  color: var(--cor-no-erro);
+  background: var(--cor-erro);
+}
+
+.botao-contornado:hover,
+.botao-destaque:hover,
+.botao-perigo:hover {
+  transform: translateY(-1px);
+}
