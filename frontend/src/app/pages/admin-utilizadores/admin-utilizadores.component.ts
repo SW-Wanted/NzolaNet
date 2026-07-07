@@ -6,6 +6,7 @@ import { MenuInferiorAdminComponent } from '../../components/menu-inferior-admin
 import { ModalComponent } from '../../components/modal/modal.component';
 import { User } from '../../models/fase1.model';
 import { AdminService } from '../../services/admin.service';
+import { AuthService } from '../../services/auth.service';
 import { mensagemErroHttp } from '../../utils/erro.utils';
 
 @Component({
@@ -22,6 +23,9 @@ import { mensagemErroHttp } from '../../utils/erro.utils';
 })
 export class AdminUtilizadoresComponent implements OnInit {
   private readonly admin = inject(AdminService);
+  private readonly auth = inject(AuthService);
+
+  readonly currentUserId = computed(() => this.auth.currentUser()?.id);
 
   utilizadores = signal<User[]>([]);
   carregando = signal(true);

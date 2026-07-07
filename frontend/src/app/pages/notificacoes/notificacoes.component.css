@@ -73,6 +73,7 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
+  background-color: var(--cor-container-mais-baixo);
   flex-shrink: 0;
 }
 

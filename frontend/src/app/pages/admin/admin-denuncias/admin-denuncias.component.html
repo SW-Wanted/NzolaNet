@@ -113,6 +113,12 @@
                         </button>
                       </div>
                     }
+                    @if (d.estado === 'aceite') {
+                      <button class="botao-perigo" type="button" (click)="pedirEliminarConteudo(d)">
+                        <span class="material-symbols-outlined">delete</span>
+                        Eliminar {{ d.tipoAlvo === 'publicacao' ? 'publicação' : 'comentário' }}
+                      </button>
+                    }
                   </div>
                 </article>
               }

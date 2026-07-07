@@ -50,11 +50,11 @@
                   <img
                     class="notificacao-avatar"
                     [src]="notificacao.sender?.profile_photo || avatarFallback(notificacao.sender?.name || 'N')"
-                    [alt]="notificacao.sender?.name"
+                    [alt]="notificacao.sender?.name || 'Utilizador removido'"
                   />
                   <div class="notificacao-corpo">
                     <p class="notificacao-texto">
-                      <strong>{{ notificacao.sender?.name }}</strong>
+                      <strong>{{ notificacao.sender?.name || 'Utilizador removido' }}</strong>
                       {{ rotuloDeTipo(notificacao.type) }}
                     </p>
                     @if (formatarData(notificacao.created_at)) {

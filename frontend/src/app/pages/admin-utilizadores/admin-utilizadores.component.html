@@ -175,23 +175,25 @@
                           <button class="botao-fantasma admin-btn" type="button" (click)="verDetalhe(u)">
                             <span class="material-symbols-outlined">info</span>Detalhes
                           </button>
-                          <button
-                            class="botao-fantasma admin-btn admin-btn--aviso"
-                            type="button"
-                            [title]="(u.is_active ?? true) ? 'Desativar utilizador' : 'Ativar utilizador'"
-                            (click)="alternarEstado(u)"
-                          >
-                            <span class="material-symbols-outlined">{{ (u.is_active ?? true) ? 'block' : 'check_circle' }}</span>
-                            {{ (u.is_active ?? true) ? 'Desativar' : 'Ativar' }}
-                          </button>
-                          <button
-                            class="botao-fantasma admin-btn admin-btn--perigo"
-                            type="button"
-                            title="Eliminar utilizador"
-                            (click)="eliminarUtilizador(u)"
-                          >
-                            <span class="material-symbols-outlined">delete</span>Eliminar
-                          </button>
+                          @if (u.id !== currentUserId()) {
+                            <button
+                              class="botao-fantasma admin-btn admin-btn--aviso"
+                              type="button"
+                              [title]="(u.is_active ?? true) ? 'Desativar utilizador' : 'Ativar utilizador'"
+                              (click)="alternarEstado(u)"
+                            >
+                              <span class="material-symbols-outlined">{{ (u.is_active ?? true) ? 'block' : 'check_circle' }}</span>
+                              {{ (u.is_active ?? true) ? 'Desativar' : 'Ativar' }}
+                            </button>
+                            <button
+                              class="botao-fantasma admin-btn admin-btn--perigo"
+                              type="button"
+                              title="Eliminar utilizador"
+                              (click)="eliminarUtilizador(u)"
+                            >
+                              <span class="material-symbols-outlined">delete</span>Eliminar
+                            </button>
+                          }
                         </div>
                       </td>
                     </tr>
@@ -230,10 +232,12 @@
                     <button class="botao-contornado admin-btn" type="button" (click)="verDetalhe(u)">
                       <span class="material-symbols-outlined">info</span>Detalhes
                     </button>
-                    <button class="botao-contornado admin-btn" type="button" (click)="alternarEstado(u)">
-                      <span class="material-symbols-outlined">{{ (u.is_active ?? true) ? 'block' : 'check_circle' }}</span>
-                      {{ (u.is_active ?? true) ? 'Desativar' : 'Ativar' }}
-                    </button>
+                    @if (u.id !== currentUserId()) {
+                      <button class="botao-contornado admin-btn" type="button" (click)="alternarEstado(u)">
+                        <span class="material-symbols-outlined">{{ (u.is_active ?? true) ? 'block' : 'check_circle' }}</span>
+                        {{ (u.is_active ?? true) ? 'Desativar' : 'Ativar' }}
+                      </button>
+                    }
                   </div>
                 </div>
               }
