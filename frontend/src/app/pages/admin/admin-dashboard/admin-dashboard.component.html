@@ -12,33 +12,44 @@
               <h1 class="titulo-pagina">Dashboard</h1>
               <p class="descricao-pagina">Visão geral da atividade da comunidade NzolaNet.</p>
             </div>
-            @if (denunciasPendentes > 0) {
+            @if (denunciasPendentes() > 0) {
               <div class="acoes-cabecalho">
                 <a class="botao-destaque" routerLink="/admin/denuncias">
                   <span class="material-symbols-outlined">flag</span>
-                  {{ denunciasPendentes }} denúncia(s) pendente(s)
+                  {{ denunciasPendentes() }} denúncia(s) pendente(s)
                 </a>
               </div>
             }
           </header>
 
+          @if (erro()) {
+            <div class="cartao cartao-preenchido admin-estado">
+              <span class="material-symbols-outlined admin-estado-icone">error_outline</span>
+              <p class="admin-estado-titulo">Erro ao carregar dashboard</p>
+              <p class="texto-cartao">{{ erro() }}</p>
+              <button class="botao-contornado" type="button" style="margin-top:16px" (click)="carregarDashboard()">
+                <span class="material-symbols-outlined">refresh</span>Tentar novamente
+              </button>
+            </div>
+          }
+
           <!-- Cartões estatísticos -->
           <div class="admin-grelha-stats">
             <app-cartao-estatistica
-              rotulo="Utilizadores" [valor]="totalUtilizadores" icone="group"
+              rotulo="Utilizadores" [valor]="totalUtilizadores()" icone="group"
               tom="primaria" variacao="Total de membros" rota="/admin/utilizadores" />
             <app-cartao-estatistica
-              rotulo="Publicações" [valor]="totalPublicacoes" icone="article"
+              rotulo="Publicações" [valor]="totalPublicacoes()" icone="article"
               tom="terciaria" variacao="Conteúdo partilhado" />
             <app-cartao-estatistica
-              rotulo="Comentários" [valor]="totalComentarios" icone="chat_bubble"
+              rotulo="Comentários" [valor]="totalComentarios()" icone="chat_bubble"
               tom="secundaria" variacao="Interações" />
             <app-cartao-estatistica
-              rotulo="Bazes" [valor]="totalBazes" icone="favorite"
+              rotulo="Bazes" [valor]="totalBazes()" icone="favorite"
               tom="secundaria" variacao="Gostos atribuídos" />
             <app-cartao-estatistica
-              rotulo="Denúncias" [valor]="totalDenuncias" icone="flag"
-              tom="erro" variacao="{{ denunciasPendentes }} pendentes" rota="/admin/denuncias" />
+              rotulo="Denúncias" [valor]="totalDenuncias()" icone="flag"
+              tom="erro" variacao="{{ denunciasPendentes() }} pendentes" rota="/admin/denuncias" />
           </div>
 
           <div class="grelha-bento">

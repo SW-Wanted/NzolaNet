@@ -1,10 +1,13 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
 import {
   CartaoPublicacaoComponent,
   Publicacao,
+  PublicacaoEditada,
 } from '../../components/cartao-publicacao/cartao-publicacao.component';
+import { DrawerComentariosComponent } from '../../components/drawer-comentarios/drawer-comentarios.component';
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
 import { Post, User } from '../../models/fase1.model';
 import { AuthService } from '../../services/auth.service';
@@ -31,7 +34,13 @@ function formatarData(value: string): string {
 
 @Component({
   selector: 'app-perfil-publico',
-  imports: [CabecalhoComponent, CartaoPublicacaoComponent, MenuLateralComponent, RouterLink],
+  imports: [
+    CabecalhoComponent,
+    CartaoPublicacaoComponent,
+    DrawerComentariosComponent,
+    MenuLateralComponent,
+    RouterLink,
+  ],
   templateUrl: './perfil-publico.component.html',
   styleUrl: './perfil-publico.component.css',
 })
@@ -44,11 +53,15 @@ export class PerfilPublicoComponent implements OnInit {
   utilizador = signal<User | null>(null);
   carregando = signal(true);
   erro = signal('');
+  perfilPrivado = signal(false);
   emSeguindo = signal(false);
 
   publicacoes = signal<Publicacao[]>([]);
   carregandoPosts = signal(false);
   erroPosts = signal('');
+
+  drawerComentariosAberto = signal(false);
+  publicacaoActiva = signal<Publicacao | null>(null);
 
   readonly euProprioId = computed(() => this.auth.currentUser()?.id);
   readonly ehEuProprio = computed(() => this.utilizador()?.id === this.euProprioId());
@@ -71,8 +84,12 @@ export class PerfilPublicoComponent implements OnInit {
         this.carregando.set(false);
         this.carregarPublicacoes(user.id);
       },
-      error: () => {
-        this.erro.set('Não foi possível carregar o perfil.');
+      error: (err: HttpErrorResponse) => {
+        if (err.status === 403) {
+          this.perfilPrivado.set(true);
+        } else {
+          this.erro.set('Não foi possível carregar o perfil.');
+        }
         this.carregando.set(false);
       },
     });
@@ -130,8 +147,15 @@ export class PerfilPublicoComponent implements OnInit {
     });
   }
 
-  aoEditar(evento: { id: number; conteudo: string }): void {
-    this.postService.updatePost(evento.id, evento.conteudo).subscribe({
+  aoEditar(evento: PublicacaoEditada): void {
+    this.postService
+      .updatePost(evento.id, evento.conteudo, {
+        image: evento.imagemFile,
+        video: evento.videoFile,
+        removeImage: evento.removerImagem,
+        removeVideo: evento.removerVideo,
+      })
+      .subscribe({
       next: (post) => {
         this.publicacoes.update((lista) =>
           lista.map((item) => (item.id === post.id ? this.toPublicacao(post) : item)),
@@ -139,6 +163,26 @@ export class PerfilPublicoComponent implements OnInit {
       },
       error: (err) => this.erroPosts.set(mensagemErroHttp(err)),
     });
+  }
+
+  abrirComentarios(publicacao: Publicacao): void {
+    this.publicacaoActiva.set(publicacao);
+    this.drawerComentariosAberto.set(true);
+  }
+
+  fecharComentarios(): void {
+    this.drawerComentariosAberto.set(false);
+    this.publicacaoActiva.set(null);
+  }
+
+  aoContagemComentariosAlterada(evento: { postId: number; delta: number }): void {
+    this.publicacoes.update((lista) =>
+      lista.map((publicacao) =>
+        publicacao.id === evento.postId
+          ? { ...publicacao, contagemComentarios: Math.max(0, publicacao.contagemComentarios + evento.delta) }
+          : publicacao,
+      ),
+    );
   }
 
   private carregarPublicacoes(userId: number): void {

@@ -59,10 +59,14 @@
 
       <div class="linha-distribuida" style="margin-top: 8px">
         <button class="botao-contornado" type="button" (click)="aoFechar()">Cancelar</button>
-        <button class="botao-perigo" type="button" (click)="aoEnviar()">
-          <span class="material-symbols-outlined">flag</span>Enviar denúncia
+        <button class="botao-perigo" type="button" [disabled]="enviando()" (click)="aoEnviar()">
+          <span class="material-symbols-outlined">{{ enviando() ? 'hourglass_top' : 'flag' }}</span>
+          {{ enviando() ? 'A enviar...' : 'Enviar denúncia' }}
         </button>
       </div>
+      @if (erro()) {
+        <span class="mensagem-campo">{{ erro() }}</span>
+      }
     </div>
   }
 </app-modal>

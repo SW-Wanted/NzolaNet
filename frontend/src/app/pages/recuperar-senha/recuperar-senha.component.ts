@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { mensagemErroHttp } from '../../utils/erro.utils';
 
 @Component({
   selector: 'app-recuperar-senha',
@@ -51,8 +52,8 @@ export class RecuperarSenhaComponent {
         this.mensagem.set('Link de recuperacao enviado. Verifique o email ou o log do backend em ambiente local.');
         this.emSubmissao = false;
       },
-      error: () => {
-        this.erroApi.set('Nao foi possivel enviar o link de recuperacao.');
+      error: (err) => {
+        this.erroApi.set(mensagemErroHttp(err));
         this.emSubmissao = false;
       },
     });
@@ -77,8 +78,8 @@ export class RecuperarSenhaComponent {
       })
       .subscribe({
         next: () => void this.router.navigateByUrl('/entrar'),
-        error: () => {
-          this.erroApi.set('Nao foi possivel redefinir a senha. O link pode estar expirado.');
+        error: (err) => {
+          this.erroApi.set(mensagemErroHttp(err));
           this.emSubmissao = false;
         },
       });

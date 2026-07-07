@@ -83,6 +83,7 @@
             @for (publicacao of publicacoes(); track publicacao.id) {
               <app-cartao-publicacao
                 [publicacao]="publicacao"
+                [destacado]="publicacao.id === postDestacadoId()"
                 (eliminar)="aoEliminar($event)"
                 (editar)="aoEditar($event)"
                 (abrirComentarios)="abrirComentarios($event)"
@@ -228,7 +229,7 @@
       />
       <div>
         <strong>{{ nomeActual() }}</strong>
-        <span class="texto-cartao">Conta autenticada</span>
+        <span class="etiqueta-conta-autenticada">Conta autenticada</span>
       </div>
     </div>
     <form [formGroup]="formularioCriar" (ngSubmit)="publicar()">
@@ -267,12 +268,6 @@
             <span class="material-symbols-outlined">smart_display</span>
             <input id="modal-input-video" type="file" accept="video/*" (change)="aoSelecionarMedia($event, 'video')" />
           </label>
-          <button class="criar-post-anexo" type="button" title="Emoji" (click)="mostrarIndisponivel('Emojis não disponíveis de momento.')">
-            <span class="material-symbols-outlined">sentiment_satisfied</span>
-          </button>
-          <button class="criar-post-anexo" type="button" title="Localização" (click)="mostrarIndisponivel('Localização não disponível de momento.')">
-            <span class="material-symbols-outlined">location_on</span>
-          </button>
         </div>
         <button class="botao-destaque" type="submit" [disabled]="emPublicacao()">
           {{ emPublicacao() ? 'A publicar...' : 'Publicar' }}
@@ -283,106 +278,9 @@
 </app-modal>
 
 <!-- ── Drawer: Detalhes + Comentários ──────────────────────────── -->
-<app-modal
+<app-drawer-comentarios
   [aberto]="drawerComentariosAberto()"
-  titulo="Comentários"
-  variante="drawer"
+  [publicacao]="publicacaoActiva()"
   (fechar)="fecharComentarios()"
->
-  @if (publicacaoActiva(); as pub) {
-    <!-- Post summary -->
-    <div class="drawer-post-resumo">
-      <a class="drawer-autor-row" [routerLink]="['/utilizador', pub.autorId]">
-        <img [src]="pub.autorAvatar" [alt]="pub.autorNome" class="drawer-autor-avatar" />
-        <div>
-          <strong class="drawer-autor-nome">{{ pub.autorNome }}</strong>
-          <p class="texto-cartao">{{ pub.tempoPublicacao }}</p>
-        </div>
-      </a>
-      <p class="drawer-post-conteudo">{{ pub.conteudo }}</p>
-      @if (pub.imagem) {
-        <img [src]="pub.imagem" [alt]="pub.imagemAlt || ''" class="drawer-post-imagem" />
-      }
-      @if (pub.videoUrl) {
-        <video [src]="pub.videoUrl" controls class="drawer-post-imagem"></video>
-      }
-      <p class="drawer-post-stats">{{ pub.contagemBazes }} bazes · {{ pub.contagemComentarios }} comentários</p>
-    </div>
-
-    <div class="drawer-divisor"></div>
-
-    <!-- Comments list -->
-    <div class="drawer-comentarios-lista">
-      @for (comentario of comentarios(); track comentario.id) {
-        <article class="comentario">
-          <img class="comentario__avatar" [src]="comentario.autorAvatar" [alt]="comentario.autor" />
-          <div class="comentario__conteudo">
-            <strong class="comentario__autor">{{ comentario.autor }}</strong>
-            <span class="comentario__data">{{ comentario.data }}</span>
-            @if (editandoComentarioId() === comentario.id) {
-              <input
-                class="campo-formulario comentario__campo-editar"
-                [value]="textoEdicaoComentario()"
-                (input)="textoEdicaoComentario.set($any($event.target).value)"
-              />
-            } @else {
-              <p>{{ comentario.texto }}</p>
-            }
-          </div>
-          <div class="comentario__accoes">
-            @if (editandoComentarioId() === comentario.id) {
-              <button class="botao-destaque comentario__botao" type="button" (click)="guardarEdicaoComentario(comentario.id)">Guardar</button>
-              <button class="botao-fantasma comentario__botao" type="button" (click)="cancelarEdicaoComentario()">Cancelar</button>
-            } @else {
-              @if (comentario.podeEditar) {
-                <button class="botao-fantasma comentario__botao" type="button" (click)="iniciarEdicaoComentario(comentario.id, comentario.texto)">
-                  <span class="material-symbols-outlined">edit</span>
-                </button>
-              }
-              @if (comentario.podeEliminar) {
-                <button class="botao-fantasma comentario__botao comentario__botao--perigo" type="button" (click)="removerComentario(comentario.id)">
-                  <span class="material-symbols-outlined">delete</span>
-                </button>
-              }
-              @if (!comentario.podeEditar && !comentario.podeEliminar) {
-                <button class="botao-fantasma comentario__botao" type="button" title="Denunciar comentário" (click)="abrirDenunciaComentario(comentario)">
-                  <span class="material-symbols-outlined">flag</span>
-                </button>
-              }
-            }
-          </div>
-        </article>
-      } @empty {
-        <p class="texto-cartao" style="text-align:center; padding: 16px 0">Sem comentários ainda. Seja o primeiro!</p>
-      }
-    </div>
-  }
-
-  <!-- Comment input -->
-  <div class="drawer-comentario-form">
-    @if (erroComentario()) {
-      <span class="mensagem-campo">{{ erroComentario() }}</span>
-    }
-    <form [formGroup]="formularioComentario" (ngSubmit)="adicionarComentario()" class="drawer-comentario-input">
-      <input
-        class="campo-formulario"
-        formControlName="texto"
-        placeholder="Escrever comentário..."
-      />
-      <button class="botao-destaque" type="submit">
-        <span class="material-symbols-outlined">send</span>
-      </button>
-    </form>
-    @if (comentarioSubmetido && formularioComentario.controls.texto.invalid) {
-      <span class="mensagem-campo">Escreva um comentário antes de enviar.</span>
-    }
-  </div>
-</app-modal>
-
-<!-- Modal: Denunciar Comentário -->
-<app-modal-denuncia
-  [aberto]="denunciaComentarioAberta()"
-  tipoAlvo="comentario"
-  [nomeAlvo]="comentarioDenunciado()?.autor ?? ''"
-  (fechar)="denunciaComentarioAberta.set(false)"
+  (contagemAlterada)="aoContagemComentariosAlterada($event)"
 />

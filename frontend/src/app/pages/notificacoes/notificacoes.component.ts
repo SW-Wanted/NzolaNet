@@ -41,7 +41,7 @@ export class NotificacoesComponent implements OnInit {
         return 'comentou a sua publicação';
       case 'follow':
         return 'começou a segui-lo';
-      case 'report':
+      case 'report_created':
         return 'submeteu uma denúncia para revisão';
       default:
         return 'interagiu consigo';
@@ -56,7 +56,7 @@ export class NotificacoesComponent implements OnInit {
         return 'chat_bubble';
       case 'follow':
         return 'person_add';
-      case 'report':
+      case 'report_created':
         return 'flag';
       default:
         return 'notifications';

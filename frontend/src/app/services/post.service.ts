@@ -17,6 +17,7 @@ interface RawUser extends Partial<User> {
   id: number;
   name: string;
   profile_photo_url?: string | null;
+  cover_photo_url?: string | null;
 }
 
 interface RawPost {
@@ -76,9 +77,30 @@ export class PostService {
       .pipe(map((response) => this.toPost(response.data)));
   }
 
-  updatePost(id: number, content: string): Observable<Post> {
+  updatePost(
+    id: number,
+    content: string,
+    options?: { image?: File; video?: File; removeImage?: boolean; removeVideo?: boolean },
+  ): Observable<Post> {
+    const temMedia =
+      options && (options.image || options.video || options.removeImage || options.removeVideo);
+
+    if (!temMedia) {
+      return this.http
+        .put<ApiResponse<RawPost>>(`${API_URL}/posts/${id}`, { content })
+        .pipe(map((response) => this.toPost(response.data)));
+    }
+
+    const formData = new FormData();
+    formData.append('_method', 'PUT');
+    formData.append('content', content);
+    if (options?.image) formData.append('image', options.image);
+    if (options?.video) formData.append('video', options.video);
+    if (options?.removeImage) formData.append('remove_image', '1');
+    if (options?.removeVideo) formData.append('remove_video', '1');
+
     return this.http
-      .put<ApiResponse<RawPost>>(`${API_URL}/posts/${id}`, { content })
+      .post<ApiResponse<RawPost>>(`${API_URL}/posts/${id}`, formData)
       .pipe(map((response) => this.toPost(response.data)));
   }
 
@@ -139,8 +161,10 @@ export class PostService {
       name: user.name,
       email: user.email ?? null,
       profile_photo: this.absoluteUrl(user.profile_photo_url ?? user.profile_photo ?? null),
+      cover_photo: this.absoluteUrl(user.cover_photo_url ?? user.cover_photo ?? null),
       bio: user.bio ?? null,
       is_private: user.is_private ?? false,
+      is_active: user.is_active ?? true,
       is_following: user.is_following ?? false,
       followers_count: user.followers_count ?? 0,
       following_count: user.following_count ?? 0,

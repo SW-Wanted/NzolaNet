@@ -1,0 +1,144 @@
+@import '../../pages/telas.css';
+
+.drawer-autor-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 12px;
+}
+
+.drawer-autor-row:hover .drawer-autor-nome {
+  text-decoration: underline;
+}
+
+.drawer-autor-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--cor-container-mais-baixo);
+  border: 1px solid var(--cor-contorno-variante);
+  flex-shrink: 0;
+}
+
+.drawer-autor-nome {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cor-no-superficie);
+}
+
+.drawer-post-resumo {
+  margin-bottom: 4px;
+}
+
+.drawer-post-conteudo {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--cor-no-superficie);
+  margin-bottom: 12px;
+}
+
+.drawer-post-imagem {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  max-height: 240px;
+  margin-bottom: 10px;
+}
+
+.drawer-post-stats {
+  font-size: 13px;
+  color: var(--cor-no-superficie-variante);
+}
+
+.drawer-divisor {
+  height: 1px;
+  background: var(--cor-contorno-variante);
+  margin: 16px 0;
+}
+
+.drawer-comentarios-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.drawer-comentario-form {
+  position: sticky;
+  bottom: 0;
+  background: var(--cor-superficie);
+  padding-top: 16px;
+  border-top: 1px solid var(--cor-contorno-variante);
+  margin: 16px -24px -24px;
+  padding: 16px 24px;
+}
+
+.drawer-comentario-input {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.drawer-comentario-input .campo-formulario {
+  flex: 1;
+}
+
+.drawer-comentario-input .botao-destaque {
+  padding: 10px 14px;
+  min-height: unset;
+}
+
+.comentario {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.comentario__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--cor-container-mais-baixo);
+  border: 1px solid var(--cor-contorno-variante);
+  flex-shrink: 0;
+}
+
+.comentario__conteudo {
+  flex: 1;
+  min-width: 0;
+  border-radius: 8px;
+  background: var(--cor-container);
+  padding: 9px 12px;
+}
+
+.comentario__autor {
+  display: block;
+  font-size: 13px;
+}
+
+.comentario__data {
+  display: block;
+  margin-top: 2px;
+  color: var(--cor-no-superficie-variante);
+  font-size: 11px;
+}
+
+.comentario__conteudo p {
+  margin: 6px 0 0;
+  line-height: 1.45;
+}
+
+.comentario__accoes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.comentario__botao {
+  min-height: 32px;
+  padding: 6px 8px;
+}

@@ -161,6 +161,9 @@
                           </span>
                           {{ rolePilula(u.role) }}
                         </span>
+                        @if (!(u.is_active ?? true)) {
+                          <span class="admin-estado-pilula admin-estado-pilula--rejeitada" style="margin-left:6px">Inativo</span>
+                        }
                       </td>
                       <td class="admin-num">{{ u.followers_count }}</td>
                       <td class="admin-num">{{ u.posts_count }}</td>
@@ -172,22 +175,25 @@
                           <button class="botao-fantasma admin-btn" type="button" (click)="verDetalhe(u)">
                             <span class="material-symbols-outlined">info</span>Detalhes
                           </button>
-                          <button
-                            class="botao-fantasma admin-btn admin-btn--aviso"
-                            type="button"
-                            title="Funcionalidade requer endpoint de backend"
-                            (click)="mostrarAviso('Bloquear/desbloquear utilizadores requer um endpoint de backend dedicado que não está disponível nesta versão da API.')"
-                          >
-                            <span class="material-symbols-outlined">block</span>Bloquear
-                          </button>
-                          <button
-                            class="botao-fantasma admin-btn admin-btn--perigo"
-                            type="button"
-                            title="Funcionalidade requer endpoint de backend"
-                            (click)="mostrarAviso('Eliminar utilizadores requer um endpoint de backend dedicado (DELETE /api/admin/users/:id) que não está disponível nesta versão da API.')"
-                          >
-                            <span class="material-symbols-outlined">delete</span>Eliminar
-                          </button>
+                          @if (u.id !== currentUserId()) {
+                            <button
+                              class="botao-fantasma admin-btn admin-btn--aviso"
+                              type="button"
+                              [title]="(u.is_active ?? true) ? 'Desativar utilizador' : 'Ativar utilizador'"
+                              (click)="alternarEstado(u)"
+                            >
+                              <span class="material-symbols-outlined">{{ (u.is_active ?? true) ? 'block' : 'check_circle' }}</span>
+                              {{ (u.is_active ?? true) ? 'Desativar' : 'Ativar' }}
+                            </button>
+                            <button
+                              class="botao-fantasma admin-btn admin-btn--perigo"
+                              type="button"
+                              title="Eliminar utilizador"
+                              (click)="eliminarUtilizador(u)"
+                            >
+                              <span class="material-symbols-outlined">delete</span>Eliminar
+                            </button>
+                          }
                         </div>
                       </td>
                     </tr>
@@ -211,6 +217,9 @@
                     <span class="pilula" [class.pilula-primaria]="u.role === 'admin'">
                       {{ rolePilula(u.role) }}
                     </span>
+                    @if (!(u.is_active ?? true)) {
+                      <span class="admin-estado-pilula admin-estado-pilula--rejeitada">Inativo</span>
+                    }
                   </div>
                   <div class="admin-card-mobile__stats">
                     <span><strong>{{ u.followers_count }}</strong> seguidores</span>
@@ -223,6 +232,12 @@
                     <button class="botao-contornado admin-btn" type="button" (click)="verDetalhe(u)">
                       <span class="material-symbols-outlined">info</span>Detalhes
                     </button>
+                    @if (u.id !== currentUserId()) {
+                      <button class="botao-contornado admin-btn" type="button" (click)="alternarEstado(u)">
+                        <span class="material-symbols-outlined">{{ (u.is_active ?? true) ? 'block' : 'check_circle' }}</span>
+                        {{ (u.is_active ?? true) ? 'Desativar' : 'Ativar' }}
+                      </button>
+                    }
                   </div>
                 </div>
               }
@@ -278,6 +293,9 @@
           <span class="pilula" [class.pilula-primaria]="u.role === 'admin'" style="margin-top:8px">
             {{ rolePilula(u.role) }}
           </span>
+          @if (!(u.is_active ?? true)) {
+            <span class="admin-estado-pilula admin-estado-pilula--rejeitada" style="margin-top:8px">Inativo</span>
+          }
         </div>
       </div>
       @if (u.bio) {
@@ -310,13 +328,12 @@
 <!-- Modal: Feature not available -->
 <app-modal
   [aberto]="modalAvisoAberto()"
-  titulo="Funcionalidade não disponível"
+  titulo="Aviso"
   (fechar)="modalAvisoAberto.set(false)"
 >
   <div style="display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center;padding:8px 0">
     <span class="material-symbols-outlined" style="font-size:56px;color:var(--cor-primaria)">api</span>
     <p class="texto-cartao">{{ mensagemAviso() }}</p>
-    <p class="texto-cartao">Para implementar esta funcionalidade é necessário adicionar o endpoint correspondente ao backend Laravel.</p>
     <button class="botao-destaque" type="button" (click)="modalAvisoAberto.set(false)">Entendido</button>
   </div>
 </app-modal>

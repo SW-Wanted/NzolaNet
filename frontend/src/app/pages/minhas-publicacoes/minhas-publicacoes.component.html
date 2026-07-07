@@ -72,6 +72,7 @@
                   [publicacao]="publicacao"
                   (eliminar)="aoEliminar($event)"
                   (editar)="aoEditar($event)"
+                  (abrirComentarios)="abrirComentarios($event)"
                   (alternarBaze)="aoAlternarBaze($event)"
                 />
               }
@@ -90,3 +91,10 @@
   <a routerLink="/mercado"><span class="material-symbols-outlined">storefront</span>Loja</a>
   <a class="ativo" routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
 </nav>
+
+<app-drawer-comentarios
+  [aberto]="drawerComentariosAberto()"
+  [publicacao]="publicacaoActiva()"
+  (fechar)="fecharComentarios()"
+  (contagemAlterada)="aoContagemComentariosAlterada($event)"
+/>

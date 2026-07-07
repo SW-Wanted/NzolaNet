@@ -30,6 +30,8 @@ export class PerfilUtilizadorComponent implements OnInit {
     );
   });
 
+  readonly capa = computed(() => this.utilizador()?.cover_photo ?? null);
+
   ngOnInit(): void {
     this.auth.getCurrentUserFromServer().subscribe();
     this.carregarPublicacoes();
