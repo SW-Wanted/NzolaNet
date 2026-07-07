@@ -12,6 +12,11 @@
   background: linear-gradient(135deg, var(--cor-primaria) 0%, #c49a00 100%);
 }
 
+.capa-perfil--com-foto {
+  background-size: cover;
+  background-position: center;
+}
+
 .perfil-conteudo {
   display: flex;
   align-items: flex-end;
@@ -30,6 +35,7 @@
   height: 88px;
   border-radius: 50%;
   border: 4px solid var(--cor-superficie);
+  background-color: var(--cor-container-mais-baixo);
   object-fit: cover;
   margin-top: -44px;
   flex-shrink: 0;

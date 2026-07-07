@@ -1,4 +1,8 @@
-<article class="cartao-publicacao">
+<article
+  class="cartao-publicacao"
+  [id]="'publicacao-' + publicacao.id"
+  [class.cartao-publicacao--destacada]="destacado"
+>
   <div class="cartao-publicacao__cabecalho">
     <a class="cartao-publicacao__autor" [routerLink]="['/utilizador', publicacao.autorId]">
       <img
@@ -143,6 +147,31 @@
     @if (conteudoEditado().trim().length < 10) {
       <span class="mensagem-campo">O conteúdo precisa de pelo menos 10 caracteres.</span>
     }
+    @if (erroEdicao()) {
+      <span class="mensagem-campo">{{ erroEdicao() }}</span>
+    }
+    @if (previewMediaEdit()) {
+      <div class="media-preview">
+        @if (tipoMediaEdit() === 'imagem') {
+          <img [src]="previewMediaEdit()" alt="Pré-visualização" class="media-preview__imagem" />
+        } @else {
+          <video [src]="previewMediaEdit()" controls class="media-preview__video"></video>
+        }
+        <button class="media-preview__remover" type="button" (click)="removerMediaEdicao()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+    }
+    <div class="criar-post-anexos">
+      <label class="criar-post-anexo" for="modal-input-imagem-editar" title="Adicionar imagem">
+        <span class="material-symbols-outlined">image</span>
+        <input id="modal-input-imagem-editar" type="file" accept="image/*" (change)="aoSelecionarMediaEdicao($event, 'imagem')" />
+      </label>
+      <label class="criar-post-anexo" for="modal-input-video-editar" title="Adicionar vídeo">
+        <span class="material-symbols-outlined">smart_display</span>
+        <input id="modal-input-video-editar" type="file" accept="video/*" (change)="aoSelecionarMediaEdicao($event, 'video')" />
+      </label>
+    </div>
     <div class="linha-distribuida" style="margin-top:16px">
       <button class="botao-contornado" type="button" (click)="modalEditarAberto.set(false)">Cancelar</button>
       <button class="botao-destaque" type="button" (click)="guardarEdicao()" [disabled]="conteudoEditado().trim().length < 10">Guardar</button>

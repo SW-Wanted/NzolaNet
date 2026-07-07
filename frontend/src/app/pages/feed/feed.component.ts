@@ -1,27 +1,16 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
-import { CartaoPublicacaoComponent, Publicacao } from '../../components/cartao-publicacao/cartao-publicacao.component';
+import { CartaoPublicacaoComponent, Publicacao, PublicacaoEditada } from '../../components/cartao-publicacao/cartao-publicacao.component';
+import { DrawerComentariosComponent } from '../../components/drawer-comentarios/drawer-comentarios.component';
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
 import { ModalComponent } from '../../components/modal/modal.component';
-import { ModalDenunciaComponent } from '../../components/modal-denuncia/modal-denuncia.component';
-import { Comment, Post, User } from '../../models/fase1.model';
+import { Post, User } from '../../models/fase1.model';
 import { AuthService } from '../../services/auth.service';
-import { CommentService } from '../../services/comment.service';
 import { PostService } from '../../services/post.service';
 import { UserService } from '../../services/user.service';
 import { mensagemErroHttp } from '../../utils/erro.utils';
-
-interface ComentarioView {
-  id: number;
-  autor: string;
-  autorAvatar: string;
-  texto: string;
-  data: string;
-  podeEditar: boolean;
-  podeEliminar: boolean;
-}
 
 interface DestaqueFeed {
   rotulo: string;
@@ -38,10 +27,10 @@ function avatarFallback(name: string): string {
   imports: [
     CabecalhoComponent,
     CartaoPublicacaoComponent,
+    DrawerComentariosComponent,
     MenuLateralComponent,
     RouterLink,
     ModalComponent,
-    ModalDenunciaComponent,
     ReactiveFormsModule,
   ],
   templateUrl: './feed.component.html',
@@ -49,10 +38,13 @@ function avatarFallback(name: string): string {
 })
 export class FeedComponent implements OnInit {
   private readonly auth = inject(AuthService);
-  private readonly comentariosApi = inject(CommentService);
   private readonly fb = inject(FormBuilder);
   private readonly postsApi = inject(PostService);
   private readonly userService = inject(UserService);
+  private readonly route = inject(ActivatedRoute);
+
+  postDestacadoId = signal<number | null>(null);
+  private destaqueTimer: ReturnType<typeof setTimeout> | undefined;
 
   filtroActivo = signal<'todos' | 'seguidos'>('todos');
   sugestoes = signal<User[]>([]);
@@ -73,23 +65,6 @@ export class FeedComponent implements OnInit {
 
   drawerComentariosAberto = signal(false);
   publicacaoActiva = signal<Publicacao | null>(null);
-  comentarios = signal<ComentarioView[]>([]);
-  editandoComentarioId = signal<number | null>(null);
-  textoEdicaoComentario = signal('');
-  comentarioSubmetido = false;
-  erroComentario = signal('');
-
-  denunciaComentarioAberta = signal(false);
-  comentarioDenunciado = signal<ComentarioView | null>(null);
-
-  abrirDenunciaComentario(comentario: ComentarioView): void {
-    this.comentarioDenunciado.set(comentario);
-    this.denunciaComentarioAberta.set(true);
-  }
-
-  readonly formularioComentario = this.fb.nonNullable.group({
-    texto: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(2000)]],
-  });
 
   publicacoes = signal<Publicacao[]>([]);
   carregandoFeed = signal(false);
@@ -223,83 +198,21 @@ export class FeedComponent implements OnInit {
   abrirComentarios(publicacao: Publicacao): void {
     this.publicacaoActiva.set(publicacao);
     this.drawerComentariosAberto.set(true);
-    this.formularioComentario.reset();
-    this.comentarioSubmetido = false;
-    this.cancelarEdicaoComentario();
-    this.carregarComentarios(publicacao.id);
   }
 
   fecharComentarios(): void {
     this.drawerComentariosAberto.set(false);
     this.publicacaoActiva.set(null);
-    this.comentarios.set([]);
-    this.cancelarEdicaoComentario();
   }
 
-  adicionarComentario(): void {
-    const publicacao = this.publicacaoActiva();
-    this.comentarioSubmetido = true;
-    this.erroComentario.set('');
-
-    if (!publicacao || this.formularioComentario.invalid) {
-      this.formularioComentario.markAllAsTouched();
-      return;
-    }
-
-    this.comentariosApi
-      .addComment(publicacao.id, this.formularioComentario.controls.texto.value.trim())
-      .subscribe({
-        next: (comentario) => {
-          this.comentarios.update((lista) => [...lista, this.toComentarioView(comentario)]);
-          this.formularioComentario.reset();
-          this.comentarioSubmetido = false;
-          this.atualizarContagemComentarios(publicacao.id, 1);
-        },
-        error: (err) => this.erroComentario.set(mensagemErroHttp(err)),
-      });
-  }
-
-  removerComentario(id: number): void {
-    const publicacao = this.publicacaoActiva();
-
-    this.comentariosApi.deleteComment(id).subscribe({
-      next: () => {
-        this.comentarios.update((lista) => lista.filter((comentario) => comentario.id !== id));
-        if (publicacao) {
-          this.atualizarContagemComentarios(publicacao.id, -1);
-        }
-      },
-      error: (err) => this.erroComentario.set(mensagemErroHttp(err)),
-    });
-  }
-
-  iniciarEdicaoComentario(id: number, texto: string): void {
-    this.editandoComentarioId.set(id);
-    this.textoEdicaoComentario.set(texto);
-  }
-
-  cancelarEdicaoComentario(): void {
-    this.editandoComentarioId.set(null);
-    this.textoEdicaoComentario.set('');
-  }
-
-  guardarEdicaoComentario(id: number): void {
-    const texto = this.textoEdicaoComentario().trim();
-
-    if (texto.length < 3) {
-      this.erroComentario.set('O comentário precisa de pelo menos 3 caracteres.');
-      return;
-    }
-
-    this.comentariosApi.updateComment(id, texto).subscribe({
-      next: (comentario) => {
-        this.comentarios.update((lista) =>
-          lista.map((item) => (item.id === id ? this.toComentarioView(comentario) : item)),
-        );
-        this.cancelarEdicaoComentario();
-      },
-      error: (err) => this.erroComentario.set(mensagemErroHttp(err)),
-    });
+  aoContagemComentariosAlterada(evento: { postId: number; delta: number }): void {
+    this.publicacoes.update((lista) =>
+      lista.map((publicacao) =>
+        publicacao.id === evento.postId
+          ? { ...publicacao, contagemComentarios: Math.max(0, publicacao.contagemComentarios + evento.delta) }
+          : publicacao,
+      ),
+    );
   }
 
   aoEliminar(id: number): void {
@@ -310,8 +223,15 @@ export class FeedComponent implements OnInit {
     });
   }
 
-  aoEditar(evento: { id: number; conteudo: string }): void {
-    this.postsApi.updatePost(evento.id, evento.conteudo).subscribe({
+  aoEditar(evento: PublicacaoEditada): void {
+    this.postsApi
+      .updatePost(evento.id, evento.conteudo, {
+        image: evento.imagemFile,
+        video: evento.videoFile,
+        removeImage: evento.removerImagem,
+        removeVideo: evento.removerVideo,
+      })
+      .subscribe({
       next: (post) => {
         const publicacao = this.toPublicacao(post);
         this.publicacoes.update((lista) =>
@@ -360,12 +280,26 @@ export class FeedComponent implements OnInit {
       next: (posts) => {
         this.publicacoes.set(posts.map((post) => this.toPublicacao(post)));
         this.carregandoFeed.set(false);
+        this.destacarPublicacaoPartilhada();
       },
       error: (err) => {
         this.erroFeed.set(mensagemErroHttp(err));
         this.carregandoFeed.set(false);
       },
     });
+  }
+
+  private destacarPublicacaoPartilhada(): void {
+    const idParam = this.route.snapshot.queryParamMap.get('post');
+    if (!idParam) return;
+
+    const id = Number(idParam);
+    if (!this.publicacoes().some((p) => p.id === id)) return;
+
+    if (this.destaqueTimer) clearTimeout(this.destaqueTimer);
+    this.postDestacadoId.set(id);
+    setTimeout(() => document.getElementById(`publicacao-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+    this.destaqueTimer = setTimeout(() => this.postDestacadoId.set(null), 2500);
   }
 
   private carregarSugestoes(): void {
@@ -375,38 +309,6 @@ export class FeedComponent implements OnInit {
         this.sugestoes.set(users.filter((u) => u.id !== currentUserId).slice(0, 3));
       },
     });
-  }
-
-  private carregarComentarios(postId: number): void {
-    this.erroComentario.set('');
-    this.comentarios.set([]);
-
-    this.comentariosApi.getComments(postId).subscribe({
-      next: (comentarios) =>
-        this.comentarios.set(comentarios.map((comentario) => this.toComentarioView(comentario))),
-      error: (err) => this.erroComentario.set(mensagemErroHttp(err)),
-    });
-  }
-
-  private atualizarContagemComentarios(postId: number, delta: number): void {
-    this.publicacoes.update((lista) =>
-      lista.map((publicacao) =>
-        publicacao.id === postId
-          ? {
-              ...publicacao,
-              contagemComentarios: Math.max(0, publicacao.contagemComentarios + delta),
-            }
-          : publicacao,
-      ),
-    );
-
-    const activa = this.publicacaoActiva();
-    if (activa?.id === postId) {
-      this.publicacaoActiva.set({
-        ...activa,
-        contagemComentarios: Math.max(0, activa.contagemComentarios + delta),
-      });
-    }
   }
 
   private toPublicacao(post: Post): Publicacao {
@@ -427,18 +329,6 @@ export class FeedComponent implements OnInit {
       temBaze: post.liked_by_me ?? false,
       podeEditar: post.can_update ?? false,
       podeEliminar: post.can_delete ?? false,
-    };
-  }
-
-  private toComentarioView(comment: Comment): ComentarioView {
-    return {
-      id: comment.id,
-      autor: comment.author.name,
-      autorAvatar: comment.author.profile_photo ?? avatarFallback(comment.author.name),
-      texto: comment.content,
-      data: this.formatarData(comment.created_at),
-      podeEditar: comment.can_update ?? false,
-      podeEliminar: comment.can_delete ?? false,
     };
   }
 

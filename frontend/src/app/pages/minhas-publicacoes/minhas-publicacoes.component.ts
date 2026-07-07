@@ -1,7 +1,8 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
-import { CartaoPublicacaoComponent, Publicacao } from '../../components/cartao-publicacao/cartao-publicacao.component';
+import { CartaoPublicacaoComponent, Publicacao, PublicacaoEditada } from '../../components/cartao-publicacao/cartao-publicacao.component';
+import { DrawerComentariosComponent } from '../../components/drawer-comentarios/drawer-comentarios.component';
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
 import { Post } from '../../models/fase1.model';
 import { AuthService } from '../../services/auth.service';
@@ -27,7 +28,13 @@ function formatarData(value: string): string {
 
 @Component({
   selector: 'app-minhas-publicacoes',
-  imports: [CabecalhoComponent, CartaoPublicacaoComponent, MenuLateralComponent, RouterLink],
+  imports: [
+    CabecalhoComponent,
+    CartaoPublicacaoComponent,
+    DrawerComentariosComponent,
+    MenuLateralComponent,
+    RouterLink,
+  ],
   templateUrl: './minhas-publicacoes.component.html',
   styleUrl: './minhas-publicacoes.component.css',
 })
@@ -39,8 +46,31 @@ export class MinhasPublicacoesComponent implements OnInit {
   carregando = signal(true);
   erro = signal('');
 
+  drawerComentariosAberto = signal(false);
+  publicacaoActiva = signal<Publicacao | null>(null);
+
   ngOnInit(): void {
     this.carregarPublicacoes();
+  }
+
+  abrirComentarios(publicacao: Publicacao): void {
+    this.publicacaoActiva.set(publicacao);
+    this.drawerComentariosAberto.set(true);
+  }
+
+  fecharComentarios(): void {
+    this.drawerComentariosAberto.set(false);
+    this.publicacaoActiva.set(null);
+  }
+
+  aoContagemComentariosAlterada(evento: { postId: number; delta: number }): void {
+    this.publicacoes.update((lista) =>
+      lista.map((publicacao) =>
+        publicacao.id === evento.postId
+          ? { ...publicacao, contagemComentarios: Math.max(0, publicacao.contagemComentarios + evento.delta) }
+          : publicacao,
+      ),
+    );
   }
 
   aoEliminar(id: number): void {
@@ -50,8 +80,15 @@ export class MinhasPublicacoesComponent implements OnInit {
     });
   }
 
-  aoEditar(evento: { id: number; conteudo: string }): void {
-    this.postsApi.updatePost(evento.id, evento.conteudo).subscribe({
+  aoEditar(evento: PublicacaoEditada): void {
+    this.postsApi
+      .updatePost(evento.id, evento.conteudo, {
+        image: evento.imagemFile,
+        video: evento.videoFile,
+        removeImage: evento.removerImagem,
+        removeVideo: evento.removerVideo,
+      })
+      .subscribe({
       next: (post) => {
         this.publicacoes.update((lista) =>
           lista.map((item) => (item.id === post.id ? this.toPublicacao(post) : item)),

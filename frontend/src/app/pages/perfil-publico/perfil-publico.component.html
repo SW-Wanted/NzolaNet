@@ -22,6 +22,15 @@
               <div class="estatistica-separador"></div>
               <div class="skeleton skeleton-stat"></div>
             </div>
+          } @else if (perfilPrivado()) {
+            <div class="cartao cartao-preenchido perfil-pub-estado perfil-pub-erro">
+              <span class="material-symbols-outlined perfil-pub-estado-icone">lock</span>
+              <p class="perfil-pub-estado-titulo">Este perfil é privado</p>
+              <p class="texto-cartao">Siga este utilizador para poder ver as suas publicações e informações.</p>
+              <a class="botao-contornado" routerLink="/feed" style="margin-top: 16px">
+                <span class="material-symbols-outlined">home</span>Voltar ao feed
+              </a>
+            </div>
           } @else if (erro()) {
             <div class="cartao cartao-preenchido perfil-pub-estado perfil-pub-erro">
               <span class="material-symbols-outlined perfil-pub-estado-icone">person_off</span>
@@ -35,7 +44,11 @@
 
             <!-- Profile cover + avatar -->
             <article class="cartao perfil-capa">
-              <div class="capa-perfil"></div>
+              <div
+                class="capa-perfil"
+                [class.capa-perfil--com-foto]="u.cover_photo"
+                [style.background-image]="u.cover_photo ? 'url(' + u.cover_photo + ')' : null"
+              ></div>
               <div class="perfil-conteudo">
                 <img [src]="avatar()" [alt]="u.name" class="avatar-perfil" />
                 <div class="perfil-texto">
@@ -127,6 +140,7 @@
                       [publicacao]="publicacao"
                       (eliminar)="aoEliminar($event)"
                       (editar)="aoEditar($event)"
+                      (abrirComentarios)="abrirComentarios($event)"
                       (alternarBaze)="aoAlternarBaze($event)"
                     />
                   }
@@ -148,3 +162,10 @@
   <a routerLink="/mercado"><span class="material-symbols-outlined">storefront</span>Loja</a>
   <a routerLink="/perfil"><span class="material-symbols-outlined">person</span>Perfil</a>
 </nav>
+
+<app-drawer-comentarios
+  [aberto]="drawerComentariosAberto()"
+  [publicacao]="publicacaoActiva()"
+  (fechar)="fecharComentarios()"
+  (contagemAlterada)="aoContagemComentariosAlterada($event)"
+/>
