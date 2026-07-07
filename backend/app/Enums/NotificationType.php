@@ -7,4 +7,5 @@ enum NotificationType: string
     case Follow = 'follow';
     case Like = 'like';
     case Comment = 'comment';
+    case ReportCreated = 'report_created';
 }

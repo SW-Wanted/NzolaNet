@@ -256,6 +256,20 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/LikeSuccess'
+  /posts/{id}/report:
+    post:
+      tags: [Posts]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportWriteRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/ReportSuccess'
   /posts/{id}/comments:
     get:
       tags: [Comments]
@@ -299,6 +313,20 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Success'
+  /comments/{id}/report:
+    post:
+      tags: [Comments]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportWriteRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/ReportSuccess'
   /feed:
     get:
       tags: [Feed]
@@ -331,6 +359,62 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/NotificationSuccess'
+  /admin/dashboard:
+    get:
+      tags: [Admin]
+      responses:
+        '200':
+          $ref: '#/components/responses/AdminDashboardSuccess'
+  /admin/users:
+    get:
+      tags: [Admin]
+      parameters:
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserCollectionSuccess'
+  /admin/users/{id}/active:
+    patch:
+      tags: [Admin]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [is_active]
+              properties:
+                is_active:
+                  type: boolean
+      responses:
+        '200':
+          $ref: '#/components/responses/UserSuccess'
+  /admin/users/{id}:
+    delete:
+      tags: [Admin]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /admin/posts:
+    get:
+      tags: [Admin]
+      parameters:
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          $ref: '#/components/responses/PostCollectionSuccess'
+  /admin/posts/{id}:
+    delete:
+      tags: [Admin]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
   /admin/comments/{id}:
     delete:
       tags: [Admin]
@@ -347,6 +431,47 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/CommentCollectionSuccess'
+  /admin/reports:
+    get:
+      tags: [Admin]
+      parameters:
+        - $ref: '#/components/parameters/PerPage'
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [pendente, aceite, rejeitada]
+      responses:
+        '200':
+          $ref: '#/components/responses/ReportCollectionSuccess'
+  /admin/reports/{id}:
+    get:
+      tags: [Admin]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/ReportSuccess'
+  /admin/reports/{id}/resolve:
+    patch:
+      tags: [Admin]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  type: string
+                  enum: [aceitar, rejeitar, apagar]
+      responses:
+        '200':
+          $ref: '#/components/responses/ReportSuccess'
 components:
   securitySchemes:
     bearerAuth:
@@ -458,6 +583,34 @@ components:
                     properties:
                       likes_count:
                         type: integer
+    ReportSuccess:
+      description: Denuncia
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ApiSuccess'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Report'
+    ReportCollectionSuccess:
+      description: Lista paginada de denuncias
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaginatedReports'
+    AdminDashboardSuccess:
+      description: Resumo administrativo
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ApiSuccess'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AdminDashboard'
   schemas:
     ApiSuccess:
       type: object
@@ -541,6 +694,17 @@ components:
       properties:
         content:
           type: string
+    ReportWriteRequest:
+      type: object
+      required: [reason]
+      properties:
+        reason:
+          type: string
+          maxLength: 120
+        description:
+          type: string
+          nullable: true
+          maxLength: 2000
     AuthResponse:
       allOf:
         - $ref: '#/components/schemas/ApiSuccess'
@@ -577,6 +741,8 @@ components:
           nullable: true
         is_private:
           type: boolean
+        is_active:
+          type: boolean
         role:
           type: string
           enum: [user, admin]
@@ -591,6 +757,65 @@ components:
         created_at:
           type: string
           format: date-time
+    Report:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          enum: [publicacao, comentario]
+        reason:
+          type: string
+        description:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [pendente, aceite, rejeitada]
+        reporter:
+          $ref: '#/components/schemas/User'
+        content_author:
+          $ref: '#/components/schemas/User'
+        content:
+          type: string
+          nullable: true
+        image_url:
+          type: string
+          nullable: true
+        video_url:
+          type: string
+          nullable: true
+        post_id:
+          type: integer
+          nullable: true
+        comment_id:
+          type: integer
+          nullable: true
+        resolved_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+    AdminDashboard:
+      type: object
+      properties:
+        totals:
+          type: object
+        recent_reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/Report'
+        top_posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+        recent_likes:
+          type: array
+          items:
+            type: object
     Post:
       type: object
       properties:
@@ -659,7 +884,7 @@ components:
           $ref: '#/components/schemas/User'
         type:
           type: string
-          enum: [follow, like, comment]
+          enum: [follow, like, comment, report_created]
         data:
           type: object
         is_read:
@@ -692,5 +917,8 @@ components:
       allOf:
         - $ref: '#/components/schemas/PaginationEnvelope'
     PaginatedNotifications:
+      allOf:
+        - $ref: '#/components/schemas/PaginationEnvelope'
+    PaginatedReports:
       allOf:
         - $ref: '#/components/schemas/PaginationEnvelope'

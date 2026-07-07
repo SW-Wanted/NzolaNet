@@ -30,6 +30,7 @@ class User extends Authenticatable
         'bio',
         'is_private',
         'role',
+        'is_active',
     ];
 
     /**
@@ -52,6 +53,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'is_private' => 'boolean',
+            'is_active' => 'boolean',
             'role' => UserRole::class,
             'password' => 'hashed',
         ];
@@ -85,6 +87,11 @@ class User extends Authenticatable
     public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class, 'recipient_id');
+    }
+
+    public function reports(): HasMany
+    {
+        return $this->hasMany(Report::class, 'reporter_id');
     }
 
     public function isAdmin(): bool

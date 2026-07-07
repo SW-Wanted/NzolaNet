@@ -18,6 +18,7 @@ class UserResource extends JsonResource
             'profile_photo_url' => $this->profile_photo ? Storage::disk('public')->url($this->profile_photo) : null,
             'bio' => $this->bio,
             'is_private' => $this->is_private,
+            'is_active' => $this->is_active,
             'role' => $this->role?->value ?? $this->role,
             'followers_count' => $this->whenCounted('followers'),
             'following_count' => $this->whenCounted('following'),

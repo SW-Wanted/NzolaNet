@@ -83,6 +83,7 @@ class AuthController extends ApiController
                 'email' => $user->email,
                 'role' => $user->role?->value ?? $user->role,
                 'is_private' => $user->is_private,
+                'is_active' => $user->is_active,
                 'profile_photo' => $user->profile_photo,
                 'profile_photo_url' => $user->profile_photo
                     ? \Illuminate\Support\Facades\Storage::disk('public')->url($user->profile_photo)
