@@ -8,6 +8,7 @@ import { UserService } from '../../services/user.service';
 import { mensagemErroHttp } from '../../utils/erro.utils';
 
 const DEFAULT_AVATAR = 'https://ui-avatars.com/api/?background=111827&color=ffffff&name=NzolaNet';
+const DEFAULT_CAPA = '';
 
 @Component({
   selector: 'app-editar-perfil',
@@ -22,6 +23,7 @@ export class EditarPerfilComponent implements OnInit {
   private readonly router = inject(Router);
 
   readonly avatarPreview = signal<string>(DEFAULT_AVATAR);
+  readonly capaPreview = signal<string>(DEFAULT_CAPA);
   readonly erroApi = signal('');
   readonly emSubmissao = signal(false);
 
@@ -34,6 +36,7 @@ export class EditarPerfilComponent implements OnInit {
 
   submetido = false;
   private fotoSelecionada: File | undefined;
+  private capaSelecionada: File | undefined;
 
   ngOnInit(): void {
     const user = this.auth.currentUser();
@@ -44,6 +47,7 @@ export class EditarPerfilComponent implements OnInit {
         privado: user.is_private ?? false,
       });
       this.avatarPreview.set(user.profile_photo ?? DEFAULT_AVATAR);
+      this.capaPreview.set(user.cover_photo ?? DEFAULT_CAPA);
     }
   }
 
@@ -64,6 +68,26 @@ export class EditarPerfilComponent implements OnInit {
     this.fotoSelecionada = ficheiro;
     const leitor = new FileReader();
     leitor.onload = () => this.avatarPreview.set(leitor.result as string);
+    leitor.readAsDataURL(ficheiro);
+  }
+
+  aoSelecionarCapa(evento: Event): void {
+    const ficheiro = (evento.target as HTMLInputElement).files?.[0];
+    if (!ficheiro) return;
+
+    if (!ficheiro.type.startsWith('image/')) {
+      this.erroApi.set('Selecione um ficheiro de imagem válido (JPG, PNG ou GIF).');
+      return;
+    }
+
+    if (ficheiro.size > 5 * 1024 * 1024) {
+      this.erroApi.set('A foto não pode ter mais de 5 MB.');
+      return;
+    }
+
+    this.capaSelecionada = ficheiro;
+    const leitor = new FileReader();
+    leitor.onload = () => this.capaPreview.set(leitor.result as string);
     leitor.readAsDataURL(ficheiro);
   }
 
@@ -106,16 +130,30 @@ export class EditarPerfilComponent implements OnInit {
         });
     };
 
-    if (this.fotoSelecionada) {
-      this.userService.uploadProfilePhoto(this.fotoSelecionada).subscribe({
-        next: () => guardarPerfil(),
+    const guardarFoto = (): void => {
+      if (this.fotoSelecionada) {
+        this.userService.uploadProfilePhoto(this.fotoSelecionada).subscribe({
+          next: () => guardarPerfil(),
+          error: (err) => {
+            this.erroApi.set(mensagemErroHttp(err));
+            this.emSubmissao.set(false);
+          },
+        });
+      } else {
+        guardarPerfil();
+      }
+    };
+
+    if (this.capaSelecionada) {
+      this.userService.uploadCoverPhoto(this.capaSelecionada).subscribe({
+        next: () => guardarFoto(),
         error: (err) => {
           this.erroApi.set(mensagemErroHttp(err));
           this.emSubmissao.set(false);
         },
       });
     } else {
-      guardarPerfil();
+      guardarFoto();
     }
   }
 }

@@ -17,12 +17,13 @@ interface RawUser extends Partial<User> {
   id: number;
   name: string;
   profile_photo_url?: string | null;
+  cover_photo_url?: string | null;
 }
 
 interface RawNotification {
   id: number;
   recipient_id: number;
-  sender: RawUser;
+  sender: RawUser | null;
   type: string;
   data: Record<string, unknown>;
   is_read: boolean;
@@ -62,7 +63,7 @@ export class NotificationService {
     return {
       id: n.id,
       recipient_id: n.recipient_id,
-      sender: this.toUser(n.sender),
+      sender: n.sender ? this.toUser(n.sender) : null,
       type: n.type,
       data: n.data ?? {},
       is_read: n.is_read ?? false,
@@ -76,6 +77,7 @@ export class NotificationService {
       name: user.name,
       email: user.email ?? null,
       profile_photo: this.absoluteUrl(user.profile_photo_url ?? user.profile_photo ?? null),
+      cover_photo: this.absoluteUrl(user.cover_photo_url ?? user.cover_photo ?? null),
       bio: user.bio ?? null,
       is_private: user.is_private ?? false,
       is_following: user.is_following ?? false,

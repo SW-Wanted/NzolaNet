@@ -241,6 +241,7 @@
   flex: 0 0 auto;
   border-radius: 999px;
   object-fit: cover;
+  background-color: var(--cor-container-mais-baixo);
 }
 
 .campo-formulario,

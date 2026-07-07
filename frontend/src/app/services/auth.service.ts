@@ -14,6 +14,7 @@ interface LaravelUserPayload extends Partial<User> {
   id: number;
   name: string;
   profile_photo_url?: string | null;
+  cover_photo_url?: string | null;
 }
 
 interface LaravelAuthPayload {
@@ -217,6 +218,7 @@ export class AuthService {
       name: user.name,
       email: user.email ?? null,
       profile_photo: this.absoluteUrl(user.profile_photo_url ?? user.profile_photo ?? null),
+      cover_photo: this.absoluteUrl(user.cover_photo_url ?? user.cover_photo ?? null),
       bio: user.bio ?? null,
       is_private: user.is_private ?? false,
       is_active: user.is_active ?? true,

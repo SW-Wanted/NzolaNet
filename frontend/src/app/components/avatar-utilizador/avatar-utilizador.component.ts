@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
       border-radius: 50%;
       object-fit: cover;
       border: 1px solid var(--cor-contorno-variante);
+      background-color: var(--cor-container-mais-baixo);
       flex-shrink: 0;
     }
     .avatar--pequeno {

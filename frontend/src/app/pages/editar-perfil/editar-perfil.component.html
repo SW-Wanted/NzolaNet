@@ -22,6 +22,30 @@
             </div>
           </header>
 
+          <!-- Cover photo upload -->
+          <div class="perfil-capa-upload">
+            @if (capaPreview()) {
+              <img [src]="capaPreview()" alt="Foto de capa" class="perfil-capa-preview" />
+            } @else {
+              <div class="perfil-capa-preview perfil-capa-preview--vazia"></div>
+            }
+            <div class="perfil-capa-accoes">
+              <label class="botao-contornado perfil-foto-label" for="input-capa">
+                <span class="material-symbols-outlined">photo_camera</span>
+                Alterar foto de capa
+              </label>
+              <input
+                id="input-capa"
+                type="file"
+                accept="image/*"
+                class="perfil-foto-input"
+                aria-label="Selecionar foto de capa"
+                (change)="aoSelecionarCapa($event)"
+              />
+              <p class="texto-cartao">JPG, PNG ou GIF. Máx. 5 MB.</p>
+            </div>
+          </div>
+
           <!-- Profile picture upload -->
           <div class="perfil-foto-upload">
             <img

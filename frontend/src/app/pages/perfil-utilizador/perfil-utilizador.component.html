@@ -6,7 +6,11 @@
       <div class="conteudo-principal">
         <div class="conteudo-limite">
           <article class="cartao perfil-capa">
-            <div class="capa-perfil"></div>
+            <div
+              class="capa-perfil"
+              [class.capa-perfil--com-foto]="capa()"
+              [style.background-image]="capa() ? 'url(' + capa() + ')' : null"
+            ></div>
             <div class="perfil-conteudo">
               <img
                 alt="Perfil"

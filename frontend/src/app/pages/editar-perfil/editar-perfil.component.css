@@ -4,6 +4,7 @@
   max-width: 760px;
 }
 
+.perfil-capa-upload,
 .perfil-foto-upload {
   display: flex;
   align-items: center;
@@ -14,11 +15,36 @@
   background: var(--cor-container-baixo);
 }
 
+.perfil-capa-upload {
+  margin-bottom: 16px;
+}
+
+.perfil-capa-preview {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 3 / 1;
+  border-radius: 12px;
+  object-fit: cover;
+  background-color: var(--cor-container-mais-baixo);
+  flex-shrink: 0;
+}
+
+.perfil-capa-preview--vazia {
+  background: linear-gradient(120deg, rgba(123, 89, 0, 0.28), rgba(183, 5, 107, 0.22));
+}
+
+.perfil-capa-accoes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .perfil-foto-preview {
   width: 88px;
   height: 88px;
   border-radius: 50%;
   object-fit: cover;
+  background-color: var(--cor-container-mais-baixo);
   border: 3px solid var(--cor-primaria);
   flex-shrink: 0;
 }

@@ -13,6 +13,7 @@ interface RawUser extends Partial<User> {
   id: number;
   name: string;
   profile_photo_url?: string | null;
+  cover_photo_url?: string | null;
 }
 
 const API_URL = 'http://localhost:8000/api';
@@ -79,6 +80,17 @@ export class UserService {
     );
   }
 
+  uploadCoverPhoto(file: File): Observable<{ photo_url: string }> {
+    const formData = new FormData();
+    formData.append('photo', file);
+
+    return this.http.post<ApiResponse<RawUser>>(`${API_URL}/users/cover-photo`, formData).pipe(
+      map((response) => ({
+        photo_url: this.absoluteUrl(response.data.cover_photo_url ?? response.data.cover_photo ?? null) ?? '',
+      })),
+    );
+  }
+
   toggleFollow(userId: number): Observable<void> {
     return this.http
       .post<ApiResponse<null>>(`${API_URL}/users/${userId}/follow`, null)
@@ -114,6 +126,7 @@ export class UserService {
       name: user.name,
       email: user.email ?? null,
       profile_photo: this.absoluteUrl(user.profile_photo_url ?? user.profile_photo ?? null),
+      cover_photo: this.absoluteUrl(user.cover_photo_url ?? user.cover_photo ?? null),
       bio: user.bio ?? null,
       is_private: user.is_private ?? false,
       is_active: user.is_active ?? true,

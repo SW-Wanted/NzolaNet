@@ -2,10 +2,12 @@
 
 .capa-perfil {
   height: 240px;
-  background:
-    linear-gradient(120deg, rgba(123, 89, 0, 0.28), rgba(183, 5, 107, 0.22)),
-    url('https://lh3.googleusercontent.com/aida-public/AB6AXuAQyCxYTrGTvudis_SU_kdT9jUuVWq9DN-Mkuj80cvluFlQF_565vx4GgHaAK-XfZYyy3lTPnUL1Dn04JwIAtU_ALs9X6meSm-XmSmdhAo_rK5sw3QMuXMfVoRCjdXzDsfVk_94wf_3FQBJfyyODaOftfvffHm9mOkzLy0Kb3muxoQEgiQ4PVNfUnhqWthga2o6ik9cSGgaqGWDM2LyMW_fV31hCRCEmOu-Liyrzf69ykPU6q664BnRGN2AR5DxPywt0jOx77M-v40H')
-      center/cover;
+  background: linear-gradient(120deg, rgba(123, 89, 0, 0.28), rgba(183, 5, 107, 0.22));
+}
+
+.capa-perfil--com-foto {
+  background-size: cover;
+  background-position: center;
 }
 
 .perfil-conteudo {
@@ -22,6 +24,7 @@
   margin-top: -54px;
   border: 5px solid #fff;
   border-radius: 999px;
+  background-color: var(--cor-container-mais-baixo);
   object-fit: cover;
 }
 
