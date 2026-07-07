@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Validation\ValidationException;
@@ -56,6 +57,18 @@ return Application::configure(basePath: dirname(__DIR__))
                 'message' => 'Recurso nao encontrado',
                 'errors' => [],
             ], 404);
+        });
+
+        $exceptions->render(function (PostTooLargeException $e, $request) {
+            if (! $request->expectsJson()) {
+                return null;
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'O ficheiro enviado e demasiado grande. O limite e 50 MB para videos e 8 MB para imagens.',
+                'errors' => [],
+            ], 413);
         });
 
         $exceptions->render(function (HttpExceptionInterface $e, $request) {
