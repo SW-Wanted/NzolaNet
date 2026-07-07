@@ -262,14 +262,15 @@
       }
       <div class="criar-post-rodape">
         <div class="criar-post-anexos">
-          <label class="criar-post-anexo" for="modal-input-imagem" title="Adicionar imagem">
+          <label class="criar-post-anexo" for="modal-input-imagem" title="Adicionar imagem (máx. 8 MB)">
             <span class="material-symbols-outlined">image</span>
             <input id="modal-input-imagem" type="file" accept="image/*" (change)="aoSelecionarMedia($event, 'imagem')" />
           </label>
-          <label class="criar-post-anexo" for="modal-input-video" title="Adicionar vídeo">
+          <label class="criar-post-anexo" for="modal-input-video" title="Adicionar vídeo (máx. 50 MB)">
             <span class="material-symbols-outlined">smart_display</span>
             <input id="modal-input-video" type="file" accept="video/*" (change)="aoSelecionarMedia($event, 'video')" />
           </label>
+          <span class="texto-cartao">Imagem até 8 MB · Vídeo até 50 MB</span>
         </div>
         <button class="botao-destaque" type="submit" [disabled]="emPublicacao()">
           {{ emPublicacao() ? 'A publicar...' : 'Publicar' }}

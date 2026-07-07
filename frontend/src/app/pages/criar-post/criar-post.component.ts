@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
 import { MenuLateralComponent } from '../../components/menu-lateral/menu-lateral.component';
 import { PostService } from '../../services/post.service';
+import { mensagemErroHttp } from '../../utils/erro.utils';
 
 @Component({
   selector: 'app-criar-post',
@@ -41,8 +42,8 @@ export class CriarPostComponent {
 
     this.posts.createPost(this.formulario.controls.conteudo.value.trim(), this.mediaSelecionada).subscribe({
       next: () => void this.router.navigateByUrl('/feed'),
-      error: () => {
-        this.erroApi.set('Nao foi possivel publicar. Confirme o texto e o ficheiro selecionado.');
+      error: (err) => {
+        this.erroApi.set(mensagemErroHttp(err));
         this.emSubmissao = false;
       },
     });

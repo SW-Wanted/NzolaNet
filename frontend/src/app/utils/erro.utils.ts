@@ -14,6 +14,9 @@ export function mensagemErroHttp(error: unknown): string {
     if (error.status === 404) {
       return 'O recurso solicitado não foi encontrado.';
     }
+    if (error.status === 413) {
+      return 'O ficheiro enviado é demasiado grande. O limite é 50 MB para vídeos e 8 MB para imagens.';
+    }
     if (error.status === 422) {
       const mensagens = error.error?.errors;
       if (mensagens) {

@@ -75,8 +75,6 @@
             <span class="mensagem-campo">Informe um nome válido (mínimo 3 caracteres).</span>
           }
 
-          <input class="campo-formulario" formControlName="descricaoCurta" placeholder="Descrição curta" />
-
           <textarea class="area-formulario" formControlName="biografia" placeholder="Biografia"></textarea>
           @if (submetido && formulario.controls.biografia.invalid) {
             <span class="mensagem-campo">A biografia não pode ter mais de 1000 caracteres.</span>

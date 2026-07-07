@@ -29,7 +29,6 @@ export class EditarPerfilComponent implements OnInit {
 
   formulario = this.formBuilder.nonNullable.group({
     nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-    descricaoCurta: ['Perfil NzolaNet'],
     biografia: ['', [Validators.maxLength(1000)]],
     privado: [false],
   });
