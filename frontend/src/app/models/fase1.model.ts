@@ -7,6 +7,7 @@ export interface User {
   profile_photo: string | null;
   bio: string | null;
   is_private?: boolean;
+  is_active?: boolean;
   is_following?: boolean;
   followers_count: number;
   following_count: number;
